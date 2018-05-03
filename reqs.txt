@@ -33,3 +33,7 @@ add_to_trie(char *str, trie_t *t): int i // says if a word is in a trie (these r
     str: "dictionaryverysuperduperlongwordyayitssolongwowcrazy", t: default => i: 0
     str: "no", t: default => i: 1
     str: "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd", t: default => i: 1
+
+
+*Note- creating a dictionary will rely on successfully adding values to the dictionary, so this needs to work somehow
+dict_init requires successfully adding to the dictionary to pass, while the above tests need to return the correct conditions

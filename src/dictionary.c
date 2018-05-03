@@ -8,11 +8,19 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <unistd.h>
 #include "utils.h"
 #include "dictionary.h"
 
 /* See dictionary.h */
 dict_t* dict_new(char* file) {
+
+    // Make sure the file exists
+    // From here: https://stackoverflow.com/questions/230062/whats-the-best-way-to-check-if-a-file-exists-in-c-cross-platform
+    if (access(file, F_OK) == -1 ) {
+        return NULL;
+    }
+
     dict_t *d;
     int rc;
 
@@ -36,6 +44,12 @@ dict_t* dict_new(char* file) {
 int dict_init(dict_t *d, char *file) {
     assert(d != NULL);
 
+    // Make sure the file exists
+    // From here: https://stackoverflow.com/questions/230062/whats-the-best-way-to-check-if-a-file-exists-in-c-cross-platform
+    if (access(file, F_OK) == -1 ) {
+        return NULL;
+    }
+
     trie_t *t = trie_new();
     if (t == NULL) {
         return 1;
@@ -44,6 +58,7 @@ int dict_init(dict_t *d, char *file) {
 
     int rc = 0;
 
+    // From here: https://stackoverflow.com/questions/16400886/reading-from-a-file-word-by-word
     char buffer[1024];
     FILE *f = fopen(file, "r");
     while (fscanf(f, " %1023s", buffer) == 1) {
