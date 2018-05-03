@@ -68,16 +68,20 @@ int dict_free(dict_t *d) {
 
 /* See dictionary.h */
 int in_dict(char *str, dict_t *d) {
-    assert(d != NULL);
-    assert(d->dict != NULL);
+    if (d == NULL || d->dict == NULL || str == NULL) {
+        error("Invalid input to in_dict");
+        return -1;
+    }
 
     return in_trie(str, d->dict);
 }
 
 /* See dictionary.h */
 int add_to_dict(char *str, dict_t *d) {
-    assert(d != NULL);
-    assert(d->dict != NULL);
+    if (d == NULL || d->dict == NULL || str == NULL) {
+        error("Invalid arguments to add_to_dict");
+        return -1;
+    }
 
     return add_to_trie(str, d->dict);
 }

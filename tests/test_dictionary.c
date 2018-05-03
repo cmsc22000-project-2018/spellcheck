@@ -127,7 +127,7 @@ Test(dictionary, add_to_dict_null0) {
 Test(dictionary, add_to_dict_null1) {
     int rc;
 
-    rc = in_dict("hi", NULL);
+    rc = add_to_dict("hi", NULL);
 
     cr_assert_eq(rc, -1, "Passing NULL in as a dictionary in add_to_dict should have "
                  "returned -1, but it returned %d", rc);
@@ -140,7 +140,7 @@ Test(dictionary, add_to_dict_empty) {
 
     d = dict_new("dict_test0.txt");
 
-    rc = in_dict("", d);
+    rc = add_to_dict("", d);
 
     cr_assert_eq(rc, -1, "Passing an empty string in as a dictionary to add_to_dict "
                  "should have returned -1, but it returned %d", rc);
@@ -165,22 +165,22 @@ check_add_to_dict(char *file, char *str, int expected) {
 
 /* Test adding a small string for failure */
 Test(dictionary, add_to_dict_f0) {
-    check_in_dict("dict_test0.txt", "hi", 0);
+    check_add_to_dict("dict_test0.txt", "hi", 0);
 }
 
 /* Test adding a long string for failure */
 Test(dictionary, add_to_dict_f0) {
-    check_in_dict("dict_test0.txt",
+    check_add_to_dict("dict_test0.txt",
                   "dictionaryverysuperduperlongwordyayitssolongwowcrazy", 0);
 }
 
 /* Test adding a small string for success */
-Test(dictionary, add_to_dict_f0) {
-    check_in_dict("dict_test0.txt", "no", 1);
+Test(dictionary, add_to_dict_s0) {
+    check_add_to_dict("dict_test0.txt", "no", 1);
 }
 
 /* Test adding a long string for success */
-Test(dictionary, add_to_dict_f1) {
-    check_in_dict("dict_test0.txt",
+Test(dictionary, add_to_dict_s1) {
+    check_add_to_dict("dict_test0.txt",
                   "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd", 1);
 }

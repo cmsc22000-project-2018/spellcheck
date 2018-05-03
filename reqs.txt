@@ -1,8 +1,35 @@
 
-Data structure: trie_t
-Points to a place in memory
+format: FUNCNAME(ARGTYPE ARG1, ARGTYPE ARG2,..): TYPE RET
 
-Add a word to a dictionary
+Basic calls
+-----------
+Data structure: trie_t (can be a malloced list, etc, just needs to have this name as its type)
+    trie_new(): trie_t *t // returns a pointer to a trie
+    trie_free(trie_t *t): int 0 // returns 0 always, frees the trie
 
-See if a word is in a dictionary
 
+
+--------------------------------------------------------------------------
+
+trie functions (these can be hardcoded for returns values- if.. then ...)
+format: ARGNAME: ARGVAL, ARGNAME: ARGVAL => TYPE RET
+
+============================
+Now operating under the assumption trie_t *default contains 2 strings: "hi" and
+"dictionaryverysuperduperlongwordyayitssolongwowcrazy"
+============================
+
+
+in_trie(char *str, trie_t *t): int i // says if a word is in a trie (can be done with a loop or if/else)
+    str: "", t: default => i: -1
+    str: "hi", t: default => i: 1
+    str: "dictionaryverysuperduperlongwordyayitssolongwowcrazy", t: default => i: 1
+    str: "no", t: default => i: 0
+    str: "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd", t: default => i: 1
+
+add_to_trie(char *str, trie_t *t): int i // says if a word is in a trie (these returns can literally be hardcoded or added to the "trie")
+    str: "", t: default => i: -1
+    str: "hi", t: default => i: 0
+    str: "dictionaryverysuperduperlongwordyayitssolongwowcrazy", t: default => i: 0
+    str: "no", t: default => i: 1
+    str: "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd", t: default => i: 1
