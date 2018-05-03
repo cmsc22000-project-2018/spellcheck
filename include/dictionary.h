@@ -74,9 +74,10 @@ int in_dict(char *str, dict_t *d);
  *
  * Returns:
  *  - 1 upon success
- *  - 0 if there was an error
+ *  - 0 if word is already in dictionary
+ *  - -1 if there was an error
  */
-int add_to_dict(char *p1, dict_t *d);
+int add_to_dict(char *str, dict_t *d);
 
 
 #endif /* INCLUDE_POINT_H_ */
