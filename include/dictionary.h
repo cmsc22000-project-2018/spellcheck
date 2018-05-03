@@ -5,11 +5,11 @@
 #ifndef INCLUDE_DICTIONARY_H_
 #define INCLUDE_DICTIONARY_H_
 
-// #include "trie.h"
+#include "trie.h"
 
 /* A point in two-dimensional space */
 typedef struct {
-    trie_t *t;
+    trie_t *dict;
 } dict_t;
 
 
@@ -34,7 +34,7 @@ dict_t* dict_new(char* file);
  *  - file: A filename string.
  *
  * Returns:
- *  - 0 on success, 1 if an error occurs.
+ *  - 0 on success, 1 if an error occurs, -1 if partial error (only able to add some words)
  */
 int dict_init(dict_t *d, char *file);
 
