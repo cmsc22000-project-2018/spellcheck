@@ -84,10 +84,10 @@ int read_to_dict(char *file, dict_t *d) {
     // Make sure the file exists
     // From here: https://stackoverflow.com/questions/230062/whats-the-best-way-to-check-if-a-file-exists-in-c-cross-platform
     if (access(file, F_OK) == -1 ) {
-        return NULL;
+        return 0;
     }
 
-    int rc = 0;
+    int rc = 1;
 
     // From here: https://stackoverflow.com/questions/16400886/reading-from-a-file-word-by-word
     char buffer[1024];
@@ -97,4 +97,6 @@ int read_to_dict(char *file, dict_t *d) {
             rc = -1;
         }
     }
+
+    return rc;
 }
