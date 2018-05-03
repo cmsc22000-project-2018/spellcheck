@@ -30,3 +30,4 @@ $(ZIP_NAME).tar.gz: $(ALLSOURCES)
 	cp $(ALLSOURCES) $(ZIP_NAME)
 	tar cvzf $(ZIP_NAME).tar.gz $(ZIP_NAME)
 	rm -rf $(ZIP_NAME)
+
