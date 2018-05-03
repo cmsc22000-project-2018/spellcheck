@@ -13,13 +13,7 @@
 #include "dictionary.h"
 
 /* See dictionary.h */
-dict_t* dict_new(char* file) {
-
-    // Make sure the file exists
-    // From here: https://stackoverflow.com/questions/230062/whats-the-best-way-to-check-if-a-file-exists-in-c-cross-platform
-    if (access(file, F_OK) == -1 ) {
-        return NULL;
-    }
+dict_t* dict_new() {
 
     dict_t *d;
     int rc;
@@ -33,7 +27,7 @@ dict_t* dict_new(char* file) {
 
     rc = dict_init(d, file);
     if (rc != 0) {
-        error("Could not initialize polygon");
+        error("Could not initialize dict");
         return NULL;
     }
 
@@ -41,14 +35,8 @@ dict_t* dict_new(char* file) {
 }
 
 /* See dictionary.h */
-int dict_init(dict_t *d, char *file) {
+int dict_init(dict_t *d) {
     assert(d != NULL);
-
-    // Make sure the file exists
-    // From here: https://stackoverflow.com/questions/230062/whats-the-best-way-to-check-if-a-file-exists-in-c-cross-platform
-    if (access(file, F_OK) == -1 ) {
-        return NULL;
-    }
 
     trie_t *t = trie_new();
     if (t == NULL) {
@@ -56,18 +44,7 @@ int dict_init(dict_t *d, char *file) {
     }
     d->dict = t;
 
-    int rc = 0;
-
-    // From here: https://stackoverflow.com/questions/16400886/reading-from-a-file-word-by-word
-    char buffer[1024];
-    FILE *f = fopen(file, "r");
-    while (fscanf(f, " %1023s", buffer) == 1) {
-        if (add_to_dict(buffer, d) != 1) {
-            rc = -1;
-        }
-    }
-
-    return rc;
+    return 0;
 }
 
 /* See dictionary.h */
@@ -103,5 +80,21 @@ int add_to_dict(char *str, dict_t *d) {
 
 /* See dictionary.h */
 int read_to_dict(char *file, dict_t *d) {
-    return 0;
+
+    // Make sure the file exists
+    // From here: https://stackoverflow.com/questions/230062/whats-the-best-way-to-check-if-a-file-exists-in-c-cross-platform
+    if (access(file, F_OK) == -1 ) {
+        return NULL;
+    }
+
+    int rc = 0;
+
+    // From here: https://stackoverflow.com/questions/16400886/reading-from-a-file-word-by-word
+    char buffer[1024];
+    FILE *f = fopen(file, "r");
+    while (fscanf(f, " %1023s", buffer) == 1) {
+        if (add_to_dict(buffer, d) != 1) {
+            rc = -1;
+        }
+    }
 }
