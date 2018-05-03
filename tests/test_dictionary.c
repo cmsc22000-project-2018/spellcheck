@@ -17,7 +17,7 @@ Test(dictionary, init) {
 
     d = dict_new();
 
-    rc = dict_init(d, "init_test.txt");
+    rc = dict_init(dict);
 
     cr_assert_eq(rc, 0, "dict_init() failed");
 }

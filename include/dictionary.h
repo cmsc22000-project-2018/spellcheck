@@ -23,20 +23,19 @@ typedef struct {
  *  - A pointer to the dictionary, or NULL if a dictionary
  *    cannot be allocated
  */
-dict_t* dict_new(char* file);
+dict_t* dict_new();
 
 
 /*
- * Initializes the words in a dictionary
+ * Initializes a dictionary
  *
  * Parameters:
  *  - d: A dictionary. Must point to already allocated memory.
- *  - file: A filename string.
  *
  * Returns:
- *  - 0 on success, 1 if an error occurs, -1 if partial error (only able to add some words)
+ *  - 0 on success, 1 if an error occurs
  */
-int dict_init(dict_t *d, char *file);
+int dict_init(dict_t *d);
 
 
 /*
@@ -78,6 +77,18 @@ int in_dict(char *str, dict_t *d);
  *  - -1 if there was an error
  */
 int add_to_dict(char *str, dict_t *d);
+
+/*
+ * Parses a file and adds all words to the dictionary
+ *
+ * Parameters:
+ *  - d: A dictionary. Must point to already allocated memory.
+ *  - file: A filename string.
+ *
+ * Returns:
+ *  - 1 on success, 0 if an error occurs, -1 if partial error (only able to add some words)
+ */
+int read_to_dict(char *file, dict_t *d);
 
 
 #endif /* INCLUDE_POINT_H_ */

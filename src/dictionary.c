@@ -100,3 +100,8 @@ int add_to_dict(char *str, dict_t *d) {
 
     return add_to_trie(str, d->dict);
 }
+
+/* See dictionary.h */
+int read_to_dict(char *file, dict_t *d) {
+    return 0;
+}
