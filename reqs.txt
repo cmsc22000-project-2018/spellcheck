@@ -1,0 +1,8 @@
+
+Data structure: trie_t
+Points to a place in memory
+
+Add a word to a dictionary
+
+See if a word is in a dictionary
+
