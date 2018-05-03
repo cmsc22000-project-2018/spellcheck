@@ -25,7 +25,7 @@ in_trie(char *str, trie_t *t): int i // says if a word is in a trie (can be done
     str: "hi", t: default => i: 1
     str: "dictionaryverysuperduperlongwordyayitssolongwowcrazy", t: default => i: 1
     str: "no", t: default => i: 0
-    str: "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd", t: default => i: 1
+    str: "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd", t: default => i: 0
 
 add_to_trie(char *str, trie_t *t): int i // says if a word is in a trie (these returns can literally be hardcoded or added to the "trie")
     str: "", t: default => i: -1
