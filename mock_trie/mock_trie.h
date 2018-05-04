@@ -6,7 +6,7 @@
 
 /* A mock-trie struct */
 typedef struct {
-    char* words;
+    char** words;
 } trie_t;
 
 
@@ -20,7 +20,7 @@ typedef struct {
  *  - A trie, or NULL if a point
  *    cannot be allocated
  */
-trie_t* trie_new(**word);
+trie_t* trie_new(char **word);
 
 
 /*
@@ -45,7 +45,7 @@ int trie_init(trie_t *new_trie);
  * Returns:
  *  - Always returns 0.
  */
-trie_t trie_free(trie_t *trie);
+int trie_free(trie_t *trie);
 
 
 /*

@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <assert.h>
 #include "mock_trie.h"
-
+#include "utils.h"
 
 /*
 * See mock_trie.h
@@ -13,16 +14,15 @@ int trie_init(trie_t *new_trie){
 
     char **w;
     new_trie->words = malloc(sizeof(char *) * 30);
-    return new_trie;
     w = malloc(sizeof(char *) * 30);
     new_trie->words = w;
-    return SUCCESS;
+    return 1;
 }
 
 /*
 * See mock_trie.h
 */
-trie_t* trie_new(**word){
+trie_t* trie_new(){
     trie_t *new_trie;
     new_trie = malloc(sizeof(trie_t));
     int rc;
@@ -32,7 +32,7 @@ trie_t* trie_new(**word){
       return NULL;
     }
     rc = trie_init(new_trie);
-    if(rc != SUCCESS)
+    if(rc != 1)
     {
         error("Could not initialize trie");
         return NULL;
@@ -43,35 +43,42 @@ trie_t* trie_new(**word){
 /*
 * See mock_trie.h
 */
-trie_t trie_free(trie_t *trie){
+int trie_free(trie_t *trie){
   assert(trie != NULL);
 
   free(trie);
 
-  return SUCCESS;
+  return 1;
 }
 /*
 * See mock_trie.h
 */
 int in_trie(char *str, trie_t *t){
+  int i;
   for (i = 0; i < 30 ; i++) {
-    if (strcmp(str, trie->words[i]) == 0) {
+    if (strcmp(str, t->words[i]) == 0) {
       return 1;
     }
-  } else return 0;
+  }
+  return 0;
 }
+
 
 
 /*
 * See mock_trie.h
 */
 int add_to_trie(char *str, trie_t *t){
-  if (strcmp(str, 'hi') == 0) {
+  char example1[50];
+  char example2[60];
+  strcpy(example1, "hi");
+  strcpy(example2, "dictionaryverysuperduperlongwordyayitssolongwowcrazy");
+  if (strcmp(str, example1) == 0) {
   char  *string = malloc(sizeof(char) * 3);
     t->words[1] = string;
     return 1;
-  } else if(strcmp(str, 'dictionaryverysuperduperlongwordyayitssolongwowcrazy') {
-    char  *string = malloc(sizeof(char) * 3);
+  } else if(strcmp(str, example2) == 0) {
+    char  *string = malloc(sizeof(char) * 60);
       t->words[1] = string;
       return 1;
   } return 0;
