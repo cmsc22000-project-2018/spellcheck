@@ -80,3 +80,17 @@ int add_to_trie(char *str, trie_t *t){
       return 1;
   } return 0;
 }
+
+int main() {
+  char sample1[50];
+  char **sample2;
+  strcpy(sample1, "hi");
+  strcpy(sample2, "hi");
+  trie_t *sample_trie = trie_new(sample2);
+  int testing_add_trie = add_to_trie(sample2, sample_trie);
+  printf("word added to trie: %d \n", testing_add_trie);
+
+  return 0;
+
+
+}
