@@ -9,12 +9,9 @@
 /*
 * See mock_trie.h
 */
-int trie_init(trie_t *new_trie){
+int trie_init(trie_t *new_trie, char **w){
     assert(new_trie != NULL);
 
-    char **w;
-    new_trie->words = malloc(sizeof(char *) * 30);
-    w = malloc(sizeof(char *) * 30);
     new_trie->words = w;
     return 1;
 }
@@ -22,7 +19,7 @@ int trie_init(trie_t *new_trie){
 /*
 * See mock_trie.h
 */
-trie_t* trie_new(){
+trie_t* trie_new(char **word){
     trie_t *new_trie;
     new_trie = malloc(sizeof(trie_t));
     int rc;
@@ -31,7 +28,7 @@ trie_t* trie_new(){
       error("Could not allocate memory");
       return NULL;
     }
-    rc = trie_init(new_trie);
+    rc = trie_init(new_trie, word);
     if(rc != 1)
     {
         error("Could not initialize trie");

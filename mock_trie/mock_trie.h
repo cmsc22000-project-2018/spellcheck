@@ -33,7 +33,7 @@ trie_t* trie_new(char **word);
  * Returns:
  *  - 0 on success, 1 if an error occurs.
  */
-int trie_init(trie_t *new_trie);
+int trie_init(trie_t *new_trie, char **w);
 
 
 /*
