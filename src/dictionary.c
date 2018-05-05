@@ -25,7 +25,7 @@ dict_t* dict_new() {
         return NULL;
     }
 
-    rc = dict_init(d, file);
+    rc = dict_init(d);
     if (rc != 0) {
         error("Could not initialize dict");
         return NULL;
@@ -60,7 +60,7 @@ int dict_free(dict_t *d) {
 
 /* See dictionary.h */
 int in_dict(char *str, dict_t *d) {
-    if (d == NULL || d->dict == NULL || str == NULL) {
+    if (d == NULL || d->dict == NULL || str == NULL || str[0] == '\0') {
         error("Invalid input to in_dict");
         return -1;
     }
@@ -81,22 +81,23 @@ int add_to_dict(char *str, dict_t *d) {
 /* See dictionary.h */
 int read_to_dict(char *file, dict_t *d) {
 
-    // Make sure the file exists
-    // From here: https://stackoverflow.com/questions/230062/whats-the-best-way-to-check-if-a-file-exists-in-c-cross-platform
-    if (access(file, F_OK) == -1 ) {
-        return 0;
-    }
-
     int rc = 1;
 
     // From here: https://stackoverflow.com/questions/16400886/reading-from-a-file-word-by-word
     char buffer[1024];
     FILE *f = fopen(file, "r");
-    while (fscanf(f, " %1023s", buffer) == 1) {
+
+    if (f == NULL) {
+        return 0;
+    }
+
+    while (fscanf(f, "%1023s", buffer) == 1) {
         if (add_to_dict(buffer, d) != 1) {
             rc = -1;
         }
     }
+
+    fclose(f);
 
     return rc;
 }

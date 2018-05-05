@@ -2,22 +2,18 @@
 
 CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -O2 -g -I../include/
-LDFLAGS = -L../ -Wl,-rpath,.
 RM = rm -f
 BIN = test-spellcheck
 LDLIBS = -lcriterion
 
-SRCS = main.c test_dictionary.c
+SRCS = main.c test_dictionary.c test_mock_trie.c ../src/dictionary.c ../src/mock_trie.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all
 all: ${BIN}
 
 $(BIN): $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o $(BIN) $(LDLIBS)
-
-$(TARGET_LIB): $(OBJS)
-	$(CC) ${LDFLAGS} -o $@ $^
+	$(CC) $(OBJS) -o $(BIN) $(LDLIBS)
 
 $(SRCS:.c=.d):%.d:%.c
 	$(CC) $(CFLAGS) -MM $< >$@
