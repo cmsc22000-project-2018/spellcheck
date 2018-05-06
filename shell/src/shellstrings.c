@@ -72,3 +72,13 @@ void usage()
 	"./spellcheck [~/path/file.txt] [-flag] [~/path/destination.txt] \n";
 	printf("%s",u);
 }
+
+void interactive_correction(int lnum, char* sent, char* hglt, char** sugns, int snum)
+{
+	printf("Line %d:\n",lnum);
+	printf("%s\n",sent);
+	printf("%s\n",hglt);
+	printf("Suggestions: \n");
+	for (int i=0; i<snum; i++)
+		printf("[%d] [%s]", i+1, sugns[i]);
+}

@@ -17,7 +17,7 @@ void save_page(char* filename, char** lines,int* quit);
 void batch_mode(int argc, char **argv);
 
 /* Functions needed for interactive mode */
-char* edit_interactive(char* line);
+char* edit_interactive(char* line, int linenum);
 
 void interactive_mode(char** filename, int* quit);
 

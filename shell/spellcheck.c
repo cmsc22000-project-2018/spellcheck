@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 	}
 
 	if (argc == 3 || argc ==4) { // batch mode
-//		batch_mode(argc,argv);
+		batch_mode(argc,argv);
 	}
 
 	return 0;

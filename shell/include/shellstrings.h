@@ -23,6 +23,7 @@ void usage();
 
 void shell_prompt();
 
+void interactive_correction(int lnum, char* sent, char* hglt, char** sugns, int snum);
 
 
 #endif

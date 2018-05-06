@@ -51,20 +51,42 @@ void save_page(char* filename, char** lines,int* quit)
 }
 
 
-/* Functions needed for batch mode */
-//void batch_mode(int argc, char **argv)
-//{
-//	// implmenent after having interactive success
-//}
-
 
 /* Functions needed for interactive mode */
-char* edit_interactive(char* line)
+char* edit_interactive(char* line, int linenum)
 {
-	return line;
-	// need a way for string to (a) preserve punctuations and (b) 
-	// @Sarika this would be where the program needs replace_word, ignore_word, alternate_spelling
+	// first loop through the line
+	char* l = strdup(line);
+	char* w = get_word(l);
+	int i = 0;
+	while (w != NULL) {
 
+		while (strcmp(w,"jomped")!=0) {
+		i += strlen(w);
+		w=get_word(l);
+		}
+
+	// generate_suggestions
+	char* s[]= {"jumped","jammed","dumped"};
+	char a[]= "                 ^";
+
+	interactive_correction(linenum,line,a,s,3);
+
+	// select replacement
+	char* c=read_line();
+	int b = (int*) c;
+	char* y= s[b-1];
+
+	// replace word: NOTE THIS ONLY WORKS, AS IT DOES NOW, BECAUSE LENGTH OF WORD IS IDENTICAL! SHOULD NOT BE EMULATED IN IMPLEMENTATION
+	int m = i+strlen(a);
+	for (int j = i; j < m; j++)
+		l[j] = y[j-i];
+
+	w = get_word(l);
+	}
+	free(line);
+	return l;
+	// later, need a way for string to (a) preserve punctuations and (b) spaces 
 }
 
 void interactive_mode(char** filename, int* quit)
@@ -73,12 +95,12 @@ void interactive_mode(char** filename, int* quit)
 
 	lines = lineparse_file(filename[1]);
 
-	printf("%s", lines[15]);	// testing purposes
+	printf("%s", lines[0]);	// testing purposes
 
 	// step through phases
 	int i=0;
 	while (lines[i] != NULL) {	// potential error - one empty line in the middle of two full?	
-		lines[i] = edit_interactive(lines[i]);
+		lines[i] = edit_interactive(lines[i],i+1);
 		i++;
 	}
 
@@ -100,9 +122,36 @@ void help_page()
 	help_page_text();
 	shell_prompt();
 
-	read_line();
+	char* l=read_line();
+	free(l);
 }
 
+
+void batch_mode(int argc, char** argv)
+{
+	if (argc == 3) {
+		if (!strcmp(argv[1],"-q")) {
+			// quiet
+		} else if (!strcmp(argv[1],"-v")) {
+			// verbose
+		} else {
+			usage();
+			exit(0);
+		}
+		// move to save page
+	}
+
+	if (argc == 4) {
+		if (strcmp(argv[1],"-s")) {
+			usage();
+			exit(0);
+		}
+		// save mode		
+	}
+}
+
+
+/* main page */
 int main_page(int* quit)
 {
 	main_help_text();
