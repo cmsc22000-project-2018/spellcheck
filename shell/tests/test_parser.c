@@ -7,9 +7,25 @@
 #include <stdlib.h>
 #include <assert.h>
 
-char* extract_words(char* s);
+int main()
+{
+	char* l;
+	char** p;
+	p = lineparse_file("test.txt");
+	int i=0;
 
-char* extract_lines(char* s);
+	while (p[i]!=NULL) {	// should condition be end of file instead?
+		printf("%s",p[i]);
+		i++
+	}
 
-char** parse_file(file); // reconsider data types for this
+	free(p);
 
+	l=lsh_read_line();
+	p=lsh_split_line(l);
+
+	while (p[i]!=NULL) {
+		printf("%s",p[i]);
+		i++;
+	}
+}

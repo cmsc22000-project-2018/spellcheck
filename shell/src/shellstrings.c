@@ -1,6 +1,7 @@
 /* Strings to be used in shell
    Jaewan Park
 */
+#include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
 #include "shellstrings.h"
@@ -25,7 +26,7 @@ void help_page_text()
 	"To run batch mode, exit program, and run:\n"
 	"\t $ ./spellcheck [~/path/file.txt] [-flag]\n"
 	"-q is for quiet, -v is for verbose, and -s saves a file to another destination."
-	"Press any key to return to the previous page.\n\n"
+	"Press any key to return to the previous page.\n\n";
 	printf("%s",h);
 }
 

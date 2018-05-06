@@ -1,13 +1,26 @@
-.PHONY: clean
 CC = gcc
-CFLAGS = -O2 -g -Wall -Wextra -I ./include/
-HEADS = include/shellstrings.h include/parser.h
-SRCS = src/shellstrings.c src/parser.c
+CFLAGS = -O2 -g -Wall -Wextra -fPIC
+LIBFLAGS = -shared
+DYN_LIBFLAGS = -lshell
+
+HEADS = include/shellstrings.h include/parser.h include/scfunctions.h
+SRCS = src/shellstrings.c src/parser.c src/scfunctions.c
+OBJS = $(SRCS:.c=.o)
+
 TARGET = spellcheck
-RM = rm -rf
+TARGET_LIB = libshell.so
+RM = rm -f
 
-spellcheck: spellcheck.c include/shellstrings.h include/parser.h src/shellstrings.c src/parser.c
-	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS) -lm
+.PHONY: spellcheck lib
+spellcheck: $(TARGET_LIB)
+	$(CC) $(CFLAGS) -o $(TARGET) $(DYN_LIBFLAGS)
 
+lib: $(OBJS)
+	$(CC) $(LIBFLAGS) -o $(TARGET_LIB) $(OBJS)
+
+$(OBJS): %.o:%.c
+	$(CC) $(CFLAGS) -I ./include/ -c -o $@ $(patsubst %.o,%.c,$@)
+
+.PHONY: clean
 clean: $(TARGET)
-	$(RM) $(TARGET)
+	$(RM) $(TARGET) $(OBJS) $(TARGET_LIB)
