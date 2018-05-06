@@ -7,4 +7,4 @@ before_install:
 
 script:
     - make tests
-    - ./test/test-spellcheck
+    - ./tests/test-spellcheck
