@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "mock_trie.h"
-
+#include <string.h>
 /* Checks whether a new trie is properly created */
 Test(trie, new)
 {
@@ -50,7 +50,8 @@ Test(string, compare){
   strcpy(s2, "hi");
 
   int result = compstr(s1, s2);
-  cr_assert_eq(result, 0, "compstr failed");
+  printf("%d\n", result);
+  cr_assert_eq(result, 1, "compstr failed");
 }
 
 Test(string, compare_different){
@@ -60,7 +61,8 @@ Test(string, compare_different){
   strcpy(s22, "day");
 
   int results = compstr(s11, s22);
-  cr_assert_eq(results, 1, "compstr failed");
+  printf("%d\n", results);
+  cr_assert_eq(results, 0, "compstr failed");
 }
 
 Test(trie, added_to_trie){
@@ -68,6 +70,7 @@ Test(trie, added_to_trie){
   char *s1 = (char *)malloc(sizeof(char));
   strcpy(s1, "hi");
   int added_to_trie = add_to_trie(s1, trie1);
+  printf("%d\n", added_to_trie);
   cr_assert_eq(added_to_trie, 1, "add_to_trie failed");
 }
 
