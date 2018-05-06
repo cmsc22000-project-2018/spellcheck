@@ -15,8 +15,14 @@ void save_page_text();
 
 void greet();
 
-void error_shell();
+void error_shell(char* s);
+
+void bye();
+
+void usage();
 
 void shell_prompt();
+
+
 
 #endif

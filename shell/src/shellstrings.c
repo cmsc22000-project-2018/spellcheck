@@ -20,13 +20,13 @@ void main_help_text()
 void help_page_text()
 {
 	char h[] =
-	"Spellcheck is a  tool which, given a text, will search for misspelled words and will suggest alternative spellings.\n\n\n"
+	"\n\n Spellcheck is a tool which, given a text file, will search for misspelled words and will suggest alternative spellings.\n\n\n"
 	"To run interactive mode on a file, return to the previous page and run:\n\n"
 	"\t r [~/path/file.txt]\n\n"
-	"To run batch mode, exit program, and run:\n"
-	"\t $ ./spellcheck [~/path/file.txt] [-flag]\n"
-	"-q is for quiet, -v is for verbose, and -s saves a file to another destination."
-	"Press any key to return to the previous page.\n\n";
+	"To run batch mode, exit program, and run:\n\n"
+	"\t $ ./spellcheck [~/path/file.txt] [-flag]\n\n"
+	"-q is for quiet, -v is for verbose, and -s saves a file to another destination.\n\n"
+	"Press any key to return to the previous page.\n\n\n";
 	printf("%s",h);
 }
 
@@ -43,7 +43,7 @@ void save_page_text()
 
 void greet()
 {
-	char g[] = "------- Welcome to Spellcheck! ------\n";
+	char g[] = "------- Welcome to Spellcheck! ------\n\n";
 	printf("%s",g);
 }
 
@@ -66,6 +66,9 @@ void bye()
 
 void usage()
 {
-	char u[] = "./spellcheck [~/path/file.txt] [-flag] [~/path/destination.txt] \n";
+	char u[] =
+	"Please use designated format:\n\n"
+	"./spellcheck or \n"
+	"./spellcheck [~/path/file.txt] [-flag] [~/path/destination.txt] \n";
 	printf("%s",u);
 }

@@ -25,7 +25,7 @@ void interactive_mode(char** filename, int* quit);
 void help_page();
 
 /* function for main page */
-void main_page(int* quit);
+int main_page(int* quit);
 
 
 

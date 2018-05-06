@@ -14,6 +14,7 @@ void save_corrections(char* filename, char** lines)
 		fprintf(f,"%s",lines[i]);
 		i++;
 	}
+	fclose(f);
 }
 
 void save_page(char* filename, char** lines,int* quit)
@@ -22,6 +23,7 @@ void save_page(char* filename, char** lines,int* quit)
 
 	while (i) {
 		save_page_text();
+		shell_prompt();
 		i=0;
 		char* line;
 		char** args;
@@ -33,17 +35,16 @@ void save_page(char* filename, char** lines,int* quit)
 
 		if (!strcmp(args[0],"w")) {
 			save_corrections(filename,lines);
-			*quit=1;
+			*quit=0;
 		} else if (!strcmp(args[0],"s")) {
 			save_corrections(args[1],lines);
-			*quit=1;
+			*quit=0;
 		} else if (!strcmp(args[0],"r")) {
-			*quit=0;
-		} else if (!strcmp(args[0],"q")) {
 			*quit=1;
-		} else {
-			error_shell("please type in one of the indicated commands!\n");
+		} else if (!strcmp(args[0],"q")) {
 			*quit=0;
+		} else {
+			error_shell("please type in one of the indicated commands!");
 			i=1;
 		}
 	}
@@ -72,6 +73,8 @@ void interactive_mode(char** filename, int* quit)
 
 	lines = lineparse_file(filename[1]);
 
+	printf("%s", lines[15]);	// testing purposes
+
 	// step through phases
 	int i=0;
 	while (lines[i] != NULL) {	// potential error - one empty line in the middle of two full?	
@@ -95,11 +98,16 @@ void interactive_mode(char** filename, int* quit)
 void help_page()
 {
 	help_page_text();
-	getchar();
+	shell_prompt();
+
+	read_line();
 }
 
-void main_page(int* quit)
+int main_page(int* quit)
 {
+	main_help_text();
+	shell_prompt();
+
 	char* line;
 	char** args;
 
@@ -110,6 +118,11 @@ void main_page(int* quit)
 		help_page();
 		*quit=0;
 	} else if (!strcmp(args[0],"r")) {
+		if(args[1] == NULL) {
+			error_shell("Please indicate a file!");
+			*quit=0;
+			return 0;
+		}
 		interactive_mode(args,quit);
 		*quit=0;
 	} else if (!strcmp(args[0],"d")) {
@@ -118,10 +131,12 @@ void main_page(int* quit)
 	} else if (!strcmp(args[0],"q")) {
 		*quit=1;
 	} else {
-		error_shell("Please type in one of the indicated commands!\n");
+		error_shell("Please type in one of the indicated commands!");
 		*quit=0;
 	}
 
 	free(line);
 	free(args);
+
+	return 1;
 }

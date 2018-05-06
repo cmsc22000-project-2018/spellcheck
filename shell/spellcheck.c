@@ -2,13 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include "parser.h"
+#include "scfunctions.h"
+#include "shellstrings.h"
 
 /* Main function */
 int main(int argc, char **argv)
 {
 	// initialization: dictionary?
-	int *quit;
-	*quit = 0;
+	int i = 0;
+	int *quit = &i;
 
 	if (argc == 2 || argc > 4) {
 		usage();
@@ -16,16 +19,14 @@ int main(int argc, char **argv)
 	}
 
 	if (argc == 1) {
+		greet();
 		while(!(*quit)) {
-			greet();
-			main_help_text();
-			shell_prompt();
 			main_page(quit);
 		}
 	}
 
 	if (argc == 3 || argc ==4) { // batch mode
-		batch_mode(argc,argv);
+//		batch_mode(argc,argv);
 	}
 
 	return 0;
