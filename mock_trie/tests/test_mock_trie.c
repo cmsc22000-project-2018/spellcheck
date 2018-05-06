@@ -19,9 +19,9 @@ Test(trie, init)
 {
     int rc;
     trie_t new_trie;
-    char** words = malloc(sizeof(char *) * 70);
+  //  char** words = malloc(sizeof(char *) * 70);
 
-    rc = trie_init(&new_trie, words);
+    rc = trie_init(&new_trie);
 
     cr_assert_eq(rc, 1, "trie_init() failed");
 

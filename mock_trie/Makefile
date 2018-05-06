@@ -1,9 +1,25 @@
-all:
-	gcc -O2 -Wall -Wextra -g -o mock_trie mock_trie.c mock_main.c
+# Makefile based on template at https://gist.github.com/xuhdev/1873316
+
+CC = gcc
+CFLAGS = -fPIC -Wall -Wextra -O2 -g -I./include/
+LDFLAGS = -shared
+RM = rm -f
+LDLIBS = -lm
+
+SRCS = src/mock_trie.c
+OBJS = $(SRCS:.c=.o)
+
+.PHONY: all
+
+$(SRCS:.c=.d):%.d:%.c
+	$(CC) $(CFLAGS) -MM $< -MT $(patsubst %.d,%.o,$@) > $@
+
+-include $(SRCS:.c=.d)
+
+.PHONY: clean tests
 clean:
-	rm -f mock_trie
+	-${RM} ${LIBS} ${OBJS} $(SRCS:.c=.d)
+	make -C ./tests clean
 
-tests:
-	gcc -O2 -Wall -Wextra -g -o test_mock_trie test_mock_trie.c mock_main.c mock_trie.c
-
-.PHONY: all clean
+tests: $(OBJS)
+	make -C ./tests
