@@ -9,88 +9,110 @@
 /*
 * See mock_trie.h
 */
-int trie_init(trie_t *new_trie, char **w){
-    assert(new_trie != NULL);
-
-    new_trie->words = w;
-    return 1;
-}
-
-/*
-* See mock_trie.h
-*/
-trie_t* trie_new(char **word){
-    trie_t *new_trie;
-    new_trie = malloc(sizeof(trie_t));
+trie_t* trie_new(){
+    trie_t *t;
+    t = malloc(sizeof(trie_t));
     int rc;
 
-    if (new_trie == NULL) {
+    if (t == NULL) {
       error("Could not allocate memory");
       return NULL;
     }
-    rc = trie_init(new_trie, word);
+
+    rc = trie_init(t);
     if(rc != 1)
     {
         error("Could not initialize trie");
         return NULL;
     }
-    return new_trie;
+    return t;
 }
 
 /*
 * See mock_trie.h
 */
-int trie_free(trie_t *trie){
-  assert(trie != NULL);
+int trie_init(trie_t *t){
+    assert(t != NULL);
 
-  free(trie);
+    char **w;
+    w = calloc(LEN, sizeof(char*));
 
-  return 1;
+    t->words = w;
+    return 1;
 }
+
 /*
 * See mock_trie.h
 */
-int in_trie(char *str, trie_t *t){
-  int i;
-  for (i = 0; i < 30 ; i++) {
-    if (strcmp(str, t->words[i]) == 0) {
-      return 1;
+int trie_free(trie_t *t){
+    assert(t != NULL);
+    assert(t->words != NULL);
+
+    for (int i = 0; i < LEN; i++) {
+        if (t->words[i] != NULL) {
+            free(t->words[i]);
+        }
     }
-  }
-  return 0;
+
+    free(t->words);
+    free(t);
+
+    return 1;
 }
 
+int compstr(char *s1, char *s2) {
+    int i = 0;
 
+    while (s1[i] != '\0' && s2[i] != '\0') {
+        if (s1[i] != s2[i]) {
+            return 0;
+        }
+        i++;
+    }
+
+    if (s1[i] == s2[i]) {
+        return 1;
+    }
+
+    return 0;
+}
+
+/*
+* See mock_trie.h
+*/
+int in_trie(char *str, trie_t *t) {
+    for (int i = 0; i < LEN ; i++) {
+        if (t->words[i] == NULL) return 0;
+        if (compstr(str, t->words[i]) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 /*
 * See mock_trie.h
 */
 int add_to_trie(char *str, trie_t *t){
-  char example1[50];
-  char example2[60];
-  strcpy(example1, "hi");
-  strcpy(example2, "dictionaryverysuperduperlongwordyayitssolongwowcrazy");
-  if (strcmp(str, example1) == 0) {
-  char  *string = malloc(sizeof(char) * 3);
-    t->words[1] = string;
-    return 1;
-  } else if(strcmp(str, example2) == 0) {
-    char  *string = malloc(sizeof(char) * 60);
-      t->words[1] = string;
-      return 1;
-  } return 0;
-}
+    int i = 0;
 
-int main() {
-  char sample1[50];
-  char **sample2;
-  strcpy(sample1, "hi");
-  strcpy(sample2, "hi");
-  trie_t *sample_trie = trie_new(sample2);
-  int testing_add_trie = add_to_trie(sample2, sample_trie);
-  printf("word added to trie: %d \n", testing_add_trie);
+    while (i < LEN && t->words[i] != NULL) {
+        if (compstr(str, t->words[i]) == 1) {
+            return 0;
+        }
+        i++;
+    }
 
-  return 0;
+    if (i < LEN) {
+        char *w;
+        w = malloc(sizeof(char) * strlen(str) + 1);
 
+        strncpy(w, str, strlen(str) + 1);
 
+        t->words[i] = w;
+
+        return 1;
+    }
+
+    return -1;
 }

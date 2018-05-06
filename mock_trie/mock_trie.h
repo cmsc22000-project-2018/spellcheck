@@ -1,8 +1,7 @@
 #ifndef MOCK_TRIE_H
 #define MOCK_TRIE_H
 
-#define MAX_WORD_SIZE   40
-#define MAX_DESC_SIZE  200
+#define LEN 30
 
 /* A mock-trie struct */
 typedef struct {
@@ -20,7 +19,7 @@ typedef struct {
  *  - A trie, or NULL if a point
  *    cannot be allocated
  */
-trie_t* trie_new(char **word);
+trie_t* trie_new();
 
 
 /*
@@ -33,7 +32,7 @@ trie_t* trie_new(char **word);
  * Returns:
  *  - 0 on success, 1 if an error occurs.
  */
-int trie_init(trie_t *new_trie, char **w);
+int trie_init(trie_t *t);
 
 
 /*
@@ -45,7 +44,7 @@ int trie_init(trie_t *new_trie, char **w);
  * Returns:
  *  - Always returns 0.
  */
-int trie_free(trie_t *trie);
+int trie_free(trie_t *t);
 
 
 /*
