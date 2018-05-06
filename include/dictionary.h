@@ -5,7 +5,7 @@
 #ifndef INCLUDE_DICTIONARY_H_
 #define INCLUDE_DICTIONARY_H_
 
-#include "trie.h"
+#include "mock_trie.h"
 
 /* A point in two-dimensional space */
 typedef struct {
