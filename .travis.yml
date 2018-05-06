@@ -6,10 +6,6 @@ before_install:
     - sudo apt-get update -q
     - sudo apt-get install criterion-dev -y
 
-stages:
-    - test
-      if: branch = dev
-
 jobs: 
     include:
         # Set up various jobs here. Anything with dependencies must be in the same job
