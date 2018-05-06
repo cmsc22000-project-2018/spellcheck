@@ -48,6 +48,18 @@ int trie_free(trie_t *t);
 
 
 /*
+ * Compares the given two strings to see if they are equal (the same)
+ *
+ * Parameters:
+ *  - s1: a string
+ *  - s2: a string
+ * Returns:
+ *  1 if strings are the same
+ *  0 if strings are different
+ */
+int compstr(char *s1, char *s2);
+
+/*
  * Checks if a word is in a trie
  *
  * Parameters:

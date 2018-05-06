@@ -42,3 +42,66 @@ Test(trie, free)
 
     cr_assert_eq(rc, 1, "trie_free() failed");
 }
+
+Test(string, compare){
+  char *s1 = malloc(sizeof(char*));
+  char *s2 = malloc(sizeof(char*));
+  strcpy(s1, "hi");
+  strcpy(s2, "hi");
+
+  int result = compstr(s1, s2);
+  cr_assert_eq(result, 0, "compstr failed");
+}
+
+Test(string, compare_different){
+  char *s11 = malloc(sizeof(char*));
+  char *s22 = malloc(sizeof(char*));
+  strcpy(s11, "hi");
+  strcpy(s22, "day");
+
+  int results = compstr(s11, s22);
+  cr_assert_eq(results, 1, "compstr failed");
+}
+
+Test(trie, added_to_trie){
+  trie_t *trie1 = trie_new();
+  char *s1 = (char *)malloc(sizeof(char));
+  strcpy(s1, "hi");
+  int added_to_trie = add_to_trie(s1, trie1);
+  cr_assert_eq(added_to_trie, 1, "add_to_trie failed");
+}
+
+Test(trie, same_variable_add_to_trie){
+  trie_t *trie2 = trie_new();
+  char *ss1 = (char *)malloc(sizeof(char));
+  strcpy(ss1, "hi");
+  int same_word_add_to_trie = add_to_trie(ss1, trie2);
+  int same_word_add_to_trie2 = add_to_trie(ss1, trie2);
+  cr_assert_eq(same_word_add_to_trie2, 0, "add_to_trie failed");
+}
+
+Test(trie, cannot_add_to_trie){
+  trie_t *trie3 = trie_new();
+  char *sss1 = (char *)malloc(sizeof(char));
+  strcpy(sss1, "asdfghjkljhgfdsxcvbnkuytfdfghjkjhgfdcvbnmjhgfdscvbnjhgfdcvbnhgfdcvb");
+  int cant_add_to_trie = add_to_trie(sss1, trie3);
+  cr_assert_eq(cant_add_to_trie, -1, "add_to_trie failed");
+}
+
+/*
+Test(Trie, in_trie){
+  trie_t *t = trie_new();
+  char *s = (char *)malloc(sizeof(char) * 10);
+  char *ss = (char *)malloc(sizeof(char) * 10);
+  strcpy(ss, "hi");
+  strcpy(s, "hi");
+  t->words = s;
+  int is_in_trie = in_trie(ss, t);
+}
+
+Test(Trie, not_in_trie){
+
+}
+
+
+*/
