@@ -4,33 +4,49 @@
 #include <assert.h>
 #include "parser.h"
 
-/* adapted from */
+#define MAXCHAR 1000	// maximum characters in a line?
+#define INITLINE 50
 
-void next_token()
+void array_resize(char** array, size_t alen)
 {
-	size_t linemax = 2048;
-	char* token = NULL;
-	char buffer[linemax];
-
-	if (token != NULL) {
-		token = strtok(NULL, " \t\n");
-	}
-
-	while (token == NULL) {
-		char* s = fgets(buffer, linemax, stdin);
-		if (s==NULL) {
-		
-		assert(feof(stdin));
-		break;
-		}
-
-		token = strtok(s, SEP);
-	}
-	
+	alen = 2*alen;
+	array=realloc(array,alen*sizeof(char*));
 }
 
-int read_string(char** s)
+char** lineparse_file(char* filename, int* numline, int* size)
 {
-	*s = token;
-	return token != NULL;
+	int n=0;
+	size_t i=INITLINE;
+
+	char str[MAXCHAR];
+	char* lines[i];
+	lines=malloc(i*sizeof(char*));
+	if (lines == NULL) {
+		fprintf(stderr,"parse_file: malloc failed\n");
+		exit(0);
+	}
+	
+	FILE *f = fopen(filename, "r");
+
+	if (f==NULL) {
+		return NULL;
+	}
+
+	while(fgets(str,MAXCHAR,f) != NULL) {
+		array[n]=strdup(str);
+		n++;
+		if (n=>i) {
+			array_resize(lines,i);
+		}
+	}
+
+	fclose(f);
+	&numline = n;			// total num of lines
+	&size = i;			// size of array
+	return lines;
+}
+
+char* get_word(char* line)
+{
+	return strtok(line," ,.-\n\t\"\'");
 }

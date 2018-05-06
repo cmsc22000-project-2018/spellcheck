@@ -9,7 +9,9 @@ SRCS = src/shellstrings.c
 OBJS := $(SRCS:.c=.o)
 
 .PHONY: all
-all: ${TARGET_LIB}
+all: spellcheck
+
+spellcheck: ${TARGET_LIB}
 
 $(TARGET_LIB): $(OBJS)
 	$(CC) ${LDFLAGS} -o $@ $^ $(LDLIBS)

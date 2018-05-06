@@ -40,31 +40,7 @@ batch_mode()
 	// implmenent after having null
 }
 
-/* lsh_execute - case considertion? */
-
-{
-	int quit=0;
-
-	/* Case in which arg entered is only "spellcheck", in which case main page is loaded */
-	if (argc==1) {
-		printf("%s%s%s",greet(),main_help_text(),shell_prompt());
-		main_page();
-	}
-
-	/* case in which arg is */
-	if (argc==2) {
-		/* check that given string is valid input for file */
-	}
-
-	/* Case in which arg entered is 1 => If this is a file, enter interactive mode immediately */
-	if (argc==3) {
-		/* check command line entered is feasible for execution: order of commands, file existence*/
-		/* run batch mode, quiet or verbose */
-	}
-
-	/* File and mode must be entered, in order (brittle at the moment, change later) */
-}
-
+/* necessary?
 int lsh_launch(char **args)
 {
 	pid_t pid, wpid;
@@ -86,10 +62,39 @@ int lsh_launch(char **args)
 
 	return 1;
 }
+*/
 
 int lsh_execute(char **args)
 {
-	int i;
+	if (args[0]==NULL) {
+		return 1;
+	}
+
+	int n;
+	while (args[n] != NULL)
+		n++;
+
+	/* Case in which arg entered is only "spellcheck", in which case main page is loaded */
+	if (argn==1) {
+		printf("%s%s%s",greet(),main_help_text(),shell_prompt());
+		main_page();
+	}
+
+	/* case in which arg is */
+	if (argn==2) {
+		/* check that given string is valid input for file */
+	}
+
+	/* Case in which arg entered is 1 => If this is a file, enter interactive mode immediately */
+	if (argn==3) {
+		/* check command line entered is feasible for execution: order of commands, file existence*/
+		/* run batch mode, quiet or verbose */
+	}
+
+
+/*
+	// count number of args
+	int n;
 	if (args[0] == NULL) {
 		return 1;
 	}
@@ -98,10 +103,10 @@ int lsh_execute(char **args)
 		if (strcmp(args[0], builtin_str[i]) == 0) {
 			return(*builtin_func[i])(args);
 		}
-	}
-
+	} */
 	return lsh_launch(args);
 }
+
 
 char **lsh_split_line(char *line)
 {
