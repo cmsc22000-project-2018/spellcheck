@@ -1,5 +1,10 @@
 language: c
 
+before_install:
+    - sudo add-apt-repository ppa:snaipewastaken/ppa
+    - sudo apt-get update
+    - sudo apt-get install criterion-dev
+
 script:
     - make tests
     - ./test/test-spellcheck
