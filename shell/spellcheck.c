@@ -11,7 +11,7 @@
 #define BUFFER_SIZE 256
 
 /* Functions needed for saving */
-save_page()
+void save_page(char* filename, char** lines,int* quit)
 {
 	save_page_text();
 
@@ -23,14 +23,30 @@ save_page()
 
 	assert(args!=NULL);
 
-	switch(args[0]) {
+/*        "w                     : save file with corrections\n"
+        "s [~path/name.txt]    : save corrections to new file\n"
+        "r                     : return to program's home screen\n"
+        "q                     : quit program\n"; */
 
+	switch(args[0]) {
+		case "w": // save with corrections "w"
+			*quit=1;
+			break;
+		case "s": // save to another route: "w"
+			*quit=1;
+			break;
+		case "r": *quit=0;
+			break;
+		case "q": *quit=1;
+			break;
+		default: error_shell("please type in one of the indicated commands!\n");
+			*quit=0;
 	}
 }
 
 
 /* Functions needed for batch mode */
-batch_mode(int argc, char **argv)
+void batch_mode(int argc, char **argv)
 {
 	// implmenent after having null
 }
@@ -50,7 +66,7 @@ void interactive(char** filename, int* quit)
 	lines = edit_interactive();
 
 	// call save
-	save_page(lines);
+	save_page(filename[1], lines, quit);
 
 	// free lines
 	int i=0;
