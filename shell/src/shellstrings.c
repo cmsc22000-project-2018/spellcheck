@@ -1,4 +1,4 @@
-/* Shell Functions
+/* Strings to be used in shell
    Jaewan Park
 */
 #include <stdlib.h>
