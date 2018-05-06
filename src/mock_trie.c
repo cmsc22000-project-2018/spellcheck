@@ -48,7 +48,9 @@ int trie_free(trie_t *t){
     assert(t != NULL);
     assert(t->words != NULL);
 
-    for (int i = 0; i < LEN; i++) {
+    int i;
+
+    for (i = 0; i < LEN; i++) {
         if (t->words[i] != NULL) {
             free(t->words[i]);
         }
@@ -81,7 +83,9 @@ int compstr(char *s1, char *s2) {
 * See mock_trie.h
 */
 int in_trie(char *str, trie_t *t) {
-    for (int i = 0; i < LEN ; i++) {
+    int i;
+
+    for (i = 0; i < LEN ; i++) {
         if (t->words[i] == NULL) return 0;
         if (compstr(str, t->words[i]) == 1) {
             return 1;
