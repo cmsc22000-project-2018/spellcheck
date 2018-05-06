@@ -97,14 +97,14 @@ void check_add_to_dict(char *file, char *str, int expected) {
 Test(dictionary, add_to_dict_f0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "hi";
-    check_add_to_dict("dict_test0.txt", s, 0);
+    check_add_to_dict("./tests/dict_test0.txt", s, 0);
 }
 
 /* Test adding a long string for failure (already in dict) */
 Test(dictionary, add_to_dict_f1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "dictionaryverysuperduperlongwordyayitssolongwowcrazy";
-    check_add_to_dict("dict_test0.txt", s, 0);
+    check_add_to_dict("./tests/dict_test0.txt", s, 0);
 }
 
 /* Test adding a small string for success (not in dict) */
@@ -142,7 +142,7 @@ Test(dictionary, read_to_dict_null0) {
 Test(dictionary, read_to_dict_null1) {
     int rc;
 
-    rc = read_to_dict("dict_test0.txt", NULL);
+    rc = read_to_dict("./tests/dict_test0.txt", NULL);
 
     cr_assert_eq(rc, -1, "Passing NULL in as a dictionary in read_to_dict should have "
                  "returned -1, but it returned %d", rc);
@@ -175,7 +175,7 @@ void check_read_to_dict(char *file, int expected) {
 
 /* Test for regular input in read_to_dict 1 */
 Test(dictionary, read_to_dict0) {
-    check_read_to_dict("dict_test0.txt", 1);
+    check_read_to_dict("./tests/dict_test0.txt", 1);
 }
 
 
@@ -214,7 +214,7 @@ Test(dictionary, in_dict_empty) {
 
     d = dict_new();
 
-    read_to_dict("dict_test0.txt", d);
+    read_to_dict("./tests/dict_test0.txt", d);
 
     rc = in_dict("", d);
 
@@ -244,26 +244,26 @@ void check_in_dict(char *file, char *str, int expected) {
 Test(dictionary, in_dict_s0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "hi";
-    check_in_dict("dict_test0.txt", s, 1);
+    check_in_dict("./tests/dict_test0.txt", s, 1);
 }
 
 /* Test a long string for success */
 Test(dictionary, in_dict_s1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "dictionaryverysuperduperlongwordyayitssolongwowcrazy";
-    check_in_dict("dict_test0.txt", s, 1);
+    check_in_dict("./tests/dict_test0.txt", s, 1);
 }
 
 /* Test a small string for failure */
 Test(dictionary, in_dict_f0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "no";
-    check_in_dict("dict_test0.txt", s, 0);
+    check_in_dict("./tests/dict_test0.txt", s, 0);
 }
 
 /* Test a long string for failure */
 Test(dictionary, in_dict_f1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
-    check_in_dict("dict_test0.txt", s, 0);
+    check_in_dict("./tests/dict_test0.txt", s, 0);
 }
