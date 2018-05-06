@@ -2,10 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "shellstrings.h"
-#include "parser.h"
-#include "scfunctions.h"
-
 
 /* Main function */
 int main(int argc, char **argv)
@@ -16,14 +12,14 @@ int main(int argc, char **argv)
 
 	if (argc == 2 || argc > 4) {
 		usage();
-		return 1;
+		return 0;
 	}
 
 	if (argc == 1) {
-		greet();
-		main_help_text();
-		shell_prompt();
-		while (!(*quit))	{
+		while(!(*quit)) {
+			greet();
+			main_help_text();
+			shell_prompt();
 			main_page(quit);
 		}
 	}

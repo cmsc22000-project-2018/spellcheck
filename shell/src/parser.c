@@ -13,124 +13,71 @@ void array_resize(char** array, size_t alen)
 	array=realloc(array,alen*sizeof(char*));
 }
 
-char** lineparse_file(char* filename, int* numline, int* size)
+/* returns with pointer */
+char** lineparse_file(char* filename)
 {
-	int n=0;
-	size_t i=INITLINE;
-
-	char str[MAXCHAR];
-	char* lines;
-	lines=malloc(i*sizeof(char*));
-	if (lines == NULL) {
-		fprintf(stderr,"parse_file: malloc failed\n");
-		exit(0);
-	}
-	
 	FILE *f = fopen(filename, "r");
 
 	if (f==NULL) {
 		return NULL;
+		// when this happens, exit accordingly and restart
 	}
 
-	while(fgets(str,MAXCHAR,f) != NULL) {
+	unsigned int n=0;
+	size_t i=INITLINE;
+	char str[MAXCHAR];		// consider resizing?
+	char** lines;
+	lines = malloc(i*sizeof(char*));
+
+	char* temp = fgets(str,MAXCHAR,f);
+	while(temp != NULL) {
 		lines[n]=strdup(str);
 		n++;
-		if (n=>i) {
+		if (n >= i) {
 			array_resize(lines,i);
 		}
+		temp = fgets(str,MAXCHAR,f);	// warning - 1 empty line will end this
+	}
+	while(n<i) {
+		lines[n]=NULL;
+		n++;
 	}
 
 	fclose(f);
-	size=i;			// for freeing purposes?
 	return lines;
 }
 
 char* get_word(char* line)
 {
-	return strtok(line," ,.-\n\t\"\'");
+	return strtok(line," ,.-\n\t\"\'!?()");	// more?
 }
 
 /* source: https://github.com/brenns10/lsh/blob/master/src/main.c */
-
-#define LSH_RL_BUFSIZE 1024
-/**
-   @brief Read a line of input from stdin.
-   @return The line from stdin.
- */
-char *lsh_read_line(void)
+#define BUFFERSIZE 256
+char* read_line()
 {
-  int bufsize = LSH_RL_BUFSIZE;
-  int position = 0;
-  char *buffer = malloc(sizeof(char) * bufsize);
-  int c;
+	char input[BUFFERSIZE];
+	char* rval;
+	memset(input,'\0',BUFFERSIZE);
+	char* t = fgets(input,BUFFERSIZE,stdin);
 
-  if (!buffer) {
-    fprintf(stderr, "lsh: allocation error\n");
-    exit(EXIT_FAILURE);
-  }
+	int n = strlen(input);
+	rval = strdup(input);
+	if (input[n-1]=='\n')
+		rval[n-1] = '\0';
 
-  while (1) {
-    // Read a character
-    c = getchar();
-
-    if (c == EOF) {
-      exit(EXIT_SUCCESS);
-    } else if (c == '\n') {
-      buffer[position] = '\0';
-      return buffer;
-    } else {
-      buffer[position] = c;
-    }
-    position++;
-
-    // If we have exceeded the buffer, reallocate.
-    if (position >= bufsize) {
-      bufsize += LSH_RL_BUFSIZE;
-      buffer = realloc(buffer, bufsize);
-      if (!buffer) {
-        fprintf(stderr, "lsh: allocation error\n");
-        exit(EXIT_FAILURE);
-      }
-    }
-  }
+	return rval;
 }
 
-#define LSH_TOK_BUFSIZE 64
-#define LSH_TOK_DELIM " \t\r\n\a"
-/**
-   @brief Split a line into tokens (very naively).
-   @param line The line.
-   @return Null-terminated array of tokens.
- */
-char **lsh_split_line(char *line)
+#define SPLIT_BUFFER 16	// reconsider
+char **split_line(char *line)
 {
-  int bufsize = LSH_TOK_BUFSIZE, position = 0;
-  char **tokens = malloc(bufsize * sizeof(char*));
-  char *token, **tokens_backup;
+	char** rval;
+	rval = malloc(SPLIT_BUFFER*sizeof(char));
+	int i=0;
+	for(; rval[i]!=NULL; i++) {
+		rval[i]=strtok(line," \t");
+	}
 
-  if (!tokens) {
-    fprintf(stderr, "lsh: allocation error\n");
-    exit(EXIT_FAILURE);
-  }
-
-  token = strtok(line, LSH_TOK_DELIM);
-  while (token != NULL) {
-    tokens[position] = token;
-    position++;
-
-    if (position >= bufsize) {
-      bufsize += LSH_TOK_BUFSIZE;
-      tokens_backup = tokens;
-      tokens = realloc(tokens, bufsize * sizeof(char*));
-      if (!tokens) {
-		free(tokens_backup);
-        fprintf(stderr, "lsh: allocation error\n");
-        exit(EXIT_FAILURE);
-      }
-    }
-
-    token = strtok(NULL, LSH_TOK_DELIM);
-  }
-  tokens[position] = NULL;
-  return tokens;
+	return rval;
 }

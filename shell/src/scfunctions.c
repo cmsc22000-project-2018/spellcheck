@@ -6,68 +6,84 @@
 #include "parser.h"
 #include "scfunctions.h"
 
-#define BUFFER_SIZE 256
+void save_corrections(char* filename, char** lines)
+{
+	FILE* f=fopen(filename,"w");
+	int i=0;
+	while (lines[i] != NULL) {
+		fprintf(f,"%s",lines[i]);
+		i++;
+	}
+}
 
-/* Functions needed for saving */
 void save_page(char* filename, char** lines,int* quit)
 {
-	save_page_text();
+	int i=1;
 
-	char* line;
-	char** args;
+	while (i) {
+		save_page_text();
+		i=0;
+		char* line;
+		char** args;
 
-	line=lsh_read_line();
-	args=lsh_split_line();
+		line=read_line();
+		args=split_line(line);
 
-	assert(args!=NULL);
+		assert(args!=NULL);
 
-/*        "w                     : save file with corrections\n"
-        "s [~path/name.txt]    : save corrections to new file\n"
-        "r                     : return to program's home screen\n"
-        "q                     : quit program\n"; */
-
-	switch(args[0]) {
-		case "w": // save with corrections "w"
+		if (!strcmp(args[0],"w")) {
+			save_corrections(filename,lines);
 			*quit=1;
-			break;
-		case "s": // save to another route: "w"
+		} else if (!strcmp(args[0],"s")) {
+			save_corrections(args[1],lines);
 			*quit=1;
-			break;
-		case "r": *quit=0;
-			break;
-		case "q": *quit=1;
-			break;
-		default: error_shell("please type in one of the indicated commands!\n");
+		} else if (!strcmp(args[0],"r")) {
 			*quit=0;
+		} else if (!strcmp(args[0],"q")) {
+			*quit=1;
+		} else {
+			error_shell("please type in one of the indicated commands!\n");
+			*quit=0;
+			i=1;
+		}
 	}
 }
 
 
 /* Functions needed for batch mode */
-void batch_mode(int argc, char **argv)
-{
-	// implmenent after having null
-}
+//void batch_mode(int argc, char **argv)
+//{
+//	// implmenent after having interactive success
+//}
 
 
 /* Functions needed for interactive mode */
-
-void interactive(char** filename, int* quit)
+char* edit_interactive(char* line)
 {
-	// load file
-	int *n, *s;
+	return line;
+	// need a way for string to (a) preserve punctuations and (b) 
+	// @Sarika this would be where the program needs replace_word, ignore_word, alternate_spelling
+
+}
+
+void interactive_mode(char** filename, int* quit)
+{
 	char** lines;
 
-	lines = lineparse_file(filename[1], *n, *s);	// discovered not necessary~
+	lines = lineparse_file(filename[1]);
 
 	// step through phases
-	lines = edit_interactive();
+	int i=0;
+	while (lines[i] != NULL) {	// potential error - one empty line in the middle of two full?	
+		lines[i] = edit_interactive(lines[i]);
+		i++;
+	}
 
 	// call save
 	save_page(filename[1], lines, quit);
 
 	// free lines
-	int i=0;
+	i=0;
 	while(lines[i]!=NULL) {
 		free(lines[i]);
 		i++;
@@ -87,57 +103,25 @@ void main_page(int* quit)
 	char* line;
 	char** args;
 
-	line = lsh_read_line();
-	args = lsh_split_line(line);
+	line = read_line();
+	args = split_line(line);
 
-	switch (args[0])
-	{
-		case "h": help_page();
-			*quit=0;
-			break;
-		case "r": // check num of args
-			 interactive_mode(args[1],quit);	// quitting determined on case-by-case
-			break;
-		case "d": // read_to_dict(args[1],
-			*quit=0;
-			break;
-		case "q": *quit=1;
-			break;
-		default: error_shell("Please type in one of the indicated commands!\n");
-			*quit=0;
+	if (!strcmp(args[0],"h")) {
+		help_page();
+		*quit=0;
+	} else if (!strcmp(args[0],"r")) {
+		interactive_mode(args,quit);
+		*quit=0;
+	} else if (!strcmp(args[0],"d")) {
+		// read_to_dict;
+		*quit=0;
+	} else if (!strcmp(args[0],"q")) {
+		*quit=1;
+	} else {
+		error_shell("Please type in one of the indicated commands!\n");
+		*quit=0;
 	}
 
 	free(line);
 	free(args);
 }
-
-/* Main function */
-int main(int argc, char **argv)
-{
-	// initialization: dictionary?
-	int *quit;
-	*quit = 0;
-
-	if (argc == 2 || argc > 4) {
-		usage();
-		return 1;
-	}
-
-	if (argc == 1) {
-		greet();
-		main_help_text();
-		shell_prompt();
-		while (!(*quit))	{
-			main_page(quit);
-		}
-	}
-
-	if (argc == 3 || argc ==4) { // batch mode
-		batch_mode(argc,argv);
-	}
-
-	return 0;
-}
-
-
-#endif

@@ -2,8 +2,10 @@
    Jaewan Park
 */
 
-#ifndef _SHELL_H
-#define _SHELL_H
+#ifndef _SHELLSTRINGS_H
+#define _SHELLSTRINGS_H
+#include <stdio.h>
+#include <strings.h>
 
 void main_help_text();
 

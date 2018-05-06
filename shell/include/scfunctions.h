@@ -9,13 +9,17 @@
 #include "parser.h"
 
 /* functions for saving files */
+void save_corrections(char* filename, char** lines);
+
 void save_page(char* filename, char** lines,int* quit);
 
 /* Functions needed for batch mode */
 void batch_mode(int argc, char **argv);
 
 /* Functions needed for interactive mode */
-void interactive(char** filename, int* quit);
+char* edit_interactive(char* line);
+
+void interactive_mode(char** filename, int* quit);
 
 /* Prints help page. Returns to main page via loop in main function */
 void help_page();

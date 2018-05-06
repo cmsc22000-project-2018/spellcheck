@@ -11,7 +11,7 @@ char** lineparse_file(char* filename);
 char* get_word(char* line);
 
 /* Parse command lines */
-char *lsh_read_line();
+char *read_line();
 
-char **lsh_split_line(char* line);
+char **split_line(char* line);
 /* how to revert lines, preserving their punctuation? */
