@@ -12,5 +12,4 @@ jobs:
 
         # Make and run tests
         - stage: test
-          script: make tests
-          script: ./tests/test-spellcheck
+          script: make tests && ./tests/test-spellcheck
