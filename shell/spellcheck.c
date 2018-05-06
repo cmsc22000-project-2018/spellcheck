@@ -3,171 +3,127 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
-#include <sys/wait.h>
+#include <assert.h>
 #include "shellstrings.h"
+#include "parser.h"
 
+#define BUFFER_SIZE 256
 
-/* This file will run the shell "spellcheck" for interacting with the dictionary and the file */
-/* Adapted from  https://brennan.io/2015/01/16/write-a-shell-in-c/ */
-
+/* Functions needed for saving */
 save_page()
 {
-	/* print page: */
-	/* input: file */
+	save_page_text();
+
+	char* line;
+	char** args;
+
+	line=lsh_read_line();
+	args=lsh_split_line();
+
+	assert(args!=NULL);
+
+	switch(args[0]) {
+
+	}
 }
 
-interactive()
-{
-	/* must walk through file: in runtime, while , check for each word in dictionary */
-	/* call save page */
-}
 
-help_page()
-{
-	/* accept a key, then return to main_page */
-}
-
-main_page()
-{
-	/* must take in a command line argument, then direct to help, load file, load dic, or quit */
-	/* must accept a file, then parse for dictionary or output file */
-}
-
-batch_mode()
+/* Functions needed for batch mode */
+batch_mode(int argc, char **argv)
 {
 	// implmenent after having null
 }
 
-/* necessary?
-int lsh_launch(char **args)
+
+/* Functions needed for interactive mode */
+
+void interactive(char** filename, int* quit)
 {
-	pid_t pid, wpid;
-	int status;
+	// load file
+	int *n, *s;
+	char** lines;
 
-	pid = fork();
-	if (pid == 0) {	// this is the child process
-		if (execvp(args[0],args) == -1) {	// execvp - program name, array
-			perror("lsh_launch forking failed\n");
-		}
-		exit(0);
-	} else if (pid<0) {
-		perror("lsh_launch forking failed\n");
-	} else {
-		do {	// parent process: wait until processes are exited, to prompt for input again
-			wpid = waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	lines = lineparse_file(filename[1], *n, *s);	// discovered not necessary~
+
+	// step through phases
+	lines = edit_interactive();
+
+	// call save
+	save_page(lines);
+
+	// free lines
+	int i=0;
+	while(lines[i]!=NULL) {
+		free(lines[i]);
+		i++;
 	}
-
-	return 1;
-}
-*/
-
-int lsh_execute(char **args)
-{
-	if (args[0]==NULL) {
-		return 1;
-	}
-
-	int n;
-	while (args[n] != NULL)
-		n++;
-
-	/* Case in which arg entered is only "spellcheck", in which case main page is loaded */
-	if (argn==1) {
-		printf("%s%s%s",greet(),main_help_text(),shell_prompt());
-		main_page();
-	}
-
-	/* case in which arg is */
-	if (argn==2) {
-		/* check that given string is valid input for file */
-	}
-
-	/* Case in which arg entered is 1 => If this is a file, enter interactive mode immediately */
-	if (argn==3) {
-		/* check command line entered is feasible for execution: order of commands, file existence*/
-		/* run batch mode, quiet or verbose */
-	}
-
-
-/*
-	// count number of args
-	int n;
-	if (args[0] == NULL) {
-		return 1;
-	}
-
-	for (i=0; i < lsh_num_builtins(); i++) {
-		if (strcmp(args[0], builtin_str[i]) == 0) {
-			return(*builtin_func[i])(args);
-		}
-	} */
-	return lsh_launch(args);
+	free(lines);
 }
 
-
-char **lsh_split_line(char *line)
+/* Prints help page. Returns to main page via loop in main function */
+void help_page()
 {
-	int bufsize = 64, position=0;
-	char **tokens = malloc(bufsize*sizeof(char*));
-	char* lsh_tok_delim = " \t\r\n\a"
-	char *token;
-
-	if (!tokens) {
-		fprintf(stderr, "lsh_split_line: malloc failed\n");
-		exit(0);
-	}
-
-	token = strtok(line,lsh_tok_delim);
-	while (token) {
-		tokens[position]=token;
-		position++;
-		if (position >= bufsize) {
-			bufsize += bufsize;
-			tokens = realloc(tokens,bufsize*sizeof(char*));
-			if (!tokens) {
-				fprintf(stderr, "lsh_split_line: realloc failed\n");
-				exit(1);
-			}
-		}
-
-		// returns beginning of next token
-		token = strtok(NULL, lsh_tok_delim);
-	}
-	tokens[position]=NULL;
-	return tokens;
+	help_page_text();
+	getchar();
 }
 
-char *lsh_read_line(void)
+void main_page(int* quit)
 {
-	char* line=NULL;
-	ssize_t bufsize=0;
-	// buffer is address of first character position where input string is stored
-	// size is address of variable that holds size of input buffer
-	// stdin is input file handle
-	getline(&line,&bufsize,stdin);
-	return line;
+	char* line;
+	char** args;
+
+	line = lsh_read_line();
+	args = lsh_split_line(line);
+
+	switch (args[0])
+	{
+		case "h": help_page();
+			*quit=0;
+			break;
+		case "r": // check num of args
+			 interactive_mode(args[1],quit);	// quitting determined on case-by-case
+			break;
+		case "d": // read_to_dict(args[1],
+			*quit=0;
+			break;
+		case "q": *quit=1;
+			break;
+		default: error_shell("Please type in one of the indicated commands!\n");
+			*quit=0;
+	}
+
+	free(line);
+	free(args);
 }
 
-/* Administer Shell */
+/* Main function */
 int main(int argc, char **argv)
 {
-	char *line;
-	char **args;
-	int status;
+	// initialization: dictionary?
+	int *quit;
+	*quit = 0;
 
-	do {
-		line = lsh_read_line();
-		args = lsh_split_line(line);
-		status = lsh_execute(args);
+	if (argc == 2 || argc > 4) {
+		usage();
+		return 1;
+	}
 
-		free(line);
-		free(args);
-	} while (status);
+	if (argc == 1) {
+		greet();
+		main_help_text();
+		shell_prompt();
+		while (!(*quit))	{
+			main_page(quit);
+		}
+	}
+
+	if (argc == 3 || argc ==4) { // batch mode
+		batch_mode(argc,argv);
+	}
 
 	return 0;
 }
+
 
 #endif

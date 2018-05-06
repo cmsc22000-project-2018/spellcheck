@@ -5,7 +5,7 @@
 #include <strings.h>
 #include "shellstrings.h"
 
-char* main_help_text()
+void main_help_text()
 {
 	char m[] =
 	"Please load a file into spellcheck to begin. Additionally, select mode and choose dictionary.\n\n"
@@ -13,10 +13,10 @@ char* main_help_text()
 	"r [~/path/file.txt]          : read a file into spellcheck\n"
 	"d [~/path/dictionary.txt]    : read dictionary file into spellcheck\n"
 	"q                            : quit program\n\n";
-	return m;
+	printf("%s",m);
 }
 
-char* help_page_text()
+void help_page_text()
 {
 	char h[] =
 	"Spellcheck is a  tool which, given a text, will search for misspelled words and will suggest alternative spellings.\n\n\n"
@@ -26,10 +26,10 @@ char* help_page_text()
 	"\t $ ./spellcheck [~/path/file.txt] [-flag]\n"
 	"-q is for quiet, -v is for verbose, and -s saves a file to another destination."
 	"Press any key to return to the previous page.\n\n"
-	return h;
+	printf("%s",h);
 }
 
-char* save_page_text()
+void save_page_text()
 {
 	char s[] =
 	"File editing successful!\n"
@@ -37,22 +37,34 @@ char* save_page_text()
 	"s [~path/name.txt]    : save corrections to new file\n"
 	"r                     : return to program's home screen\n"
 	"q                     : quit program\n";
-	return s;
+	printf("%s",s);
 }
 
-char* greet()
+void greet()
 {
 	char g[] = "------- Welcome to Spellcheck! ------\n";
-	return g;
+	printf("%s",g);
 }
 
-char* error_shell(char* s)
+void error_shell(char* s)
 {
-	fprintf(stderr,"=> ERROR: %s <=\n",s);
+	printf("=> ERROR: %s <=\n",s);
 }
 
-char* shell_prompt()
+void shell_prompt()
 {
 	char p[] = "spellcheck > ";
-	return p;
+	printf("%s",p);
+}
+
+void bye()
+{
+	char b[] = "Thank you for using Spellcheck. Bye!\n";
+	printf("%s",b);
+}
+
+void usage()
+{
+	char u[] = "./spellcheck [~/path/file.txt] [-flag] [~/path/destination.txt] \n";
+	printf("%s",u);
 }

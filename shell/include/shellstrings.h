@@ -5,16 +5,16 @@
 #ifndef _SHELL_H
 #define _SHELL_H
 
-char* main_help_text();
+void main_help_text();
 
-char* help_page_text();
+void help_page_text();
 
-char* save_page_text();
+void save_page_text();
 
-char* greet();
+void greet();
 
-char* error_shell();
+void error_shell();
 
-char* shell_prompt();
+void shell_prompt();
 
 #endif

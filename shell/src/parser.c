@@ -41,8 +41,7 @@ char** lineparse_file(char* filename, int* numline, int* size)
 	}
 
 	fclose(f);
-	&numline = n;			// total num of lines
-	&size = i;			// size of array
+	size=i;			// for freeing purposes?
 	return lines;
 }
 
