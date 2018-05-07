@@ -62,23 +62,6 @@ int trie_free(trie_t *t){
     return 1;
 }
 
-int compstr(char *s1, char *s2) {
-    int i = 0;
-
-    while (s1[i] != '\0' && s2[i] != '\0') {
-        if (s1[i] != s2[i]) {
-            return 0;
-        }
-        i++;
-    }
-
-    if (s1[i] == s2[i]) {
-        return 1;
-    }
-
-    return 0;
-}
-
 /*
 * See mock_trie.h
 */
@@ -87,7 +70,7 @@ int in_trie(char *str, trie_t *t) {
 
     for (i = 0; i < LEN ; i++) {
         if (t->words[i] == NULL) return 0;
-        if (compstr(str, t->words[i]) == 1) {
+        if (strcmp(str, t->words[i]) == 0) {
             return 1;
         }
     }
@@ -101,7 +84,7 @@ int add_to_trie(char *str, trie_t *t){
     int i = 0;
 
     while (i < LEN && t->words[i] != NULL) {
-        if (compstr(str, t->words[i]) == 1) {
+        if (strcmp(str, t->words[i]) == 0) {
             return 0;
         }
         i++;

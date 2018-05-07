@@ -44,28 +44,6 @@ Test(trie, free)
     cr_assert_eq(rc, 1, "trie_free() failed");
 }
 
-/* Checks the case in which the two strings are the same */
-Test(string, compare){
-  char *s1 = malloc(sizeof(char) * 3);
-  char *s2 = malloc(sizeof(char) * 3);
-  s1 = "hi";
-  s2 = "hi";
-
-  int result = compstr(s1, s2);
-  cr_assert_eq(result, 1, "compstr failed");
-}
-
-/* Checks the case in which two strings are completely different */
-Test(string, compare_different){
-  char *s11 = malloc(sizeof(char) * 3);
-  char *s22 = malloc(sizeof(char) * 4);
-  s11 = "hi";
-  s22 = "day";
-
-  int results = compstr(s11, s22);
-  cr_assert_eq(results, 0, "compstr failed");
-}
-
 /* Checks the case in which a new word is being added to the trie*/
 Test(trie, added_to_trie){
   trie_t *trie1 = trie_new();
