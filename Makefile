@@ -6,10 +6,11 @@ LDFLAGS = -shared
 RM = rm -f
 LDLIBS = -lm
 
-SRCS = src/dictionary.c src/mock_trie.c
+SRCS = src/spellcheck.c src/parser.c src/shellstrings.c src/dictionary.c src/mock_trie.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all
+spellcheck:
 
 $(SRCS:.c=.d):%.d:%.c
 	$(CC) $(CFLAGS) -MM $< -MT $(patsubst %.d,%.o,$@) > $@
