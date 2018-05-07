@@ -73,12 +73,34 @@ void usage()
 	printf("%s",u);
 }
 
-void interactive_correction(int lnum, char* sent, char* hglt, char** sugns, int snum)
+
+void interactive_1()
 {
-	printf("Line %d:\n",lnum);
-	printf("%s\n",sent);
-	printf("%s\n",hglt);
-	printf("Suggestions: \n");
-	for (int i=0; i<snum; i++)
-		printf("[%d] [%s]", i+1, sugns[i]);
+	char a[]=
+	"Line 32:\n"
+	"and then the fox jomped over the fens\n"
+	"                 ^^^^^^\n"
+	"Edit the specified misspelling? [y/n]\n"
+	"You can press [r] to return to the home interface)\n"
+	"spellcheck > ";
+	printf("%s",a);
+}
+
+void interactive_2()
+{
+	char a[]=
+	"Suggestions: [1] jumped, [2] jammed, [3] dumped\n"
+	"\n"
+	"Type chosen correction (Type number to pick a suggestion, or type a different word):\n"
+	"spellcheck >\n";
+	printf("%s",a);
+}
+
+void interactive_3()
+{
+	char a[]=
+	"You have typed: johmaped\n\n"
+	"Are you sure this is the right correction? [y/n]\n"
+	"spellcheck >";
+	printf("%s",a);
 }

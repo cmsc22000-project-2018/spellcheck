@@ -55,37 +55,19 @@ void save_page(char* filename, char** lines,int* quit)
 /* Functions needed for interactive mode */
 char* edit_interactive(char* line, int linenum)
 {
-	// first loop through the line
-	char* l = strdup(line);
-	char* w = get_word(l);
-	int i = 0;
-	while (w != NULL) {
-
-		while (strcmp(w,"jomped")!=0) {
-		i += strlen(w);
-		w=get_word(l);
-		}
-
 	// generate_suggestions
-	char* s[]= {"jumped","jammed","dumped"};
-	char a[]= "                 ^";
-
-	interactive_correction(linenum,line,a,s,3);
-
 	// select replacement
-	char* c=read_line();
-	int b = (int*) c;
-	char* y= s[b-1];
+	// replace word
 
-	// replace word: NOTE THIS ONLY WORKS, AS IT DOES NOW, BECAUSE LENGTH OF WORD IS IDENTICAL! SHOULD NOT BE EMULATED IN IMPLEMENTATION
-	int m = i+strlen(a);
-	for (int j = i; j < m; j++)
-		l[j] = y[j-i];
+	// HARD-CODED VERSION
+	interactive_1();
+	read_line();
+	interactive_2();
+	read_line();
 
-	w = get_word(l);
-	}
-	free(line);
-	return l;
+	line[18]='u';
+
+	return line;
 	// later, need a way for string to (a) preserve punctuations and (b) spaces 
 }
 
@@ -125,6 +107,7 @@ void help_page()
 	char* l=read_line();
 	free(l);
 }
+
 
 
 void batch_mode(int argc, char** argv)

@@ -25,5 +25,8 @@ void shell_prompt();
 
 void interactive_correction(int lnum, char* sent, char* hglt, char** sugns, int snum);
 
+void interactive_1();
+void interactive_2();
+void interactive_3();
 
 #endif
