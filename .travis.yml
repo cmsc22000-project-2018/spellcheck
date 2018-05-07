@@ -8,5 +8,3 @@ before_install:
 script:
     - make tests
     - ./tests/test-spellcheck
-    - make spellcheck
-    - ./spellcheck

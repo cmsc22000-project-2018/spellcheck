@@ -5,15 +5,11 @@ CFLAGS = -fPIC -Wall -Wextra -O2 -g -I./include/
 LDFLAGS = -shared
 RM = rm -f
 LDLIBS = -lm
-BIN = spellcheck
 
-SRCS = src/spellcheck.c src/parser.c src/shellstrings.c src/dictionary.c src/mock_trie.c
+SRCS = src/dictionary.c src/mock_trie.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all
-
-$(BIN): $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o$(BIN) $(LDLIBS) 
 
 $(SRCS:.c=.d):%.d:%.c
 	$(CC) $(CFLAGS) -MM $< -MT $(patsubst %.d,%.o,$@) > $@
