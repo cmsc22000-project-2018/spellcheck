@@ -13,7 +13,7 @@ OBJS = $(SRCS:.c=.o)
 .PHONY: all
 
 $(BIN): $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o$(BIN) $(LDLIBS) 
+	$(CC) $(LDFLAGS) $(OBJS) -o $(BIN) $(LDLIBS) 
 
 $(SRCS:.c=.d):%.d:%.c
 	$(CC) $(CFLAGS) -MM $< -MT $(patsubst %.d,%.o,$@) > $@
