@@ -4,7 +4,6 @@
 #include <string.h>
 #include <assert.h>
 #include "mock_trie.h"
-#include "utils.h"
 
 /*
 * See mock_trie.h
