@@ -65,7 +65,7 @@ int dict_exists(dict_t *d, char *str) {
         return -1;
     }
 
-    return in_trie(str, d->dict);
+    return trie_exists(d->dict, str);
 }
 
 /* See dictionary.h */
@@ -75,7 +75,7 @@ int dict_add(dict_t *d, char *str) {
         return -1;
     }
 
-    return add_to_trie(str, d->dict);
+    return trie_add(d->dict, str);
 }
 
 /* See dictionary.h */
