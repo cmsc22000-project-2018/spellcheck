@@ -70,7 +70,7 @@ int trie_exists(trie_t *t, char *str) {
     int i;
 
     for (i = 0; i < TRIE_LEN ; i++) {
-        if (t->words[i] == NULL) return 0;
+        if (t->words[i] == NULL) return EXIT_FAILURE;
         if (strncmp(str, t->words[i], WORD_LEN) == 0) {
             return EXIT_SUCCESS;
         }
