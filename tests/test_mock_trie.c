@@ -73,7 +73,7 @@ Test(trie, cannot_trie_add){
 }
 
 /* Checks the case in which the word is in the trie */
-Test(Trie, trie_exists) {
+Test(trie, trie_exists) {
   trie_t *triet = trie_new();
   char *q = (char *)malloc(sizeof(char) * 10);
   char *ss = (char *)malloc(sizeof(char) * 10);
@@ -85,7 +85,7 @@ Test(Trie, trie_exists) {
 }
 
 /* Checks the case in which the word is not in the trie*/
-Test(Trie, not_trie_exists) {
+Test(trie, not_trie_exists) {
   trie_t *t1 = trie_new();
   char *sq = (char *)malloc(sizeof(char) * 10);
   char *sqq = (char *)malloc(sizeof(char) * 10);
