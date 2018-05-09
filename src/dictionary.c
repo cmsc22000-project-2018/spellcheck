@@ -92,7 +92,7 @@ int dict_read(dict_t *d, char *file) {
     }
 
     while (fscanf(f, "%1023s", buffer) == 1) {
-        if (dict_add(buffer, d) != 1) {
+        if (dict_add(d, buffer) != 1) {
             rc = -1;
         }
     }
