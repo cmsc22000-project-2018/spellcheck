@@ -1,7 +1,8 @@
 #ifndef MOCK_TRIE_H
 #define MOCK_TRIE_H
 
-#define LEN 30
+#define TRIE_LEN 50
+#define WORD_LEN 100
 
 /* A mock-trie struct */
 typedef struct {

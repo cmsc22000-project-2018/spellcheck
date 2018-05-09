@@ -35,7 +35,7 @@ int trie_init(trie_t *t){
     assert(t != NULL);
 
     char **w;
-    w = calloc(LEN, sizeof(char*));
+    w = calloc(TRIE_LEN, sizeof(char*));
     if (w == NULL) {
         return EXIT_FAILURE;
     }
@@ -53,7 +53,7 @@ int trie_free(trie_t *t){
 
     int i;
 
-    for (i = 0; i < LEN; i++) {
+    for (i = 0; i < TRIE_LEN; i++) {
         if (t->words[i] != NULL) {
             free(t->words[i]);
         }
@@ -72,9 +72,9 @@ int trie_exists(trie_t *t, char *str) {
     int i;
     int len = strlen(str);
 
-    for (i = 0; i < LEN ; i++) {
+    for (i = 0; i < TRIE_LEN ; i++) {
         if (t->words[i] == NULL) return 0;
-        if (strncmp(str, t->words[i], len) == 0) {
+        if (strncmp(str, t->words[i], WORD_LEN) == 0) {
             return EXIT_SUCCESS;
         }
     }
@@ -89,7 +89,7 @@ int trie_add(trie_t *t, char *str){
     int len = strlen(str);
 
     while (i < LEN && t->words[i] != NULL) {
-        if (strncmp(str, t->words[i], len) == 0) {
+        if (strncmp(str, t->words[i], WORD_LEN) == 0) {
             return EXIT_FAILURE;
         }
         i++;

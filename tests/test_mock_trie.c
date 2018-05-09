@@ -63,13 +63,13 @@ Test(trie, same_variable_trie_add){
   cr_assert_eq(same_word_trie_add2, EXIT_FAILURE, "trie_add failed");
 }
 
-/* Checks the case in which the word cannot be added to the trie */
-Test(trie, cannot_trie_add){
+/* Checks the case in which the word can be added to the trie */
+Test(trie, can_trie_add){
   trie_t *trie3 = trie_new();
   char *sss1 = (char *)malloc(sizeof(char) * 53);
   sss1 = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
-  int cant_trie_add = trie_add(trie3, sss1);
-  cr_assert_eq(cant_trie_add, EXIT_FAILURE, "trie_add failed");
+  int can_trie_add = trie_add(trie3, sss1);
+  cr_assert_eq(can_trie_add, EXIT_SUCCESS, "trie_add failed");
 }
 
 /* Checks the case in which the word is in the trie */
