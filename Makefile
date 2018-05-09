@@ -6,13 +6,14 @@ LDFLAGS = -shared
 RM = rm -f
 
 # We'll need these when we have something beyond a testing binary
-# SRCS = src/mock_trie.c src/dictionary.c
+SRCS = src/mock_trie.c src/dictionary.c
+OBJS = $(SRCS:.c=.o)
 
 .PHONY: all
 
 .PHONY: clean tests
 clean:
-	-$(RM) $(LIBS)
+	-$(RM) $(OBJS) $(LIBS)
 	make -C ./tests clean
 
 tests:

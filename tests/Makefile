@@ -7,13 +7,14 @@ BIN = test-spellcheck
 LDLIBS = -lcriterion
 
 SRCS = main.c test_mock_trie.c test_dictionary.c ../src/mock_trie.c ../src/dictionary.c
+OBJS = $(SRCS:.c=.o)
 
 .PHONY: all
-all: ${BIN}
+all: $(BIN)
 
 $(BIN):
 	$(CC) $(CFLAGS) $(SRCS) -o $(BIN) $(LDLIBS)
 
 .PHONY: clean
 clean:
-	-$(RM) $(BIN)
+	-$(RM) $(OBJS) $(BIN)
