@@ -7,19 +7,13 @@ BIN = test-spellcheck
 LDLIBS = -lcriterion
 
 SRCS = main.c test_mock_trie.c test_dictionary.c ../src/mock_trie.c ../src/dictionary.c
-OBJS = $(SRCS:.c=.o)
 
 .PHONY: all
 all: ${BIN}
 
-$(BIN): # $(OBJS)
-	$(CC) $(SRCS) -o $(BIN) $(LDLIBS)
-
-# $(SRCS:.c=.d):%.d:%.c
-# 	$(CC) $(CFLAGS) -MM $< >$@
-
-# include $(SRCS:.c=.d)
+$(BIN):
+	$(CC) $(CFLAGS) $(SRCS) -o $(BIN) $(LDLIBS)
 
 .PHONY: clean
 clean:
-	-$(RM) $(TARGET_LIB) $(OBJS) $(SRCS:.c=.d) $(BIN)
+	-$(RM) $(BIN)
