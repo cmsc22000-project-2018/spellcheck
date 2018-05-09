@@ -71,8 +71,8 @@ Test(dictionary, dict_add_empty) {
 
     rc = dict_add(d, "");
 
-    cr_assert_eq(rc, EXIT_FAILURE, "Passing an empty string in as a dictionary to dict_add "
-                 "should have returned 1, but it returned %d", rc);
+    cr_assert_eq(rc, EXIT_SUCCESS, "Passing an empty string in as a dictionary to dict_add "
+                 "should have returned EXIT_SUCCESS, but it returned %d", rc);
 }
 
 /* Helper function for testing regular input for dict_add */
@@ -83,7 +83,7 @@ void check_dict_add(char *file, char *str, int expected) {
     d = dict_new();
 
     if (file != NULL) {
-        cr_assert_eq(1, dict_read(d, file), "Read to dict failed");
+        cr_assert_eq(EXIT_SUCCESS, dict_read(d, file), "Read to dict failed");
     }
 
     rc = dict_add(d, str);
