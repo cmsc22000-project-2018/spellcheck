@@ -70,7 +70,6 @@ int trie_free(trie_t *t){
 */
 int trie_exists(trie_t *t, char *str) {
     int i;
-    int len = strlen(str);
 
     for (i = 0; i < TRIE_LEN ; i++) {
         if (t->words[i] == NULL) return 0;
@@ -86,18 +85,17 @@ int trie_exists(trie_t *t, char *str) {
 */
 int trie_add(trie_t *t, char *str){
     int i = 0;
-    int len = strlen(str);
 
-    while (i < LEN && t->words[i] != NULL) {
+    while (i < TRIE_LEN && t->words[i] != NULL) {
         if (strncmp(str, t->words[i], WORD_LEN) == 0) {
             return EXIT_FAILURE;
         }
         i++;
     }
 
-    if (i < LEN) {
+    if (i < TRIE_LEN) {
         char *w;
-        w = malloc(sizeof(char) * strlen(str) + 1);
+        w = malloc(sizeof(char) * WORD_LEN);
         if (w == NULL) {
             return EXIT_FAILURE;
         }
