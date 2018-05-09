@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include "dictionary.h"
 
-Test(1_dictionary, new) {
+Test(b_dictionary, new) {
     dict_t *d;
 
     d = dict_new();
@@ -11,7 +11,7 @@ Test(1_dictionary, new) {
     cr_assert_not_null(d, "dict_new() failed");
 }
 
-Test(1_dictionary, init) {
+Test(b_dictionary, init) {
     dict_t *d;
     int rc;
 
@@ -22,7 +22,7 @@ Test(1_dictionary, init) {
     cr_assert_eq(rc, EXIT_SUCCESS, "dict_init() failed");
 }
 
-Test(1_dictionary, free) {
+Test(b_dictionary, free) {
     dict_t *d;
     int rc;
 
@@ -40,7 +40,7 @@ Test(1_dictionary, free) {
 */
 
 /* Test arg 1 for null input for dict_add */
-Test(1_dictionary, dict_add_null0) {
+Test(b_dictionary, dict_add_null0) {
     dict_t *d;
     int rc;
 
@@ -53,7 +53,7 @@ Test(1_dictionary, dict_add_null0) {
 }
 
 /* Test arg 2 for null input for dict_add */
-Test(1_dictionary, dict_add_null1) {
+Test(b_dictionary, dict_add_null1) {
     int rc;
 
     rc = dict_add(NULL, "hi");
@@ -63,7 +63,7 @@ Test(1_dictionary, dict_add_null1) {
 }
 
 /* Test empty string input for dict_add */
-Test(1_dictionary, dict_add_empty) {
+Test(b_dictionary, dict_add_empty) {
     dict_t *d;
     int rc;
 
@@ -94,28 +94,28 @@ void check_dict_add(char *file, char *str, int expected) {
 }
 
 /* Test adding a small string for failure (already in dict) */
-Test(1_dictionary, dict_add_f0) {
+Test(b_dictionary, dict_add_f0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "hi";
     check_dict_add("./tests/dict_test0.txt", s, EXIT_FAILURE);
 }
 
 /* Test adding a long string for failure (already in dict) */
-Test(dictionary, dict_add_f1) {
+Test(b_dictionary, dict_add_f1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "dictionaryverysuperduperlongwordyayitssolongwowcrazy";
     check_dict_add("./tests/dict_test0.txt", s, EXIT_FAILURE);
 }
 
 /* Test adding a small string for success (not in dict) */
-Test(1_dictionary, dict_add_s0) {
+Test(b_dictionary, dict_add_s0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "no";
     check_dict_add(NULL, s, EXIT_SUCCESS);
 }
 
 /* Test adding a long string for success (not in dict) */
-Test(1_dictionary, dict_add_s1) {
+Test(b_dictionary, dict_add_s1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
     check_dict_add(NULL, s, EXIT_SUCCESS);
@@ -126,7 +126,7 @@ Test(1_dictionary, dict_add_s1) {
 */
 
 /* Test arg 1 for null input in dict_read */
-Test(1_dictionary, dict_read_null0) {
+Test(b_dictionary, dict_read_null0) {
     dict_t *d;
     int rc;
 
@@ -139,7 +139,7 @@ Test(1_dictionary, dict_read_null0) {
 }
 
 /* Test arg 2 for null input in dict_read */
-Test(1_dictionary, dict_read_null1) {
+Test(b_dictionary, dict_read_null1) {
     int rc;
 
     rc = dict_read(NULL, "./tests/dict_test0.txt");
@@ -149,7 +149,7 @@ Test(1_dictionary, dict_read_null1) {
 }
 
 /* Test bad filename input in dict_read */
-Test(1_dictionary, dict_read_noname) {
+Test(b_dictionary, dict_read_noname) {
     dict_t *d;
     int rc;
 
@@ -174,7 +174,7 @@ void check_dict_read(char *file, int expected) {
 }
 
 /* Test for regular input in dict_read 1 */
-Test(1_dictionary, dict_read0) {
+Test(b_dictionary, dict_read0) {
     check_dict_read("./tests/dict_test0.txt", EXIT_SUCCESS);
 }
 
@@ -185,7 +185,7 @@ Test(1_dictionary, dict_read0) {
 */
 
 /* Test arg 1 for null input for dict_exists */
-Test(1_dictionary, dict_exists_null0) {
+Test(b_dictionary, dict_exists_null0) {
     dict_t *d;
     int rc;
 
@@ -198,7 +198,7 @@ Test(1_dictionary, dict_exists_null0) {
 }
 
 /* Test arg 2 for null input for dict_exists */
-Test(1_dictionary, dict_exists_null1) {
+Test(b_dictionary, dict_exists_null1) {
     int rc;
 
     rc = dict_exists(NULL, "hi");
@@ -208,7 +208,7 @@ Test(1_dictionary, dict_exists_null1) {
 }
 
 /* Test empty string input for dict_exists */
-Test(1_dictionary, dict_exists_empty) {
+Test(b_dictionary, dict_exists_empty) {
     dict_t *d;
     int rc;
 
@@ -241,28 +241,28 @@ void check_dict_exists(char *file, char *str, int expected) {
 }
 
 /* Test a small string for success */
-Test(1_dictionary, dict_exists_s0) {
+Test(b_dictionary, dict_exists_s0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "hi";
     check_dict_exists("./tests/dict_test0.txt", s, EXIT_SUCCESS);
 }
 
 /* Test a long string for success */
-Test(1_dictionary, dict_exists_s1) {
+Test(b_dictionary, dict_exists_s1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "dictionaryverysuperduperlongwordyayitssolongwowcrazy";
     check_dict_exists("./tests/dict_test0.txt", s, EXIT_SUCCESS);
 }
 
 /* Test a small string for failure */
-Test(1_dictionary, dict_exists_f0) {
+Test(b_dictionary, dict_exists_f0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "no";
     check_dict_exists("./tests/dict_test0.txt", s, EXIT_FAILURE);
 }
 
 /* Test a long string for failure */
-Test(1_dictionary, dict_exists_f1) {
+Test(b_dictionary, dict_exists_f1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
     check_dict_exists("./tests/dict_test0.txt", s, EXIT_FAILURE);
