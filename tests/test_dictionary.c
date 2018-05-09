@@ -230,7 +230,7 @@ void check_dict_exists(char *file, char *str, int expected) {
     d = dict_new();
 
     if (file != NULL) {
-        cr_assert_eq(1, dict_read(d, file), "Read to dict failed");
+        cr_assert_eq(EXIT_SUCCESS, dict_read(d, file), "Read to dict failed");
     }
 
     rc = dict_exists(d, str);
