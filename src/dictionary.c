@@ -59,7 +59,7 @@ int dict_free(dict_t *d) {
 }
 
 /* See dictionary.h */
-int in_dict(char *str, dict_t *d) {
+int dict_exists(dict_t *d, char *str) {
     if (d == NULL || d->dict == NULL || str == NULL || str[0] == '\0') {
         error("Invalid input to in_dict");
         return -1;
@@ -69,7 +69,7 @@ int in_dict(char *str, dict_t *d) {
 }
 
 /* See dictionary.h */
-int add_to_dict(char *str, dict_t *d) {
+int dict_add(dict_t *d, char *str) {
     if (d == NULL || d->dict == NULL || str == NULL) {
         error("Invalid arguments to add_to_dict");
         return -1;
@@ -79,7 +79,7 @@ int add_to_dict(char *str, dict_t *d) {
 }
 
 /* See dictionary.h */
-int read_to_dict(char *file, dict_t *d) {
+int dict_read(dict_t *d, char *file) {
 
     int rc = 1;
 
@@ -92,7 +92,7 @@ int read_to_dict(char *file, dict_t *d) {
     }
 
     while (fscanf(f, "%1023s", buffer) == 1) {
-        if (add_to_dict(buffer, d) != 1) {
+        if (dict_add(buffer, d) != 1) {
             rc = -1;
         }
     }

@@ -62,7 +62,7 @@ int dict_free(dict_t *d);
  *  - 0 if the word is not in the dictionary
  *  - -1 if there was an error
  */
-int in_dict(char *str, dict_t *d);
+int dict_exists(dict_t *d, char *str);
 
 /*
  * Adds a word to a dictionary
@@ -76,7 +76,7 @@ int in_dict(char *str, dict_t *d);
  *  - 0 if word is already in dictionary
  *  - -1 if there was an error
  */
-int add_to_dict(char *str, dict_t *d);
+int dict_add(dict_t *d, char *str);
 
 /*
  * Parses a file and adds all words to the dictionary
@@ -88,7 +88,7 @@ int add_to_dict(char *str, dict_t *d);
  * Returns:
  *  - 1 on success, 0 if an error occurs, -1 if partial error (only able to add some words)
  */
-int read_to_dict(char *file, dict_t *d);
+int dict_read(dict_t *d, char *file);
 
 
 #endif /* INCLUDE_POINT_H_ */
