@@ -20,7 +20,7 @@ trie_t* trie_new(){
     }
 
     rc = trie_init(t);
-    if(rc != 1)
+    if(rc != EXIT_SUCCESS)
     {
         error("Could not initialize trie");
         return NULL;
@@ -36,9 +36,12 @@ int trie_init(trie_t *t){
 
     char **w;
     w = calloc(LEN, sizeof(char*));
+    if (w == NULL) {
+        return EXIT_FAILURE;
+    }
 
     t->words = w;
-    return 1;
+    return EXIT_SUCCESS;
 }
 
 /*
@@ -59,7 +62,7 @@ int trie_free(trie_t *t){
     free(t->words);
     free(t);
 
-    return 1;
+    return EXIT_SUCCESS;
 }
 
 /*
@@ -72,10 +75,10 @@ int trie_exists(trie_t *t, char *str) {
     for (i = 0; i < LEN ; i++) {
         if (t->words[i] == NULL) return 0;
         if (strncmp(str, t->words[i], len) == 0) {
-            return 1;
+            return EXIT_SUCCESS;
         }
     }
-    return 0;
+    return EXIT_FAILURE;
 }
 
 /*
@@ -87,7 +90,7 @@ int trie_add(trie_t *t, char *str){
 
     while (i < LEN && t->words[i] != NULL) {
         if (strncmp(str, t->words[i], len) == 0) {
-            return 0;
+            return EXIT_FAILURE;
         }
         i++;
     }
@@ -95,13 +98,16 @@ int trie_add(trie_t *t, char *str){
     if (i < LEN) {
         char *w;
         w = malloc(sizeof(char) * strlen(str) + 1);
+        if (w == NULL) {
+            return EXIT_FAILURE;
+        }
 
         strncpy(w, str, strlen(str) + 1);
 
         t->words[i] = w;
 
-        return 1;
+        return EXIT_SUCCESS;
     }
 
-    return -1;
+    return EXIT_FAILURE;
 }

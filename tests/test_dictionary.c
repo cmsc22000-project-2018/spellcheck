@@ -19,7 +19,7 @@ Test(dictionary, init) {
 
     rc = dict_init(d);
 
-    cr_assert_eq(rc, 0, "dict_init() failed");
+    cr_assert_eq(rc, EXIT_SUCCESS, "dict_init() failed");
 }
 
 Test(dictionary, free) {
@@ -32,7 +32,7 @@ Test(dictionary, free) {
 
     rc = dict_free(d);
 
-    cr_assert_eq(rc, 0, "dict_free() failed");
+    cr_assert_eq(rc, EXIT_SUCCESS, "dict_free() failed");
 }
 
 /*
@@ -48,8 +48,8 @@ Test(dictionary, dict_add_null0) {
 
     rc = dict_add(d, NULL);
 
-    cr_assert_eq(rc, -1, "Passing NULL in as a string in dict_add should have "
-                 "returned -1, but it returned %d", rc);
+    cr_assert_eq(rc, EXIT_FAILURE, "Passing NULL in as a string in dict_add should have "
+                 "returned EXIT_FAILURE, but it returned %d", rc);
 }
 
 /* Test arg 2 for null input for dict_add */
@@ -58,7 +58,7 @@ Test(dictionary, dict_add_null1) {
 
     rc = dict_add(NULL, "hi");
 
-    cr_assert_eq(rc, -1, "Passing NULL in as a dictionary in dict_add should have "
+    cr_assert_eq(rc, EXIT_FAILURE, "Passing NULL in as a dictionary in dict_add should have "
                  "returned -1, but it returned %d", rc);
 }
 
@@ -71,7 +71,7 @@ Test(dictionary, dict_add_empty) {
 
     rc = dict_add(d, "");
 
-    cr_assert_eq(rc, 1, "Passing an empty string in as a dictionary to dict_add "
+    cr_assert_eq(rc, EXIT_FAILURE, "Passing an empty string in as a dictionary to dict_add "
                  "should have returned 1, but it returned %d", rc);
 }
 
@@ -97,28 +97,28 @@ void check_dict_add(char *file, char *str, int expected) {
 Test(dictionary, dict_add_f0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "hi";
-    check_dict_add("./tests/dict_test0.txt", s, 0);
+    check_dict_add("./tests/dict_test0.txt", s, EXIT_FAILURE);
 }
 
 /* Test adding a long string for failure (already in dict) */
 Test(dictionary, dict_add_f1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "dictionaryverysuperduperlongwordyayitssolongwowcrazy";
-    check_dict_add("./tests/dict_test0.txt", s, 0);
+    check_dict_add("./tests/dict_test0.txt", s, EXIT_FAILURE);
 }
 
 /* Test adding a small string for success (not in dict) */
 Test(dictionary, dict_add_s0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "no";
-    check_dict_add(NULL, s, 1);
+    check_dict_add(NULL, s, EXIT_SUCCESS);
 }
 
 /* Test adding a long string for success (not in dict) */
 Test(dictionary, dict_add_s1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
-    check_dict_add(NULL, s, 1);
+    check_dict_add(NULL, s, EXIT_SUCCESS);
 }
 
 /*
@@ -134,8 +134,8 @@ Test(dictionary, dict_read_null0) {
 
     rc = dict_read(d, NULL);
 
-    cr_assert_eq(rc, 0, "Passing NULL in as a string in dict_read should have "
-                 "returned 0, but it returned %d", rc);
+    cr_assert_eq(rc, EXIT_FAILURE, "Passing NULL in as a string in dict_read should have "
+                 "returned EXIT_FAILURE, but it returned %d", rc);
 }
 
 /* Test arg 2 for null input in dict_read */
@@ -144,8 +144,8 @@ Test(dictionary, dict_read_null1) {
 
     rc = dict_read(NULL, "./tests/dict_test0.txt");
 
-    cr_assert_eq(rc, -1, "Passing NULL in as a dictionary in dict_read should have "
-                 "returned -1, but it returned %d", rc);
+    cr_assert_eq(rc, EXIT_FAILURE, "Passing NULL in as a dictionary in dict_read should have "
+                 "returned EXIT_FAILURE, but it returned %d", rc);
 }
 
 /* Test bad filename input in dict_read */
@@ -157,8 +157,8 @@ Test(dictionary, dict_read_noname) {
 
     rc = dict_read(d, "DNE.txt");
 
-    cr_assert_eq(rc, 0, "Passing NULL in as a string in dict_read should have "
-                 "returned 0, but it returned %d", rc);
+    cr_assert_eq(rc, EXIT_FAILURE, "Passing NULL in as a string in dict_read should have "
+                 "returned EXIT_FAILURE, but it returned %d", rc);
 }
 
 void check_dict_read(char *file, int expected) {
@@ -169,13 +169,13 @@ void check_dict_read(char *file, int expected) {
 
     rc = dict_read(d, file);
 
-    cr_assert_eq(rc, 1, "Passing file %s in dict_read should have "
+    cr_assert_eq(rc, expected, "Passing file %s in dict_read should have "
                  "returned %d, but it returned %d", file, expected, rc);
 }
 
 /* Test for regular input in dict_read 1 */
 Test(dictionary, dict_read0) {
-    check_dict_read("./tests/dict_test0.txt", 1);
+    check_dict_read("./tests/dict_test0.txt", EXIT_SUCCESS);
 }
 
 
@@ -193,7 +193,7 @@ Test(dictionary, dict_exists_null0) {
 
     rc = dict_exists(d, NULL);
 
-    cr_assert_eq(rc, -1, "Passing NULL in as a string in dict_exists should have "
+    cr_assert_eq(rc, EXIT_FAILURE, "Passing NULL in as a string in dict_exists should have "
                  "returned -1, but it returned %d", rc);
 }
 
@@ -203,8 +203,8 @@ Test(dictionary, dict_exists_null1) {
 
     rc = dict_exists(NULL, "hi");
 
-    cr_assert_eq(rc, -1, "Passing NULL in as a dictionary in dict_exists should have "
-                 "returned -1, but it returned %d", rc);
+    cr_assert_eq(rc, EXIT_FAILURE, "Passing NULL in as a dictionary in dict_exists should have "
+                 "returned EXIT_FAILURE, but it returned %d", rc);
 }
 
 /* Test empty string input for dict_exists */
@@ -218,8 +218,8 @@ Test(dictionary, dict_exists_empty) {
 
     rc = dict_exists(d, "");
 
-    cr_assert_eq(rc, -1, "Passing an empty string in as a dictionary to dict_exists "
-                 "should have returned -1, but it returned %d", rc);
+    cr_assert_eq(rc, EXIT_FAILURE, "Passing an empty string in as a dictionary to dict_exists "
+                 "should have returned EXIT_FAILURE, but it returned %d", rc);
 }
 
 /* Helper function for testing regular input for dict_exists */
@@ -244,26 +244,26 @@ void check_dict_exists(char *file, char *str, int expected) {
 Test(dictionary, dict_exists_s0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "hi";
-    check_dict_exists("./tests/dict_test0.txt", s, 1);
+    check_dict_exists("./tests/dict_test0.txt", s, EXIT_SUCCESS);
 }
 
 /* Test a long string for success */
 Test(dictionary, dict_exists_s1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "dictionaryverysuperduperlongwordyayitssolongwowcrazy";
-    check_dict_exists("./tests/dict_test0.txt", s, 1);
+    check_dict_exists("./tests/dict_test0.txt", s, EXIT_SUCCESS);
 }
 
 /* Test a small string for failure */
 Test(dictionary, dict_exists_f0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "no";
-    check_dict_exists("./tests/dict_test0.txt", s, 0);
+    check_dict_exists("./tests/dict_test0.txt", s, EXIT_FAILURE);
 }
 
 /* Test a long string for failure */
 Test(dictionary, dict_exists_f1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
-    check_dict_exists("./tests/dict_test0.txt", s, 0);
+    check_dict_exists("./tests/dict_test0.txt", s, EXIT_FAILURE);
 }

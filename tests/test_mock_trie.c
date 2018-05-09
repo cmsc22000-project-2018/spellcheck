@@ -24,7 +24,7 @@ Test(trie, init)
 
     rc = trie_init(&new_trie);
 
-    cr_assert_eq(rc, 1, "trie_init() failed");
+    cr_assert_eq(rc, EXIT_SUCCESS, "trie_init() failed");
 
 }
 
@@ -41,7 +41,7 @@ Test(trie, free)
 
     rc = trie_free(new_trie);
 
-    cr_assert_eq(rc, 1, "trie_free() failed");
+    cr_assert_eq(rc, EXIT_SUCCESS, "trie_free() failed");
 }
 
 /* Checks the case in which a new word is being added to the trie*/
@@ -50,7 +50,7 @@ Test(trie, added_to_trie){
   char *s1 = (char *)malloc(sizeof(char) * 3);
   s1 = "hi";
   int added_to_trie = trie_add(trie1, s1);
-  cr_assert_eq(added_to_trie, 1, "trie_add failed");
+  cr_assert_eq(added_to_trie, EXIT_SUCCESS, "trie_add failed");
 }
 
 /* Checks the case in which the same word is being tried to add to the trie */
@@ -60,7 +60,7 @@ Test(trie, same_variable_trie_add){
   ss1 = "hi";
   trie_add(trie2, ss1);
   int same_word_trie_add2 = trie_add(trie2, ss1);
-  cr_assert_eq(same_word_trie_add2, 0, "trie_add failed");
+  cr_assert_eq(same_word_trie_add2, EXIT_FAILURE, "trie_add failed");
 }
 
 /* Checks the case in which the word cannot be added to the trie */
@@ -69,7 +69,7 @@ Test(trie, cannot_trie_add){
   char *sss1 = (char *)malloc(sizeof(char) * 53);
   sss1 = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
   int cant_trie_add = trie_add(trie3, sss1);
-  cr_assert_eq(cant_trie_add, 1, "trie_add failed");
+  cr_assert_eq(cant_trie_add, EXIT_FAILURE, "trie_add failed");
 }
 
 /* Checks the case in which the word is in the trie */
@@ -81,7 +81,7 @@ Test(Trie, trie_exists) {
   ss = "hi";
   trie_add(triet, q);
   int is_trie_exists = trie_exists(triet, ss);
-  cr_assert_eq(is_trie_exists, 1, "trie_exists failed");
+  cr_assert_eq(is_trie_exists, EXIT_SUCCESS, "trie_exists failed");
 }
 
 /* Checks the case in which the word is not in the trie*/
@@ -93,5 +93,5 @@ Test(Trie, not_trie_exists) {
   sqq = "no";
   trie_add(t1, sq);
   int is_trie_exists = trie_exists(t1, sqq);
-  cr_assert_eq(is_trie_exists, 0, "trie_exists failed");
+  cr_assert_eq(is_trie_exists, EXIT_FAILURE, "trie_exists failed");
 }

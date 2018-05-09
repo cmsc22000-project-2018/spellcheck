@@ -33,7 +33,7 @@ dict_t* dict_new();
  *  - d: A dictionary. Must point to already allocated memory.
  *
  * Returns:
- *  - 0 on success, 1 if an error occurs
+ *  - EXIT_SUCCESS on success, EXIT_FAILURE if an error occurs
  */
 int dict_init(dict_t *d);
 
@@ -45,7 +45,7 @@ int dict_init(dict_t *d);
  *  - d: A dictionary. Must point to a dictionary allocated with dict_new
  *
  * Returns:
- *  - Always returns 0.
+ *  - Always returns EXIT_SUCCESS.
  */
 int dict_free(dict_t *d);
 
@@ -58,9 +58,8 @@ int dict_free(dict_t *d);
  *  - d: A dictionary
  *
  * Returns:
- *  - 1 if the word is in the dictionary
- *  - 0 if the word is not in the dictionary
- *  - -1 if there was an error
+ *  - EXIT_SUCCESS if the word is in the dictionary
+ *  - EXIT_FAILURE if the word is not in the dictionary or if an error occured
  */
 int dict_exists(dict_t *d, char *str);
 
@@ -72,9 +71,8 @@ int dict_exists(dict_t *d, char *str);
  *  - d: A dictionary
  *
  * Returns:
- *  - 1 upon success
- *  - 0 if word is already in dictionary
- *  - -1 if there was an error
+ *  - EXIT_SUCCESS upon success
+ *  - EXIT_FAILURE if word is already in dictionary or if an error occured
  */
 int dict_add(dict_t *d, char *str);
 
@@ -86,7 +84,8 @@ int dict_add(dict_t *d, char *str);
  *  - file: A filename string.
  *
  * Returns:
- *  - 1 on success, 0 if an error occurs, -1 if partial error (only able to add some words)
+ *  - EXIT_SUCCESS on success, 
+ *  - EXIT_FAILURE if an error occurs
  */
 int dict_read(dict_t *d, char *file);
 

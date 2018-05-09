@@ -28,9 +28,8 @@ trie_t* trie_new();
  * Parameters:
  *  - new_trie: A trie. Must point to already allocated memory.
  *
- *
  * Returns:
- *  - 0 on success, 1 if an error occurs.
+ *  - EXIT_SUCCESS on success, EXIT_FAILURE if an error occurs.
  */
 int trie_init(trie_t *t);
 
@@ -42,7 +41,7 @@ int trie_init(trie_t *t);
  *  - trie: A trie. Must point to a point allocated with segment_new
  *
  * Returns:
- *  - Always returns 0.
+ *  - Always returns EXIT_SUCCESS.
  */
 int trie_free(trie_t *t);
 
@@ -53,8 +52,8 @@ int trie_free(trie_t *t);
  *  - trie: a trie.
  *
  * Returns:
- *  1 if word is in the trie
- *  0 if word is not in the trie
+ *  EXIT_SUCCESS if word is in the trie
+ *  EXIT_FAILURE if word is not in the trie
  */
 int trie_exists(trie_t *t, char *str);
 
@@ -66,8 +65,8 @@ int trie_exists(trie_t *t, char *str);
  *  - t: a trie.
  *
  * Returns:
- *  1 if word is in the trie
- *  0 if word is not in the trie
+ *  EXIT_SUCCESS if word is in the trie
+ *  EXIT_FAILURE if word is not in the trie
  */
 int trie_add(trie_t *t, char *str);
 
