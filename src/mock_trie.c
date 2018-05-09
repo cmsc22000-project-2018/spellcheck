@@ -65,7 +65,7 @@ int trie_free(trie_t *t){
 /*
 * See mock_trie.h
 */
-int in_trie(char *str, trie_t *t) {
+int trie_exists(trie_t *t, char *str) {
     int i;
 
     for (i = 0; i < LEN ; i++) {
@@ -80,7 +80,7 @@ int in_trie(char *str, trie_t *t) {
 /*
 * See mock_trie.h
 */
-int add_to_trie(char *str, trie_t *t){
+int trie_add(trie_t *t, char *str){
     int i = 0;
 
     while (i < LEN && t->words[i] != NULL) {

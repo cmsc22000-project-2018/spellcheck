@@ -49,49 +49,49 @@ Test(trie, added_to_trie){
   trie_t *trie1 = trie_new();
   char *s1 = (char *)malloc(sizeof(char) * 3);
   s1 = "hi";
-  int added_to_trie = add_to_trie(s1, trie1);
-  cr_assert_eq(added_to_trie, 1, "add_to_trie failed");
+  int added_to_trie = trie_add(trie1, s1);
+  cr_assert_eq(added_to_trie, 1, "trie_add failed");
 }
 
 /* Checks the case in which the same word is being tried to add to the trie */
-Test(trie, same_variable_add_to_trie){
+Test(trie, same_variable_trie_add){
   trie_t *trie2 = trie_new();
   char *ss1 = (char *)malloc(sizeof(char) * 3);
   ss1 = "hi";
-  add_to_trie(ss1, trie2);
-  int same_word_add_to_trie2 = add_to_trie(ss1, trie2);
-  cr_assert_eq(same_word_add_to_trie2, 0, "add_to_trie failed");
+  trie_add(trie2, ss1);
+  int same_word_trie_add2 = trie_add(trie2, ss1);
+  cr_assert_eq(same_word_trie_add2, 0, "trie_add failed");
 }
 
 /* Checks the case in which the word cannot be added to the trie */
-Test(trie, cannot_add_to_trie){
+Test(trie, cannot_trie_add){
   trie_t *trie3 = trie_new();
   char *sss1 = (char *)malloc(sizeof(char) * 53);
   sss1 = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
-  int cant_add_to_trie = add_to_trie(sss1, trie3);
-  cr_assert_eq(cant_add_to_trie, 1, "add_to_trie failed");
+  int cant_trie_add = trie_add(trie3, sss1);
+  cr_assert_eq(cant_trie_add, 1, "trie_add failed");
 }
 
 /* Checks the case in which the word is in the trie */
-Test(Trie, in_trie) {
+Test(Trie, trie_exists) {
   trie_t *triet = trie_new();
   char *q = (char *)malloc(sizeof(char) * 10);
   char *ss = (char *)malloc(sizeof(char) * 10);
   q =  "hi";
   ss = "hi";
-  add_to_trie(q, triet);
-  int is_in_trie = in_trie(ss, triet);
-  cr_assert_eq(is_in_trie, 1, "in_trie failed");
+  trie_add(triet, q);
+  int is_trie_exists = trie_exists(triet, ss);
+  cr_assert_eq(is_trie_exists, 1, "trie_exists failed");
 }
 
 /* Checks the case in which the word is not in the trie*/
-Test(Trie, not_in_trie) {
+Test(Trie, not_trie_exists) {
   trie_t *t1 = trie_new();
   char *sq = (char *)malloc(sizeof(char) * 10);
   char *sqq = (char *)malloc(sizeof(char) * 10);
   sq =  "hi";
   sqq = "no";
-  add_to_trie(sq, t1);
-  int is_in_trie = in_trie(sqq, t1);
-  cr_assert_eq(is_in_trie, 0, "in_trie failed");
+  trie_add(t1, sq);
+  int is_trie_exists = trie_exists(t1, sqq);
+  cr_assert_eq(is_trie_exists, 0, "trie_exists failed");
 }

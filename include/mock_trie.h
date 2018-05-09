@@ -56,7 +56,7 @@ int trie_free(trie_t *t);
  *  1 if word is in the trie
  *  0 if word is not in the trie
  */
-int in_trie(char *str, trie_t *t);
+int trie_exists(trie_t *t, char *str);
 
 /*
  * Adds a word to trie
@@ -69,7 +69,7 @@ int in_trie(char *str, trie_t *t);
  *  1 if word is in the trie
  *  0 if word is not in the trie
  */
-int add_to_trie(char *str, trie_t *t);
+int trie_add(trie_t *t, char *str);
 
 
 #endif
