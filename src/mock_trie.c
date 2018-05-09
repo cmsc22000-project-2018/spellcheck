@@ -67,10 +67,11 @@ int trie_free(trie_t *t){
 */
 int trie_exists(trie_t *t, char *str) {
     int i;
+    int len = strlen(str);
 
     for (i = 0; i < LEN ; i++) {
         if (t->words[i] == NULL) return 0;
-        if (strcmp(str, t->words[i]) == 0) {
+        if (strncmp(str, t->words[i], len) == 0) {
             return 1;
         }
     }
@@ -82,9 +83,10 @@ int trie_exists(trie_t *t, char *str) {
 */
 int trie_add(trie_t *t, char *str){
     int i = 0;
+    int len = strlen(str);
 
     while (i < LEN && t->words[i] != NULL) {
-        if (strcmp(str, t->words[i]) == 0) {
+        if (strncmp(str, t->words[i], len) == 0) {
             return 0;
         }
         i++;
