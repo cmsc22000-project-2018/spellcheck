@@ -8,9 +8,8 @@
 Test(trie, new)
 {
     trie_t *new_trie;
-    char** word = malloc(sizeof(char *) * 70);
 
-    new_trie = trie_new(word);
+    new_trie = trie_new();
 
     cr_assert_not_null(new_trie, "trie_new() failed");
 }
@@ -32,10 +31,9 @@ Test(trie, init)
 Test(trie, free)
 {
     trie_t *new_trie;
-    char** wordss = malloc(sizeof(char *) * 70);
     int rc;
 
-    new_trie = trie_new(wordss);
+    new_trie = trie_new();
 
     cr_assert_not_null(new_trie, "trie_new() failed");
 

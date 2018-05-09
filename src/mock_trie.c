@@ -98,7 +98,7 @@ int trie_add(trie_t *t, char *str){
             return EXIT_FAILURE;
         }
 
-        strncpy(w, str, strlen(str) + 1);
+        strncpy(w, str, WORD_LEN);
 
         t->words[i] = w;
 
