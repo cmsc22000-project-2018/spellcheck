@@ -6,7 +6,7 @@ RM = rm -f
 BIN = test-spellcheck
 LDLIBS = -lcriterion
 
-SRCS = main.c test_dictionary.c test_mock_trie.c ../src/dictionary.c ../src/mock_trie.c
+SRCS = main.c test_mock_trie.c test_dictionary.c ../src/mock_trie.c ../src/dictionary.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all

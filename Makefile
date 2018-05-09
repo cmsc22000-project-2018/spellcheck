@@ -6,7 +6,7 @@ LDFLAGS = -shared
 RM = rm -f
 LDLIBS = -lm
 
-SRCS = src/dictionary.c src/mock_trie.c
+SRCS = src/mock_trie.c src/dictionary.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all
