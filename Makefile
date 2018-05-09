@@ -11,14 +11,14 @@ OBJS = $(SRCS:.c=.o)
 
 .PHONY: all
 
-$(SRCS:.c=.d):%.d:%.c
-	$(CC) $(CFLAGS) -MM $< -MT $(patsubst %.d,%.o,$@) > $@
+# $(SRCS:.c=.d):%.d:%.c
+# 	$(CC) $(CFLAGS) -MM $< -MT $(patsubst %.d,%.o,$@) > $@
 
 -include $(SRCS:.c=.d)
 
 .PHONY: clean tests
 clean:
-	-${RM} ${LIBS} ${OBJS} $(SRCS:.c=.d)
+	-$(RM) $(LIBS) $(OBJS) $(SRCS:.c=.d)
 	make -C ./tests clean
 
 tests: $(OBJS)

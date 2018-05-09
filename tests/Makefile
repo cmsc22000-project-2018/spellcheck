@@ -12,14 +12,14 @@ OBJS = $(SRCS:.c=.o)
 .PHONY: all
 all: ${BIN}
 
-$(BIN): $(OBJS)
-	$(CC) $(OBJS) -o $(BIN) $(LDLIBS)
+$(BIN): # $(OBJS)
+	$(CC) $(SRCS) -o $(BIN) $(LDLIBS)
 
-$(SRCS:.c=.d):%.d:%.c
-	$(CC) $(CFLAGS) -MM $< >$@
+# $(SRCS:.c=.d):%.d:%.c
+# 	$(CC) $(CFLAGS) -MM $< >$@
 
 include $(SRCS:.c=.d)
 
 .PHONY: clean
 clean:
-	-${RM} ${TARGET_LIB} ${OBJS} $(SRCS:.c=.d) $(BIN)
+	-$(RM) $(TARGET_LIB) $(OBJS) $(SRCS:.c=.d) $(BIN)
