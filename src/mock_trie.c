@@ -15,14 +15,12 @@ trie_t* trie_new(){
     int rc;
 
     if (t == NULL) {
-      error("Could not allocate memory");
       return NULL;
     }
 
     rc = trie_init(t);
     if(rc != EXIT_SUCCESS)
     {
-        error("Could not initialize trie");
         return NULL;
     }
     return t;

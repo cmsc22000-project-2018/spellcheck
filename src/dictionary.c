@@ -21,13 +21,11 @@ dict_t* dict_new() {
     d = malloc(sizeof(dict_t));
 
     if (d == NULL) {
-        error("Could not allocate memory");
         return NULL;
     }
 
     rc = dict_init(d);
     if (rc != EXIT_SUCCESS) {
-        error("Could not initialize dict");
         return NULL;
     }
 
@@ -61,7 +59,6 @@ int dict_free(dict_t *d) {
 /* See dictionary.h */
 int dict_exists(dict_t *d, char *str) {
     if (d == NULL || d->dict == NULL || str == NULL || str[0] == '\0') {
-        error("Invalid input to in_dict");
         return EXIT_FAILURE;
     }
 
@@ -71,7 +68,6 @@ int dict_exists(dict_t *d, char *str) {
 /* See dictionary.h */
 int dict_add(dict_t *d, char *str) {
     if (d == NULL || d->dict == NULL || str == NULL) {
-        error("Invalid arguments to add_to_dict");
         return EXIT_FAILURE;
     }
 
