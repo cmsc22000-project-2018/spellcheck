@@ -5,7 +5,7 @@
 #include "mock_trie.h"
 #include <string.h>
 /* Checks whether a new trie is properly created */
-Test(a_trie, new)
+Test(trie, new)
 {
     trie_t *new_trie;
 
@@ -15,7 +15,7 @@ Test(a_trie, new)
 }
 
 /* Checks whether a trie is initiated properly */
-Test(a_trie, init)
+Test(trie, init)
 {
     int rc;
     trie_t new_trie;
@@ -28,7 +28,7 @@ Test(a_trie, init)
 }
 
 /* Checks whether the trie is correctly freed */
-Test(a_trie, free)
+Test(trie, free)
 {
     trie_t *new_trie;
     int rc;
@@ -43,7 +43,7 @@ Test(a_trie, free)
 }
 
 /* Checks the case in which a new word is being added to the trie*/
-Test(a_trie, added_to_trie){
+Test(trie, added_to_trie){
   trie_t *trie1 = trie_new();
   char *s1 = (char *)malloc(sizeof(char) * 3);
   s1 = "hi";
@@ -52,7 +52,7 @@ Test(a_trie, added_to_trie){
 }
 
 /* Checks the case in which the same word is being tried to add to the trie */
-Test(a_trie, same_variable_trie_add){
+Test(trie, same_variable_trie_add){
   trie_t *trie2 = trie_new();
   char *ss1 = (char *)malloc(sizeof(char) * 3);
   ss1 = "hi";
@@ -62,7 +62,7 @@ Test(a_trie, same_variable_trie_add){
 }
 
 /* Checks the case in which the word can be added to the trie */
-Test(a_trie, can_trie_add){
+Test(trie, can_trie_add){
   trie_t *trie3 = trie_new();
   char *sss1 = (char *)malloc(sizeof(char) * 53);
   sss1 = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
@@ -71,7 +71,7 @@ Test(a_trie, can_trie_add){
 }
 
 /* Checks the case in which the word is in the trie */
-Test(a_trie, trie_exists) {
+Test(trie, trie_exists) {
   trie_t *triet = trie_new();
   char *q = (char *)malloc(sizeof(char) * 10);
   char *ss = (char *)malloc(sizeof(char) * 10);
@@ -83,7 +83,7 @@ Test(a_trie, trie_exists) {
 }
 
 /* Checks the case in which the word is not in the trie*/
-Test(a_trie, not_trie_exists) {
+Test(trie, not_trie_exists) {
   trie_t *t1 = trie_new();
   char *sq = (char *)malloc(sizeof(char) * 10);
   char *sqq = (char *)malloc(sizeof(char) * 10);
