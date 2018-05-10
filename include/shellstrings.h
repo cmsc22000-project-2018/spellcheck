@@ -1,28 +1,30 @@
-/* Shell interface functions
+/* Strings to be used in shell
    Jaewan Park
 */
-
-#ifndef _SHELLSTRINGS_H
-#define _SHELLSTRINGS_H
 #include <stdio.h>
+#include <stdlib.h>
 #include <strings.h>
+#include "shellstrings.h"
+
+/* Home Page */
+void greet();
 
 void main_help_text();
 
+/* Help Page */
 void help_page_text();
 
+/* Save Page */
 void save_page_text();
 
-void greet();
-
+/* Print error, allowing for description depending on context */
 void error_shell(char* s);
 
-void bye();
-
+/* Command Line Input Format */
 void usage();
 
+/* Shell Prompt */
 void shell_prompt();
 
-
-
-#endif
+/* Final message */
+void bye();

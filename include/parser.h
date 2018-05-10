@@ -1,17 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
+#include "parser.h"
 
-/* returns allocated array of strings, each of which are lines from the text file
- * this array can later be reproduced into a new file/overwrite the existing one
- */
+/* Parsing Functions for Parsing Input Files */
+
+/* returns with pointer to array of strings, each of which represent a line in a given file */
+/* current limit to each string is 1000 characters */
+/* return NULL if file could not be opened */
 char** lineparse_file(char* filename);
 
-/* Returns next word in line */
 char* get_word(char* line);
 
-/* Parse command lines */
-char *read_line();
+/* Parsing functions for parsing command line inputs */
+/* read a command line and return a string */
+char* read_line();
 
-char **split_line(char* line);
-/* how to revert lines, preserving their punctuation? */
+/*
+   reference: https://github.com/brenns10/lsh/blob/master/src/main.c
+   @brief Split a line into tokens (very naively).
+   @param line The line.
+   @return Null-terminated array of tokens.
+ */
+char **split_line(char *line);

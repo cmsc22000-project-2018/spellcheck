@@ -7,20 +7,24 @@
 #define MAXCHAR 1000	// maximum characters in a line?
 #define INITLINE 50
 
+/* Parsing Functions for Parsing Input Files */
+
+/* helper function: resizes array in lineparse if given file is too large */
 void array_resize(char** array, size_t alen)
 {
 	alen = 2*alen;
 	array=realloc(array,alen*sizeof(char*));
 }
 
-/* returns with pointer */
+/* returns with pointer to array of strings, each of which represent a line in a given file */
+/* current limit to each string is 1000 characters */
+/* return NULL if file could not be opened */
 char** lineparse_file(char* filename)
 {
 	FILE *f = fopen(filename, "r");
 
 	if (f==NULL) {
 		return NULL;
-		// when this happens, exit accordingly and restart
 	}
 
 	unsigned int n=0;
@@ -28,6 +32,10 @@ char** lineparse_file(char* filename)
 	char str[MAXCHAR];		// consider resizing?
 	char** lines;
 	lines = malloc(i*sizeof(char*));
+	if (lines == NULL) {
+		fprintf(strderr,"lineparse_file: malloc failed\n");
+		exit(0);
+	}
 
 	while(fgets(str,MAXCHAR,f) != 0) {
 		lines[n]=strdup(str);
@@ -47,10 +55,16 @@ char** lineparse_file(char* filename)
 
 char* get_word(char* line)
 {
-	return strtok(line," ,.-\n\t\"\'!?()");	// more?
+	char* word = strtok(line," ,.-\n\t\"\'!?()"); // add additional punctuations
+	if (word == NULL) {
+		return NULL;
+	}
+
+	return word;
 }
 
-/* source: https://github.com/brenns10/lsh/blob/master/src/main.c */
+/* Parsing functions for parsing command line inputs */
+/* read a command line and return a string */
 #define BUFFERSIZE 256
 char* read_line()
 {
@@ -69,8 +83,8 @@ char* read_line()
 
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
-/**
-	reference: https://github.com/brenns10/lsh/blob/master/src/main.c
+/*
+   reference: https://github.com/brenns10/lsh/blob/master/src/main.c
    @brief Split a line into tokens (very naively).
    @param line The line.
    @return Null-terminated array of tokens.
@@ -107,18 +121,3 @@ char **split_line(char *line)
   tokens[position] = NULL;
   return tokens;
 }
-
-
-/*
-#define SPLIT_BUFFER 16	// reconsider
-char **split_line(char *line)
-{
-	char** rval;
-	rval = malloc(SPLIT_BUFFER*sizeof(char));
-	for(int i=0; rval[i]!=NULL; i++) {
-		rval[i]=strtok(line," ");
-	}
-
-	return rval;
-}
-*/

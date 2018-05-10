@@ -6,6 +6,13 @@
 #include <strings.h>
 #include "shellstrings.h"
 
+/* Home Page */
+void greet()
+{
+	char g[] = "------- Welcome to Spellcheck! ------\n\n";
+	printf("%s",g);
+}
+
 void main_help_text()
 {
 	char m[] =
@@ -17,6 +24,7 @@ void main_help_text()
 	printf("%s",m);
 }
 
+/* Help Page */
 void help_page_text()
 {
 	char h[] =
@@ -30,6 +38,7 @@ void help_page_text()
 	printf("%s",h);
 }
 
+/* Save Page */
 void save_page_text()
 {
 	char s[] =
@@ -41,29 +50,13 @@ void save_page_text()
 	printf("%s",s);
 }
 
-void greet()
-{
-	char g[] = "------- Welcome to Spellcheck! ------\n\n";
-	printf("%s",g);
-}
-
+/* Print error, allowing for description depending on context */
 void error_shell(char* s)
 {
 	printf("=> ERROR: %s <=\n",s);
 }
 
-void shell_prompt()
-{
-	char p[] = "spellcheck > ";
-	printf("%s",p);
-}
-
-void bye()
-{
-	char b[] = "Thank you for using Spellcheck. Bye!\n";
-	printf("%s",b);
-}
-
+/* Command Line Input Format */
 void usage()
 {
 	char u[] =
@@ -71,4 +64,18 @@ void usage()
 	"./spellcheck or \n"
 	"./spellcheck [~/path/file.txt] [-flag] [~/path/destination.txt] \n";
 	printf("%s",u);
+}
+
+/* Shell Prompt */
+void shell_prompt()
+{
+	char p[] = "spellcheck > ";
+	printf("%s",p);
+}
+
+/* Final message */
+void bye()
+{
+	char b[] = "Thank you for using Spellcheck. Bye!\n";
+	printf("%s",b);
 }
