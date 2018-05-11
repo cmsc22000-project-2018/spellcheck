@@ -61,8 +61,8 @@ void usage()
 {
 	char u[] =
 	"Please use designated format:\n\n"
-	"./spellcheck or \n"
-	"./spellcheck [~/path/file.txt] [-flag] [~/path/destination.txt] \n";
+	"./spellcheck [-flag] [~/path/file.txt] [-saveflag] [~/path/destination.txt] \n\n";
+	"For help, run without command line arguments and enter help page\n";
 	printf("%s",u);
 }
 
@@ -78,4 +78,11 @@ void bye()
 {
 	char b[] = "Thank you for using Spellcheck. Bye!\n";
 	printf("%s",b);
+}
+
+/* File input */
+void input(char* input_file, char* status)
+{
+	char i[] = "has been accepted as the input file for";
+	printf("%s %s %s!\n",input_file,i,status);
 }

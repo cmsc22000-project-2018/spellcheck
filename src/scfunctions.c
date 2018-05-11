@@ -8,8 +8,9 @@
 #include "dictionary.h"
 #include "word.h"
 
-
-
+/*
+	Functions Relating to saving files after having parsed through array of strings
+ */
 
 void save_corrections(char* filename, char** lines)
 {
@@ -55,6 +56,9 @@ void save_page(char* filename, char** lines,int* quit)
 	}
 }
 
+/*
+	edit interactions
+*/
 
 void underline_misspelled(char *tkn, char* underline) {
 	for(int i = 0; i < strlen(tkn); i++) {
@@ -215,20 +219,15 @@ char* edit_interactive(char* line, dict_t* dict)
 
 
 
-
-
-
-
-
-
-
-
-
 	return line_copy;
 	// need a way for string to (a) preserve punctuations and (b) 
 	// @Sarika this would be where the program needs replace_word, ignore_word, alternate_spelling
 
 }
+
+
+
+/* interctive mode file */
 
 void interactive_mode(char** filename, int* quit)
 {
@@ -310,4 +309,4 @@ int main_page(int* quit)
 	free(args);
 
 	return 1;
-}
+}	

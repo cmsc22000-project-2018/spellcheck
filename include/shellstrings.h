@@ -28,3 +28,6 @@ void shell_prompt();
 
 /* Final message */
 void bye();
+
+/* File input in Terminal */
+void input(char* input_file, char* status);

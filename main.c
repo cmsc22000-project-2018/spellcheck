@@ -1,56 +1,122 @@
 #include <stdio.h>
+#include <getopt.h>
 #include "parser.h"
 #include "shellstrings.h"
 #include "scfunctions.h"
+#include "dictionary.h"
+#include "getopt.h"
 
 /*
-Sample input:
+	Main function
 
-    > ./spellcheck -i misspelled.txt
+	- parses through initial command line
+	- in the absence of a file to parse, open main page, which can either do one of 4 things:
+		- load a new dictionary (will replace the one that is parsed, if
+		- quit
+		- 
 
-    Spellchecks misspelled.txt in interactive mode with the default dictionary
+	- launch either interactive or batch mode
+	- save file
+ */
 
+/*
+Sample inputs:
 
-    > ./spellcheck -d my_dict.txt misspelled.txt
+One input
+	> ./spellcheck: opens main page
 
-    Spellchecks in batch mode using custom dictionary my_dict.txt
+Two inputs
+	> Not possible to determine whether entered filename is for dict or editing
+	> Print error messages and exit
+
+Three inputs
+	> ./spellcheck -d [dictname.txt]: stores 
+
+	> ./spellcheck -i [filename.txt]: interactive mode
+
+	> ./spellcheck -q [filename.txt]: quiet mode
+
+	> ./spellcheck -v [filename.txt]: verbose mode
+
+...
+and so on, with different combinations.
+
+	> ./spellcheck -d my_dict.txt -q misspelled.txt
 
 */
 
+
 int main(int argc, char **argv) {
 
-    // Support filenames up to 100 characters long
-    char *dictionary_name = (char*)malloc(sizeof(char*) * 101);
-    char *file_name = (char*)malloc(sizeof(char*) * 101);
+	// filenames up to 100 char
+	char* dict_name = malloc(101*sizeof(char*));
+	char* file_name = malloc(101*sizeof(char*));
+	char* save_file = malloc(101*sizeof(char*));
 
-    // Interactive mode flag- default 0 for batch
-    int interactive = 0;
+	// default dict name
+	dic_name = "default_dict.txt";
 
-    // Just a default dictionary, can be updated with commandline args
-    dictionary_name = "default_dict.txt";
 
-    // Read the arguments from commandline
-    for (int i = 0; i < argc; i++) {
+	/*
+		0: default?
+		1: quiet batch
+		2: verbose batch
+		3: interactive
+	*/
+	int mode=0;
 
-        // Found a commandline flag
-        if (argv[i][0] == '-') {
+	/* Parse Command Line Args */
+	// Consider using sscanf
+	char c;
+	while ((c=getopt(argc,argv,"d:i:v:q:s")) != -1) {
+		switch(c) {
+		case 'd':
+			dict_name=optarg;
+			greet();
+			input(optarg,"dictionary");
+			// if dict name doesn't point to valid file route, print error message and exit
+			break;
+		case 'i':
+			mode=3;
+			file_name=optarg;
+			greet();
+			input(optarg,"target file");
+			// if file name is not valid, print error
+			break;
+		case 'v':
+			mode=2;
+			file_name=optarg;
+			greet();
+			input(optarg,"target file");
+			break;
+		case 'q':
+			mode=1;
+			file_name=optarg;
+			greet();
+			input(optarg,"target file");
+			break;
+		case 's':
+			save_file=optarg;
+			greet();
+			printf("Your file will now be saved as %s\n",optarg);
+			break;
+		default:
+			break;
+		}
+	}
 
-            if (argv[i][1] == 'd') {
-                // Checks for a custom dictionary
-                sscanf(argv[i+1], "%s", dictionary_name);
-            } else if (argv[i][1] == 'i') {
-                // If the interactive mode flag is used
-                interactive = 1;
-            } 
+	// Main Page load
+	int *quit=0;
+	while (!quit) {
+		main_page(quit);
+	}
 
-            // have more flags here
-        }
+	// Execute either interactive or batch mode, and save file at end
+	switch (mode) {
+		1: // batch
+		2: // verbose
+		3: // interactive
+	}
 
-        // Have special nonflag things here maybe?
-    }
-
-    // Asssume the last argument is the file to spellcheck
-    sscanf(argv[argc - 1], "%s", file_name);
-
-    // Then just handle stuff here with reading to dictionary and interavctive vs batch
+	return 0;
 }
