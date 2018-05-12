@@ -1,3 +1,6 @@
+#ifndef _SHELLSTRINGS_H
+#define _SHELLSTRINGS_H
+
 /* Strings to be used in shell
    Jaewan Park
 */
@@ -31,3 +34,4 @@ void bye();
 
 /* File input in Terminal */
 void input(char* input_file, char* status);
+#endif

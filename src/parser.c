@@ -33,7 +33,7 @@ char** lineparse_file(char* filename)
 	char** lines;
 	lines = malloc(i*sizeof(char*));
 	if (lines == NULL) {
-		fprintf(strderr,"lineparse_file: malloc failed\n");
+		fprintf(stderr,"lineparse_file: malloc failed\n");
 		exit(0);
 	}
 

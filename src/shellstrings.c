@@ -61,7 +61,7 @@ void usage()
 {
 	char u[] =
 	"Please use designated format:\n\n"
-	"./spellcheck [-flag] [~/path/file.txt] [-saveflag] [~/path/destination.txt] \n\n";
+	"./spellcheck [-flag] [~/path/file.txt] [-saveflag] [~/path/destination.txt] \n\n"
 	"For help, run without command line arguments and enter help page\n";
 	printf("%s",u);
 }

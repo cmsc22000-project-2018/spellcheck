@@ -153,10 +153,6 @@ char* correct_line(char* line, char* old_word, char* new_word) {
 
 
 
-
-
-
-
 /* Functions needed for interactive mode */
 char* edit_interactive(char* line, dict_t* dict)
 {
@@ -229,16 +225,16 @@ char* edit_interactive(char* line, dict_t* dict)
 
 /* interctive mode file */
 
-void interactive_mode(char** filename, int* quit)
+void interactive_mode(char* filename, int* quit)
 {
 	char** lines;
 
-	lines = lineparse_file(filename[1]);
+	lines = lineparse_file(filename);
 
 	dict_t* dict;
 
 	dict = dict_new();
-	if (read_to_dict("sample_dict.txt", dict) == 1) {
+	if (read_to_dict("tests/sample_dict.txt", dict) == 1) {
 		printf("Dictionary successfully read! \n");
 	}
 	else {
@@ -273,8 +269,10 @@ void help_page()
 	read_line();
 }
 
-int main_page(int* quit)
+void main_page(int* quits, char* file_name, char* dict_name)
 {
+	while (!(*quit)) {
+
 	main_help_text();
 	shell_prompt();
 
@@ -288,15 +286,18 @@ int main_page(int* quit)
 		help_page();
 		*quit=0;
 	} else if (!strcmp(args[0],"r")) {
-		if(args[1] == NULL) {
-			error_shell("Please indicate a file!");
-			*quit=0;
-			return 0;
-		}
-		interactive_mode(args,quit);
-		*quit=0;
+		if(!fileexists(args[1])) {
+			error_shell("Please enter a valid file path for a new edit target!");
+			*quit=1;
+		} else {
+		// refactor later, to accommodate for edit_interactive
+		file_name = args[1];
+		*quit=1;
 	} else if (!strcmp(args[0],"d")) {
-		// read_to_dict;
+		if(!fileexists(args[2])) {
+			error_shell("Please enter a valid file path for a new dictionary!");
+		}
+		dict_name = args[1];
 		*quit=0;
 	} else if (!strcmp(args[0],"q")) {
 		*quit=1;
@@ -308,5 +309,16 @@ int main_page(int* quit)
 	free(line);
 	free(args);
 
-	return 1;
-}	
+	}
+}
+
+/* Check if file with name, given by string, exists */
+int fileexists(const char* filename)
+{
+	FILE *file;
+	if (file=fopen(filename,"r")) {
+		fclose(file);
+		return EXIT_SUCCESS;
+	}
+	return EXIT_FAILURE;
+}

@@ -54,8 +54,7 @@ int main(int argc, char **argv) {
 	char* save_file = malloc(101*sizeof(char*));
 
 	// default dict name
-	dic_name = "default_dict.txt";
-
+	dict_name = "sample_dict.txt";
 
 	/*
 		0: default?
@@ -105,18 +104,35 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	// Main Page load
+	/* Open main page, if file path doesn't exist */
 	int *quit=0;
-	while (!quit) {
-		main_page(quit);
+	if (fileexists(file_name)) {
+		*quit=1;
+
 	}
+
+	/* main page */
+	main_page(quit,file_name,dict_name);
+	if (!fileexists(file_name)) return 0; // user selected quit in main page
+
+	// pass dictionary into
+	
 
 	// Execute either interactive or batch mode, and save file at end
 	switch (mode) {
-		1: // batch
-		2: // verbose
-		3: // interactive
+		case 1: *quit=1;	//quiet
+			break;
+		case 2: *quit=1;	//verbose
+			break;
+		case 3: interactive_mode(file_name, quit);
+			break;
+		default:
+			break;
 	}
 
+	// free and exit
+	free(save_file);
+	free(dict_name);
+	free(file_name);
 	return 0;
 }

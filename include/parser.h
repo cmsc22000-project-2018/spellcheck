@@ -1,3 +1,6 @@
+#ifndef _PARSER_H
+#define _PARSER_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,3 +27,4 @@ char* read_line();
    @return Null-terminated array of tokens.
  */
 char **split_line(char *line);
+#endif
