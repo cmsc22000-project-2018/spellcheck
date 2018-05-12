@@ -8,8 +8,18 @@
 #include "dictionary.h"
 #include "word.h"
 
+/* 
+	Order of functions:
+		I. Saving files
+		II. Functions for editing strings (lines)
+		III. Interactive Mode
+		IV. Batch Mode
+		V. Main Page
+ */
+
+
 /*
-	Functions Relating to saving files after having parsed through array of strings
+	I. Saving Files
  */
 
 void save_corrections(char* filename, char** lines)
@@ -37,9 +47,11 @@ void save_page(char* filename, char** lines,int* quit)
 		line=read_line();
 		args=split_line(line);
 
-		assert(args!=NULL);
 
-		if (!strcmp(args[0],"w")) {
+		if (args == NULL || args [1] != NULL) { // More than 1 input, or no input
+			error_shell("\nPlease type in one of the indicated commands!\n\n");
+			i=1;
+		} else if (!strcmp(args[0],"w")) {
 			save_corrections(filename,lines);
 			*quit=0;
 		} else if (!strcmp(args[0],"s")) {
@@ -50,14 +62,14 @@ void save_page(char* filename, char** lines,int* quit)
 		} else if (!strcmp(args[0],"q")) {
 			*quit=0;
 		} else {
-			error_shell("please type in one of the indicated commands!");
+			error_shell("\nPlease type in one of the indicated commands!\n\n");
 			i=1;
 		}
 	}
 }
 
 /*
-	edit interactions
+	II. Functions for editing strings
 */
 
 void underline_misspelled(char *tkn, char* underline) {
@@ -90,13 +102,6 @@ void add_to_badwords(char *badword, char** badwords) {
 	// printf("adding badword %s", badword);
 	// printf("i is %d ", i);
 }
-
-/* Functions needed for batch mode */
-//void batch_mode(int argc, char **argv)
-//{
-//	// implmenent after having interactive success
-//}
-
 
 //takes in a line, identifies incorrect words, and generates a string of underlines  
 void parse_string(char* string, dict_t *dict, char *underline, char** badwords) {
@@ -245,7 +250,7 @@ char* edit_interactive(char* line, dict_t* dict)
 
 
 
-/* interctive mode file */
+/* interctive mode - open file, parse and work on later */
 
 void interactive_mode(char* filename, int* quit) //will pass in dictionary later
 {
@@ -271,7 +276,7 @@ void interactive_mode(char* filename, int* quit) //will pass in dictionary later
 	}
 
 	// call save
-	save_page(filename[1], lines, quit);
+	save_page(filename, lines, quit);
 
 	// free lines
 	i=0;
@@ -282,6 +287,53 @@ void interactive_mode(char* filename, int* quit) //will pass in dictionary later
 	free(lines);
 }
 
+/* 
+	IV. Batch Mode
+ */
+
+char* edit_batch(char* line, dict_t* dict, int verbosity)
+{
+	// generate bad words
+
+	// generate replacements
+
+	// replace string
+
+	return line;
+}
+
+void batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
+{
+	char** lines;
+	lines = lineparse_file(filename);
+	// if lineparse_file returns NULL
+	if (lines == NULL) {
+		shell_error("file parsing error: check %s\n",filename);
+		*quit=1;
+	}
+
+	int i=0;
+	while (lines[i] != NULL) {
+//		lines[i] = edit_batch(lines[i], dict, verbosity);
+		i++;
+	}
+
+	// call save
+	save_page(filename, lines, quit);
+
+	i=0;
+	while(lines[i]!=NULL) {
+		free(lines[i]);
+		i++;
+	}
+	free(lines);
+}
+
+/*
+	V. Main Page
+ */
+
+
 /* Prints help page. Returns to main page via loop in main function */
 void help_page()
 {
@@ -291,7 +343,32 @@ void help_page()
 	read_line();
 }
 
-void main_page(int* quits, char* file_name, char* dict_name)
+/* Check if file with name, given by string, exists */
+int fileexists(const char* filename)
+{
+	FILE *file;
+	if (file=fopen(filename,"r")) {
+		fclose(file);
+		return EXIT_SUCCESS;
+	}
+
+	return EXIT_FAILURE;
+}
+
+/* helper for main_page, determine input mode */
+int mode(char* arg)
+{
+	switch (arg) {
+		case '1'; return atoi(arg);	// might be "
+		case '2'; return atoi(arg);
+		case '3'; return atoi(arg);
+		default: // error case
+			shell_error("\n");
+			
+	}
+}
+
+void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 {
 	while (!(*quit)) {
 
@@ -304,27 +381,39 @@ void main_page(int* quits, char* file_name, char* dict_name)
 	line = read_line();
 	args = split_line(line);
 
-	if (!strcmp(args[0],"h")) {
+	if (args == NULL || args [2] != NULL) { // 3 inputs, or no input
+		error_shell("Please type in one of the indicated commands!\n\n");
+		*quit=0;
+	} else if (!strcmp(args[0],"h")) { // Print help page and exit
 		help_page();
 		*quit=0;
-	} else if (!strcmp(args[0],"r")) {
+	} else if (!strcmp(args[0],"r")) { // Check valid file path, then exit. If not, redo loop
 		if(!fileexists(args[1])) {
-			error_shell("Please enter a valid file path for a new edit target!");
-			*quit=1;
+			error_shell("Please enter a valid file path for a new edit target!\n\n");
+			*quit=0;
 		} else {
-		// refactor later, to accommodate for edit_interactive
 		file_name = args[1];
 		*quit=1;
-	} else if (!strcmp(args[0],"d")) {
-		if(!fileexists(args[2])) {
-			error_shell("Please enter a valid file path for a new dictionary!");
 		}
+	} else if (!strcmp(args[0],"d")) { // Check file path validity for dicitonary, then redo loop
+		if(!fileexists(args[1])) {
+			error_shell("Please enter a valid file path for a new dictionary!\n\n");
+			*quit=0;
+		} else {
 		dict_name = args[1];
 		*quit=0;
-	} else if (!strcmp(args[0],"q")) {
-		*quit=1;
-	} else {
-		error_shell("Please type in one of the indicated commands!");
+		}
+	} else if (!strcmp(args[0],"q")) { // quit
+		*quit=2;
+	} else if (!strcmp(args[0], "m")) { // change mode
+		*mode = mode_change(args[1]);
+		if(!fileexists(file_name)){
+			*quit=0;
+		} else {
+			*quit=1;
+		}
+	} else { // input bad
+		error_shell("Please type in one of the indicated commands!\n\n");
 		*quit=0;
 	}
 
@@ -332,15 +421,4 @@ void main_page(int* quits, char* file_name, char* dict_name)
 	free(args);
 
 	}
-}
-
-/* Check if file with name, given by string, exists */
-int fileexists(const char* filename)
-{
-	FILE *file;
-	if (file=fopen(filename,"r")) {
-		fclose(file);
-		return EXIT_SUCCESS;
-	}
-	return EXIT_FAILURE;
 }

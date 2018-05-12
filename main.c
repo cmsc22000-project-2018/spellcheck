@@ -41,9 +41,21 @@ Three inputs
 ...
 and so on, with different combinations.
 
-	> ./spellcheck -d my_dict.txt -q misspelled.txt
+Largest possible number of argc: 7
+	> ./spellcheck -d my_dict.txt -q misspelled.txt -s savefilename.txt
 
 */
+
+char* mode_name(int mode)
+{
+	switch (mode) {
+		case 1: return "quiet batch mode"; 
+		case 2: return "verbose batch mode";
+		case 3: return "interactive mode";
+		default: break;
+	}
+	return "quiet batch mode";
+}
 
 
 int main(int argc, char **argv) {
@@ -57,25 +69,32 @@ int main(int argc, char **argv) {
 	dict_name = "sample_dict.txt";
 
 	/*
-		0: default?
 		1: quiet batch
 		2: verbose batch
 		3: interactive
 	*/
-	int mode=0;
+	int mode=3;
 
 	/* Parse Command Line Args */
 	// Consider using sscanf
 	char c;
+
 	while ((c=getopt(argc,argv,"d:i:v:q:s")) != -1) {
 		switch(c) {
 		case 'd':
+			if (!fileexists(optarg)) {
+				shell_error("Dictionary input file path invalid\n");
+				return EXIT_FAILURE;
+			}
 			dict_name=optarg;
 			greet();
 			input(optarg,"dictionary");
-			// if dict name doesn't point to valid file route, print error message and exit
 			break;
 		case 'i':
+			if (!fileexists(optarg)) {
+				shell_error("Input file path invalid\n");
+				return EXIT_FAILURE;
+			}
 			mode=3;
 			file_name=optarg;
 			greet();
@@ -83,12 +102,20 @@ int main(int argc, char **argv) {
 			// if file name is not valid, print error
 			break;
 		case 'v':
+			if (!fileexists(optarg)) {
+				shell_error("Input file path invalid\n");
+				return EXIT_FAILURE;
+			}
 			mode=2;
 			file_name=optarg;
 			greet();
 			input(optarg,"target file");
 			break;
 		case 'q':
+			if (!fileexists(optarg)) {
+				shell_error("Input file path invalid\n");
+				return EXIT_FAILURE;
+			}
 			mode=1;
 			file_name=optarg;
 			greet();
@@ -104,31 +131,50 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	/* Open main page, if file path doesn't exist */
 	int *quit=0;
+
+  while(!(*quit)) {
 	if (fileexists(file_name)) {
 		*quit=1;
-
 	}
 
-	/* main page */
-	main_page(quit,file_name,dict_name);
-	if (!fileexists(file_name)) return 0; // user selected quit in main page
+	/* main page: activated if there is no file to be parsed.
+	   can open help page, quit, or load filename / dictname */
+	main_page(quit,&mode,file_name,dict_name);
+	if (!fileexists(file_name) && ((*quit)==2)) { // user selected "quit" in main_page
+		bye();
+		return 0;
+	}
 
-	// pass dictionary into
-	
+
+	/*
+		Initialize dictionary, declare names of files to be used
+	*/
+
+	// ...
+
+	/*
+		Starting to Parse file!
+	 */
+	char* mode_name(mode);	
+	printf("\n\n Editing Started With \n\n");
+	printf("file: %s\n", file_name);
+	printf("dictionary: %s\n\n", dict_name);
+	printf("mode \n\n", mode_name);
 
 	// Execute either interactive or batch mode, and save file at end
 	switch (mode) {
-		case 1: *quit=1;	//quiet
+		case 1: batch_mode(file_name, dict, quit, 0); // pass in dictionary
 			break;
-		case 2: *quit=1;	//verbose
+		case 2: batch_mode(file_name, dict, quit, 1); // pass in dictionary 
 			break;
-		case 3: interactive_mode(file_name, quit);
+		case 3: interactive_mode(file_name, quit); // pass in dictionary - to implement
 			break;
 		default:
 			break;
 	}
+
+  }
 
 	// free and exit
 	free(save_file);

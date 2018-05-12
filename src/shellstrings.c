@@ -20,6 +20,7 @@ void main_help_text()
 	"h                            : help\n"
 	"r [~/path/file.txt]          : read a file into spellcheck\n"
 	"d [~/path/dictionary.txt]    : read dictionary file into spellcheck\n"
+	"m [1, 2 or 3]                : change mode (1 - quiet, 2 - verbose, 3 - interactive\n"
 	"q                            : quit program\n\n";
 	printf("%s",m);
 }
