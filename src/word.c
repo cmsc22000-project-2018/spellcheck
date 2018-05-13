@@ -3,6 +3,7 @@
 #include <strings.h>
 #include <string.h>
 #include <assert.h>
+#include <stdlib.h>	
 
 
 int valid_word(char* word, dict_t* dict) {
@@ -35,7 +36,7 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 	}
 
 	else {
-		return -1;
+		return EXIT_FAILURE;
 	}
 
 }
