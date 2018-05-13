@@ -3,9 +3,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <assert.h>
-#include "parser.h"
 
 /* Parsing Functions for Parsing Input Files */
 

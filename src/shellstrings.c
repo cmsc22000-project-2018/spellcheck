@@ -29,7 +29,7 @@ void main_help_text()
 void help_page_text()
 {
 	char h[] =
-	"\n\n Spellcheck is a tool which, given a text file, will search for misspelled words and will suggest alternative spellings.\n\n\n"
+	"\n\nSpellcheck is a tool which, given a text file, will search for misspelled words and will suggest alternative spellings.\n\n\n"
 	"To run interactive mode on a file, return to the previous page and run:\n\n"
 	"\t r [~/path/file.txt]\n\n"
 	"To run batch mode, exit program, and run:\n\n"

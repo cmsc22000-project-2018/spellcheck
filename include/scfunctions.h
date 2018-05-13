@@ -1,8 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
-#include "shellstrings.h"
+#ifndef _SCFUNCTIONS_H
+#define _SCFUNCTIONS_H
+
 #include "parser.h"
 #include "scfunctions.h"
 #include "dictionary.h"
@@ -22,9 +20,9 @@
 	I. Saving Files
  */
 
-void save_corrections(char* filename, char** lines)
+void save_corrections(char* filename, char** lines);
 
-void save_page(char* filename, char** lines,int* quit)
+void save_page(char* filename, char** lines,int* quit);
 
 /*
 	II. Functions for editing strings
@@ -43,7 +41,7 @@ void parse_string(char* string, dict_t *dict, char *underline, char** badwords);
 char* correct_line(char* line, char* old_word, char* new_word);
 
 //initialises each element in array (that stores misspelled words in a line) to NULL
-void initialize_badwords(char *badwords, int length);
+void initialize_badwords(char **badwords, int length);
 
 /*
 	III. Interactive Mode
@@ -54,7 +52,7 @@ void initialize_badwords(char *badwords, int length);
 char* edit_interactive(char* line, dict_t* dict);
 
 /* interctive mode - open file, parse and work on later */
-void interactive_mode(char* filename, int* quit) //will pass in dictionary later
+void interactive_mode(char* filename, dict_t* dict, int* quit); //will pass in dictionary later
 
 /* 
 	IV. Batch Mode
@@ -76,6 +74,8 @@ void help_page();
 int fileexists(const char* filename);
 
 /* helper for main_page, determine input mode */
-int mode(char* arg);
+int change_mode(char* arg);
 
 void main_page(int* quit, int *mode, char* file_name, char* dict_name);
+
+#endif

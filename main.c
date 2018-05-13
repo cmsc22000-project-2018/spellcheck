@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <getopt.h>
+#include <string.h>
 #include "parser.h"
 #include "shellstrings.h"
 #include "scfunctions.h"
 #include "dictionary.h"
-#include "getopt.h"
 
 /*
 	Main function
@@ -17,9 +17,7 @@
 
 	- launch either interactive or batch mode
 	- save file
- */
 
-/*
 Sample inputs:
 
 One input
@@ -46,7 +44,7 @@ Largest possible number of argc: 7
 
 */
 
-char* mode_name(int mode)
+char* modename(int mode)
 {
 	switch (mode) {
 		case 1: return "quiet batch mode"; 
@@ -58,15 +56,15 @@ char* mode_name(int mode)
 }
 
 
-int main(int argc, char **argv) {
-
+int main(int argc, char **argv)
+{
 	// filenames up to 100 char
 	char* dict_name = malloc(101*sizeof(char*));
 	char* file_name = malloc(101*sizeof(char*));
 	char* save_file = malloc(101*sizeof(char*));
 
 	// default dict name
-	dict_name = "sample_dict.txt";
+	dict_name = "tests/sample_dict.txt";
 
 	/*
 		1: quiet batch
@@ -83,7 +81,7 @@ int main(int argc, char **argv) {
 		switch(c) {
 		case 'd':
 			if (!fileexists(optarg)) {
-				shell_error("Dictionary input file path invalid\n");
+				error_shell("Dictionary input file path invalid\n");
 				return EXIT_FAILURE;
 			}
 			dict_name=optarg;
@@ -92,7 +90,7 @@ int main(int argc, char **argv) {
 			break;
 		case 'i':
 			if (!fileexists(optarg)) {
-				shell_error("Input file path invalid\n");
+				error_shell("Input file path invalid\n");
 				return EXIT_FAILURE;
 			}
 			mode=3;
@@ -103,7 +101,7 @@ int main(int argc, char **argv) {
 			break;
 		case 'v':
 			if (!fileexists(optarg)) {
-				shell_error("Input file path invalid\n");
+				error_shell("Input file path invalid\n");
 				return EXIT_FAILURE;
 			}
 			mode=2;
@@ -113,7 +111,7 @@ int main(int argc, char **argv) {
 			break;
 		case 'q':
 			if (!fileexists(optarg)) {
-				shell_error("Input file path invalid\n");
+				error_shell("Input file path invalid\n");
 				return EXIT_FAILURE;
 			}
 			mode=1;
@@ -131,17 +129,18 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	int *quit=0;
+	int *quit=malloc(sizeof(int*));
+	*quit=0;
 
-  while(!(*quit)) {
-	if (fileexists(file_name)) {
+  while (!(*quit)) {
+	if (fileexists(file_name)) {	// if file exists, then bypass main page
 		*quit=1;
 	}
 
 	/* main page: activated if there is no file to be parsed.
 	   can open help page, quit, or load filename / dictname */
 	main_page(quit,&mode,file_name,dict_name);
-	if (!fileexists(file_name) && ((*quit)==2)) { // user selected "quit" in main_page
+	if ((*quit)==2) { // user selected "quit" in main_page
 		bye();
 		return 0;
 	}
@@ -150,17 +149,21 @@ int main(int argc, char **argv) {
 	/*
 		Initialize dictionary, declare names of files to be used
 	*/
-
-	// ...
+	dict_t* dict = dict_new();
+	if (read_to_dict(dict_name, dict) == 1) {
+		printf("Dictionary Successfully Parsed!\n");
+	} else {
+		printf("Trouble reading dictionary, exiting program\n");
+	}
 
 	/*
 		Starting to Parse file!
 	 */
-	char* mode_name(mode);	
-	printf("\n\n Editing Started With \n\n");
+	char* md = modename(mode);
+	printf("\n\n==========Editing Started With==========\n\n");
 	printf("file: %s\n", file_name);
 	printf("dictionary: %s\n\n", dict_name);
-	printf("mode \n\n", mode_name);
+	printf("mode: %s \n\n", md);
 
 	// Execute either interactive or batch mode, and save file at end
 	switch (mode) {
@@ -168,15 +171,18 @@ int main(int argc, char **argv) {
 			break;
 		case 2: batch_mode(file_name, dict, quit, 1); // pass in dictionary 
 			break;
-		case 3: interactive_mode(file_name, quit); // pass in dictionary - to implement
+		case 3: interactive_mode(file_name, dict, quit); // pass in dictionary - to implement
 			break;
 		default:
 			break;
 	}
 
+	file_name="";
   }
 
 	// free and exit
+	bye();
+	free(quit);
 	free(save_file);
 	free(dict_name);
 	free(file_name);

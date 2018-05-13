@@ -6,8 +6,6 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include <strings.h>
-#include "shellstrings.h"
 
 /* Home Page */
 void greet();

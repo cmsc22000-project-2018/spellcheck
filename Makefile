@@ -1,6 +1,6 @@
 # Makefile based on template at https://gist.github.com/xuhdev/1873316
 spellcheck: main.c src/parser.c src/scfunctions.c src/shellstrings.c src/dictionary.c src/word.c src/mock_trie.c
-	gcc -fPIC -Wall -Wextra -g -I./include/ -o spellcheck main.c src/parser.c src/scfunctions.c src/shellstrings.c src/word.c src/mock_trie.c
+	gcc -fPIC -Wall -Wextra -g -I./include/ -o spellcheck main.c src/parser.c src/scfunctions.c src/shellstrings.c src/word.c src/dictionary.c src/mock_trie.c
 
 clean:
 	rm shell
