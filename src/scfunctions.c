@@ -235,7 +235,8 @@ char* edit_interactive(char* line, dict_t* dict)
     	if(success != -1) {
     	printf("Possible replacements for word %s are: ", badwords[i]);
     	printf("1: No replacement ");
-    	for (int j = 0; j < max_no_suggestions; j++) {
+        int j = 0;
+    	for ( ; j < max_no_suggestions; j++) {
     		printf("%d : %s ", j+2, suggestions[j]);
 
     	}  	
