@@ -52,7 +52,7 @@ void initialize_badwords(char **badwords, int length);
 char* edit_interactive(char* line, dict_t* dict);
 
 /* interctive mode - open file, parse and work on later */
-void interactive_mode(char* filename, dict_t* dict, int* quit); //will pass in dictionary later
+char** interactive_mode(char* filename, dict_t* dict, int* quit); //will pass in dictionary later
 
 /* 
 	IV. Batch Mode
@@ -60,7 +60,7 @@ void interactive_mode(char* filename, dict_t* dict, int* quit); //will pass in d
 
 char* edit_batch(char* line, dict_t* dict, int verbosity);
 
-void batch_mode(char* filename, dict_t* dict, int* quit, int verbosity);
+char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity);
 
 /*
 	V. Main Page

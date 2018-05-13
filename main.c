@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 		switch(c) {
 		case 'd':
 			if (!fileexists(optarg)) {
-				error_shell("Dictionary input file path invalid\n");
+				error_shell("Dictionary input file path invalid");
 				return EXIT_FAILURE;
 			}
 			dict_name=optarg;
@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 			break;
 		case 'i':
 			if (!fileexists(optarg)) {
-				error_shell("Input file path invalid\n");
+				error_shell("Input file path invalid");
 				return EXIT_FAILURE;
 			}
 			mode=3;
@@ -103,7 +103,7 @@ int main(int argc, char **argv)
 			break;
 		case 'v':
 			if (!fileexists(optarg)) {
-				error_shell("Input file path invalid\n");
+				error_shell("Input file path invalid");
 				return EXIT_FAILURE;
 			}
 			mode=2;
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
 			break;
 		case 'q':
 			if (!fileexists(optarg)) {
-				error_shell("Input file path invalid\n");
+				error_shell("Input file path invalid");
 				return EXIT_FAILURE;
 			}
 			mode=1;
@@ -122,9 +122,9 @@ int main(int argc, char **argv)
 			input(optarg,"target file");
 			break;
 		case 's':
-			save_file=optarg;
+			printf("Your file will now be saved as %s",optarg);
 			greet();
-			printf("Your file will now be saved as %s\n",optarg);
+			save_file=optarg;
 			break;
 		default: /* If command line contains just the file at argv[1], write it into file_name */
 			if (fileexists(argv[1])) file_name=argv[1];
@@ -172,17 +172,36 @@ int main(int argc, char **argv)
 	printf("Enter any command to start %s\n\n", md);
 	read_line();
 
+	char** result;
 	// Execute either interactive or batch mode, and save file at end
 	switch (mode) {
-		case 1: batch_mode(file_name, dict, quit, 0); // pass in dictionary
+		case 1: result = batch_mode(file_name, dict, quit, 0); // pass in dictionary
 			break;
-		case 2: batch_mode(file_name, dict, quit, 1); // pass in dictionary 
+		case 2: result = batch_mode(file_name, dict, quit, 1); // pass in dictionary 
 			break;
-		case 3: interactive_mode(file_name, dict, quit); // pass in dictionary - to implement
+		case 3: result = interactive_mode(file_name, dict, quit); // pass in dictionary - to implement
 			break;
 		default:
 			break;
 	}
+
+	// Save file
+	if (fileexists(save_file)) {
+		save_corrections(save_file, result);
+		*quit=1;
+	} else {
+		save_page(save_file, result, quit);
+	}
+
+	// free text array
+	int k;
+	if (result[k] != NULL) {
+		free(result[k]);
+		k++;
+	}
+	free(result);
+
+
 
 	file_name="";
   }

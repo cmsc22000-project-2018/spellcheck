@@ -51,7 +51,7 @@ void save_page(char* filename, char** lines,int* quit)
 		args=split_line(line);
 
 
-		if (args == NULL || args [1] != NULL) { // More than 1 input, or no input
+		if (args == NULL || args [2] != NULL) { // More than 1 input, or no input
 			error_shell("Please type in one of the indicated commands!");
 			i=1;
 		} else if (!strcmp(args[0],"w")) {
@@ -114,8 +114,6 @@ void add_to_badwords(char *badword, char** badwords)
 //takes in a line, identifies incorrect words, and generates a string of underlines  
 void parse_string(char* string, dict_t *dict, char *underline, char** badwords)
 {
-
-	
 	char *tkn = strtok(string," ,.-'\n'"); //words only separated by these punctuation
 	while (tkn != NULL) {
 
@@ -267,7 +265,7 @@ char* edit_interactive(char* line, dict_t* dict)
 
 /* interctive mode - open file, parse and work on later */
 
-void interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in dictionary later
+char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in dictionary later
 {
 	char** lines;
 
@@ -283,23 +281,15 @@ void interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in di
 	// call save
 	save_page(filename, lines, quit);
 
-	// free lines
-	i=0;
-	while(lines[i]!=NULL) {
-		free(lines[i]);
-		i++;
-	}
-	free(lines);
+	return lines;
 }
 
 /* 
 	IV. Batch Mode
  */
-
+// Adapted from sarika's edit_interactive
 char* edit_batch(char* line, dict_t* dict, int verbosity)
 {
-    if (verbosity) printf("Batch Mode, Verbose");
-
     char *line_copy = malloc(strlen(line));
     strcpy(line_copy, line); //maintain a copy of the line to preserve original line: line will be parsed into individual words
     int max_no_suggestions = 1; //need only one suggestion
@@ -307,7 +297,6 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
     int length = strlen(line)/3; //approximate 3 chars per word to be safe
     char *badwords[length]; //generates an empty array where the misspelled words in a line will be stored
     initialize_badwords(badwords, length);
-
 
     char *underline = (char *)malloc(strlen(line + 1)); //generate an empty array where the underline will go
     underline[0] = '\0'; 
@@ -321,14 +310,17 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
     	int success = generate_suggestions(badwords[i], dict, suggestions);
 	if (success == -1) suggestions[0] = badwords[i];
     	correct_line(line_copy, badwords[i], suggestions[0]);
-	if (verbosity) printf("WORD:%s\t\tREPLACEMENt:%s\n",badwords[i],suggestions[0]);
+	if (verbosity) printf("WORD:%s\t\t\tREPLACEMENT:%s\n",badwords[i],suggestions[0]);
+	i++;
 	}
 
 	return line_copy;
 }
 
-void batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
+char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 {
+	if (verbosity) printf("\nBatch Mode: Verbose\n\n");
+
 	char** lines;
 	lines = lineparse_file(filename);
 	// if lineparse_file returns NULL
@@ -344,15 +336,7 @@ void batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 		i++;
 	}
 
-	// call save
-	save_page(filename, lines, quit);
-
-	i=0;
-	while(lines[i]!=NULL) {
-		free(lines[i]);
-		i++;
-	}
-	free(lines);
+	return lines;
 }
 
 /*
@@ -413,8 +397,7 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 				error_shell("\n\nPlease enter a valid file path for a new edit target!");
 				*quit=0;
 			} else {
-			free(file_name);
-			file_name = strdup(args[1]);
+			strcpy(file_name,args[1]);
 			printf("\n\nInput file is now %s\n\n\n",file_name);
 			*quit=1;
 			}
@@ -423,8 +406,7 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 				error_shell("Please enter a valid file path for a new dictionary!");
 				*quit=0;
 			} else {
-			free(dict_name);
-			dict_name = strdup(args[1]);
+			dict_name=args[1];
 			printf("\n\nDictionary file is now %s\n\n\n",dict_name);
 			*quit=0;
 			}
@@ -432,6 +414,7 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 			*quit=2;
 		} else if (!strcmp(args[0], "m")) { // change mode
 			*mode = change_mode(args[1]);
+			printf("Mode changed to %d\n",atoi(args[1]));
 			if(!fileexists(file_name)) {
 				*quit=0;
 			} else {
