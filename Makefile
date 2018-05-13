@@ -9,11 +9,15 @@ BIN = spellcheck
 SRCS = main.c src/mock_trie.c src/dictionary.c src/parser.c src/word.c src/scfunctions.c
 OBJS = $(SRCS:.c=.o)
 
-.PHONY: all clean
+.PHONY: all tests clean
 all: $(BIN)
 
 $(BIN):
 	$(CC) $(CFLAGS) -o $(BIN) $(SRCS)
-	
+
+tests:
+	make -C ./tests
+
 clean:
 	-$(RM) $(OBJS) $(BIN)
+	make -C ./tests clean
