@@ -13,7 +13,7 @@
 void array_resize(char** array, size_t alen)
 {
 	alen = 2*alen;
-	array=realloc(array,alen*sizeof(char*));
+	array = realloc(array, alen * sizeof(char*));
 }
 
 /* returns with pointer to array of strings, each of which represent a line in a given file */
@@ -23,29 +23,29 @@ char** lineparse_file(char* filename)
 {
 	FILE *f = fopen(filename, "r");
 
-	if (f==NULL) {
+	if (f == NULL) {
 		return NULL;
 	}
 
-	unsigned int n=0;
-	size_t i=INITLINE;
+	unsigned int n = 0;
+	size_t i = INITLINE;
 	char str[MAXCHAR];		// consider resizing?
 	char** lines;
-	lines = malloc(i*sizeof(char*));
+	lines = malloc(i * sizeof(char*));
 	if (lines == NULL) {
-		fprintf(stderr,"lineparse_file: malloc failed\n");
+		fprintf(stderr, "lineparse_file: malloc failed\n");
 		exit(0);
 	}
 
-	while(fgets(str,MAXCHAR,f) != 0) {
-		lines[n]=strdup(str);
+	while(fgets(str, MAXCHAR, f) != 0) {
+		lines[n] = strdup(str);
 		n++;
 		if (n >= i) {
-			array_resize(lines,i);
+			array_resize(lines, i);
 		}
 	}
-	while(n<i) {
-		lines[n]=NULL;
+	while(n < i) {
+		lines[n] = NULL;
 		n++;
 	}
 
@@ -55,7 +55,7 @@ char** lineparse_file(char* filename)
 
 char* get_word(char* line)
 {
-	char* word = strtok(line," ,.-\n\t\"\'!?()"); // add additional punctuations
+	char* word = strtok(line, " ,.-\n\t\"\'!?()"); // add additional punctuations
 	if (word == NULL) {
 		return NULL;
 	}
@@ -70,12 +70,13 @@ char* read_line()
 {
 	char input[BUFFERSIZE];
 	char* rval;
-	memset(input,'\0',BUFFERSIZE);
-	fgets(input,BUFFERSIZE,stdin);
+	memset(input, '\0', BUFFERSIZE);
+	char* i = fgets(input, BUFFERSIZE, stdin);
+    assert(i != NULL);      // even empty lines will probably have '\0; test to see if works
 
 	int n = strlen(input);
 	rval = strdup(input);
-	if (input[n-1]=='\n')
+	if (input[n-1] == '\n')
 		rval[n-1] = '\0';
 
 	return rval;

@@ -24,7 +24,7 @@
 #define BOLDWHITE   "\033[1m\033[37m"       // Bold White
 
 /* Home Page */
-void shell_greeting();
+void shell_intro();
 
 /* Save Page */
 void shell_save();
