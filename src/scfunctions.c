@@ -47,8 +47,8 @@ void save_page(char* filename, char** lines, int* quit)
 		char* line;
 		char** args;
 
-		line = read_line();
-		args = split_line(line);
+		line = parse_read_line();
+		args = parse_split_line(line);
 
 
 		if (args == NULL || args [2] != NULL) { // More than 1 input, or no input
@@ -272,7 +272,7 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in 
 {
 	char** lines;
 
-	lines = lineparse_file(filename);
+	lines = parse_file(filename);
 
 	// step through phases
 	int i=0;
@@ -323,7 +323,7 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 	if (verbosity) printf("\nBatch Mode: Verbose\n\n");
 
 	char** lines;
-	lines = lineparse_file(filename);
+	lines = parse_file(filename);
 	// if lineparse_file returns NULL
 	if (lines == NULL) {
 		shell_error("file parsing error: check txt file");
@@ -351,7 +351,7 @@ void help_page()
     shell_help();
 	shell_prompt();
 
-	read_line();
+	parse_read_line();
 }
 
 /* Check if file with name, given by string, exists */
@@ -385,8 +385,8 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 		shell_intro();
 		shell_prompt();
 
-		line = read_line();
-		args = split_line(line);
+		line = parse_read_line();
+		args = parse_split_line(line);
 
 		if (args == NULL || args [2] != NULL) { // 3 inputs, or no input
 			shell_error("Please type in one of the indicated commands!");

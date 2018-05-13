@@ -4,7 +4,7 @@
 #include <assert.h>
 #include "parser.h"
 
-#define MAXCHAR 1000	// maximum characters in a line?
+#define MAXCHAR 1025	// limit is 1024
 #define INITLINE 50
 
 /* Parsing Functions for Parsing Input Files */
@@ -12,6 +12,7 @@
 /* helper function: resizes array in lineparse if given file is too large */
 void array_resize(char** array, size_t alen)
 {
+    assert(alen > 0);
 	alen = 2*alen;
 	array = realloc(array, alen * sizeof(char*));
 }
@@ -19,7 +20,7 @@ void array_resize(char** array, size_t alen)
 /* returns with pointer to array of strings, each of which represent a line in a given file */
 /* current limit to each string is 1000 characters */
 /* return NULL if file could not be opened */
-char** lineparse_file(char* filename)
+char** parse_file(char* filename)
 {
 	FILE *f = fopen(filename, "r");
 
@@ -53,7 +54,7 @@ char** lineparse_file(char* filename)
 	return lines;
 }
 
-char* get_word(char* line)
+char* parse_get_word(char* line)
 {
 	char* word = strtok(line, " ,.-\n\t\"\'!?()"); // add additional punctuations
 	if (word == NULL) {
@@ -66,7 +67,7 @@ char* get_word(char* line)
 /* Parsing functions for parsing command line inputs */
 /* read a command line and return a string */
 #define BUFFERSIZE 256
-char* read_line()
+char* parse_read_line()
 {
 	char input[BUFFERSIZE];
 	char* rval;
@@ -90,7 +91,7 @@ char* read_line()
    @param line The line.
    @return Null-terminated array of tokens.
  */
-char **split_line(char *line)
+char **parse_split_line(char *line)
 {
   int bufsize = LSH_TOK_BUFSIZE, position = 0;
   char **tokens = malloc(bufsize * sizeof(char*));

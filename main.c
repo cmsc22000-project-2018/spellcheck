@@ -165,7 +165,7 @@ int main(int argc, char **argv)
 
 	/* Pause, to confirm start */
 	printf("Enter any command to start %s\n\n", md);
-	read_line();
+	parse_read_line();
 
 	char** result=NULL;
 	// Execute either interactive or batch mode, and save file at end
