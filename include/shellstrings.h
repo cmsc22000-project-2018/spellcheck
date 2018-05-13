@@ -38,13 +38,13 @@ void shell_usage();
 /* Shell Prompt */
 void shell_prompt();
 
-/* Final message */
-void shell_outro();
-
 /* File input in Terminal */
 void shell_input(char* input_file, char* status);
 
 /* Help Page */
 void shell_help();
+
+/* Final message */
+void shell_outro();
 
 #endif
