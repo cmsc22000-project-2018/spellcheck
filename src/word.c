@@ -5,8 +5,6 @@
 #include <assert.h>
 
 
-
-
 int valid_word(char* word, dict_t* dict) {
 	///printf("output is %d ", in_dict(word, dict));
 	if (*word == ',' || *word == '\n' || *word == '.') { //we cannot spellcheck for punctuation
