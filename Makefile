@@ -3,7 +3,7 @@ spellcheck: main.c src/parser.c src/scfunctions.c src/shellstrings.c src/diction
 	gcc -fPIC -Wall -Wextra -g -I./include/ -o spellcheck main.c src/parser.c src/scfunctions.c src/shellstrings.c src/word.c src/dictionary.c src/mock_trie.c
 
 clean:
-	rm shell
+	rm -f spellcheck
 
 #CC = gcc
 #CFLAGS = -fPIC -Wall -Wextra -O2 -g -I./include/

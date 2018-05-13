@@ -55,7 +55,6 @@ char* modename(int mode)
 	return "quiet batch mode";
 }
 
-
 int main(int argc, char **argv)
 {
 	// filenames up to 100 char
@@ -76,6 +75,9 @@ int main(int argc, char **argv)
 	/* Parse Command Line Args */
 	// Consider using sscanf
 	char c;
+
+	/* If command line contains just the file at argv[1], write it into file_name */
+	if (fileexists(argv[1])) file_name=argv[1];
 
 	while ((c=getopt(argc,argv,"d:i:v:q:s")) != -1) {
 		switch(c) {
@@ -124,7 +126,8 @@ int main(int argc, char **argv)
 			greet();
 			printf("Your file will now be saved as %s\n",optarg);
 			break;
-		default:
+		default: /* If command line contains just the file at argv[1], write it into file_name */
+			if (fileexists(argv[1])) file_name=argv[1];
 			break;
 		}
 	}
@@ -145,7 +148,6 @@ int main(int argc, char **argv)
 		return 0;
 	}
 
-
 	/*
 		Initialize dictionary, declare names of files to be used
 	*/
@@ -160,10 +162,15 @@ int main(int argc, char **argv)
 		Starting to Parse file!
 	 */
 	char* md = modename(mode);
-	printf("\n\n==========Editing Started With==========\n\n");
+	printf("\n\n=======================================\n"
+		   "==========Editing Started With==========\n\n");
 	printf("file: %s\n", file_name);
-	printf("dictionary: %s\n\n", dict_name);
+	printf("dictionary: %s\n", dict_name);
 	printf("mode: %s \n\n", md);
+
+	/* Pause, to confirm start */
+	printf("Enter any command to start %s\n\n", md);
+	read_line();
 
 	// Execute either interactive or batch mode, and save file at end
 	switch (mode) {

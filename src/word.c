@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <strings.h>
 #include <string.h>
-
+#include <assert.h>
 
 
 
@@ -17,6 +17,7 @@ int valid_word(char* word, dict_t* dict) {
 
 
 int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
+	assert (dict != NULL);
 
 	if (strcmp(word, "splling") == 0) {
 		suggestions[0] = "spelling";
@@ -40,4 +41,3 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 	}
 
 }
-	

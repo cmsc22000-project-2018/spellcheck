@@ -20,7 +20,7 @@ void main_help_text()
 	"h                            : help\n"
 	"r [~/path/file.txt]          : read a file into spellcheck\n"
 	"d [~/path/dictionary.txt]    : read dictionary file into spellcheck\n"
-	"m [1, 2 or 3]                : change mode (1 - quiet, 2 - verbose, 3 - interactive\n"
+	"m [1, 2 or 3]                : change mode (1 - quiet, 2 - verbose, 3 - interactive)\n"
 	"q                            : quit program\n\n";
 	printf("%s",m);
 }
@@ -35,7 +35,7 @@ void help_page_text()
 	"To run batch mode, exit program, and run:\n\n"
 	"\t $ ./spellcheck [~/path/file.txt] [-flag]\n\n"
 	"-q is for quiet, -v is for verbose, and -s saves a file to another destination.\n\n"
-	"Press any key to return to the previous page.\n\n\n";
+	"Enter any command to return to the previous page.\n\n\n";
 	printf("%s",h);
 }
 
