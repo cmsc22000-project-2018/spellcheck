@@ -78,7 +78,8 @@ void save_page(char* filename, char** lines, int* quit)
 void underline_misspelled(char *tkn, char* underline)
 {
 	int j = strlen(tkn);
-	for(int i = 0; i < j; i++) {
+    int i = 0;
+	for( ; i < j; i++) {
     	strcat(underline, "^");
 	}
 		strcat(underline, " ");
@@ -91,7 +92,8 @@ void underline_misspelled(char *tkn, char* underline)
 void underline_correct_spelling(char *tkn, char* underline)
 {
 	int j = strlen(tkn);
-	for(int i = 0; i < j; i++) {
+    int i = 0;
+	for( ; i < j; i++) {
     		strcat(underline, " ");
 	}
 		strcat(underline, " ");
@@ -173,7 +175,8 @@ char* correct_line(char* line, char* old_word, char* new_word)
 //initialises each element in array (that stores misspelled words in a line) to NULL
 void initialize_badwords(char **badwords, int length)
 {
-	for (int i = 0; i < length; i++) {
+    int i = 0;
+	for ( ; i < length; i++) {
     	badwords[i] = NULL; //initialize each element to be NULL
     }
 }
