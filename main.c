@@ -153,7 +153,7 @@ int main(int argc, char **argv)
 		Initialize dictionary, declare names of files to be used
 	*/
 	dict_t* dict = dict_new();
-	if (read_to_dict(dict_name, dict) == 1) {
+	if (dict_read(dict, dict_name) == 1) {
 		printf("Dictionary Successfully Parsed!\n");
 	} else {
 		printf("Trouble reading dictionary, exiting program\n");

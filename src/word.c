@@ -11,7 +11,7 @@ int valid_word(char* word, dict_t* dict) {
 	if (*word == ',' || *word == '\n' || *word == '.') { //we cannot spellcheck for punctuation
 		return 1;
 	}
-    return in_dict(word, dict);
+    return dict_exists(dict, word);
 }
 
 

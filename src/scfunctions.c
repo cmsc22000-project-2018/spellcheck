@@ -138,12 +138,12 @@ void parse_string(char* string, dict_t *dict, char *underline, char** badwords)
 	char *tkn = strtok(string, " ,.-'\n'"); //words only separated by these punctuation
 	while (tkn != NULL) {
 
-		if (valid_word(tkn, dict) == 0){
+		if (valid_word(tkn, dict) == EXIT_FAILURE){
 			//printf("%s ", tkn);
 			underline_misspelled(tkn, underline);
 			add_to_badwords(tkn, badwords);
 		}
-		else if (valid_word(tkn, dict) == 1) {
+		else if (valid_word(tkn, dict) == EXIT_SUCCESS) {
 			//printf("%s ", tkn);
 			underline_correct_spelling(tkn, underline);
 		}
