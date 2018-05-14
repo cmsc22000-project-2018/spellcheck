@@ -51,8 +51,7 @@ void save_page(char* filename, char** lines, int* quit)
         verify = scanf("%s", line);
         assert (!(verify < 0));
         assert (strlen(line) < 256);
-
-        if (strlen(line) > 2) {
+                if (strlen(line) > 2) {
             shell_error("Please type in one of the indicated commands!");
             i = 1;
         } else if (!strcmp(line, "s")) {
@@ -60,14 +59,14 @@ void save_page(char* filename, char** lines, int* quit)
 			*quit = 1;
 		} else if (!strcmp(line, "c")) {
             
-            while (args == NULL || !i) {
-                printf("\n\nEnter a viable file name (*.txt), or enter 'ret' to return to the save page.\n\n");
+            while ((args == NULL) ^ i) {
+                printf("\n\nEnter a viable file name (*.txt), or enter 'r' to return to the save page.\n\n");
                 shell_prompt();
                 verify = scanf("%s", line);
                 assert (!(verify < 0));
 
                 args = strstr(line, ".txt");
-                if (!strcmp(line, "ret")) i = 1;
+                if (!strcmp(line, "r")) i = 1;
             }
 
             *quit = 1;

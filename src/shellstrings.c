@@ -18,7 +18,7 @@ void shell_intro() {
 
     printf("f [/path/file.txt]           : open file\n");
     printf("d [/path/dictionary.txt]     : input custom dictionary file\n");
-    printf("m [quiet or verbose]         : output mode\n");
+    printf("m [number]                   : switch output mode - quiet (1) verbose (2) or interactive (3) \n");
     printf("h                            : help\n");
     printf("q                            : quit program\n");
 }

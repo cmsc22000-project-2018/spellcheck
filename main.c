@@ -80,7 +80,7 @@ int main(int argc, char **argv)
 	if (fileexists(argv[1])) strcpy(file_name,argv[1]);
 
 
-	while ((c = getopt(argc,argv,"d:i:v:q:s")) != -1) {
+	while ((c = getopt(argc,argv,"d:i:v:s:q:")) != -1) {
 		switch (c) {
 		case 'd':
 			if (!fileexists(optarg)) {
@@ -120,10 +120,10 @@ int main(int argc, char **argv)
 			break;
 		case 's':
 			strcpy(save_file,optarg);
-            printf("Your file will now be saved as %s", save_file);
+            shell_input(optarg,"file save destination");
 			break;
 		default: /* If command line contains just the file at argv[1], write it into file_name */
-			if (fileexists(argv[1])) strcpy(file_name,argv[1]);
+			shell_usage();
 			break;
 		}
 	}
@@ -182,7 +182,8 @@ int main(int argc, char **argv)
 	}
 
 	// Save file
-	if (fileexists(save_file)) {
+    md = strstr(save_file,".txt");
+	if (md != NULL) {
 		save_corrections(save_file, result);
 		*quit=1;
 	} else {

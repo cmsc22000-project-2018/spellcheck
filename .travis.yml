@@ -10,12 +10,7 @@ script:
     - ./tests/test-spellcheck
     - make all
     - ./spellcheck
-    - h
-    - p
-    - q
-    - ./spellcheck -i tests/test_parser.txt
-    - start
-    - "2"
-    - "2"
-    - s
-    - make clean
+    - h\n
+    - p\n
+    - q\n
+    - ./spellcheck -v tests/test_parser.txt

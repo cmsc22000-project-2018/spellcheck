@@ -123,4 +123,6 @@ void shell_help();
  */
 void shell_outro();
 
+void shell_usage();
+
 #endif
