@@ -25,7 +25,7 @@
  *	I. Saving Files
  */
 
-int save_corrections(char* filename, char** lines)
+void save_corrections(char* filename, char** lines)
 {
 	FILE* f = fopen(filename,"w");
     assert(f != NULL);
@@ -36,11 +36,9 @@ int save_corrections(char* filename, char** lines)
 		i++;
 	}
 	fclose(f);
-
-    return EXIT_SUCCESS;
 }
 
-int save_page(char* filename, char** lines, int* quit)
+void save_page(char* filename, char** lines, int* quit)
 {
 	int i = 1;
     char* line = "s";
@@ -75,8 +73,6 @@ int save_page(char* filename, char** lines, int* quit)
         free(line);
         free(args);
 	}
-
-    return EXIT_SUCCESS;
 }
 
 /*
@@ -352,22 +348,21 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 	V. Main Page
  */
 
+
 /* Prints help page. Returns to main page via loop in main function */
-int help_page()
+void help_page()
 {
     shell_help();
 	shell_prompt();
 
 	parse_read_line();
-
-    return EXIT_SUCCESS;
 }
 
 /* Check if file with name, given by string, exists */
 int fileexists(const char* filename)
 {
 	struct stat buffer;
-	return (stat(filename,&buffer)==0);
+	return(stat(filename,&buffer)==0);
 }
 
 /* helper for main_page, determine input mode */
@@ -385,7 +380,7 @@ int change_mode(char* arg)
 	return 3; 		// default is 3, given mode
 }
 
-int main_page(int* quit, int *mode, char* file_name, char* dict_name)
+void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 {
 	char* line;
 	char** args;
@@ -440,6 +435,4 @@ int main_page(int* quit, int *mode, char* file_name, char* dict_name)
 		free(line);
 		free(args);
 	}
-
-    return EXIT_SUCCESS;
 }
