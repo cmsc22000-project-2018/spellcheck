@@ -43,7 +43,7 @@ char** parse_file(char* filename)
     // resize if necessary while reading file
 	while(fgets(str, MAXCHAR, f) != 0) {
         if (n > i) {
-            array_resize(lines,i)
+            array_resize(lines,i);
         }
 		lines[n] = strdup(str);
 		n++;
