@@ -283,6 +283,10 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 
     }
 
+    else if (number2 > (max_no_suggestions+2)) {
+    	printf("Please enter a valid number");
+    }
+
     else if (number2 != 1 || number2 != 0) { //1 if no replacement needed, 0 if word deleted
     	printf("Replacing %s with %s \n", badwords[i], suggestions[number2-2]);
     	correct_line(line_copy, badwords[i], suggestions[number2-2]); //modifies line function
