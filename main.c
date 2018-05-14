@@ -158,15 +158,21 @@ int main(int argc, char **argv)
 		Starting to Parse file!
 	 */
 	char* md = modename(mode);
-	printf("\n\n========================================\n"
-               "==========Editing Started With==========\n\n");
-	printf("file: %s\n", file_name);
-	printf("dictionary: %s\n", dict_name);
-	printf("mode: %s \n\n", md);
+
+    if (mode != 1) {
+
+	    printf("\n\n========================================\n"
+                   "==========Editing Started With==========\n\n");
+	    printf("file: %s\n", file_name);
+	    printf("dictionary: %s\n", dict_name);
+	    printf("mode: %s \n\n", md);
+    }
 
 	/* Pause, to confirm start */
-	printf("Enter any command to start %s\n\n", md);
-	parse_read_line();
+    if (mode == 3) {
+        printf("Enter any command to start %s\n\n", md);
+	    parse_read_line();
+    }
 
 	char** result=NULL;
 	// Execute either interactive or batch mode, and save file at end
