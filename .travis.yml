@@ -9,9 +9,13 @@ script:
     - make tests
     - ./tests/test-spellcheck
     - make all
+    - ./spellcheck
+    - h
+    - p
+    - q
     - ./spellcheck -i tests/test_parser.txt
-    - 1
-    - 2
-    - 2
+    - start
+    - "2"
+    - "2"
     - s
     - make clean

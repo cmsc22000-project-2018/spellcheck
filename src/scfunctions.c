@@ -40,14 +40,16 @@ void save_page(char* filename, char** lines, int* quit)
 {
 	int i = 1;
     char line[256];
-//    char** args = NULL;
+    char* args = NULL;
+    int verify = 0;
 
 	while (i) {
         shell_save();
 		shell_prompt();
 		i = 0;
 
-        scanf("%s", line);
+        verify = scanf("%s", line);
+        assert (!(verify < 0));
         assert (strlen(line) < 256);
 
         if (strlen(line) > 2) {
@@ -57,16 +59,20 @@ void save_page(char* filename, char** lines, int* quit)
 			save_corrections(filename, lines);
 			*quit = 1;
 		} else if (!strcmp(line, "c")) {
-            FILE* f = NULL;
-            do {
-                printf("\n\nEnter a file name with read access, or enter r to return to the save page. \n\n");
+            
+            while (args == NULL || !i) {
+                printf("\n\nEnter a viable file name (*.txt), or enter 'ret' to return to the save page.\n\n");
                 shell_prompt();
-                scanf("%s", line);
-                if (!strcmp(line, "r")) i = 1;
-            } while (fopen(line,"r") || i == 0);
-			fclose(f);
-            save_corrections(line, lines);
-		    *quit = 1;
+                verify = scanf("%s", line);
+                assert (!(verify < 0));
+
+                args = strstr(line, ".txt");
+                if (!strcmp(line, "ret")) i = 1;
+            }
+
+            *quit = 1;
+            if (i == 0) save_corrections(line, lines);
+
 		} else if (!strcmp(line, "r")) {
 			*quit = 0;
 		} else if (!strcmp(line, "q")) {
@@ -76,8 +82,6 @@ void save_page(char* filename, char** lines, int* quit)
 			i = 1;
 		}
 
-//    free(line);
-//    free(args);
 	}
 }
 

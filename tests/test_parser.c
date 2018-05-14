@@ -7,10 +7,10 @@
 
 Test(array,resize)
 {
-    size_t asize = 5;
+//    size_t asize = 5;
     char** array = malloc(5 * sizeof(char*));
     if (array == NULL) {
-        printf(stderr,"test_parser: malloc failed in resize array testing");
+        fprintf(stderr,"test_parser: malloc failed in resize array testing");
     }
     array_resize(array,5);
 
@@ -45,7 +45,7 @@ Test(file,parse_resize)
 
 Test(string,get_word)
 {
-    char* string;
+//    char* string;
     char** array;
 
     array = parse_file("test_parser.txt");
