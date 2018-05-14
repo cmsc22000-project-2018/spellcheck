@@ -69,25 +69,18 @@ char* parse_get_word(char* line)
 #define BUFFERSIZE 256
 char* parse_read_line()
 {
-/*    char input[BUFFERSIZE];
+	char input[BUFFERSIZE];
 	char* rval;
 	memset(input, '\0', BUFFERSIZE);
-	char* i = fgets(input, 128, stdin);
-    assert(i != NULL);      // even empty lines will have '\0';
+	char* i = fgets(input, BUFFERSIZE, stdin);
+    assert(i != NULL);      // even empty lines will probably have '\0; test to see if works
 
 	int n = strlen(input);
 	rval = strdup(input);
 	if (input[n-1] == '\n')
 		rval[n-1] = '\0';
 
-	return rval; */
-    char input[BUFFERSIZE];
-    int i = scanf("%s", input);
-    assert(!(i < 0));
-
-    char* rval = strdup(input);
-
-    return rval;
+	return rval;
 }
 
 #define LSH_TOK_BUFSIZE 64

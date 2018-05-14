@@ -30,7 +30,7 @@ void shell_save() {
     printf("s                            : save to existing file\n");
     printf("c [/path/name.txt]           : save to custom file\n");
     printf("r                            : return to home screen\n");
-    printf("q                            : quit program\n\n");
+    printf("q                            : quit program\n");
 }
 
 /* See shellstrings.h */
