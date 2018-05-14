@@ -28,6 +28,8 @@
 int save_corrections(char* filename, char** lines)
 {
 	FILE* f = fopen(filename,"w");
+    assert(f != NULL);
+
 	int i = 0;
 	while (lines[i] != NULL) {
 		fprintf(f, "%s", lines[i]);
@@ -41,19 +43,18 @@ int save_corrections(char* filename, char** lines)
 int save_page(char* filename, char** lines, int* quit)
 {
 	int i = 1;
+    char* line = "s";
+    char** args;
 
 	while (i) {
         shell_save();
+        i = 0;
 		shell_prompt();
-		i = 0;
-		char* line;
-		char** args;
 
-		line = parse_read_line();
+        line = parse_read_line();
 		args = parse_split_line(line);
 
-
-		if (args == NULL || args [2] != NULL) { // More than 1 input, or no input
+		if (args [2] != NULL) { // More than 1 input, or no input
 			shell_error("Please type in one of the indicated commands!");
 			i = 1;
 		} else if (!strcmp(args[0], "s")) {
@@ -70,6 +71,9 @@ int save_page(char* filename, char** lines, int* quit)
 			shell_error("Please type in one of the indicated commands!");
 			i = 1;
 		}
+
+        free(line);
+        free(args);
 	}
 
     return EXIT_SUCCESS;
@@ -392,6 +396,7 @@ int main_page(int* quit, int *mode, char* file_name, char* dict_name)
 
 		line = parse_read_line();
 		args = parse_split_line(line);
+        printf("%s", args[0]);
 
 		if (args == NULL || args [2] != NULL) { // 3 inputs, or no input
 			shell_error("Please type in one of the indicated commands!");

@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 	char* save_file = malloc(101 * sizeof(char*));
 
 	// default dict name
-	dict_name = "tests/sample_dict.txt";
+	strcpy(dict_name,"tests/sample_dict.txt");
 
 	/*
 		1: quiet batch
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 	char c;
 
 	/* If command line contains just the file at argv[1], write it into file_name */
-	if (fileexists(argv[1])) file_name = argv[1];
+	if (fileexists(argv[1])) strcpy(file_name,argv[1]);
 
 	while ((c = getopt(argc,argv,"d:i:v:q:s")) != -1) {
 		switch (c) {
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 				shell_error("Dictionary input file path invalid");
 				return EXIT_FAILURE;
 			}
-			dict_name = optarg;
+			strcpy(dict_name,optarg);
 			shell_input(optarg, "dictionary");
 			break;
 		case 'i':
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 				return EXIT_FAILURE;
 			}
 			mode = 3;
-			file_name = optarg;
+			strcpy(file_name,optarg);
 			shell_input(optarg, "target file");
 			// if file name is not valid, print error
 			break;
@@ -114,15 +114,14 @@ int main(int argc, char **argv)
 				return EXIT_FAILURE;
 			}
 			mode = 1;
-			file_name = optarg;
+			strcpy(file_name,optarg);
 			shell_input(optarg, "target file");
 			break;
 		case 's':
-			printf("Your file will now be saved as %s", optarg);
-			save_file = optarg;
+            strcpy(save_file,optarg);
+			printf("Your file will now be saved as %s", save_file);
 			break;
 		default: /* If command line contains just the file at argv[1], write it into file_name */
-			if (fileexists(argv[1])) file_name = argv[1];
 			break;
 		}
 	}
@@ -157,7 +156,7 @@ int main(int argc, char **argv)
 		Starting to Parse file!
 	 */
 	char* md = modename(mode);
-	printf("\n\n=======================================\n"
+	printf("\n\n========================================\n"
 		   "==========Editing Started With==========\n\n");
 	printf("file: %s\n", file_name);
 	printf("dictionary: %s\n", dict_name);

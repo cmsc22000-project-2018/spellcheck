@@ -66,18 +66,25 @@ char** parse_file(char* filename)
 /* read a command line and return a string */
 char* parse_read_line()
 {
-	char input[BUFFERSIZE];
+/*    char input[BUFFERSIZE];
 	char* rval;
 	memset(input, '\0', BUFFERSIZE);
-	char* i = fgets(input, BUFFERSIZE, stdin);
-    assert(i != NULL);      // even empty lines will probably have '\0; test to see if works
+	char* i = fgets(input, 128, stdin);
+    assert(i != NULL);      // even empty lines will have '\0';
 
 	int n = strlen(input);
 	rval = strdup(input);
 	if (input[n-1] == '\n')
 		rval[n-1] = '\0';
 
-	return rval;
+	return rval; */
+    char input[BUFFERSIZE];
+    int i = scanf("%s", input);
+    assert(!(i < 0));
+
+    char* rval = strdup(input);
+
+    return rval;
 }
 
 /*
