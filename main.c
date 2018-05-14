@@ -80,10 +80,11 @@ int main(int argc, char **argv)
 	if (fileexists(argv[1])) strcpy(file_name,argv[1]);
 
 
+    // Parse the initial command line and 
 	while ((c = getopt(argc,argv,"d:i:v:s:q:")) != -1) {
 		switch (c) {
 		case 'd':
-			if (!fileexists(optarg)) {
+			if (!fileexists(optarg)) {  // this checks if the file actuall exists
 				shell_error("Dictionary input file path invalid");
 				return EXIT_FAILURE;
 			}
@@ -119,6 +120,10 @@ int main(int argc, char **argv)
 			shell_input(optarg, "target file");
 			break;
 		case 's':
+            if (strstr(optarg,".txt\0") == NULL) {    // does not save to a *.txt file
+                  shell_error("Input save file path invalid");
+                  return EXIT_FAILURE;
+            }
 			strcpy(save_file,optarg);
             shell_input(optarg,"file save destination");
 			break;
@@ -128,7 +133,7 @@ int main(int argc, char **argv)
 		}
 	}
 
-	int *quit = malloc(sizeof(int*));
+	int *quit = malloc(sizeof(int*)); // this enables return to main page, should user choose it at save_page
 	*quit = 0;
 
   while (!(*quit)) {
@@ -205,8 +210,7 @@ int main(int argc, char **argv)
 	free(result);
 
 
-
-	file_name="";
+	// free(file_name);
   }
 
 	// free and exit

@@ -28,9 +28,10 @@ char** parse_file(char* filename)
 		return NULL;
 	}
 
+    // initialization
 	unsigned int n = 0;
 	size_t i = INITLINE;
-	char str[MAXCHAR];		// consider resizing?
+	char str[MAXCHAR];
 	char** lines;
 	lines = malloc(i * sizeof(char*));
 	if (lines == NULL) {
@@ -38,14 +39,16 @@ char** parse_file(char* filename)
 		exit(0);
 	}
 
+    // read each line into a string. This size is currently limited at 1025 lines (1024, including terminating char).
+    // resize if necessary while reading file
 	while(fgets(str, MAXCHAR, f) != 0) {
+        if (n > i) {
+            array_resize(lines,i)
+        }
 		lines[n] = strdup(str);
 		n++;
-		if (n >= i) {
-			array_resize(lines, i);
-		}
 	}
-	while(n < i) {
+	while(n < i) {  // initialize the rest of the lines, which do not hold new characters
 		lines[n] = NULL;
 		n++;
 	}
@@ -102,6 +105,7 @@ char **parse_split_line(char *line)
     exit(EXIT_FAILURE);
   }
 
+    // convert input line into an array of strings, each of which represents a line. similar to argc argv in main
   token = strtok(line, LSH_TOK_DELIM);
   while (token != NULL) {
     tokens[position] = token;

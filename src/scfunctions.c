@@ -24,10 +24,11 @@
 /*
  *	I. Saving Files
  */
-
+// Accet a filename and an array of strings, then write that array into the file
 void save_corrections(char* filename, char** lines)
 {
 	FILE* f = fopen(filename,"w");
+    assert(f != NULL);
 	int i = 0;
 	while (lines[i] != NULL) {
 		fprintf(f, "%s", lines[i]);
@@ -36,6 +37,7 @@ void save_corrections(char* filename, char** lines)
 	fclose(f);
 }
 
+// operates save_page
 void save_page(char* filename, char** lines, int* quit)
 {
 	int i = 1;
@@ -43,23 +45,27 @@ void save_page(char* filename, char** lines, int* quit)
     char* args = NULL;
     int verify = 0;
 
+// save shell
 	while (i) {
         shell_save();
 		shell_prompt();
 		i = 0;
 
+
+
         verify = scanf("%s", line);
-        assert (!(verify < 0));
-        assert (strlen(line) < 256);
-                if (strlen(line) > 2) {
+        assert (!(verify < 0)); // ensure valid input
+        assert (strlen(line) < 256); // ensure that string length is within limit
+
+        if (strlen(line) > 2) { // ensure that only one character is entered, otherwise cannot proceed
             shell_error("Please type in one of the indicated commands!");
             i = 1;
         } else if (!strcmp(line, "s")) {
-			save_corrections(filename, lines);
+			save_corrections(filename, lines);  // save to the same file destination, overwriting existing file
 			*quit = 1;
 		} else if (!strcmp(line, "c")) {
             
-            while ((args == NULL) ^ i) {
+            while ((args == NULL) ^ i) {    // either user returns to main page, or inputs a vaid new destination
                 printf("\n\nEnter a viable file name (*.txt), or enter 'r' to return to the save page.\n\n");
                 shell_prompt();
                 verify = scanf("%s", line);
@@ -70,14 +76,14 @@ void save_page(char* filename, char** lines, int* quit)
             }
 
             *quit = 1;
-            if (i == 0) save_corrections(line, lines);
+            if (i == 0) save_corrections(line, lines);  // save to different file destination
 
 		} else if (!strcmp(line, "r")) {
 			*quit = 0;
 		} else if (!strcmp(line, "q")) {
 			*quit = 1;
 		} else {
-			shell_error("Please type in one of the indicated commands!");
+			shell_error("Please type in one of the indicated commands!");   // wrong input
 			i = 1;
 		}
 
@@ -324,7 +330,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
     	int success = generate_suggestions(badwords[i], dict, suggestions);
 	if (success == -1) suggestions[0] = badwords[i];
     	correct_line(line_copy, badwords[i], suggestions[0]);
-	if (verbosity) printf("WORD:%s\t\t\tREPLACEMENT:%s\n", badwords[i], suggestions[0]);
+	if (verbosity) printf("WORD:%s\t\t\tREPLACEMENT:%s\n", badwords[i], suggestions[0]);    // print list of replacement
 	i++;
 	}
 
@@ -364,7 +370,7 @@ void help_page()
     shell_help();
 	shell_prompt();
 
-	parse_read_line();
+	parse_read_line();      // accept any input in the command line
 }
 
 /* Check if file with name, given by string, exists */
@@ -380,13 +386,13 @@ int change_mode(char* arg)
 {
 	int a = atoi(arg);
 	switch (a) {
-		case 1: return a;	// might be "
+		case 1: return a;
 		case 2: return a;
 		case 3: return a;
 		default: // error case
 			shell_error("Argument unrecognizeable: return to default interactive mode");		
 	}
-	return 3; 		// default is 3, given mode
+	return 3; 		// default is 3, given this function is only called in main_page, at which point interactive is probably what user intended
 }
 
 void main_page(int* quit, int *mode, char* file_name, char* dict_name)
