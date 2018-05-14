@@ -39,35 +39,45 @@ void save_corrections(char* filename, char** lines)
 void save_page(char* filename, char** lines, int* quit)
 {
 	int i = 1;
+    char line[256];
+//    char** args = NULL;
 
 	while (i) {
         shell_save();
 		shell_prompt();
 		i = 0;
-		char* line;
-		char** args;
 
-		line = parse_read_line();
-		args = parse_split_line(line);
+        scanf("%s", line);
+        assert (strlen(line) < 256);
 
-
-		if (args == NULL || args [2] != NULL) { // More than 1 input, or no input
-			shell_error("Please type in one of the indicated commands!");
-			i = 1;
-		} else if (!strcmp(args[0], "s")) {
+        if (strlen(line) > 2) {
+            shell_error("Please type in one of the indicated commands!");
+            i = 1;
+        } else if (!strcmp(line, "s")) {
 			save_corrections(filename, lines);
-			*quit = 0;
-		} else if (!strcmp(args[0], "c")) {
-			save_corrections(args[1], lines);
-			*quit = 0;
-		} else if (!strcmp(args[0], "r")) {
 			*quit = 1;
-		} else if (!strcmp(args[0], "q")) {
+		} else if (!strcmp(line, "c")) {
+            FILE* f = NULL;
+            do {
+                printf("\n\nEnter a file name with read access, or enter r to return to the save page. \n\n");
+                shell_prompt();
+                scanf("%s", line);
+                if (!strcmp(line, "r")) i = 1;
+            } while (fopen(line,"r") || i == 0);
+			fclose(f);
+            save_corrections(line, lines);
+		    *quit = 1;
+		} else if (!strcmp(line, "r")) {
 			*quit = 0;
+		} else if (!strcmp(line, "q")) {
+			*quit = 1;
 		} else {
 			shell_error("Please type in one of the indicated commands!");
 			i = 1;
 		}
+
+//    free(line);
+//    free(args);
 	}
 }
 

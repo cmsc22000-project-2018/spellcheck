@@ -27,10 +27,10 @@ void shell_intro() {
 void shell_save() {
     printf(GREEN "File editing successful!\n\n" RESET);
 
-    printf("s                            : save to existing file\n");
-    printf("c [/path/name.txt]           : save to custom file\n");
-    printf("r                            : return to home screen\n");
-    printf("q                            : quit program\n");
+    printf("s               : save to existing file\n");
+    printf("c               : save to custom file\n");
+    printf("r               : return to home screen\n");
+    printf("q               : quit program\n\n");
 }
 
 /* See shellstrings.h */
