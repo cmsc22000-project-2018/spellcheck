@@ -32,16 +32,16 @@ void underline_misspelled(char *tkn, char* underline);
 
 void underline_correct_spelling(char *tkn, char* underline);
 
-void add_to_badwords(char *badword, char** badwords);
+int add_to_badwords(char *badword, char** badwords);
 
 //takes in a line, identifies incorrect words, and generates a string of underlines  
-void parse_string(char* string, dict_t *dict, char *underline, char** badwords);
+int parse_string(char* string, dict_t *dict, char *underline, char** badwords);
 
 //reference from https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
 char* correct_line(char* line, char* old_word, char* new_word);
 
 //initialises each element in array (that stores misspelled words in a line) to NULL
-void initialize_badwords(char **badwords, int length);
+int initialize_badwords(char **badwords, int length);
 
 /*
 	III. Interactive Mode
@@ -49,7 +49,7 @@ void initialize_badwords(char **badwords, int length);
 */
 
 /* Functions needed for interactive mode */
-char* edit_interactive(char* line, dict_t* dict);
+char* edit_interactive(char* line, dict_t* dict, int linenumber);
 
 /* interctive mode - open file, parse and work on later */
 char** interactive_mode(char* filename, dict_t* dict, int* quit); //will pass in dictionary later
