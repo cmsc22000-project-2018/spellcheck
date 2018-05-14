@@ -20,9 +20,9 @@
 	I. Saving Files
  */
 
-void save_corrections(char* filename, char** lines);
+int save_corrections(char* filename, char** lines);
 
-void save_page(char* filename, char** lines,int* quit);
+int save_page(char* filename, char** lines,int* quit);
 
 /*
 	II. Functions for editing strings
@@ -66,9 +66,8 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity);
 	V. Main Page
  */
 
-
 /* Prints help page. Returns to main page via loop in main function */
-void help_page();
+int help_page();
 
 /* Check if file with name, given by string, exists */
 int fileexists(const char* filename);
@@ -76,6 +75,6 @@ int fileexists(const char* filename);
 /* helper for main_page, determine input mode */
 int change_mode(char* arg);
 
-void main_page(int* quit, int *mode, char* file_name, char* dict_name);
+int main_page(int* quit, int *mode, char* file_name, char* dict_name);
 
 #endif

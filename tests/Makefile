@@ -12,7 +12,7 @@ OBJS = $(SRCS:.c=.o)
 .PHONY: all clean
 all: $(BIN)
 
-$(BIN):
+$(BIN): $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS) -o $(BIN) $(LDLIBS)
 
 clean:

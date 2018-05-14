@@ -6,15 +6,24 @@
 
 #define MAXCHAR 1025	// limit is 1024
 #define INITLINE 50
-
-/* Parsing Functions for Parsing Input Files */
+#define BUFFERSIZE 256
+#define LSH_TOK_BUFSIZE 64
+#define LSH_TOK_DELIM " \t\r\n\a"
 
 /* helper function: resizes array in lineparse if given file is too large */
-void array_resize(char** array, size_t alen)
+int parse_array_resize(char** array, size_t *len)
 {
-    assert(alen > 0);
-	alen = 2*alen;
-	array = realloc(array, alen * sizeof(char*));
+    assert(*len > 0);
+    *len = 2 * (*len);
+
+    char** new = malloc(sizeof(char*) * (*len));
+    memcpy(new, array, (*len) * sizeof(char*));
+
+    array = new;
+    size_t i = *len / 2;
+    for ( ; i < *len; i++) array[i] = NULL;
+
+    return EXIT_SUCCESS;
 }
 
 /* returns with pointer to array of strings, each of which represent a line in a given file */
@@ -39,12 +48,11 @@ char** parse_file(char* filename)
 	}
 
 	while(fgets(str, MAXCHAR, f) != 0) {
+        if (i < n) parse_array_resize(lines, &i);
 		lines[n] = strdup(str);
 		n++;
-		if (n >= i) {
-			array_resize(lines, i);
-		}
 	}
+
 	while(n < i) {
 		lines[n] = NULL;
 		n++;
@@ -54,19 +62,8 @@ char** parse_file(char* filename)
 	return lines;
 }
 
-char* parse_get_word(char* line)
-{
-	char* word = strtok(line, " ,.-\n\t\"\'!?()"); // add additional punctuations
-	if (word == NULL) {
-		return NULL;
-	}
-
-	return word;
-}
-
 /* Parsing functions for parsing command line inputs */
 /* read a command line and return a string */
-#define BUFFERSIZE 256
 char* parse_read_line()
 {
 	char input[BUFFERSIZE];
@@ -83,8 +80,6 @@ char* parse_read_line()
 	return rval;
 }
 
-#define LSH_TOK_BUFSIZE 64
-#define LSH_TOK_DELIM " \t\r\n\a"
 /*
    reference: https://github.com/brenns10/lsh/blob/master/src/main.c
    @brief Split a line into tokens (very naively).
