@@ -9,6 +9,7 @@
 #include "dictionary.h"
 
 // The maximum length of a string we're willing to process
+// Longest word in english dictionary is 45 letters lol
 #define MAXLEN 60
 
 /*
@@ -22,7 +23,7 @@
  *  - edits_left: The maximum levenshtein distance a word can be from prefix+suffix
  * 
  * Returns:
- *  - n/a (but set will be filled)
+ *  - 0 for success, or a positive integer n for the number of errors encountered
  * 
  */
 void suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_left);
