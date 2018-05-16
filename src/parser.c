@@ -57,16 +57,6 @@ char** parse_file(char* filename)
 	return lines;
 }
 
-char* parse_get_word(char* line)
-{
-	char* word = strtok(line, " ,.-\n\t\"\'!?()"); // add additional punctuations
-	if (word == NULL) {
-		return NULL;
-	}
-
-	return word;
-}
-
 /* Parsing functions for parsing command line inputs */
 /* read a command line and return a string */
 #define BUFFERSIZE 256

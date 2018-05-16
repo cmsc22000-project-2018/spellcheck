@@ -14,7 +14,6 @@ void array_resize(char** array, size_t alen);
 /* return NULL if file could not be opened */
 char** parse_file(char* filename);
 
-char* parse_get_word(char* line);
 
 /* Parsing functions for parsing command line inputs */
 /* read a command line and return a string */
