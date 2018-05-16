@@ -6,14 +6,10 @@
 
 /* Parsing Functions for Parsing Input Files */
 
-/* resizing char array*/
-void array_resize(char** array, size_t alen);
-
 /* returns with pointer to array of strings, each of which represent a line in a given file */
 /* current limit to each string is 1000 characters */
 /* return NULL if file could not be opened */
 char** parse_file(char* filename);
-
 
 /* Parsing functions for parsing command line inputs */
 /* read a command line and return a string */

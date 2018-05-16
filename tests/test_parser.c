@@ -5,42 +5,52 @@
 #include <stdbool.h>
 #include "parser.h"
 
-Test(array,resize)
-{
-//    size_t asize = 5;
-    char** array = malloc(5 * sizeof(char*));
-    if (array == NULL) {
-        fprintf(stderr,"test_parser: malloc failed in resize array testing");
-    }
-    array_resize(array,5);
 
-//    cr_assert_eq(asize,10,"array resize: resize failed");
-}
-
-Test(file,parse)
+/* Testing file parsing function */
+Test(file,parser)
 {
     char** array;
 
     array = parse_file("test_parser.txt");
-//    cr_assert_not_null(array,"test_parser: parse_file failed");
+    cr_assert_not_null(array,"test_parser: parse_file failed");
 
 // compare two strings
 
-    int i = 0;
+    char* c = "Eye halve a spelling chequer\n";
+    int i = strcmp(array[0] , c);
+    cr_assert_eq(i, 0, "parse_file wrong line number, testing line 1");
+
+    c = "My chequer tolled me sew.\n";
+    i = strcmp(array[15], c);
+    cr_assert_eq(i, 0, "parse_file wrong line number, testing line 16");
+
     while (array[i] != NULL) i++;
-//    cr_assert_eq(i, 16, "test_parser: parse_file wrong line number");
+    cr_assert_eq(i, 16, "parse_file wrong total line number");
 }
 
-Test(file,parse_resize)
+Test(file,parser2)
 {
     char** array;
 
     array = parse_file("test_parser2.txt");
-//    cr_assert_not_null(array,"test_parser: parse_file failed");
+    cr_assert_not_null(array,"test_parser: parse_file failed");
+// compare two strings
 
-    int i = 0;
+    char* c = "CHAPTER I. Down the Rabbit-Hole\n";
+    int i = strcmp(array[0] , c);
+    cr_assert_eq(i, 0, "parse_file wrong line number, testing line 1");
+
+    c = "Presently she began again. 'I wonder if I shall fall right THROUGH the\n";
+    i = strcmp(array[62], c);
+    cr_assert_eq(i, 0, "parse_file wrong line number, testing line 16");
+
+    c = "in the common way.\n";
+    i = strcmp(array[199], c);
+    cr_assert_eq(i, 0, "parse_file wrong line number, testing line 16");
+
     while (array[i] != NULL) i++;
-//    cr_asser_eq(i, 147, "test_parser: parse_file wrong line number");
+    cr_assert_eq(i, 200, "parse_file wrong total line number");
+
 }
 
 Test(string,get_word)
