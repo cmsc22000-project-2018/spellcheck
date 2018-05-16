@@ -6,6 +6,7 @@
 #define INCLUDE_SUGGESTION_H_
 
 #include "zset_api.h"
+#include "dictionary.h"
 
 // The maximum length of a string we're willing to process
 #define MAXLEN 60
