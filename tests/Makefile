@@ -4,9 +4,12 @@ CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -O2 -g -I../include/
 RM = rm -f
 BIN = test-spellcheck
-LDLIBS = -lcriterion
+LDLIBS = -lcriterion -lhiredis
 
-SRCS = main.c test_dictionary.c test_mock_trie.c test_parser.c ../src/dictionary.c ../src/mock_trie.c ../src/parser.c
+SRCTESTS = test_dictionary.c test_mock_trie.c test_parser.c test_suggestion.c
+SRCFILES = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/suggestion.c
+
+SRCS = main.c $(SRCTESTS) $(SRCFILES)
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all clean
