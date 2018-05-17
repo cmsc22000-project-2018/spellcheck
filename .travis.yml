@@ -9,5 +9,13 @@ script:
     - make tests
     - ./tests/test-spellcheck
     - make all
-    - ./spellcheck -v tests/test_short.txt -s test.txt
-    - ./spellcheck -q tests/test_short.txt -s test.txt
+    - ./spellcheck -v tests/test_short.txt -s test1.txt
+    - ./spellcheck -q tests/test_short.txt -s test2.txt
+    - ./spellcheck
+    - h
+    - a
+    - f tests/test_short.txt
+    - a
+    - 2
+    - 3
+    - s
