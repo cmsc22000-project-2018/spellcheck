@@ -20,23 +20,45 @@ Test(suggestion, has_children_f0) {
 }
 
 Test(suggestion, delete_s0) {
-    zset_t *set = zset_new("set");
+    zset_t *set = zset_new("set0");
     dict_t *d = dict_new();
 
     dict_add(d, "cds8Dfk");
 
-    suggestions(set, d, "cdsc", "8Dfk", 1);
+    suggestions(set, d, "cds", "c8Dfk", 1);
 
-    cr_assert_eq(zset_rank(set, "cds8Dfk"), 1, "try_delete failed");
+    cr_assert_eq(zset_rank(set, "cds8Dfk"), 1, "try_delete failed %s", zset_rank(set, "cds8Dfk"));
 }
 
 Test(suggestion, delete_s1) {
-    zset_t *set = zset_new("set");
+    zset_t *set = zset_new("set1");
     dict_t *d = dict_new();
 
-    dict_add(d, "cds8Dk");
+    dict_add(d, "cds8Dfk");
 
-    suggestions(set, d, "", "cdsc8Dfk", 2);
+    suggestions(set, d, "", "cdisc8Dfk", 2);
 
-    cr_assert_eq(zset_rank(set, "cds8Dfk"), 1, "try_delete failed");
+    cr_assert_eq(zset_rank(set, "cds8Dfk"), 1, "try_delete failed %i", zset_rank(set, "cds8Dfk"));
+}
+
+Test(suggestion, replace_s0) {
+    zset_t *set = zset_new("set2");
+    dict_t *d = dict_new();
+
+    dict_add(d, "vjikd8-");
+
+    suggestions(set, d, "vji", "ad8-", 1);
+
+    cr_assert_eq(zset_rank(set, "vjiad8-"), 1, "try_replace failed");
+}
+
+Test(suggestion, replace_s1) {
+    zset_t *set = zset_new("set3");
+    dict_t *d = dict_new();
+
+    dict_add(d, "vjikd8-");
+
+    suggestions(set, d, "", "vTik=8?", 2);
+
+    cr_assert_eq(zset_rank(set, "vjikd8-"), 1, "tr_replace failed");
 }

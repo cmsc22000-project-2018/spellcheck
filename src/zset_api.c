@@ -241,7 +241,8 @@ int zset_rank(zset_t* z, char* memname) {
                 freeReplyObject(reply);
                 return 0;
         }
+        int i = reply->integer;
         freeReplyObject(reply);
-        return 1;
+        return i;
 }
  
