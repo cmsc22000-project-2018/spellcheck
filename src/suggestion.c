@@ -13,7 +13,22 @@
 #include "suggestion.h"
 #include "zset_api.h"
 
+// TEMPORARY UNTIL WE GET has_children AND TRIES
+#include "mock_trie.h"
+
 int has_children(dict_t *d, char *s) {
+
+    int i = 0;
+    int len = strnlen(s, MAXLEN);
+    trie_t *t = d->dict;
+
+    while (i < TRIE_LEN && t->words[i] != NULL) {
+        
+        if (strncmp(s, t->words[i], len) == 0) {
+            return 1;
+        }
+    }
+
     return 0;
 }
 
