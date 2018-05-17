@@ -3,18 +3,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "parser.h"
 
-
 /* Testing file parsing function */
-Test(file,parser)
+Test(parser, parse_file)
 {
     char** array;
 
     array = parse_file("test_parser.txt");
     cr_assert_not_null(array,"test_parser: parse_file failed");
-
-// compare two strings
 
     char* c = "Eye halve a spelling chequer\n";
     int i = strcmp(array[0] , c);
@@ -28,7 +26,7 @@ Test(file,parser)
     cr_assert_eq(i, 16, "parse_file wrong total line number");
 }
 
-Test(file,parser2)
+Test(parser, parse_file2)   // test for file with 200 lines
 {
     char** array;
 
@@ -53,23 +51,46 @@ Test(file,parser2)
 
 }
 
-Test(string,get_word)
+Test(parser, parse_split_line)
 {
-//    char* string;
-    char** array;
+    char** array = calloc(20, sizeof(char*));
+    char* c = strdup("Quesadillas are delicious");
 
-    array = parse_file("test_parser.txt");
-//    cr_assert_not_null(array,"test_parser: parse_file failed");
-    // test get_word
+    array = parse_split_line(c);
+
+    int i = strncmp("are", array[1], 4);
+
+    cr_assert_eq(i, 0, "line not properly split");
 }
 
-
-Test(string,read_line)
+Test(parser, parse_split_line1)
 {
+    char** array = calloc(20, sizeof(char*));
+    char* c = strdup("Memento");
+
+    array = parse_split_line(c);
+
+    int i = strncmp("Memento", array[0], 4);
+
+    cr_assert_eq(i, 0, "line not properly split");
 }
 
-
-Test(string,split_line) // cases: 0, 1, 2
+Test(parser, parse_split_line2)    // should return null
 {
+    char** array = calloc(20, sizeof(char*));
+    char* c = strdup("");
+
+    array = parse_split_line(c);
+
+    cr_assert_null(array[0], "parse_split_line should return null");
 }
 
+Test(parser, parse_split_line3)     // test punctuation input
+{
+    char** array = calloc(20, sizeof(char*));
+    char* c = strdup("");
+
+    array = parse_split_line(c);
+
+    cr_assert_null(array[0], "parse_split_line should return null");
+}
