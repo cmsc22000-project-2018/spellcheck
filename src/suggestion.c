@@ -221,7 +221,7 @@ int suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
         }
     }
 
-    if (edits_left == 0) {
+    if (edits_left <= 0) {
         // Hooray for exit conditions!
 
         free(s);
@@ -250,6 +250,9 @@ int suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
 
 zset_t* suggestion_set_new(dict_t *d, char *str, int max_edits) {
 
+    assert(d != NULL);
+    assert(str != NULL);
+
     zset_t *set = zset_new(str);
 
     if (suggestions(set, d, "", str, max_edits) != 0) {
@@ -268,6 +271,9 @@ char** suggestion_set_first_n(zset_t *set, int n) {
 }
 
 char** suggestion_list(dict_t *d, char *str, int max_edits, int amount) {
+
+    assert(d != NULL);
+    assert(str != NULL);
 
     zset_t *set = suggestion_set_new(d, str, max_edits);
 
