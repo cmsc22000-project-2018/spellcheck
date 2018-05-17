@@ -6,6 +6,8 @@
 #ifndef INCLUDE_ZSET_API_H_
 #define INCLUDE_ZSET_API_H_
 
+#include <hiredis/hiredis.h>
+
 typedef struct
 {
     char *name; // name of sorted set
