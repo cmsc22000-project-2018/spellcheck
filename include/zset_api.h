@@ -6,7 +6,7 @@
 #ifndef INCLUDE_ZSET_API_H_
 #define INCLUDE_ZSET_API_H_
 
-#include "../lib/hiredis.h"
+#include <hiredis/hiredis.h>
 
 typedef struct
 {

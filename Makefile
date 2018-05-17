@@ -3,7 +3,7 @@
 
 CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -O2 -g -I./include/
-LDFLAGS = -L./lib -Wl,-rpath,./lib
+LDFLAGS = -L./hiredis -Wl,-rpath,./hiredis
 RM = rm -f
 BIN = spellcheck
 LDLIBS = -lhiredis
