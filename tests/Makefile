@@ -2,6 +2,7 @@
 
 CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -O2 -g -I../include/
+LDFLAGS = -L./lib -Wl,-rpath,./lib
 RM = rm -f
 BIN = test-spellcheck
 LDLIBS = -lcriterion -lhiredis
@@ -16,7 +17,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(BIN)
 
 $(BIN):
-	$(CC) $(CFLAGS) $(SRCS) -o $(BIN) $(LDLIBS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SRCS) -o $(BIN) $(LDLIBS)
 
 clean:
 	-$(RM) $(OBJS) $(BIN)

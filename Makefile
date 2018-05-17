@@ -3,6 +3,7 @@
 
 CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -O2 -g -I./include/
+LDFLAGS = -L./lib -Wl,-rpath,./lib
 RM = rm -f
 BIN = spellcheck
 LDLIBS = -lhiredis
@@ -14,7 +15,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(BIN)
 
 $(BIN): $(SRCS)
-	$(CC) $(CFLAGS) -o $(BIN) $(SRCS) $(LDLIBS) 
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BIN) $(SRCS) $(LDLIBS) 
 
 tests:
 	make -C ./tests
