@@ -178,8 +178,8 @@ char** zset_revrange(zset_t* z, int start, int stop)
 	char** s = malloc(sizeof(char*) * reply->elements);
 	for(i=0; i < reply->elements; i++)
 	{
-        s[i] = (char*)malloc(sizeof(char)*(strlen(s) + 1));
-		strncpy(s[i],reply->element[i]->str, strlen(s) + 1;
+        s[i] = (char*)malloc(sizeof(char)*(strlen(s[i]) + 1));
+		strncpy(s[i],reply->element[i]->str, strlen(s[i]) + 1);
 	}
 	return s;
 }

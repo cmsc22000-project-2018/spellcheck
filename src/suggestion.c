@@ -259,7 +259,7 @@ char** suggestion_list(dict_t *d, char *str, int max_edits, int amount) {
     char **results = suggestion_set_first_n(set, amount);
 
     // Remove all the items from the results
-    zset_remrangebyrank(set, 0 -1);
+    zset_remrangebyrank(set, 0, -1);
 
     free(set);
 
