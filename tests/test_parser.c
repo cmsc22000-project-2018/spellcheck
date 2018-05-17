@@ -6,6 +6,10 @@
 #include <string.h>
 #include "parser.h"
 
+
+/* Note that unit tests for parser_read_line have not been included, as a consequence of command line inputs being required
+ * for testing it. If travis-ci were able to run, however. this may not be an issue.*/
+
 /* Testing file parsing function */
 Test(parser, parse_file)
 {
@@ -26,6 +30,7 @@ Test(parser, parse_file)
     cr_assert_eq(i, 16, "parse_file wrong total line number");
 }
 
+/* parse_file test, with larger functions */ 
 Test(parser, parse_file2)   // test for file with 200 lines
 {
     char** array;
@@ -51,6 +56,7 @@ Test(parser, parse_file2)   // test for file with 200 lines
 
 }
 
+/* parse_split_line test, returning string array representing each token*/
 Test(parser, parse_split_line)
 {
     char** array = calloc(20, sizeof(char*));
@@ -63,6 +69,7 @@ Test(parser, parse_split_line)
     cr_assert_eq(i, 0, "line not properly split");
 }
 
+/* parse_split_line test, returning an array with one item */
 Test(parser, parse_split_line1)
 {
     char** array = calloc(20, sizeof(char*));
@@ -75,17 +82,8 @@ Test(parser, parse_split_line1)
     cr_assert_eq(i, 0, "line not properly split");
 }
 
+/* parse_split_line test, returning NULL */
 Test(parser, parse_split_line2)    // should return null
-{
-    char** array = calloc(20, sizeof(char*));
-    char* c = strdup("");
-
-    array = parse_split_line(c);
-
-    cr_assert_null(array[0], "parse_split_line should return null");
-}
-
-Test(parser, parse_split_line3)     // test punctuation input
 {
     char** array = calloc(20, sizeof(char*));
     char* c = strdup("");
