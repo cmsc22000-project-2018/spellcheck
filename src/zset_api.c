@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-
+#include <string.h>
 #include "zset_api.h"
 
 // see zset_api.h
@@ -107,7 +107,7 @@ int zset_add(zset_t *z, char *key, int score)
         return 0;
     }
 
-    // printf("ZADD: %lld\n", reply->integer);
+    printf("ZADD: %lld\n", reply->integer);
     freeReplyObject(reply);
     return 1;
 }
@@ -125,14 +125,13 @@ int zset_rem(zset_t *z, char *name)
     return 0;
   }
   freeReplyObject(reply);
-//   printf("ZREM: %lld\n", reply->integer);
   return 1;
 }
 
 
 /* Neha */  
 
-// increments the score of a member in a specified set
+// see api.h 
 int zset_incr(zset_t* z, char* key, int incrby)
 {
 	if (!connected(z))
@@ -145,11 +144,11 @@ int zset_incr(zset_t* z, char* key, int incrby)
         freeReplyObject(reply);
         return 0;
     	}
-	// printf("ZINCRBY: %s\n", reply->str);
+	printf("ZINCRBY: %s\n", reply->str);
         return 1;
 }
 
-// decrements the score of a member in a specified set 
+// see api.h 
 int zset_decr(zset_t* z, char* key, int decrby)
 {
 	if(!connected(z))
@@ -162,9 +161,53 @@ int zset_decr(zset_t* z, char* key, int decrby)
         freeReplyObject(reply);
         return 0;
         }
-        // printf("ZDECRBY: %s\n", reply->str);
+        printf("ZDECRBY: %s\n", reply->str);
         return 1;
 }
+
+// see api.h 
+char** zset_revrange(zset_t* z, int start, int stop)
+{
+	unsigned int i;
+        if(!connected(z))
+        z->context = apiConnect("127.0.0.1", 6379); //localhost
+
+        redisReply *reply = redisCommand(z->context, "ZREVRANGE %s %d %d", z->name,start, stop);
+
+        if(reply == NULL) {
+        fprintf(stderr,"ERROR: %s\n", reply->str);
+        freeReplyObject(reply);
+        }
+	char** s = malloc(sizeof(char*) * reply->elements);
+	for(i=0; i < reply->elements; i++)
+	{
+		printf("ZREVRANGE %d:%s \n",i, reply->element[i]->str);
+        	s[i] = (char*)malloc(sizeof(char)*20);
+		strncpy(s[i],reply->element[i]->str, sizeof(*s));
+	}
+	return s;
+}
+
+
+// see api.h 
+int zset_remrangebyrank(zset_t* z, int start, int stop)
+{
+	if(!connected(z))
+	{
+	        z->context = apiConnect("127.0.0.1", 6379); //localhost
+	}
+
+	redisReply *reply = redisCommand(z->context, "ZREMRANGEBYRANK %s %d %d", z->name,start, stop);
+
+        if(reply == NULL) {
+        fprintf(stderr,"ERROR: %s\n", reply->str);
+        freeReplyObject(reply);
+        return 0;
+	}
+	printf("ZREMRANGEBYRANK %lld\n", reply->integer);
+	return 1;
+}
+
 
 /* Young-Joo */
 int zset_card(zset_t* z) {
@@ -176,7 +219,7 @@ int zset_card(zset_t* z) {
                 freeReplyObject(reply);
                 return 0;
         }
-        // printf("ZCARD: %lld\n", reply->integer);
+        printf("ZCARD: %lld\n", reply->integer);
         freeReplyObject(reply);
         return 1;
 }
@@ -191,7 +234,7 @@ int zset_score(zset_t* z, char* memname) {
                 freeReplyObject(reply);
                 return 0;
         }
-        // printf("ZSCORE: %s\n", reply->str);
+        printf("ZSCORE: %s\n", reply->str);
         freeReplyObject(reply);
         return 1;
 }
@@ -205,7 +248,7 @@ int zset_rank(zset_t* z, char* memname) {
                 freeReplyObject(reply);
                 return 0;
         }
-		// printf("ZRANK: %lld\n", reply->integer);
+		printf("ZRANK: %lld\n", reply->integer);
         freeReplyObject(reply);
         return 1;
 }

@@ -125,4 +125,25 @@ int zset_score(zset_t* z, char* memname);
  *      the rank of the given member
  */
 int zset_rank(zset_t* z, char* memname);
+
+/* zset_revrange - returns ranked members in set range
+ *
+ *  Parameters:
+ *      zset_t *zset - pointer to zset
+ *      int start, stop - values of start and end of range
+ *  Returns:
+ *      the list of ranked elements in the given range
+ */
+char** zset_revrange(zset_t* z, int start, int stop);
+
+/* zset_remrangebyrank - removes ranked members in set range
+ *
+ *  Parameters:
+ *      zset_t *zset - pointer to zset 
+ *      int start, stop - values of start and end of range
+ *  Returns:
+ *      0 for failure, 1 for success
+ */
+int zset_remrangebyrank(zset_t* z, int start, int stop);
+
 #endif
