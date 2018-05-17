@@ -57,7 +57,7 @@ int move_on(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_left) 
         rc += suggestions(set, d, new_prefix, suffix + 1, edits_left);
     }
 
-    free(new_prefix);
+    // free(new_prefix);
 
     return rc + EXIT_SUCCESS;
 }
@@ -91,7 +91,7 @@ int try_replace(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
         return rc + EXIT_FAILURE;
     }
 
-    for (i = 33; i < 256; i++) {
+    for (i = 97; i < 123; i++) {
 
         new_prefix = malloc(sizeof(char) * (MAXLEN + 1));
         if (new_prefix == NULL) {
@@ -166,7 +166,7 @@ int try_insert(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_lef
         return rc + EXIT_FAILURE;
     }
 
-    for (i = 33; i < 256; i++) {
+    for (i = 97; i < 123; i++) {
 
         new_prefix = malloc(sizeof(char) * (MAXLEN + 1));
         if (new_prefix == NULL) {
