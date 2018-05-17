@@ -107,7 +107,6 @@ int zset_add(zset_t *z, char *key, int score)
         return 0;
     }
 
-    printf("ZADD: %lld\n", reply->integer);
     freeReplyObject(reply);
     return 1;
 }
@@ -144,7 +143,6 @@ int zset_incr(zset_t* z, char* key, int incrby)
         freeReplyObject(reply);
         return 0;
     	}
-	printf("ZINCRBY: %s\n", reply->str);
         return 1;
 }
 
@@ -161,7 +159,6 @@ int zset_decr(zset_t* z, char* key, int decrby)
         freeReplyObject(reply);
         return 0;
         }
-        printf("ZDECRBY: %s\n", reply->str);
         return 1;
 }
 
@@ -181,9 +178,8 @@ char** zset_revrange(zset_t* z, int start, int stop)
 	char** s = malloc(sizeof(char*) * reply->elements);
 	for(i=0; i < reply->elements; i++)
 	{
-		printf("ZREVRANGE %d:%s \n",i, reply->element[i]->str);
-        	s[i] = (char*)malloc(sizeof(char)*20);
-		strncpy(s[i],reply->element[i]->str, sizeof(*s));
+        s[i] = (char*)malloc(sizeof(char)*(strlen(s) + 1));
+		strncpy(s[i],reply->element[i]->str, strlen(s) + 1;
 	}
 	return s;
 }
@@ -204,7 +200,6 @@ int zset_remrangebyrank(zset_t* z, int start, int stop)
         freeReplyObject(reply);
         return 0;
 	}
-	printf("ZREMRANGEBYRANK %lld\n", reply->integer);
 	return 1;
 }
 
@@ -219,7 +214,6 @@ int zset_card(zset_t* z) {
                 freeReplyObject(reply);
                 return 0;
         }
-        printf("ZCARD: %lld\n", reply->integer);
         freeReplyObject(reply);
         return 1;
 }
@@ -234,7 +228,6 @@ int zset_score(zset_t* z, char* memname) {
                 freeReplyObject(reply);
                 return 0;
         }
-        printf("ZSCORE: %s\n", reply->str);
         freeReplyObject(reply);
         return 1;
 }
@@ -248,7 +241,6 @@ int zset_rank(zset_t* z, char* memname) {
                 freeReplyObject(reply);
                 return 0;
         }
-		printf("ZRANK: %lld\n", reply->integer);
         freeReplyObject(reply);
         return 1;
 }
