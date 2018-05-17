@@ -7,7 +7,7 @@ BIN = test-spellcheck
 LDLIBS = -lcriterion -lhiredis
 
 SRCTESTS = test_dictionary.c test_mock_trie.c test_parser.c test_suggestion.c
-SRCFILES = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/suggestion.c
+SRCFILES = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/suggestion.c ../src/zset_api.c
 
 SRCS = main.c $(SRCTESTS) $(SRCFILES)
 OBJS = $(SRCS:.c=.o)
