@@ -30,8 +30,9 @@ Test(suggestion, move_s0) {
 
     dict_add(d, "893bf");
 
-    suggestions(set, d, "893b", "f", 1);
+    int rc = suggestions(set, d, "893b", "f", 1);
 
+    cr_assert_eq(0, rc, "suggestions() failed");
     cr_assert_eq(zset_rank(set, "893bf"), 0, "move_on failed");
 
     // cleanup
@@ -45,8 +46,9 @@ Test(suggestion, move_s1) {
 
     dict_add(d, "vdf894jkls");
 
-    suggestions(set, d, "", "vdf894jkls", 1);
+    int rc = suggestions(set, d, "", "vdf894jkls", 1);
 
+    cr_assert_eq(0, rc, "suggestions() failed");
     cr_assert_eq(zset_rank(set, "vdf894jkls"), 0, "move_on failed");
 
     // cleanup
@@ -60,8 +62,9 @@ Test(suggestion, delete_s0) {
 
     dict_add(d, "cds8Dfk");
 
-    suggestions(set, d, "cds", "c8Dfk", 1);
+    int rc = suggestions(set, d, "cds", "c8Dfk", 1);
 
+    cr_assert_eq(0, rc, "suggestions() failed");
     cr_assert_eq(zset_rank(set, "cds8Dfk"), 0, "try_delete failed %s", zset_rank(set, "cds8Dfk"));
 
     // cleanup
@@ -75,8 +78,9 @@ Test(suggestion, delete_s1) {
 
     dict_add(d, "cds8Dfk");
 
-    suggestions(set, d, "", "cdisc8Dfk", 1);
+    int rc = suggestions(set, d, "", "cdisc8Dfk", 1);
 
+    cr_assert_eq(0, rc, "suggestions() failed");
     cr_assert_eq(zset_rank(set, "cds8Dfk"), 0, "try_delete failed %i", zset_rank(set, "cds8Dfk"));
 
     // cleanup
@@ -90,8 +94,9 @@ Test(suggestion, replace_s0) {
 
     dict_add(d, "vjikd8-");
 
-    suggestions(set, d, "vji", "ad8-", 1);
+    int rc = suggestions(set, d, "vji", "ad8-", 1);
 
+    cr_assert_eq(0, rc, "suggestions() failed");
     cr_assert_eq(zset_rank(set, "vjiad8-"), 0, "try_replace failed");
 
     // cleanup
@@ -105,8 +110,9 @@ Test(suggestion, replace_s1) {
 
     dict_add(d, "vjikd8-");
 
-    suggestions(set, d, "", "vTik=8?", 1);
+    int rc = suggestions(set, d, "", "vTik=8?", 1);
 
+    cr_assert_eq(0, rc, "suggestions() failed");
     cr_assert_eq(zset_rank(set, "vjikd8-"), 0, "try_replace failed");
 
     // cleanup
@@ -120,8 +126,9 @@ Test(suggestion, swap_s0) {
 
     dict_add(d, "vjk48sw");
 
-    suggestions(set, d, "vj4", "k8sw", 1);
+    int rc = suggestions(set, d, "vj4", "k8sw", 1);
 
+    cr_assert_eq(0, rc, "suggestions() failed");
     cr_assert_eq(zset_rank(set, "vjk48sw"), 0, "try_swap failed");
 
     // cleanup
@@ -135,8 +142,9 @@ Test(suggestion, swap_s1) {
 
     dict_add(d, "4uiwifnw");
 
-    suggestions(set, d, "", "4uiwnfiw", 1);
+    int rc = suggestions(set, d, "", "4uiwnfiw", 1);
 
+    cr_assert_eq(0, rc, "suggestions() failed");
     cr_assert_eq(zset_rank(set, "4uiwifnw"), 0, "try_swap failed");
 
     // cleanup
@@ -150,8 +158,9 @@ Test(suggestion, insert_s0) {
 
     dict_add(d, "jvd84+1");
 
-    suggestions(set, d, "jvd", "4+1", 1);
+    int rc = suggestions(set, d, "jvd", "4+1", 1);
 
+    cr_assert_eq(0, rc, "suggestions() failed");
     cr_assert_eq(zset_rank(set, "jvd84+1"), 0, "try_insert failed");
 
     // cleanup
@@ -165,8 +174,9 @@ Test(suggestion, insert_s1) {
 
     dict_add(d, "kj3fsjk]fui");
 
-    suggestions(set, d, "", "kj3sjk]fi", 1);
+    int rc = suggestions(set, d, "", "kj3sjk]fi", 1);
 
+    cr_assert_eq(0, rc, "suggestions() failed");
     cr_assert_eq(zset_rank(set, "kj3fsjk]fui"), 0, "try_insert failed");
 
     // cleanup
