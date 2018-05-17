@@ -26,6 +26,6 @@
  *  - 0 for success, or a positive integer n for the number of errors encountered
  * 
  */
-void suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_left);
+int suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_left);
 
 #endif
