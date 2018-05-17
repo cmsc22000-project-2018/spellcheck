@@ -51,8 +51,6 @@ void save_page(char* filename, char** lines, int* quit)
 		shell_prompt();
 		i = 0;
 
-
-
         verify = scanf("%s", line);
         assert (!(verify < 0)); // ensure valid input
         assert (strlen(line) < 256); // ensure that string length is within limit

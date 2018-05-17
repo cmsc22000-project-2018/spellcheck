@@ -69,7 +69,7 @@ Test(string,read_line)
 }
 
 
-Test(string,get)
+Test(string,split_line) // cases: 0, 1, 2
 {
 }
 
