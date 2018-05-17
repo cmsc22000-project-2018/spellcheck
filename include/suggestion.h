@@ -28,4 +28,49 @@
  */
 int suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_left);
 
+/*
+ * Creates a redis sorted set of spelling suggestions for a word using suggestions
+ * 
+ * Parameters:
+ *  - d: A dictionary. Must point to a dictionary allocated with dict_new
+ *  - str: A string. This will be the (misspelled) word to match
+ *  - max_edits: the maximum levenshtein distance the words in the set can have
+ * 
+ * Returns:
+ *  - A pointer to the sorted set containing the words or
+ *  - NULL if there was an error
+ * 
+ */
+zset_t* suggestion_set_new(dict_t *d, char *str, int max_edits);
+
+/*
+ * Given a redis sorted set, takes the highest n scoring strings out of it
+ * 
+ * Parameters:
+ *  - set:  A Redis Sorted Set. Must point to a zset allocated with zset_new()
+ *          Also must have been passed through suggestions
+ *  - n: the amount of strings to return. Strings are the ones with the smallest
+ *          distance and ties broken by alphabetic order
+ * 
+ * Returns:
+ *  - The first n strings matching above, or NULL if there was an error
+ */
+char** suggestion_set_first_n(zset_t *set, int n);
+
+/*
+ * Returns the n closest words to a iven string in a dictionary
+ * 
+ * Parameters:
+ *  - d: A dictionary. Must point to a dictionary allocated with dict_new
+ *  - str: A string. This will be the (misspelled) word to match
+ *  - max_edits: the maximum levenshtein distance the words in the set can have
+ *  - the amount of strings to return. Strings are the ones with the smallest
+ *          distance and ties broken by alphabetic order
+ * 
+ * Returns: 
+ *  - The first n strings matching above, or NULL if there was an error
+ * 
+ */
+char** suggestion_list(dict_t *d, char *str, int max_edits, int amount);
+
 #endif
