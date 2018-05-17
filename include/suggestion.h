@@ -13,6 +13,20 @@
 #define MAXLEN 60
 
 /*
+ * Sees if there are any words in a dictionary that contain a given prefix
+ * NOTE- awaiting the actual function from support tools
+ * 
+ * Parameters: 
+ *  - d: A dictionary. Must point to a dictionary allocated with dict_new
+ *  - s: A string. The prefix to check
+ * 
+ * Returns:
+ *  - 0 if there is aword in the dictionary with the prefix
+ *  - 1 otherwise
+*/
+int has_children(dict_t *d, char *s);
+
+/*
  * Does a fuzzy sting match on all the words in a dictionary
  * 
  * Parameters:

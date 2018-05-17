@@ -25,11 +25,13 @@ int has_children(dict_t *d, char *s) {
     while (i < TRIE_LEN && t->words[i] != NULL) {
         
         if (strncmp(s, t->words[i], len) == 0) {
-            return 1;
+            return 0;
         }
+
+        i++;
     }
 
-    return 0;
+    return 1;
 }
 
 // Helper function for suggestions that just moves on to the next character
@@ -111,7 +113,8 @@ int try_replace(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
             }
 
             // Save some space now that we're done
-            free(new_prefix);
+            // Also crashes
+            // free(new_prefix);
         }
     }
 
@@ -144,7 +147,8 @@ int try_swap(zset_t *set, dict_t * d, char *prefix, char *suffix, int edits_left
         rc += suggestions(set, d, new_prefix, suffix + 1, edits_left - 1);
     }
 
-    free(new_prefix);
+    // This crashes it? 
+    // free(new_prefix);
 
     return rc + EXIT_SUCCESS;
 }
@@ -179,7 +183,7 @@ int try_insert(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_lef
 
                 // Basically just inserting the new ASCII character to the string
                 rc += suggestions(set, d, new_prefix, suffix, edits_left - 1);
-            }
+            } 
         
             // Save some space now that we're done
             free(new_prefix);
