@@ -38,7 +38,7 @@ void add_to_badwords(char *badword, char** badwords);
 void parse_string(char* string, dict_t *dict, char *underline, char** badwords);
 
 //reference from https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
-char* correct_line(char* line, char* old_word, char* new_word);
+void correct_line(char* line, char* old_word, char* new_word);
 
 //initialises each element in array (that stores misspelled words in a line) to NULL
 void initialize_badwords(char **badwords, int length);
