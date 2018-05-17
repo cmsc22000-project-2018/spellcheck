@@ -5,6 +5,9 @@ before_install:
     - sudo apt-get update -q
     - sudo apt-get install criterion-dev -y
 
+services: 
+    - redis-server
+
 script:
     - make tests
     - ./tests/test-spellcheck
