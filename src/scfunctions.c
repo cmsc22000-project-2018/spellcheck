@@ -117,8 +117,6 @@ void underline_correct_spelling(char *tkn, char* underline)
 
 }
 
-
-
 void add_to_badwords(char *badword, char** badwords)
 {
 	int i = 0;
@@ -154,7 +152,7 @@ void parse_string(char* string, dict_t *dict, char *underline, char** badwords)
 }
 
 //reference from https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
-char* correct_line(char* line, char* old_word, char* new_word)
+void correct_line(char* line, char* old_word, char* new_word)
 {
 	char buffer[2000] = {0}; //again, we might need to modify our size estimates
 	char *insert_point = &buffer[0];
@@ -181,10 +179,6 @@ char* correct_line(char* line, char* old_word, char* new_word)
 
 	strcpy(line, buffer);
 
-	// discuss with sarika
-
-	char* c = strdup(line);
-	return c;
 }
 
 
@@ -226,8 +220,6 @@ char* edit_interactive(char* line, dict_t* dict)
     printf("\n");
     printf("%s", underline);
     printf("\n");
-
-
 
     // printf("Misspelled words in this sentence are: ");
 
