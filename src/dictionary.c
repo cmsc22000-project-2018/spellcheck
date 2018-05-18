@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <unistd.h>
+#include <string.h>
 #include "dictionary.h"
 
 /* See dictionary.h */
@@ -42,6 +43,12 @@ int dict_init(dict_t *d) {
     }
     d->dict = t;
 
+    char *char_list = (char*)calloc(sizeof(char), 256);
+    if (char_list == NULL) {
+        return EXIT_FAILURE;
+    }
+    d->char_list = char_list;
+
     return EXIT_SUCCESS;
 }
 
@@ -53,6 +60,44 @@ int dict_free(dict_t *d) {
     trie_free(d->dict);
     free(d);
 
+    return EXIT_SUCCESS;
+}
+
+int dict_chars_exists(dict_t *d, char c) {
+    assert(d != NULL);
+    assert(d->char_list != NULL);
+
+    // Use the character as the index
+    int index = (int)c;
+
+    if (d->char_list[index] == '\0') {
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+/* See dictionary.h */
+int dict_chars_update(dict_t *d, char *str) {
+    assert(d != NULL);
+    assert(d->char_list != NULL);
+    assert(str != NULL);
+    
+    int i;
+    int len = strnlen(str, MAXLEN);
+
+    if (str[len] != '\0') {
+        return EXIT_FAILURE;
+    }
+
+    for (i = 0; i < len; i++) {
+        
+        // Use each character as a hash
+        int index = (int)str[i];
+
+        d->char_list[index] = str[i];
+    }
+    
     return EXIT_SUCCESS;
 }
 
@@ -68,6 +113,11 @@ int dict_exists(dict_t *d, char *str) {
 /* See dictionary.h */
 int dict_add(dict_t *d, char *str) {
     if (d == NULL || d->dict == NULL || str == NULL) {
+        return EXIT_FAILURE;
+    }
+
+    // Attempt to add new characters to the dictionary character list
+    if (dict_chars_update(d, str) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
 
