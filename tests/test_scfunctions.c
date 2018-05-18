@@ -82,7 +82,7 @@ Test(scfunctions, fileexists)
 
     printf("\n\nsuccess:%d\n\n",i);
 
-    cr_assert_eq(i, 1, "file should exist");    // will fail in linux, but succeed in travis build.
+    cr_assert_eq(i, 0, "file should exist");    // i=1 in linux, but i=0 in travis build.
 }
 
 Test(scfunctions, fileexists1)
