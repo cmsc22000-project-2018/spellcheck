@@ -56,7 +56,9 @@ int dict_init(dict_t *d) {
 int dict_free(dict_t *d) {
     assert(d != NULL);
     assert(d->dict != NULL);
+    assert(d->char_list != NULL);
 
+    free(d->char_list);
     trie_free(d->dict);
     free(d);
 
