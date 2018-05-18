@@ -5,13 +5,27 @@
 #include <assert.h>
 #include <stdlib.h>	
 
+int num_punctuation = 22;
+char* punctuation_array[] = {"+",",",":"," ",".","-","'","&","!","?",":",";","#","~","=","/","$","£","^","\n","_","<",">"};
+
+
+int is_in_array(char* punctuation_array[], char* word) {
+	for (int i = 0; i < num_punctuation ; i++) {
+		if (strcmp(punctuation_array[i], word) == 0) {
+			printf("comparing %s to %s", word, punctuation_array[i]);
+			return 1;	}
+	}
+	return -1;
+}
 
 int valid_word(char* word, dict_t* dict) {
-	///printf("output is %d ", in_dict(word, dict));
-	if (*word == ',' || *word == '\n' || *word == '.') { //we cannot spellcheck for punctuation
-		return 1;
+	 if (is_in_array(punctuation_array, word) == -1 && *word != '\n') {
+	    return dict_exists(dict, word);
+
 	}
-    return dict_exists(dict, word);
+	else {
+		return EXIT_SUCCESS; //automatically assume word is correct as it represents punctuation
+	}
 }
 
 

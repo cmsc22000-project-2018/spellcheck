@@ -10,6 +10,8 @@
 #include "scfunctions.h"
 #include "dictionary.h"
 #include "word.h"
+#include <stdlib.h>	
+
 
 /* 
  *	Order of functions:
@@ -121,21 +123,26 @@ void underline_correct_spelling(char *tkn, char* underline)
 
 
 
-void add_to_badwords(char *badword, char** badwords)
+int add_to_badwords(char *badword, char** badwords)
 {
+
+	if (badword == NULL || badwords == NULL) {
+		return EXIT_FAILURE;
+	}
 	int i = 0;
 	while(badwords[i] != NULL) {
 		i++;
 	}
 	badwords[i] = badword;
+	return EXIT_SUCCESS;
 	// printf("adding badword %s", badword);
 	// printf("i is %d ", i);
 }
 
 //takes in a line, identifies incorrect words, and generates a string of underlines  
-void parse_string(char* string, dict_t *dict, char *underline, char** badwords)
+int parse_string(char* string, dict_t *dict, char *underline, char** badwords)
 {
-	char *tkn = strtok(string, " ,.-'\n'"); //words only separated by these punctuation
+	char *tkn = strtok(string, ": ,.-'\n'" ""); //words only separated by these punctuation
 	while (tkn != NULL) {
 
 		if (valid_word(tkn, dict) == EXIT_FAILURE){
@@ -149,9 +156,11 @@ void parse_string(char* string, dict_t *dict, char *underline, char** badwords)
 		}
 		else {
 			printf("error processing text");
+			return EXIT_FAILURE;
 		}
 		tkn = strtok(NULL, " ,.-");
 	}
+	return EXIT_SUCCESS;
 
 }
 
@@ -192,12 +201,18 @@ char* correct_line(char* line, char* old_word, char* new_word)
 
 
 //initialises each element in array (that stores misspelled words in a line) to NULL
-void initialize_badwords(char **badwords, int length)
+int initialize_badwords(char **badwords, int length)
 {
+
+	if (badwords==NULL) {
+		return EXIT_FAILURE;
+	}
     int i = 0;
 	for ( ; i < length; i++) {
     	badwords[i] = NULL; //initialize each element to be NULL
     }
+
+    return EXIT_SUCCESS;
 }
 
 /*
@@ -205,7 +220,7 @@ void initialize_badwords(char **badwords, int length)
  */
 
 /* Functions needed for interactive mode */
-char* edit_interactive(char* line, dict_t* dict)
+char* edit_interactive(char* line, dict_t* dict, int linenumber)
 {
     char *line_copy = malloc(strlen(line));
     strcpy(line_copy, line); //maintain a copy of the line to preserve original line: line will be parsed into individual words
@@ -224,6 +239,7 @@ char* edit_interactive(char* line, dict_t* dict)
     parse_string(line, dict, underline, badwords); //identify misspelled words and add to bad_word, 
     //add to underline function 
     
+    printf("current linenumber is %d: \n", linenumber);
     printf("%s", line_copy);
     printf("\n");
     printf("%s", underline);
@@ -253,7 +269,8 @@ char* edit_interactive(char* line, dict_t* dict)
 
     	if(success != -1) {
     	printf("Possible replacements for word %s are: ", badwords[i]);
-    	printf("1: No replacement ");
+    	printf("0: Delete Word. ");
+    	printf("1: No replacement. ");
         int j = 0;
     	for ( ; j < max_no_suggestions; j++) {
     		printf("%d : %s ", j+2, suggestions[j]);
@@ -261,6 +278,7 @@ char* edit_interactive(char* line, dict_t* dict)
     	}  	
 
        }
+       printf("\n");
 
     
     //gets replacement choice from user
@@ -270,12 +288,31 @@ char* edit_interactive(char* line, dict_t* dict)
     int check = scanf("%d", &number2);
     assert(check >= 0);
 
-    if (number2 != 1) { //1 if no replacement needed
+    if (number2 == 0) {
+    	printf("Deleting %s.", badwords[i]);
+    	correct_line(line_copy, badwords[i], "");
+    	printf("Corrected sentence is: \n");
+     	printf("%s \n", line_copy);
+
+
+    }
+
+    else if (number2 == 1) {
+    	printf("No changes made to %s. \n", badwords[i]);
+
+    }
+
+    else if (number2 > (max_no_suggestions+2)) {
+    	printf("Please enter a valid number");
+    }
+
+    else if (number2 != 1 || number2 != 0) { //1 if no replacement needed, 0 if word deleted
     	printf("Replacing %s with %s \n", badwords[i], suggestions[number2-2]);
     	correct_line(line_copy, badwords[i], suggestions[number2-2]); //modifies line function
     	printf("Corrected sentence is: \n");
      	printf("%s \n", line_copy);
     }
+
 
 	i++;	// added loop changer
   }
@@ -296,7 +333,8 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in 
 	// step through phases
 	int i=0;
 	while (lines[i] != NULL) {	// potential error - one empty line in the middle of two full?	
-		lines[i] = edit_interactive(lines[i], dict); //edit interactive is called for each line 
+		int linenumber = i+1;
+		lines[i] = edit_interactive(lines[i], dict, linenumber); //edit interactive is called for each line 
 		i++;
 	}
 
