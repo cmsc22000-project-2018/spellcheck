@@ -6,9 +6,9 @@
 #include <string.h>
 #include "parser.h"
 
-
-/* Note that unit tests for parser_read_line have not been included, as a consequence of command line inputs being required
- * for testing it. If travis-ci were able to run, however. this may not be an issue.*/
+/* Note that unit tests for parser_read_line have not been included, as a consequence of command line inputs being required.
+ * While future testing will be conducted with shell testing library, note currently that parse_read_line has not
+ * resulted in errors when being used in the shell command line */
 
 /* Testing file parsing function */
 Test(parser, parse_file)

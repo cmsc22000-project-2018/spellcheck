@@ -71,9 +71,7 @@ char* parse_read_line()
 
 /*
    reference: https://github.com/brenns10/lsh/blob/master/src/main.c
-   @brief Split a line into tokens (very naively).
-   @param line The line.
-   @return Null-terminated array of tokens.
+   Split a line into tokens (very naively), and return null-terminated array of tokens.
  */
 char **parse_split_line(char *line)
 {

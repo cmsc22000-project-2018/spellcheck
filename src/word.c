@@ -16,12 +16,13 @@ int valid_word(char* word, dict_t* dict) {
 
 
 int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
-	assert (dict != NULL);
+//	assert (dict != NULL);
+    
 
 	if (strcmp(word, "splling") == 0) {
 		suggestions[0] = "spelling";
 		suggestions[1] = "spilling";
-		return 0;
+		return EXIT_SUCCESS;
 	}
 	else if (strcmp(word, "chequer") == 0) {
 	suggestions[0] = "checker";

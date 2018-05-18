@@ -367,7 +367,7 @@ void help_page()
 int fileexists(const char* filename)
 {
 	struct stat buffer;
-	return(stat(filename,&buffer)==0);
+	return(stat(filename, &buffer) == 0);
 }
 
 /* helper for main_page, determine input mode */
@@ -375,14 +375,13 @@ int fileexists(const char* filename)
 int change_mode(char* arg)
 {
 	int a = atoi(arg);
-	switch (a) {
-		case 1: return a;
-		case 2: return a;
-		case 3: return a;
-		default: // error case
-			shell_error("Argument unrecognizeable: return to default interactive mode");		
-	}
-	return 3; 		// default is 3, given this function is only called in main_page, at which point interactive is probably what user intended
+    if ((a == 1) | (a == 2) | (a == 3)) {
+        return a;
+	} else {
+        shell_error("Argument unrecognizeable: return to default interactive mode");		
+	    return 3; 		// default is 3, given this function is only called in main_page, at which point interactive is probably what user intended
+    }
+    return 3;
 }
 
 void main_page(int* quit, int *mode, char* file_name, char* dict_name)
