@@ -86,7 +86,7 @@ int dict_chars_update(dict_t *d, char *str) {
     assert(str != NULL);
     
     int i;
-    int len = strnlen(str, MAXLEN);
+    int len = strnlen(str, MAXSTRLEN);
 
     if (str[len] != '\0') {
         return EXIT_FAILURE;
@@ -118,6 +118,10 @@ int dict_add(dict_t *d, char *str) {
         return EXIT_FAILURE;
     }
 
+    if (strnlen(str, MAXSTRLEN+1) == MAXSTRLEN+1) {
+        return EXIT_FAILURE;
+    }
+
     // Attempt to add new characters to the dictionary character list
     if (dict_chars_update(d, str) == EXIT_FAILURE) {
         return EXIT_FAILURE;
@@ -130,14 +134,14 @@ int dict_add(dict_t *d, char *str) {
 int dict_read(dict_t *d, char *file) {
 
     // From here: https://stackoverflow.com/questions/16400886/reading-from-a-file-word-by-word
-    char buffer[1024];
+    char buffer[MAXSTRLEN + 1];
     FILE *f = fopen(file, "r");
 
     if (f == NULL) {
         return EXIT_FAILURE;
     }
 
-    while (fscanf(f, "%1023s", buffer) == 1) {
+    while (fscanf(f, "%100s", buffer) == 1) {
         if (dict_add(d, buffer) != EXIT_SUCCESS) {
             return EXIT_FAILURE;
         }

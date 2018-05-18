@@ -7,7 +7,7 @@
 
 #include "mock_trie.h"
 
-#define MAXLEN 100
+#define MAXSTRLEN 60
 
 /* A dictionary and a instant lookup table of the characters contained in it */
 typedef struct {
