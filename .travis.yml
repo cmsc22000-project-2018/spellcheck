@@ -11,4 +11,5 @@ script:
     - make all
     - ./spellcheck -v tests/test_short.txt -s test1.txt
     - ./spellcheck -q tests/test_short.txt -s test2.txt
-    - ./spellcheck < test_main.txt
+    - ./spellcheck < test_main0.txt
+    - ./spellcheck < test_main1.txt
