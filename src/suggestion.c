@@ -25,13 +25,13 @@ int has_children(dict_t *d, char *s) {
     while (i < TRIE_LEN && t->words[i] != NULL) {
         
         if (strncmp(s, t->words[i], len) == 0) {
-            return 0;
+            return EXIT_SUCCESS;
         }
 
         i++;
     }
 
-    return 1;
+    return EXIT_FAILURE;
 }
 
 // Helper function for suggestions that just moves on to the next character
@@ -51,7 +51,7 @@ int move_on(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_left) 
 
     new_prefix[len] = suffix[0];
 
-    if (has_children(d, new_prefix)) {
+    if (has_children(d, new_prefix) == EXIT_SUCCESS) {
 
         // Move on to the next character, don't use up an edit
         rc += suggestions(set, d, new_prefix, suffix + 1, edits_left);
@@ -69,7 +69,7 @@ int try_delete(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_lef
 
     // Don't need to copy the string over as we aren't changing the prefix
 
-    if (has_children(d, prefix)) {
+    if (has_children(d, prefix) == EXIT_SUCCESS) {
 
         // Adding 1 to the suffix pointer will essentially delete the first character
         rc += suggestions(set, d, prefix, suffix + 1, edits_left - 1);
@@ -91,30 +91,35 @@ int try_replace(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
         return rc + EXIT_FAILURE;
     }
 
-    for (i = 97; i < 123; i++) {
+    for (i = 1; i < 256; i++) {
 
-        new_prefix = malloc(sizeof(char) * (MAXLEN + 1));
-        if (new_prefix == NULL) {
-            return rc + EXIT_FAILURE;
-        } else {
+        char c = (char)i;
 
-            strncpy(new_prefix, prefix, MAXLEN);
+        if (dict_chars_exists(d, c) == EXIT_SUCCESS) {
 
-            // Try replacing the beginning of the suffix with each ASCII character
-            // And move that to the end of the prefix
-            new_prefix[len] = (char)i;
-            new_prefix[len + 1] = '\0';
+            new_prefix = malloc(sizeof(char) * (MAXLEN + 1));
+            if (new_prefix == NULL) {
+                return rc + EXIT_FAILURE;
+            } else {
 
-            if (has_children(d, new_prefix)) {
+                strncpy(new_prefix, prefix, MAXLEN);
 
-                // Adding 1 to the suffix pointer will essentially delete the first character
-                // Shifting the "replaced" character to the prefix
-                rc += suggestions(set, d, new_prefix, suffix + 1, edits_left - 1);
+                // Try replacing the beginning of the suffix with each ASCII character
+                // And move that to the end of the prefix
+                new_prefix[len] = c;
+                new_prefix[len + 1] = '\0';
+
+                if (has_children(d, new_prefix) == EXIT_SUCCESS) {
+
+                    // Adding 1 to the suffix pointer will essentially delete the first character
+                    // Shifting the "replaced" character to the prefix
+                    rc += suggestions(set, d, new_prefix, suffix + 1, edits_left - 1);
+                }
+
+                // Save some space now that we're done
+                // Also crashes
+                // free(new_prefix);
             }
-
-            // Save some space now that we're done
-            // Also crashes
-            // free(new_prefix);
         }
     }
 
@@ -129,6 +134,12 @@ int try_swap(zset_t *set, dict_t * d, char *prefix, char *suffix, int edits_left
     int len = strnlen(prefix, MAXLEN);
     char* new_prefix;
 
+    if (len == 0 || strnlen(suffix, MAXLEN) == 0) {
+        return;
+    }
+
+    // printf("pref: %s suff: %s\n", prefix, suffix);
+
     new_prefix = malloc(sizeof(char) * (MAXLEN + 1));
     if (new_prefix == NULL) {
         // malloc failed
@@ -138,11 +149,13 @@ int try_swap(zset_t *set, dict_t * d, char *prefix, char *suffix, int edits_left
     strncpy(new_prefix, prefix, MAXLEN);
 
     // Swap suffix's first character into new_prefix and insert it in front of the last character
-    new_prefix[len] = new_prefix[len];
+    new_prefix[len] = new_prefix[len - 1];
     new_prefix[len - 1] = suffix[0];
     new_prefix[len + 1] = '\0';
 
-    if (has_children(d, new_prefix)) {
+    // printf("swap %s to %s\n", prefix, new_prefix);
+
+    if (has_children(d, new_prefix) == EXIT_SUCCESS) {
         // Adding 1 to the suffix pointer will essentially delete the first character
         rc += suggestions(set, d, new_prefix, suffix + 1, edits_left - 1);
     }
@@ -166,27 +179,34 @@ int try_insert(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_lef
         return rc + EXIT_FAILURE;
     }
 
-    for (i = 97; i < 123; i++) {
+    for (i = 1; i < 256; i++) {
 
-        new_prefix = malloc(sizeof(char) * (MAXLEN + 1));
-        if (new_prefix == NULL) {
-            return rc + EXIT_FAILURE;
-        } else {
+        char c = (char)i;
 
-            strncpy(new_prefix, prefix, MAXLEN);
+        if (dict_chars_exists(d, c) == EXIT_SUCCESS) {
 
-            // Try replacing the beginning of the suffix with each ASCII character
-            new_prefix[len] = (char)i;
-            new_prefix[len + 1] = '\0';
+            // printf("%c", c);
+            
+            new_prefix = malloc(sizeof(char) * (MAXLEN + 1));
+            if (new_prefix == NULL) {
+                return rc + EXIT_FAILURE;
+            } else {
 
-            if (has_children(d, new_prefix)) {
+                strncpy(new_prefix, prefix, MAXLEN);
 
-                // Basically just inserting the new ASCII character to the string
-                rc += suggestions(set, d, new_prefix, suffix, edits_left - 1);
-            } 
-        
-            // Save some space now that we're done
-            free(new_prefix);
+                // Try adding on a new character
+                new_prefix[len] = c;
+                new_prefix[len + 1] = '\0';
+
+                if (has_children(d, new_prefix) == EXIT_SUCCESS) {
+
+                    // Basically just inserting the new ASCII character to the string
+                    rc += suggestions(set, d, new_prefix, suffix, edits_left - 1);
+                } 
+            
+                // Save some space now that we're done
+                // free(new_prefix);
+            }
         }
     }
 
@@ -209,24 +229,25 @@ int suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
     strncpy(s, prefix, MAXLEN);
     strncat(s, suffix, MAXLEN);
 
-
     // Check if the current string is in the trie
     if (dict_exists(d, s) == EXIT_SUCCESS) {
 
-        printf("found: %s\n", s);
-
         // Might have to update first comparison if value of zset_score changes
-        if (zset_score(set, s) == 0 || edits_left > zset_score(set, s)) {
+        if (1 || zset_score(set, s) == NULL || edits_left > zset_score(set, s)) {
+
             // Either the word wasn't in the set before or
             // We were able to reach the word in less edits than previously determined
-            zset_add(set, s, edits_left);
+            printf("add %s %d\n", s, edits_left);
+
+            if (zset_add(set, s, edits_left)) {
+            }
         }
     }
 
     if (edits_left <= 0) {
         // Hooray for exit conditions!
 
-        free(s);
+        // free(s);
         return rc;
     }
 
@@ -245,7 +266,7 @@ int suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
     // This one doesn't need any fancy suffix stuff
     rc += try_insert(set, d, prefix, suffix, edits_left);
 
-    free(s);
+    // free(s);
 
     return rc;
 }
@@ -269,7 +290,7 @@ char** suggestion_set_first_n(zset_t *set, int n) {
     assert(set != NULL);
 
     // Get items in decreasing edit distance
-    return zset_revrange(set, 0-n, -1);
+    return zset_revrange(set, 0, n);
 }
 
 char** suggestion_list(dict_t *d, char *str, int max_edits, int amount) {

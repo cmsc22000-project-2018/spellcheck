@@ -43,16 +43,6 @@ Test(file,parse_resize)
 //    cr_asser_eq(i, 147, "test_parser: parse_file wrong line number");
 }
 
-Test(string,get_word)
-{
-//    char* string;
-    char** array;
-
-    array = parse_file("test_parser.txt");
-//    cr_assert_not_null(array,"test_parser: parse_file failed");
-    // test get_word
-}
-
 
 Test(string,read_line)
 {
