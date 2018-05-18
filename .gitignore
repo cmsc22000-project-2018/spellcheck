@@ -4,3 +4,4 @@ tests/test-spellcheck
 spellcheck
 .DS_Store
 settings.json
+parser_testing.txt

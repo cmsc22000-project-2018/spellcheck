@@ -484,7 +484,7 @@ int change_mode(char* arg)
     if ((a == 1) | (a == 2) | (a == 3)) {
         return a;
 	} else {
-        shell_error("Argument unrecognizeable: return to (3) interactive mode");		
+        shell_error("Input invalid: return to mode 3, interactive mode");		
 	    return 3; 		// default is 3, given this function is only called in main_page, at which point interactive is probably what user intended
     }
     return 3;
@@ -510,7 +510,7 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 			*quit = 0;
 		} else if (!strcmp(args[0],"f")) { // Check valid file path, then exit. If not, redo loop
 			if(!fileexists(args[1])) {
-				shell_error("\n\nPlease enter a valid file path for a new edit target!");
+				shell_error("Please enter a valid file path for a new edit target!");
 				*quit = 0;
 			} else {
 			strcpy(file_name,args[1]);
@@ -529,7 +529,6 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 		} else if (!strcmp(args[0],"q")) { // quit
 			*quit = 2;
 		} else if (!strcmp(args[0], "m")) { // change mode
-			*mode = change_mode(args[1]);
 			printf("Mode number accepted: %d\n",atoi(args[1]));
             *mode = change_mode(args[1]);
 			if(!fileexists(file_name)) {
