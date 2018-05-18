@@ -1,9 +1,6 @@
 *.d
 *.o
 tests/test-spellcheck
-<<<<<<< HEAD
 spellcheck
 .DS_Store
-=======
 settings.json
->>>>>>> origin/master
