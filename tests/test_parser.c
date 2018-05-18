@@ -28,22 +28,34 @@ Test(parser, parse_file)
     char* c = "Eye halve a spelling chequer\n";
     int i = strncmp(array[0], c, 19);
     cr_assert_eq(i, 0, "parse_file wrong line number, testing line 1");
+}
 
-/*    c = "My chequer tolled me sew.\n";
+Test(parser, parse_file1)
+{
+    char** array;
+
+    array = parse_file("tests/test_parser.txt");
+    cr_assert_not_null(array, "test_parser: parse_file failed"); 
+
+    char* c = "Eye halve a spelling chequer\n";
+    int i = strcmp(array[0] , c);
+    cr_assert_eq(i, 0, "parse_file wrong line number, testing line 1");
+
+    c = "My chequer tolled me sew.\n";
     i = strcmp(array[15], c);
     cr_assert_eq(i, 0, "parse_file wrong line number, testing line 16");
 
     while (array[i] != NULL) i++;
-    cr_assert_eq(i, 16, "parse_file wrong total line number"); */
+    cr_assert_eq(i, 16, "parse_file wrong total line number"); 
 }
 
 /* parse_file test, with larger functions */ 
-/*
+
 Test(parser, parse_file2)   // test for file with 200 lines
 {
     char** array;
 
-    array = parse_file("test_parser2.txt");
+    array = parse_file("tests/test_parser2.txt");
     cr_assert_not_null(array,"test_parser: parse_file failed");
 // compare two strings
 
@@ -62,7 +74,6 @@ Test(parser, parse_file2)   // test for file with 200 lines
     while (array[i] != NULL) i++;
     cr_assert_eq(i, 200, "parse_file wrong total line number");
 }
-*/
 
 /* parse_split_line test, returning string array representing each token*/
 Test(parser, parse_split_line)
