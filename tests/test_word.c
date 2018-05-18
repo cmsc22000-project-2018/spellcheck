@@ -4,6 +4,28 @@
 #include "word.h"
 #include "dictionary.h"
 
+char* punct_array[] = {",", ".", " ", "\n"};
+
+/* testing is_in_array */
+Test(word, is_in_array)
+{
+    char* c = strdup(".");
+
+    int i = is_in_array(punct_array, c);
+
+    cr_assert_eq(i, 1, "testing for is_in_array, failed");
+}
+
+
+Test(word, is_in_array0)
+{
+    char* c = strdup("p");
+
+    int i = is_in_array(punct_array, c);
+
+    cr_assert_eq(i, -1, "testing for is_in_array, failed");
+}
+
 /* testing valid_word */
 Test(word, valid_word)
 {

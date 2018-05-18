@@ -8,9 +8,9 @@
 int num_punctuation = 22;
 char* punctuation_array[] = {"+",",",":"," ",".","-","'","&","!","?",":",";","#","~","=","/","$","£","^","\n","_","<",">"};
 
-
 int is_in_array(char* punctuation_array[], char* word) {
-	for (int i = 0; i < num_punctuation ; i++) {
+    int i = 0;
+	for ( ; i < num_punctuation ; i++) {
 		if (strcmp(punctuation_array[i], word) == 0) {
 			//printf("comparing %s to %s", word, punctuation_array[i]);
 			return 1;	}
@@ -48,6 +48,12 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 	suggestions[1] = "came";
 	return 0;
 	}
+
+    else if((strcmp(word, "m'y") == 0)) {
+    suggestions[0] = "my";
+    suggestions[1] = "me";
+    }
+
 	else {
         int i = 1;
         if (dict == NULL) {
@@ -55,5 +61,5 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
         } // erase after implementing dict. empty line to use variable to avoid warning
 		return i;
 	}
-
+    return EXIT_FAILURE;
 }

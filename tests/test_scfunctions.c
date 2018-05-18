@@ -34,7 +34,7 @@ Test(scfunctions,save_corrections)
 
 /* save page accepts command line input */
 
-// part 2 handled by Sarika
+// part 2 handled by scfunction_interactive tests
 
 // part 3 - edit_interactive and interactive_mode accept command line inputs
 

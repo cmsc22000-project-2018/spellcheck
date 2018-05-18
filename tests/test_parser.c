@@ -49,8 +49,7 @@ Test(parser, parse_file1)
     cr_assert_eq(i, 16, "parse_file wrong total line number"); 
 }
 
-/* parse_file test, with larger functions */ 
-
+/* parse_file test, with larger parsing file (200 lines) */ 
 Test(parser, parse_file2)   // test for file with 200 lines
 {
     char** array;

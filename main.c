@@ -178,6 +178,7 @@ int main(int argc, char **argv)
     if (mode == 3) {
         printf("Enter any command to start %s\n\n", md);
 	    parse_read_line();
+        printf("\n\n");
     }
 
 	char** result=NULL;
@@ -193,32 +194,19 @@ int main(int argc, char **argv)
 			break;
 	}
 
-	// Save file
+
+    if (mode != 2) {	// Save file, a functionality unnecessary for verbose batch mode
     md = strstr(save_file,".txt");
-	if (md != NULL) {
-		save_corrections(save_file, result);
-		*quit=1;
-	} else {
-		save_page(file_name, result, quit);
-	}
+    	if (md != NULL) {
+    		save_corrections(save_file, result);
+    		*quit=1;
+    	} else {
+    		save_page(file_name, result, quit);
+    	}
+    }
 
-	// free text array
-	int k=0;
-	if (result[k] != NULL) {
-		free(result[k]);
-		k++;
-	}
-	free(result);
-
-
-	// free(file_name);
   }
 
-	// free and exit
     shell_outro();
-	free(quit);
-	free(save_file);
-	free(dict_name);
-//	free(file_name);
 	return 0;
 }
