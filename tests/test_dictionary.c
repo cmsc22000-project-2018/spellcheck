@@ -36,6 +36,73 @@ Test(dictionary, free) {
 }
 
 /*
+************ dict_chars_exists tests ****************************
+*/
+
+Test(dictionary, dict_chars_list_f0) {
+    dict_t *d;
+    int rc;
+
+    d = dict_new();
+
+    rc = dict_chars_exists(d, 'c');
+
+    cr_assert_eq(rc, EXIT_FAILURE, "dict_chars_exists succeeded when it shouldn't have");
+}
+
+Test(dictionary, dict_chars_list_f1) {
+    dict_t *d;
+    int rc;
+
+    d = dict_new();
+
+    dict_add(d, "candy");
+
+    rc = dict_chars_exists(d, '7');
+
+    cr_assert_eq(rc, EXIT_FAILURE, "dict_chars_exists succeeded when it shouldn't have");
+}
+
+Test(dictionary, dict_chars_list_s0) {
+    dict_t *d;
+    int rc;
+
+    d = dict_new();
+
+    dict_add(d, "jkl538-yfv");
+
+    rc = dict_chars_exists(d, '-');
+
+    cr_assert_eq(rc, EXIT_SUCCESS, "dict_chars_exists failed when it should have succeeded");
+}
+
+Test(dictionary, dict_chars_list_s1) {
+    dict_t *d;
+    int rc;
+
+    d = dict_new();
+
+    dict_add(d, "candy");
+
+    rc = dict_chars_exists(d, 'd');
+
+    cr_assert_eq(rc, EXIT_SUCCESS, "dict_chars_exists failed when it should have succeeded");
+}
+
+Test(dictionary, dict_chars_list_null) {
+    dict_t *d;
+    int rc;
+
+    d = dict_new();
+
+    dict_add(d, "");
+
+    rc = dict_chars_exists(d, '\0');
+
+    cr_assert_eq(rc, EXIT_FAILURE, "dict_chars_exists succeeded when it shouldn't have");
+}
+
+/*
 ************ dict_add tests ****************************
 */
 
