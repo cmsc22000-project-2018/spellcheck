@@ -121,6 +121,44 @@ void underline_correct_spelling(char *tkn, char* underline)
 
 }
 
+char* underline_misspelled_sentence(char** badwords, char* sentence, int element) {
+
+	char* underline = malloc(strlen(sentence));
+	underline[0] = '\0'; 
+
+	while(badwords[element] != NULL) {
+
+		char *ptr = strstr(sentence, badwords[element]);
+
+		if(ptr != NULL) {
+
+			int pos = ptr - sentence;
+
+			for(int i = 0; i < pos; i++) {
+
+				strcat(underline, " ");
+
+			}
+
+			for (int i = 0; i < strlen(badwords[element]); i++) {
+
+				strcat(underline, "^");
+
+			}
+
+			sentence = ptr+strlen(badwords[element]);
+
+		}
+
+		element++;
+
+	}
+
+	return underline;
+
+}
+
+
 
 
 int add_to_badwords(char *badword, char** badwords)
@@ -215,6 +253,8 @@ int initialize_badwords(char **badwords, int length)
     return EXIT_SUCCESS;
 }
 
+
+
 /*
  *	III. Interactive Mode
  */
@@ -224,6 +264,9 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 {
     char *line_copy = malloc(strlen(line));
     strcpy(line_copy, line); //maintain a copy of the line to preserve original line: line will be parsed into individual words
+    
+    char *line_copy2 = malloc(strlen(line));
+    strcpy(line_copy2, line); 
     int max_no_suggestions = 2; //should the user decide this?
 
 
@@ -291,8 +334,10 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     if (number2 == 0) {
     	printf("Deleting %s.", badwords[i]);
     	correct_line(line_copy, badwords[i], "");
-    	printf("Corrected sentence is: \n");
-     	printf("%s \n", line_copy);
+    	printf("New sentence is: \n");
+     	printf("%s\n", line_copy);
+     	//printf("%s\n", badwords[i+1]);
+     	printf("%s\n", underline_misspelled_sentence(badwords, line_copy, i+1));
 
 
     }
@@ -309,8 +354,9 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     else if (number2 != 1 || number2 != 0) { //1 if no replacement needed, 0 if word deleted
     	printf("Replacing %s with %s \n", badwords[i], suggestions[number2-2]);
     	correct_line(line_copy, badwords[i], suggestions[number2-2]); //modifies line function
-    	printf("Corrected sentence is: \n");
-     	printf("%s \n", line_copy);
+    	printf("New sentence is: \n");
+     	printf("%s\n", line_copy);
+     	printf("%s\n", underline_misspelled_sentence(badwords, line_copy, i+1));
     }
 
 

@@ -12,7 +12,7 @@ char* punctuation_array[] = {"+",",",":"," ",".","-","'","&","!","?",":",";","#"
 int is_in_array(char* punctuation_array[], char* word) {
 	for (int i = 0; i < num_punctuation ; i++) {
 		if (strcmp(punctuation_array[i], word) == 0) {
-			printf("comparing %s to %s", word, punctuation_array[i]);
+			//printf("comparing %s to %s", word, punctuation_array[i]);
 			return 1;	}
 	}
 	return -1;
