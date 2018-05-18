@@ -38,23 +38,9 @@ Test(scfunctions,save_corrections)
 
 // part 3 - edit_interactive and interactive_mode accept command line inputs
 
-// part 4 - edit_batch operates batch mode, batch_mode is wrapper; test batch_mode
-Test(scfunctions, batch_mode)
-{
-    char* filename = "test_short.txt";
-    dict_t* dict = NULL;
-    int* quit = 0;
-    int verbosity = 0;
+// part 4 - edit_batch operates batch mode, test in command line
 
-//    char** result = batch_mode(filename, dict, quit, verbosity);
-
-//    cr_assert_not_null(result, "batch mode error");
-
-//    printf("%s", result[0]);
-}
-
-
-// part 1 - help_page and main_page require command line inputs
+// part 5 - help_page and main_page require command line inputs
 
 /* change_mode */ 
 Test(scfunctions, change_mode)
@@ -80,7 +66,8 @@ Test(scfunctions, change_mode1)
 {
     char* mode = "4";
     printf("Testing change_mode, scfunctions.c:"
-           "Expect to print out error message, as this test checks whether function identifies error case\n");
+           "Expect to print out error message, "
+           "as this test checks whether function identifies error case\n");
 
     int i = change_mode(mode);
 

@@ -367,7 +367,7 @@ void help_page()
 int fileexists(const char* filename)
 {
 	struct stat buffer;
-	return(stat(filename, &buffer) == 0);
+	return (stat(filename, &buffer) == 0);
 }
 
 /* helper for main_page, determine input mode */

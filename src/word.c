@@ -17,7 +17,6 @@ int valid_word(char* word, dict_t* dict) {
 
 int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 //	assert (dict != NULL);
-    
 
 	if (strcmp(word, "splling") == 0) {
 		suggestions[0] = "spelling";
@@ -35,9 +34,12 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 	suggestions[1] = "came";
 	return 0;
 	}
-
 	else {
-		return EXIT_FAILURE;
+        int i = 1;
+        if (dict == NULL) {
+            i = EXIT_FAILURE;
+        } // erase after implementing dict. empty line to use variable to avoid warning
+		return i;
 	}
 
 }
