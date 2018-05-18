@@ -121,6 +121,7 @@ void underline_correct_spelling(char *tkn, char* underline)
 
 }
 
+//given a list of bad words in order, underline them in sentence
 char* underline_misspelled_sentence(char** badwords, char* sentence, int element) {
 
 	char* underline = malloc(strlen(sentence));
@@ -134,13 +135,16 @@ char* underline_misspelled_sentence(char** badwords, char* sentence, int element
 
 			int pos = ptr - sentence;
 
-			for(int i = 0; i < pos; i++) {
+			int i = 0;
+			size_t j = 0;
+
+			for(; i < pos; i++) {
 
 				strcat(underline, " ");
 
 			}
 
-			for (int i = 0; i < strlen(badwords[element]); i++) {
+			for (; j < strlen(badwords[element]); j++) {
 
 				strcat(underline, "^");
 
@@ -233,6 +237,7 @@ char* correct_line(char* line, char* old_word, char* new_word)
 	// discuss with sarika
 
 	char* c = strdup(line);
+	//printf("%s\n", c);
 	return c;
 }
 
@@ -372,15 +377,27 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 /* interctive mode - open file, parse and work on later */
 char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in dictionary later
 {
+
+	size_t max_terminal_line_length = 500; //what is a reasonable estimate?
+
 	char** lines;
 
 	lines = parse_file(filename);
+
+
+	
 
 	// step through phases
 	int i=0;
 	while (lines[i] != NULL) {	// potential error - one empty line in the middle of two full?	
 		int linenumber = i+1;
-		lines[i] = edit_interactive(lines[i], dict, linenumber); //edit interactive is called for each line 
+		if (strlen(lines[i]) <= max_terminal_line_length) {
+			lines[i] = edit_interactive(lines[i], dict, linenumber);
+		}//edit interactive is called for each line 
+		else {
+			//deniz code here?
+
+		}
 		i++;
 	}
 

@@ -78,4 +78,8 @@ int change_mode(char* arg);
 
 void main_page(int* quit, int *mode, char* file_name, char* dict_name);
 
+//given a list of bad words in order, underline them in sentence
+
+char* underline_misspelled_sentence(char** badwords, char* sentence, int element);
+
 #endif
