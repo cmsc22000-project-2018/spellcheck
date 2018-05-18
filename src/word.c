@@ -8,6 +8,7 @@
 int num_punctuation = 22;
 char* punctuation_array[] = {"+",",",":"," ",".","-","'","&","!","?",":",";","#","~","=","/","$","£","^","\n","_","<",">"};
 
+// checks if punctuation exists within array
 int is_in_array(char* punctuation_array[], char* word) {
     int i = 0;
 	for ( ; i < num_punctuation ; i++) {
@@ -18,6 +19,7 @@ int is_in_array(char* punctuation_array[], char* word) {
 	return -1;
 }
 
+// checks if word is valid -- does not have erroneous punctuations within
 int valid_word(char* word, dict_t* dict) {
 	 if (is_in_array(punctuation_array, word) == -1 && *word != '\n') {
 	    return dict_exists(dict, word);
@@ -28,7 +30,7 @@ int valid_word(char* word, dict_t* dict) {
 	}
 }
 
-
+// currently hard_coded; generates suggestions for a badly spelled word
 int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 //	assert (dict != NULL);
 
