@@ -80,16 +80,12 @@ Test(scfunctions, fileexists)
 {
     int i = fileexists("test_short.txt");
 
-    printf("\n\nsuccess:%d\n\n",i);
-
     cr_assert_eq(i, 0, "file should exist");    // i=1 in linux, but i=0 in travis build.
 }
 
 Test(scfunctions, fileexists1)
 {
     int i = fileexists("test_sh.txt");
-
-    printf("\n\nfailure:%d\n\n",i);
 
     cr_assert_eq(i, 0, "file should not exist");
 }
