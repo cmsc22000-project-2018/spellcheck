@@ -7,9 +7,12 @@
 
 #include "mock_trie.h"
 
-/* A point in two-dimensional space */
+#define MAXLEN 100
+
+/* A dictionary and a instant lookup table of the characters contained in it */
 typedef struct {
     trie_t *dict;
+    char *char_list;
 } dict_t;
 
 
@@ -49,6 +52,31 @@ int dict_init(dict_t *d);
  */
 int dict_free(dict_t *d);
 
+/*
+ * Returns whether a character is in the character list
+ * 
+ * Parameters:
+ *  - d: A dictionary. Must point to a dictionary allocated with dict_new
+ *  - c: A character
+ * 
+ * Returns:
+ *  - EXIT_SUCCESS if the character is contained in the dictionary
+ *  - EXIT_FAILURE if it isn't
+ */
+int dict_chars_exists(dict_t *d, char c);
+
+/*
+ * Updates the character list with potential new characters from a string
+ * 
+ * Parameters:
+ *  - d: A dictionary. Must point to a dictionary allocated with dict_new
+ *  - str: a string
+ * 
+ * Returns:
+ *  - EXIT_SUCCESS on success, 
+ *  - EXIT_FAILURE if an error occurs
+ */
+int dict_chars_update(dict_t *d, char *str);
 
 /*
  * Checks if a string is contained in a dictionary
