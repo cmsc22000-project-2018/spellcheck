@@ -26,14 +26,14 @@
 /*
  *	I. Saving Files
  */
-// Accet a filename and an array of strings, then write that array into the file
+// Accept a filename and an array of strings, then write that array into the file
 void save_corrections(char* filename, char** lines)
 {
 	FILE* f = fopen(filename,"w");
     assert(f != NULL);
 	int i = 0;
 	while (lines[i] != NULL) {
-		fprintf(f, "%s", lines[i]);
+		fprintf(f, "%s", lines[i]); // write lines into file
 		i++;
 	}
 	fclose(f);
@@ -206,6 +206,7 @@ int parse_string(char* string, dict_t *dict, char *underline, char** badwords)
 }
 
 //reference from https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
+// replace an old, misspelled word with a new word in a string (line)
 char* correct_line(char* line, char* old_word, char* new_word)
 {
 	char buffer[2000] = {0}; //again, we might need to modify our size estimates
@@ -260,7 +261,7 @@ int initialize_badwords(char **badwords, int length)
  *	III. Interactive Mode
  */
 
-/* Functions needed for interactive mode */
+/* returns a corrected line after asking user for correction */
 char* edit_interactive(char* line, dict_t* dict, int linenumber)
 {
     char *line_copy = malloc(strlen(line));
@@ -403,6 +404,8 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in 
 	IV. Batch Mode
  */
 // Adapted from sarika's edit_interactive
+// returns corrections to a list that contains misspelled words, or returns a corrected char** string
+// that can represent an array
 char* edit_batch(char* line, dict_t* dict, int verbosity)
 {
     char *line_copy = malloc(strlen(line));
@@ -433,6 +436,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
 	return line_copy;
 }
 
+// operates batch mode
 char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 {
 	if (verbosity) printf("\nBatch Mode: Verbose\n\n");
@@ -490,6 +494,7 @@ int change_mode(char* arg)
     return 3;
 }
 
+/* operates main_page */
 void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 {
 	char* line;
