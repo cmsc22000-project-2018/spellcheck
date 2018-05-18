@@ -4,7 +4,6 @@
 #include <string.h>
 #include <assert.h>
 #include "mock_trie.h"
-#include "utils.h"
 
 /*
 * See mock_trie.h
@@ -15,14 +14,12 @@ trie_t* trie_new(){
     int rc;
 
     if (t == NULL) {
-      error("Could not allocate memory");
       return NULL;
     }
 
     rc = trie_init(t);
-    if(rc != 1)
+    if(rc != EXIT_SUCCESS)
     {
-        error("Could not initialize trie");
         return NULL;
     }
     return t;
@@ -35,10 +32,13 @@ int trie_init(trie_t *t){
     assert(t != NULL);
 
     char **w;
-    w = calloc(LEN, sizeof(char*));
+    w = calloc(TRIE_LEN, sizeof(char*));
+    if (w == NULL) {
+        return EXIT_FAILURE;
+    }
 
     t->words = w;
-    return 1;
+    return EXIT_SUCCESS;
 }
 
 /*
@@ -50,7 +50,7 @@ int trie_free(trie_t *t){
 
     int i;
 
-    for (i = 0; i < LEN; i++) {
+    for (i = 0; i < TRIE_LEN; i++) {
         if (t->words[i] != NULL) {
             free(t->words[i]);
         }
@@ -59,64 +59,50 @@ int trie_free(trie_t *t){
     free(t->words);
     free(t);
 
-    return 1;
-}
-
-int compstr(char *s1, char *s2) {
-    int i = 0;
-
-    while (s1[i] != '\0' && s2[i] != '\0') {
-        if (s1[i] != s2[i]) {
-            return 0;
-        }
-        i++;
-    }
-
-    if (s1[i] == s2[i]) {
-        return 1;
-    }
-
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 /*
 * See mock_trie.h
 */
-int in_trie(char *str, trie_t *t) {
+int trie_exists(trie_t *t, char *str) {
     int i;
 
-    for (i = 0; i < LEN ; i++) {
-        if (t->words[i] == NULL) return 0;
-        if (compstr(str, t->words[i]) == 1) {
-            return 1;
+    for (i = 0; i < TRIE_LEN ; i++) {
+        if (t->words[i] == NULL) return EXIT_FAILURE;
+        if (strncmp(str, t->words[i], WORD_LEN) == 0) {
+            return EXIT_SUCCESS;
         }
     }
-    return 0;
+    return EXIT_FAILURE;
 }
 
 /*
 * See mock_trie.h
 */
-int add_to_trie(char *str, trie_t *t){
+int trie_add(trie_t *t, char *str){
     int i = 0;
 
-    while (i < LEN && t->words[i] != NULL) {
-        if (compstr(str, t->words[i]) == 1) {
-            return 0;
+    while (i < TRIE_LEN && t->words[i] != NULL) {
+        if (strncmp(str, t->words[i], WORD_LEN) == 0) {
+            return EXIT_FAILURE;
         }
         i++;
     }
 
-    if (i < LEN) {
+    if (i < TRIE_LEN) {
         char *w;
-        w = malloc(sizeof(char) * strlen(str) + 1);
+        w = malloc(sizeof(char) * WORD_LEN);
+        if (w == NULL) {
+            return EXIT_FAILURE;
+        }
 
-        strncpy(w, str, strlen(str) + 1);
+        strncpy(w, str, WORD_LEN);
 
         t->words[i] = w;
 
-        return 1;
+        return EXIT_SUCCESS;
     }
 
-    return -1;
+    return EXIT_FAILURE;
 }

@@ -1,7 +1,8 @@
 #ifndef MOCK_TRIE_H
 #define MOCK_TRIE_H
 
-#define LEN 30
+#define TRIE_LEN 50
+#define WORD_LEN 100
 
 /* A mock-trie struct */
 typedef struct {
@@ -28,9 +29,8 @@ trie_t* trie_new();
  * Parameters:
  *  - new_trie: A trie. Must point to already allocated memory.
  *
- *
  * Returns:
- *  - 0 on success, 1 if an error occurs.
+ *  - EXIT_SUCCESS on success, EXIT_FAILURE if an error occurs.
  */
 int trie_init(trie_t *t);
 
@@ -42,22 +42,9 @@ int trie_init(trie_t *t);
  *  - trie: A trie. Must point to a point allocated with segment_new
  *
  * Returns:
- *  - Always returns 0.
+ *  - Always returns EXIT_SUCCESS.
  */
 int trie_free(trie_t *t);
-
-
-/*
- * Compares the given two strings to see if they are equal (the same)
- *
- * Parameters:
- *  - s1: a string
- *  - s2: a string
- * Returns:
- *  1 if strings are the same
- *  0 if strings are different
- */
-int compstr(char *s1, char *s2);
 
 /*
  * Checks if a word is in a trie
@@ -66,10 +53,10 @@ int compstr(char *s1, char *s2);
  *  - trie: a trie.
  *
  * Returns:
- *  1 if word is in the trie
- *  0 if word is not in the trie
+ *  EXIT_SUCCESS if word is in the trie
+ *  EXIT_FAILURE if word is not in the trie
  */
-int in_trie(char *str, trie_t *t);
+int trie_exists(trie_t *t, char *str);
 
 /*
  * Adds a word to trie
@@ -79,10 +66,10 @@ int in_trie(char *str, trie_t *t);
  *  - t: a trie.
  *
  * Returns:
- *  1 if word is in the trie
- *  0 if word is not in the trie
+ *  EXIT_SUCCESS if word is in the trie
+ *  EXIT_FAILURE if word is not in the trie
  */
-int add_to_trie(char *str, trie_t *t);
+int trie_add(trie_t *t, char *str);
 
 
 #endif

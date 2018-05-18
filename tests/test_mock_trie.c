@@ -8,9 +8,8 @@
 Test(trie, new)
 {
     trie_t *new_trie;
-    char** word = malloc(sizeof(char *) * 70);
 
-    new_trie = trie_new(word);
+    new_trie = trie_new();
 
     cr_assert_not_null(new_trie, "trie_new() failed");
 }
@@ -24,7 +23,7 @@ Test(trie, init)
 
     rc = trie_init(&new_trie);
 
-    cr_assert_eq(rc, 1, "trie_init() failed");
+    cr_assert_eq(rc, EXIT_SUCCESS, "trie_init() failed");
 
 }
 
@@ -32,38 +31,15 @@ Test(trie, init)
 Test(trie, free)
 {
     trie_t *new_trie;
-    char** wordss = malloc(sizeof(char *) * 70);
     int rc;
 
-    new_trie = trie_new(wordss);
+    new_trie = trie_new();
 
     cr_assert_not_null(new_trie, "trie_new() failed");
 
     rc = trie_free(new_trie);
 
-    cr_assert_eq(rc, 1, "trie_free() failed");
-}
-
-/* Checks the case in which the two strings are the same */
-Test(string, compare){
-  char *s1 = malloc(sizeof(char) * 3);
-  char *s2 = malloc(sizeof(char) * 3);
-  s1 = "hi";
-  s2 = "hi";
-
-  int result = compstr(s1, s2);
-  cr_assert_eq(result, 1, "compstr failed");
-}
-
-/* Checks the case in which two strings are completely different */
-Test(string, compare_different){
-  char *s11 = malloc(sizeof(char) * 3);
-  char *s22 = malloc(sizeof(char) * 4);
-  s11 = "hi";
-  s22 = "day";
-
-  int results = compstr(s11, s22);
-  cr_assert_eq(results, 0, "compstr failed");
+    cr_assert_eq(rc, EXIT_SUCCESS, "trie_free() failed");
 }
 
 /* Checks the case in which a new word is being added to the trie*/
@@ -71,49 +47,49 @@ Test(trie, added_to_trie){
   trie_t *trie1 = trie_new();
   char *s1 = (char *)malloc(sizeof(char) * 3);
   s1 = "hi";
-  int added_to_trie = add_to_trie(s1, trie1);
-  cr_assert_eq(added_to_trie, 1, "add_to_trie failed");
+  int added_to_trie = trie_add(trie1, s1);
+  cr_assert_eq(added_to_trie, EXIT_SUCCESS, "trie_add failed");
 }
 
 /* Checks the case in which the same word is being tried to add to the trie */
-Test(trie, same_variable_add_to_trie){
+Test(trie, same_variable_trie_add){
   trie_t *trie2 = trie_new();
   char *ss1 = (char *)malloc(sizeof(char) * 3);
   ss1 = "hi";
-  add_to_trie(ss1, trie2);
-  int same_word_add_to_trie2 = add_to_trie(ss1, trie2);
-  cr_assert_eq(same_word_add_to_trie2, 0, "add_to_trie failed");
+  trie_add(trie2, ss1);
+  int same_word_trie_add2 = trie_add(trie2, ss1);
+  cr_assert_eq(same_word_trie_add2, EXIT_FAILURE, "trie_add failed");
 }
 
-/* Checks the case in which the word cannot be added to the trie */
-Test(trie, cannot_add_to_trie){
+/* Checks the case in which the word can be added to the trie */
+Test(trie, can_trie_add){
   trie_t *trie3 = trie_new();
   char *sss1 = (char *)malloc(sizeof(char) * 53);
   sss1 = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
-  int cant_add_to_trie = add_to_trie(sss1, trie3);
-  cr_assert_eq(cant_add_to_trie, 1, "add_to_trie failed");
+  int can_trie_add = trie_add(trie3, sss1);
+  cr_assert_eq(can_trie_add, EXIT_SUCCESS, "trie_add failed");
 }
 
 /* Checks the case in which the word is in the trie */
-Test(Trie, in_trie) {
+Test(trie, trie_exists) {
   trie_t *triet = trie_new();
   char *q = (char *)malloc(sizeof(char) * 10);
   char *ss = (char *)malloc(sizeof(char) * 10);
   q =  "hi";
   ss = "hi";
-  add_to_trie(q, triet);
-  int is_in_trie = in_trie(ss, triet);
-  cr_assert_eq(is_in_trie, 1, "in_trie failed");
+  trie_add(triet, q);
+  int is_trie_exists = trie_exists(triet, ss);
+  cr_assert_eq(is_trie_exists, EXIT_SUCCESS, "trie_exists failed");
 }
 
 /* Checks the case in which the word is not in the trie*/
-Test(Trie, not_in_trie) {
+Test(trie, not_trie_exists) {
   trie_t *t1 = trie_new();
   char *sq = (char *)malloc(sizeof(char) * 10);
   char *sqq = (char *)malloc(sizeof(char) * 10);
   sq =  "hi";
   sqq = "no";
-  add_to_trie(sq, t1);
-  int is_in_trie = in_trie(sqq, t1);
-  cr_assert_eq(is_in_trie, 0, "in_trie failed");
+  trie_add(t1, sq);
+  int is_trie_exists = trie_exists(t1, sqq);
+  cr_assert_eq(is_trie_exists, EXIT_FAILURE, "trie_exists failed");
 }

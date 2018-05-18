@@ -2,8 +2,8 @@
  * A dictionary structure built using tries
  */
 
-#ifndef INCLUDE_DICTIONARY_H_
-#define INCLUDE_DICTIONARY_H_
+#ifndef DICTIONARY_H_
+#define DICTIONARY_H_
 
 #include "mock_trie.h"
 
@@ -33,7 +33,7 @@ dict_t* dict_new();
  *  - d: A dictionary. Must point to already allocated memory.
  *
  * Returns:
- *  - 0 on success, 1 if an error occurs
+ *  - EXIT_SUCCESS on success, EXIT_FAILURE if an error occurs
  */
 int dict_init(dict_t *d);
 
@@ -45,7 +45,7 @@ int dict_init(dict_t *d);
  *  - d: A dictionary. Must point to a dictionary allocated with dict_new
  *
  * Returns:
- *  - Always returns 0.
+ *  - Always returns EXIT_SUCCESS.
  */
 int dict_free(dict_t *d);
 
@@ -58,11 +58,10 @@ int dict_free(dict_t *d);
  *  - d: A dictionary
  *
  * Returns:
- *  - 1 if the word is in the dictionary
- *  - 0 if the word is not in the dictionary
- *  - -1 if there was an error
+ *  - EXIT_SUCCESS if the word is in the dictionary
+ *  - EXIT_FAILURE if the word is not in the dictionary or if an error occured
  */
-int in_dict(char *str, dict_t *d);
+int dict_exists(dict_t *d, char *str);
 
 /*
  * Adds a word to a dictionary
@@ -72,11 +71,10 @@ int in_dict(char *str, dict_t *d);
  *  - d: A dictionary
  *
  * Returns:
- *  - 1 upon success
- *  - 0 if word is already in dictionary
- *  - -1 if there was an error
+ *  - EXIT_SUCCESS upon success
+ *  - EXIT_FAILURE if word is already in dictionary or if an error occured
  */
-int add_to_dict(char *str, dict_t *d);
+int dict_add(dict_t *d, char *str);
 
 /*
  * Parses a file and adds all words to the dictionary
@@ -86,9 +84,10 @@ int add_to_dict(char *str, dict_t *d);
  *  - file: A filename string.
  *
  * Returns:
- *  - 1 on success, 0 if an error occurs, -1 if partial error (only able to add some words)
+ *  - EXIT_SUCCESS on success, 
+ *  - EXIT_FAILURE if an error occurs
  */
-int read_to_dict(char *file, dict_t *d);
+int dict_read(dict_t *d, char *file);
 
 
 #endif /* INCLUDE_POINT_H_ */
