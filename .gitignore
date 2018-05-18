@@ -1,3 +1,5 @@
 *.d
 *.o
 tests/test-spellcheck
+spellcheck
+.DS_Store

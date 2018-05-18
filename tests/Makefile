@@ -6,15 +6,16 @@ RM = rm -f
 BIN = test-spellcheck
 LDLIBS = -lcriterion
 
-SRCS = main.c test_mock_trie.c test_dictionary.c ../src/mock_trie.c ../src/dictionary.c
+
+SRCS = main.c test_scfunctions_interactive.c test_word.c test_scfunctions.c test_dictionary.c test_parser.c ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/scfunctions.c ../src/shellstrings.c ../src/word.c
+
 OBJS = $(SRCS:.c=.o)
 
-.PHONY: all
+.PHONY: all clean
 all: $(BIN)
 
-$(BIN):
+$(BIN): $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS) -o $(BIN) $(LDLIBS)
 
-.PHONY: clean
 clean:
 	-$(RM) $(OBJS) $(BIN)
