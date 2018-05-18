@@ -9,7 +9,7 @@
 int valid_word(char* word, dict_t* dict) {
 	///printf("output is %d ", in_dict(word, dict));
 	if (*word == ',' || *word == '\n' || *word == '.') { //we cannot spellcheck for punctuation
-		return 1;
+		return EXIT_FAILURE;
 	}
     return dict_exists(dict, word);
 }
