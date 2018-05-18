@@ -213,6 +213,8 @@ int suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
     // Check if the current string is in the trie
     if (dict_exists(d, s) == EXIT_SUCCESS) {
 
+        printf("found: %s\n", s);
+
         // Might have to update first comparison if value of zset_score changes
         if (zset_score(set, s) == 0 || edits_left > zset_score(set, s)) {
             // Either the word wasn't in the set before or

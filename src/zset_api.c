@@ -175,11 +175,13 @@ char** zset_revrange(zset_t* z, int start, int stop)
         fprintf(stderr,"ERROR: %s\n", reply->str);
         freeReplyObject(reply);
         }
+    printf("%d\n", reply->elements);
 	char** s = malloc(sizeof(char*) * reply->elements);
 	for(i=0; i < reply->elements; i++)
 	{
         s[i] = (char*)malloc(sizeof(char)*(strlen(s[i]) + 1));
 		strncpy(s[i],reply->element[i]->str, strlen(s[i]) + 1);
+        printf("%s\n", reply->element[i]->str);
 	}
 	return s;
 }

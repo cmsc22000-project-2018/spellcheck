@@ -183,3 +183,34 @@ Test(suggestion, insert_s1) {
     zset_remrangebyrank(set, 0, -1);
 }
 
+// Test regular suggestion generation 1
+Test(suggestion, suggestions_s0) {
+    zset_t *set = zset_new("set");
+    dict_t *d = dict_new();
+
+    dict_add(d, "cops");
+    dict_add(d, "8op");
+    dict_add(d, "op");
+    dict_add(d, "ocp");
+
+    int rc = suggestions(set, d, "", "cop", 2);
+    cr_assert_eq(0, rc, "suggestions() failed");
+
+    printf("uh\n");
+
+    char **results = zset_revrange(set, 0, 1);
+
+    printf("uh %s\n", results[0]);
+    
+    cr_assert_eq(0, strncmp(results[0], "8op", MAXLEN), 
+                "suggestions() first result incorrect");
+    cr_assert_eq(0, strncmp(results[1], "cops", MAXLEN), 
+                "suggestions() second result incorrect");
+    cr_assert_eq(0, strncmp(results[2], "ocp", MAXLEN), 
+                "suggestions() third result incorrect");
+    cr_assert_eq(0, strncmp(results[3], "cops", MAXLEN), 
+                "suggestions() fourth result incorrect");
+
+    zset_remrangebyrank(set, 0, -1);
+}
+
