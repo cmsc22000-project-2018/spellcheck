@@ -2,7 +2,7 @@
 #define _WORD_H
 #include <stdio.h>
 #include <strings.h>
-
+#include "dictionary.h"
 
 typedef struct word {
 	char *word;
@@ -11,6 +11,7 @@ typedef struct word {
 
 
 int valid_word(char* word, dict_t *dict);
+
 int generate_suggestions(char* word, dict_t* dict, char **suggestions);
 
 

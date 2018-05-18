@@ -71,3 +71,6 @@ void shell_help() {
 void shell_outro() {
     printf("Thank you for using Spellcheck. Bye!\n");
 }
+
+
+

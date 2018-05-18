@@ -53,8 +53,6 @@ void save_page(char* filename, char** lines, int* quit)
 		shell_prompt();
 		i = 0;
 
-
-
         verify = scanf("%s", line);
         assert (!(verify < 0)); // ensure valid input
         assert (strlen(line) < 256); // ensure that string length is within limit
@@ -167,7 +165,6 @@ char* underline_misspelled_sentence(char** badwords, char* sentence, int element
 
 int add_to_badwords(char *badword, char** badwords)
 {
-
 	if (badword == NULL || badwords == NULL) {
 		return EXIT_FAILURE;
 	}
@@ -234,11 +231,8 @@ char* correct_line(char* line, char* old_word, char* new_word)
 
 	strcpy(line, buffer);
 
-	// discuss with sarika
+	return line;
 
-	char* c = strdup(line);
-	//printf("%s\n", c);
-	return c;
 }
 
 
@@ -292,8 +286,6 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     printf("\n");
     printf("%s", underline);
     printf("\n");
-
-
 
     // printf("Misspelled words in this sentence are: ");
 
@@ -478,7 +470,7 @@ void help_page()
 int fileexists(const char* filename)
 {
 	struct stat buffer;
-	return(stat(filename,&buffer)==0);
+	return (stat(filename, &buffer) == 0);
 }
 
 /* helper for main_page, determine input mode */
@@ -486,14 +478,13 @@ int fileexists(const char* filename)
 int change_mode(char* arg)
 {
 	int a = atoi(arg);
-	switch (a) {
-		case 1: return a;
-		case 2: return a;
-		case 3: return a;
-		default: // error case
-			shell_error("Argument unrecognizeable: return to default interactive mode");		
-	}
-	return 3; 		// default is 3, given this function is only called in main_page, at which point interactive is probably what user intended
+    if ((a == 1) | (a == 2) | (a == 3)) {
+        return a;
+	} else {
+        shell_error("Argument unrecognizeable: return to default interactive mode");		
+	    return 3; 		// default is 3, given this function is only called in main_page, at which point interactive is probably what user intended
+    }
+    return 3;
 }
 
 void main_page(int* quit, int *mode, char* file_name, char* dict_name)
