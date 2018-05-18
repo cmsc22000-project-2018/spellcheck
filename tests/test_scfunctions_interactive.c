@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "scfunctions.h"
+#include <string.h>
 
 
 void check_underline_misspelled(char* wrong, char* underline, char* expected) {
@@ -63,3 +64,114 @@ Test(scfunctions, check_add_to_badwords) {
 
 }
 
+
+
+void test_correct_line(char* line, char* old_word, char* new_word, char* expected) {
+
+	char* corrected = correct_line(line, old_word, new_word);
+	//printf("%s\n", corrected);
+
+
+	int result = strcmp(corrected, expected);
+
+    cr_assert_eq(result, 0, "correct_line test failed");
+}
+
+Test(scfunctions, correct_line1) {
+	char *line_code = "I don't know hw to spell";
+	char *line = (char *)malloc(strlen(line_code)+1);
+	strcpy(line, line_code);
+	char *old_word_code = "hw";
+	char *old_word = (char *)malloc(strlen(old_word_code)+1);
+	strcpy(old_word, old_word_code);
+	char *new_word_code = "how";
+	char *new_word = (char *)malloc(strlen(new_word_code)+1);
+	strcpy(new_word, new_word_code);
+
+	char *expected = "I don't know how to spell";
+    test_correct_line(line, old_word, new_word, expected);
+}
+
+Test(scfunctions, correct_line2) {
+	char *line_code = "I dont know how to spell";
+	char *line = (char *)malloc(strlen(line_code)+1);
+	strcpy(line, line_code);
+	char *old_word_code = "dont";
+	char *old_word = (char *)malloc(strlen(old_word_code)+1);
+	strcpy(old_word, old_word_code);
+	char *new_word_code = "don't";
+	char *new_word = (char *)malloc(strlen(new_word_code)+1);
+	strcpy(new_word, new_word_code);
+
+	char *expected = "I don't know how to spell";
+    test_correct_line(line, old_word, new_word, expected);
+}
+
+Test(scfunctions, correct_line3) {
+	char *line_code = "spl";
+	char *line = (char *)malloc(strlen(line_code)+1);
+	strcpy(line, line_code);
+	char *old_word_code = "spl";
+	char *old_word = (char *)malloc(strlen(old_word_code)+1);
+	strcpy(old_word, old_word_code);
+	char *new_word_code = "spell";
+	char *new_word = (char *)malloc(strlen(new_word_code)+1);
+	strcpy(new_word, new_word_code);
+
+	char *expected = "spell";
+    test_correct_line(line, old_word, new_word, expected);
+}
+
+
+void check_underline_misspelled_sentence(char** badwords, char* sentence, int element, char* expected) {
+	char *underlined = underline_misspelled_sentence(badwords, sentence, element);
+
+	//printf("%s", underlined);
+
+	int result = strcmp(underlined, expected);
+
+    cr_assert_eq(result, 0, "underline_misspelled test failed");
+}
+
+Test(scfunctions, underline_misspelled_sentence) {
+	char **badwords = (char **)malloc((sizeof(char*)*3));
+	badwords[0] = "bd";
+	badwords[1] = "splling";
+	badwords[2] = NULL;
+	char *line = "bd splling is bad";
+	// char *line = (char *)malloc(strlen(line_hard)+1);
+	// strcpy(line, line_hard);
+
+	char *expected = "^^ ^^^^^^^";
+    check_underline_misspelled_sentence(badwords, line, 0, expected);
+}
+
+
+Test(scfunctions, underline_misspelled_sentence2) {
+	char **badwords = (char **)malloc((sizeof(char*)*4));
+	badwords[0] = "bd";
+	badwords[1] = "splling";
+	badwords[2] = "bd";
+	badwords[3] = NULL;
+	char *line = "bd splling is bd";
+	// char *line = (char *)malloc(strlen(line_hard)+1);
+	// strcpy(line, line_hard);
+
+	char *expected = "^^ ^^^^^^^    ^^";
+    check_underline_misspelled_sentence(badwords, line, 0, expected);
+}
+
+
+// Test(scfunctions, underline_misspelled_sentence3) {
+// 	char **badwords = (char *)malloc((sizeof(char*)*4));
+// 	badwords[0] = "bood";
+// 	badwords[1] = "splling";
+// 	badwords[2] = "bd";
+// 	badwords[3] = NULL;
+// 	char *line = "bd bood splling is bd";
+// 	// char *line = (char *)malloc(strlen(line_hard)+1);
+// 	// strcpy(line, line_hard);
+
+// 	char *expected = "^^ ^^^^^^^    ^^";
+//     check_underline_misspelled_sentence(badwords, line, 0, expected);
+// }
