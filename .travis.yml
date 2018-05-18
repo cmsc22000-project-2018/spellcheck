@@ -8,6 +8,9 @@ before_install:
 script:
     - make tests
     - ./tests/test-spellcheck
-    - make all
-    - ./spellcheck -v tests/test_short.txt -s test.txt
-    - ./spellcheck -q tests/test_short.txt -s test.txt
+    - make
+    - ./spellcheck -v tests/test_short.txt
+    - ./spellcheck -q tests/test_short.txt -s test2.txt
+    - ./spellcheck < test_main0.txt
+    - ./spellcheck < test_main1.txt
+    - make clean

@@ -10,6 +10,8 @@
 #include "scfunctions.h"
 #include "dictionary.h"
 #include "word.h"
+#include <stdlib.h>	
+
 
 /* 
  *	Order of functions:
@@ -50,8 +52,6 @@ void save_page(char* filename, char** lines, int* quit)
         shell_save();
 		shell_prompt();
 		i = 0;
-
-
 
         verify = scanf("%s", line);
         assert (!(verify < 0)); // ensure valid input
@@ -94,11 +94,12 @@ void save_page(char* filename, char** lines, int* quit)
  *	II. Functions for editing strings
  */
 
+// produces a set of underlines for the misspelled word
 void underline_misspelled(char *tkn, char* underline)
 {
 	int j = strlen(tkn);
     int i = 0;
-	for( ; i < j; i++) {
+	for(; i < j; i++) {
     	strcat(underline, "^");
 	}
 		strcat(underline, " ");
@@ -108,34 +109,81 @@ void underline_misspelled(char *tkn, char* underline)
 
 }
 
+// produces a set of spaces before the underline
 void underline_correct_spelling(char *tkn, char* underline)
 {
 	int j = strlen(tkn);
     int i = 0;
-	for( ; i < j; i++) {
+	for(; i < j; i++) {
     		strcat(underline, " ");
 	}
 		strcat(underline, " ");
 
 }
 
+//given a list of bad words in order, underline them in sentence
+char* underline_misspelled_sentence(char** badwords, char* sentence, int element) {
+
+	char* underline = malloc(strlen(sentence));
+	underline[0] = '\0'; 
+
+	while(badwords[element] != NULL) {
+
+		char *ptr = strstr(sentence, badwords[element]);
+
+		if(ptr != NULL) {
+
+			int pos = ptr - sentence;
+
+			int i = 0;
+			size_t j = 0;
+
+			for(; i < pos; i++) {
+
+				strcat(underline, " ");
+
+			}
+
+			for (; j < strlen(badwords[element]); j++) {
+
+				strcat(underline, "^");
+
+			}
+
+			sentence = ptr+strlen(badwords[element]);
+
+		}
+
+		element++;
+
+	}
+
+	return underline;
+
+}
 
 
-void add_to_badwords(char *badword, char** badwords)
+
+// add word in line to list of bad words (i.e. misspelled words not in the file)
+int add_to_badwords(char *badword, char** badwords)
 {
+	if (badword == NULL || badwords == NULL) {
+		return EXIT_FAILURE;
+	}
 	int i = 0;
 	while(badwords[i] != NULL) {
 		i++;
 	}
 	badwords[i] = badword;
+	return EXIT_SUCCESS;
 	// printf("adding badword %s", badword);
 	// printf("i is %d ", i);
 }
 
 //takes in a line, identifies incorrect words, and generates a string of underlines  
-void parse_string(char* string, dict_t *dict, char *underline, char** badwords)
+int parse_string(char* string, dict_t *dict, char *underline, char** badwords)
 {
-	char *tkn = strtok(string, " ,.-'\n'"); //words only separated by these punctuation
+	char *tkn = strtok(string, ": ,.-'\n'" ""); //words only separated by these punctuation
 	while (tkn != NULL) {
 
 		if (valid_word(tkn, dict) == EXIT_FAILURE){
@@ -149,9 +197,11 @@ void parse_string(char* string, dict_t *dict, char *underline, char** badwords)
 		}
 		else {
 			printf("error processing text");
+			return EXIT_FAILURE;
 		}
 		tkn = strtok(NULL, " ,.-");
 	}
+	return EXIT_SUCCESS;
 
 }
 
@@ -183,32 +233,41 @@ char* correct_line(char* line, char* old_word, char* new_word)
 
 	strcpy(line, buffer);
 
-	// discuss with sarika
+	return line;
 
-	char* c = strdup(line);
-	return c;
 }
 
 
 
 //initialises each element in array (that stores misspelled words in a line) to NULL
-void initialize_badwords(char **badwords, int length)
+int initialize_badwords(char **badwords, int length)
 {
+
+	if (badwords==NULL) {
+		return EXIT_FAILURE;
+	}
     int i = 0;
 	for ( ; i < length; i++) {
     	badwords[i] = NULL; //initialize each element to be NULL
     }
+
+    return EXIT_SUCCESS;
 }
+
+
 
 /*
  *	III. Interactive Mode
  */
 
 /* Functions needed for interactive mode */
-char* edit_interactive(char* line, dict_t* dict)
+char* edit_interactive(char* line, dict_t* dict, int linenumber)
 {
     char *line_copy = malloc(strlen(line));
     strcpy(line_copy, line); //maintain a copy of the line to preserve original line: line will be parsed into individual words
+    
+    char *line_copy2 = malloc(strlen(line));
+    strcpy(line_copy2, line); 
     int max_no_suggestions = 2; //should the user decide this?
 
 
@@ -224,12 +283,11 @@ char* edit_interactive(char* line, dict_t* dict)
     parse_string(line, dict, underline, badwords); //identify misspelled words and add to bad_word, 
     //add to underline function 
     
+    printf("Current line number is %d: \n", linenumber);
     printf("%s", line_copy);
     printf("\n");
     printf("%s", underline);
-    printf("\n");
-
-
+    printf("\n\n");
 
     // printf("Misspelled words in this sentence are: ");
 
@@ -253,7 +311,8 @@ char* edit_interactive(char* line, dict_t* dict)
 
     	if(success != -1) {
     	printf("Possible replacements for word %s are: ", badwords[i]);
-    	printf("1: No replacement ");
+    	printf("0: Delete Word. ");
+    	printf("1: No replacement. ");
         int j = 0;
     	for ( ; j < max_no_suggestions; j++) {
     		printf("%d : %s ", j+2, suggestions[j]);
@@ -261,6 +320,7 @@ char* edit_interactive(char* line, dict_t* dict)
     	}  	
 
        }
+       printf("\n\n");
 
     
     //gets replacement choice from user
@@ -270,12 +330,34 @@ char* edit_interactive(char* line, dict_t* dict)
     int check = scanf("%d", &number2);
     assert(check >= 0);
 
-    if (number2 != 1) { //1 if no replacement needed
+    if (number2 == 0) {
+    	printf("Deleting %s.", badwords[i]);
+    	correct_line(line_copy, badwords[i], "");
+    	printf("New sentence is: \n\n");
+     	printf("%s\n\n", line_copy);
+     	//printf("%s\n", badwords[i+1]);
+     	printf("%s\n", underline_misspelled_sentence(badwords, line_copy, i+1));
+
+
+    }
+
+    else if (number2 == 1) {
+    	printf("No changes made to %s. \n\n", badwords[i]);
+
+    }
+
+    else if (number2 > (max_no_suggestions+2)) {
+    	shell_error("Please enter a valid number");
+    }
+
+    else if (number2 != 1 || number2 != 0) { //1 if no replacement needed, 0 if word deleted
     	printf("Replacing %s with %s \n", badwords[i], suggestions[number2-2]);
     	correct_line(line_copy, badwords[i], suggestions[number2-2]); //modifies line function
-    	printf("Corrected sentence is: \n");
-     	printf("%s \n", line_copy);
+    	printf("New sentence is: \n");
+     	printf("%s\n\n", line_copy);
+     	printf("%s\n", underline_misspelled_sentence(badwords, line_copy, i+1));
     }
+
 
 	i++;	// added loop changer
   }
@@ -289,14 +371,27 @@ char* edit_interactive(char* line, dict_t* dict)
 /* interctive mode - open file, parse and work on later */
 char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in dictionary later
 {
+
+	size_t max_terminal_line_length = 500; //what is a reasonable estimate?
+
 	char** lines;
 
 	lines = parse_file(filename);
 
+
+	
+
 	// step through phases
 	int i=0;
 	while (lines[i] != NULL) {	// potential error - one empty line in the middle of two full?	
-		lines[i] = edit_interactive(lines[i], dict); //edit interactive is called for each line 
+		int linenumber = i+1;
+		if (strlen(lines[i]) <= max_terminal_line_length) {
+			lines[i] = edit_interactive(lines[i], dict, linenumber);
+		}//edit interactive is called for each line 
+		else {
+			//deniz code here?
+
+		}
 		i++;
 	}
 
@@ -323,15 +418,16 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
     parse_string(line, dict, underline, badwords); //identify misspelled words and add to bad_word, 
 
     char *suggestions[max_no_suggestions]; //generates empty array where suggestions will be filled
- 
+
+
     int i = 0;
     //replacing words, printing out if batch mode
-      while (badwords[i] != NULL) {
-    	int success = generate_suggestions(badwords[i], dict, suggestions);
-	if (success == -1) suggestions[0] = badwords[i];
-    	correct_line(line_copy, badwords[i], suggestions[0]);
-	if (verbosity) printf("WORD:%s\t\t\tREPLACEMENT:%s\n", badwords[i], suggestions[0]);    // print list of replacement
-	i++;
+    while (badwords[i] != NULL) {
+        int success = generate_suggestions(badwords[i], dict, suggestions);
+	    if (success == -1) suggestions[0] = badwords[i];
+    	    correct_line(line_copy, badwords[i], suggestions[0]);
+	    if (verbosity) printf("WORD:%s\nREPLACEMENT:%s\n\n", badwords[i], suggestions[0]);    // print list of replacement
+	    i++;
 	}
 
 	return line_copy;
@@ -377,7 +473,7 @@ void help_page()
 int fileexists(const char* filename)
 {
 	struct stat buffer;
-	return(stat(filename,&buffer)==0);
+	return (stat(filename, &buffer) == 0);
 }
 
 /* helper for main_page, determine input mode */
@@ -385,14 +481,13 @@ int fileexists(const char* filename)
 int change_mode(char* arg)
 {
 	int a = atoi(arg);
-	switch (a) {
-		case 1: return a;
-		case 2: return a;
-		case 3: return a;
-		default: // error case
-			shell_error("Argument unrecognizeable: return to default interactive mode");		
-	}
-	return 3; 		// default is 3, given this function is only called in main_page, at which point interactive is probably what user intended
+    if ((a == 1) | (a == 2) | (a == 3)) {
+        return a;
+	} else {
+        shell_error("Argument unrecognizeable: return to (3) interactive mode");		
+	    return 3; 		// default is 3, given this function is only called in main_page, at which point interactive is probably what user intended
+    }
+    return 3;
 }
 
 void main_page(int* quit, int *mode, char* file_name, char* dict_name)
@@ -435,7 +530,8 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 			*quit = 2;
 		} else if (!strcmp(args[0], "m")) { // change mode
 			*mode = change_mode(args[1]);
-			printf("Mode changed to %d\n",atoi(args[1]));
+			printf("Mode number accepted: %d\n",atoi(args[1]));
+            *mode = change_mode(args[1]);
 			if(!fileexists(file_name)) {
 				*quit = 0;
 			} else {

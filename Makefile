@@ -2,7 +2,7 @@
 
 
 CC = gcc
-CFLAGS = -fPIC -Wall -Wextra -O2 -g -I./include/
+CFLAGS = -fPIC -Wall -Wextra -O0 -g -I./include/
 RM = rm -f
 BIN = spellcheck
 
