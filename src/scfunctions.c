@@ -98,7 +98,7 @@ void underline_misspelled(char *tkn, char* underline)
 {
 	int j = strlen(tkn);
     int i = 0;
-	for( ; i < j; i++) {
+	for(; i < j; i++) {
     	strcat(underline, "^");
 	}
 		strcat(underline, " ");
@@ -112,7 +112,7 @@ void underline_correct_spelling(char *tkn, char* underline)
 {
 	int j = strlen(tkn);
     int i = 0;
-	for( ; i < j; i++) {
+	for(; i < j; i++) {
     		strcat(underline, " ");
 	}
 		strcat(underline, " ");
