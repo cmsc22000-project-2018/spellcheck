@@ -108,7 +108,7 @@ int zset_add(zset_t *z, char *key, int score)
     }
 
     freeReplyObject(reply);
-    return 1;
+    return reply->integer;
 }
 
 // see api.h
@@ -178,9 +178,9 @@ char** zset_revrange(zset_t* z, int start, int stop)
 	char** s = malloc(sizeof(char*) * reply->elements);
 	for(i=0; i < reply->elements; i++)
 	{
-        s[i] = (char*)malloc(sizeof(char)*(strlen(s[i]) + 1));
-		strncpy(s[i],reply->element[i]->str, strlen(s[i]) + 1);
-        // printf("%s\n", reply->element[i]->str);
+        char *str = reply->element[i]->str;
+        s[i] = (char*)malloc(sizeof(char)*(strlen(str + 1)));
+		strncpy(s[i], str, strlen(str) + 1);
 	}
 	return s;
 }
@@ -201,7 +201,7 @@ int zset_remrangebyrank(zset_t* z, int start, int stop)
         freeReplyObject(reply);
         return 0;
 	}
-	return 1;
+	return reply->integer;
 }
 
 
@@ -229,8 +229,8 @@ int zset_score(zset_t* z, char* memname) {
                 freeReplyObject(reply);
                 return 0;
         }
-        freeReplyObject(reply);
-        return 1;
+
+        return reply->integer;
 }
 
 int zset_rank(zset_t* z, char* memname) {
