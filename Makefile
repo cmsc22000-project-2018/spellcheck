@@ -2,18 +2,20 @@
 
 
 CC = gcc
-CFLAGS = -fPIC -Wall -Wextra -O0 -g -I./include/
+CFLAGS = -fPIC -Wall -Wextra -O2 -g -I./include/
+LDFLAGS = -L./hiredis -Wl,-rpath,./hiredis
 RM = rm -f
 BIN = spellcheck
+LDLIBS = -lhiredis
 
-SRCS = main.c src/mock_trie.c src/dictionary.c src/parser.c src/word.c src/scfunctions.c src/shellstrings.c
+SRCS = main.c src/mock_trie.c src/dictionary.c src/parser.c src/word.c src/scfunctions.c src/shellstrings.c src/suggestion.c src/zset_api.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all tests clean
 all: $(BIN)
 
 $(BIN): $(SRCS)
-	$(CC) $(CFLAGS) -o $(BIN) $(SRCS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BIN) $(SRCS) $(LDLIBS) 
 
 tests:
 	make -C ./tests

@@ -77,7 +77,7 @@ Test(parser, parse_file2)   // test for file with 200 lines
 /* parse_split_line test, returning string array representing each token*/
 Test(parser, parse_split_line)
 {
-    char** array = calloc(20, sizeof(char*));
+    char** array = calloc(5, sizeof(char*));
     char* c = strdup("Quesadillas are delicious");
 
     array = parse_split_line(c);
