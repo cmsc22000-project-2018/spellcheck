@@ -63,7 +63,7 @@ Test(suggestion, delete_s0) {
     int rc = suggestions(set, d, "", "k", 1);
 
     cr_assert_eq(0, rc, "suggestions() failed");
-    cr_assert_eq(zset_rank(set, "cds8Dfk"), 0, "try_delete failed %s", zset_rank(set, "cds8Dfk"));
+    cr_assert_eq(zset_rank(set, "cds8Dfk"), 0, "try_delete failed");
 
     // cleanup
     zset_remrangebyrank(set, 0, -1);
@@ -79,7 +79,7 @@ Test(suggestion, delete_s1) {
     int rc = suggestions(set, d, "", "cdisc8Dfk", 2);
 
     cr_assert_eq(0, rc, "suggestions() failed");
-    cr_assert_eq(zset_rank(set, "cds8Dfk"), 0, "try_delete failed %i", zset_rank(set, "cds8Dfk"));
+    cr_assert_eq(zset_rank(set, "cds8Dfk"), 0, "try_delete failed %i");
 
     // cleanup
     zset_remrangebyrank(set, 0, -1);
@@ -326,8 +326,6 @@ Test(suggestion, suggestion_list_s1) {
 
 
     char **result = suggestion_list(d, "afij4-8", 3, 3);
-
-    printf("%s %s %s\n", result[0], result[1], result[2]);
 
     cr_assert_eq(0, strncmp(result[0], "afij4-8", MAXLEN), 
                 "suggestion_list() first result incorrect");
