@@ -159,7 +159,6 @@ char* underline_misspelled_sentence(char** badwords, char* sentence, int element
 	}
 
 	return underline;
-
 }
 
 
