@@ -57,7 +57,7 @@ int move_on(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_left) 
         rc += suggestions(set, d, new_prefix, suffix + 1, edits_left);
     }
 
-    // free(new_prefix);
+    free(new_prefix);
 
     return rc + EXIT_SUCCESS;
 }
@@ -118,7 +118,7 @@ int try_replace(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
 
                 // Save some space now that we're done
                 // Also crashes
-                // free(new_prefix);
+                free(new_prefix);
             }
         }
     }
@@ -135,7 +135,7 @@ int try_swap(zset_t *set, dict_t * d, char *prefix, char *suffix, int edits_left
     char* new_prefix;
 
     if (len == 0 || strnlen(suffix, MAXLEN) == 0) {
-        return;
+        return rc + EXIT_SUCCESS;
     }
 
     // printf("pref: %s suff: %s\n", prefix, suffix);
@@ -160,8 +160,7 @@ int try_swap(zset_t *set, dict_t * d, char *prefix, char *suffix, int edits_left
         rc += suggestions(set, d, new_prefix, suffix + 1, edits_left - 1);
     }
 
-    // This crashes it? 
-    // free(new_prefix);
+    free(new_prefix);
 
     return rc + EXIT_SUCCESS;
 }
@@ -205,7 +204,7 @@ int try_insert(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_lef
                 } 
             
                 // Save some space now that we're done
-                // free(new_prefix);
+                free(new_prefix);
             }
         }
     }
@@ -247,7 +246,7 @@ int suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
     if (edits_left <= 0) {
         // Hooray for exit conditions!
 
-        // free(s);
+        free(s);
         return rc;
     }
 
@@ -266,7 +265,7 @@ int suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
     // This one doesn't need any fancy suffix stuff
     rc += try_insert(set, d, prefix, suffix, edits_left);
 
-    // free(s);
+    free(s);
 
     return rc;
 }

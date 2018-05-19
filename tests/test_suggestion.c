@@ -30,6 +30,12 @@ Test(suggestion, move_s0) {
 
     dict_add(d, "f");
 
+    printf("\n");
+    for (int i = 0; i < 256; i++) {
+        printf("%c", d->char_list[i]);
+    }
+    printf("\n");
+
     int rc = suggestions(set, d, "", "f", 1);
 
     cr_assert_eq(0, rc, "suggestions() failed");
@@ -220,7 +226,7 @@ Test(suggestion, insert_s1) {
     zset_t *set = zset_new("set");
     dict_t *d = dict_new();
 
-    dict_add(d, "kj3fsjk]fui");
+    dict_add(d, "fnjk43?>.f@");
 
     printf("\n");
     for (int i = 0; i < 256; i++) {
@@ -228,10 +234,10 @@ Test(suggestion, insert_s1) {
     }
     printf("\n");
 
-    int rc = suggestions(set, d, "", "kj3sjk]fi", 2);
+    int rc = suggestions(set, d, "", "fnk43?>.f", 2);
 
     cr_assert_eq(0, rc, "suggestions() failed");
-    cr_assert_eq(zset_rank(set, "kj3fsjk]fui"), 0, "try_insert failed");
+    cr_assert_eq(zset_rank(set, "fnjk43?>.f@"), 0, "try_insert failed");
 
     // cleanup
     zset_remrangebyrank(set, 0, -1);
