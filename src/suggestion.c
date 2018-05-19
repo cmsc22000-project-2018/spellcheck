@@ -43,7 +43,6 @@ int move_on(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_left) 
 
     new_prefix = malloc(sizeof(char) * (MAXLEN + 1));
     if (new_prefix == NULL) {
-        // malloc failed
         return rc + EXIT_FAILURE;
     }
 
@@ -57,6 +56,7 @@ int move_on(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_left) 
         rc += suggestions(set, d, new_prefix, suffix + 1, edits_left);
     }
 
+    // Save some space now that we're done
     free(new_prefix);
 
     return rc + EXIT_SUCCESS;
@@ -117,7 +117,6 @@ int try_replace(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
                 }
 
                 // Save some space now that we're done
-                // Also crashes
                 free(new_prefix);
             }
         }
@@ -138,11 +137,8 @@ int try_swap(zset_t *set, dict_t * d, char *prefix, char *suffix, int edits_left
         return rc + EXIT_SUCCESS;
     }
 
-    // printf("pref: %s suff: %s\n", prefix, suffix);
-
     new_prefix = malloc(sizeof(char) * (MAXLEN + 1));
     if (new_prefix == NULL) {
-        // malloc failed
         return rc + EXIT_FAILURE;
     }
 
@@ -153,13 +149,12 @@ int try_swap(zset_t *set, dict_t * d, char *prefix, char *suffix, int edits_left
     new_prefix[len - 1] = suffix[0];
     new_prefix[len + 1] = '\0';
 
-    // printf("swap %s to %s\n", prefix, new_prefix);
-
     if (has_children(d, new_prefix) == EXIT_SUCCESS) {
         // Adding 1 to the suffix pointer will essentially delete the first character
         rc += suggestions(set, d, new_prefix, suffix + 1, edits_left - 1);
     }
 
+    // Save some space now that we're done
     free(new_prefix);
 
     return rc + EXIT_SUCCESS;
@@ -183,8 +178,6 @@ int try_insert(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_lef
         char c = (char)i;
 
         if (dict_chars_exists(d, c) == EXIT_SUCCESS) {
-
-            // printf("%c", c);
             
             new_prefix = malloc(sizeof(char) * (MAXLEN + 1));
             if (new_prefix == NULL) {
@@ -232,14 +225,12 @@ int suggestions(zset_t *set, dict_t *d, char *prefix, char *suffix, int edits_le
     if (dict_exists(d, s) == EXIT_SUCCESS) {
 
         // Might have to update first comparison if value of zset_score changes
-        if (1 || zset_score(set, s) == NULL || edits_left > zset_score(set, s)) {
+        if (edits_left >= zset_score(set, s)) {
 
             // Either the word wasn't in the set before or
             // We were able to reach the word in less edits than previously determined
-            printf("add %s %d\n", s, edits_left);
 
-            if (zset_add(set, s, edits_left)) {
-            }
+            zset_add(set, s, edits_left);
         }
     }
 
