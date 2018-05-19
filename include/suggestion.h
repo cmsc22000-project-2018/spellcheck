@@ -64,7 +64,7 @@ zset_t* suggestion_set_new(dict_t *d, char *str, int max_edits);
  *  - set:  A Redis Sorted Set. Must point to a zset allocated with zset_new()
  *          Also must have been passed through suggestions
  *  - n: the amount of strings to return. Strings are the ones with the smallest
- *          distance and ties broken by alphabetic order
+ *          distance and ties broken by reverse alphabetic order
  * 
  * Returns:
  *  - The first n strings matching above, or NULL if there was an error
@@ -79,7 +79,7 @@ char** suggestion_set_first_n(zset_t *set, int n);
  *  - str: A string. This will be the (misspelled) word to match
  *  - max_edits: the maximum levenshtein distance the words in the set can have
  *  - the amount of strings to return. Strings are the ones with the smallest
- *          distance and ties broken by alphabetic order
+ *          distance and ties broken by reverse alphabetic order
  * 
  * Returns: 
  *  - The first n strings matching above, or NULL if there was an error
