@@ -79,7 +79,7 @@ Test(suggestion, delete_s1) {
     int rc = suggestions(set, d, "", "cdisc8Dfk", 2);
 
     cr_assert_eq(0, rc, "suggestions() failed");
-    cr_assert_eq(zset_rank(set, "cds8Dfk"), 0, "try_delete failed %i");
+    cr_assert_eq(zset_rank(set, "cds8Dfk"), 0, "try_delete failed");
 
     // cleanup
     zset_remrangebyrank(set, 0, -1);
