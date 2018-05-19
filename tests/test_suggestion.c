@@ -181,6 +181,8 @@ Test(suggestion, insert_s1) {
     zset_remrangebyrank(set, 0, -1);
 }
 
+/*************   These functions test suggestions() as a whole   *************/
+
 // Test regular suggestion generation 1
 Test(suggestion, suggestions_s0) {
     zset_t *set = zset_new("set");
@@ -234,6 +236,8 @@ Test(suggestion, suggestions_s1) {
 
     zset_remrangebyrank(set, 0, -1);
 }
+
+/*************   These functions test the easy input functions   *************/
 
 // Test for suggestion_set_new function
 Test(suggestion, suggestion_set_new_s0) {
