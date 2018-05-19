@@ -301,12 +301,42 @@ char** suggestion_list(dict_t *d, char *str, int max_edits, int amount) {
     assert(str != NULL);
 
     zset_t *set = suggestion_set_new(d, str, max_edits);
+    int i;
+    int flag = 0;
 
     if (set == NULL) {
         return NULL;
     }
 
-    char **results = suggestion_set_first_n(set, amount);
+    char **list = suggestion_set_first_n(set, amount);
+
+    char **results = (char**)malloc(sizeof(char*) * amount);
+    if (results == NULL) {
+        return NULL;
+    }
+
+    // Since len(list) could be less than amount, make a new list with 
+    // NULL for any unsuccessful items
+    for (i = 0; i < amount; i++) {
+        if (flag == 1) {
+            results[i] = NULL;
+        } else {
+            if (list[i] == NULL) {
+                flag = 1;
+                results[i] = NULL;
+            } else {
+                results[i] = (char*)malloc(sizeof(char) * (MAXLEN + 1));
+                if (results[i] == NULL) {
+                    return NULL;
+                }
+
+                strncpy(results[i], list[i], MAXLEN);
+                free(list[i]);
+            }
+        }
+    }
+
+    free(list);
 
     // Remove all the items from the results
     // If this doesn't happen you start getting the weirdest bugs
