@@ -99,7 +99,7 @@ int zset_add(zset_t *z, char *key, int score)
         z->context = apiConnect("127.0.0.1", 6379); //localhost
 	
 
-    redisReply *reply = redisCommand(z->context, "ZADD %s %d %s", z->name, score, key);
+    redisReply *reply = redisCommand(z->context, "ZADD %s CH %d %s", z->name, score, key);
 
     if (reply == NULL) {
         printf("ERROR: %s\n", reply->str);
@@ -230,7 +230,11 @@ int zset_score(zset_t* z, char* memname) {
                 return 0;
         }
 
-        return reply->integer;
+        if (reply->str == NULL) {
+            return -1;
+        }
+
+        return atoi(reply->str);
 }
 
 int zset_rank(zset_t* z, char* memname) {
