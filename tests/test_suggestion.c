@@ -235,3 +235,104 @@ Test(suggestion, suggestions_s1) {
     zset_remrangebyrank(set, 0, -1);
 }
 
+// Test for suggestion_set_new function
+Test(suggestion, suggestion_set_new_s0) {
+    dict_t *d = dict_new();
+
+    dict_add(d, "only");
+    dict_add(d, "onety");
+    dict_add(d, "none");
+    dict_add(d, "fjmsdk8");
+    dict_add(d, "o=9");
+
+    zset_t *set = suggestion_set_new(d, "one", 2);
+
+    char **results = zset_revrange(set, 0, 3);
+
+    cr_assert_eq(0, strncmp(results[0], "none", MAXLEN), 
+                "suggestion_set_new() first result incorrect");
+    cr_assert_eq(0, strncmp(results[1], "only", MAXLEN), 
+                "suggestion_set_new() second result incorrect");
+    cr_assert_eq(0, strncmp(results[2], "onety", MAXLEN), 
+                "suggestion_set_new() third result incorrect");
+    cr_assert_eq(0, strncmp(results[3], "o=9", MAXLEN), 
+                "suggestion_set_new() fourth result incorrect");    
+
+    zset_remrangebyrank(set, 0, -1);
+}
+
+// Test for suggestion_set_first_n function with regular input
+Test(suggestion, suggestion_set_first_n_s0) {
+    zset_t *set = zset_new("set");
+
+    zset_add(set, "a", 1);
+    zset_add(set, "b", 2);
+    zset_add(set, "c", 3);
+
+    char **results = suggestion_set_first_n(set, 2);
+
+    cr_assert_eq(0, strncmp(results[0], "c", MAXLEN), 
+                "suggestion_set_first_n() first result incorrect");
+    cr_assert_eq(0, strncmp(results[1], "b", MAXLEN), 
+                "suggestion_set_first_n() second result incorrect");
+
+    zset_remrangebyrank(set, 0, -1);
+}
+
+// Test for suggestion_set_first_n function with not enough matches
+Test(suggestion, suggestion_set_first_n_f0) {
+    zset_t *set = zset_new("set");
+
+    zset_add(set, "a", 1);
+    zset_add(set, "b", 2);
+
+    char **results = suggestion_set_first_n(set, 3);
+
+    cr_assert_eq(0, strncmp(results[0], "b", MAXLEN), 
+                "suggestion_set_first_n() first result incorrect");
+    cr_assert_eq(0, strncmp(results[1], "a", MAXLEN), 
+                "suggestion_set_first_n() second result incorrect");
+    cr_assert_null(results[2], 
+                "suggestion_set_first_n() third result incorrect");
+    
+    zset_remrangebyrank(set, 0, -1);
+}
+
+// Test for suggestion_list wrapper function simple
+Test(suggestion, suggestion_list_s0) {
+    dict_t *d = dict_new();
+
+    dict_add(d, "a");
+
+    // lol
+    char **result = suggestion_list(d, "a", 0, 1);
+
+    cr_assert_eq(0, strncmp(result[0], "a", MAXLEN), 
+                "suggestion_list() first result incorrect");
+}
+
+Test(suggestion, suggestion_list_s1) {
+    dict_t *d = dict_new();
+
+    dict_add(d, "afij4-8");
+    dict_add(d, "ayij48-");
+    dict_add(d, "flij4-8");
+    dict_add(d, "afij4*8");
+    dict_add(d, "antij4-8"); 
+    dict_add(d, "nkj345yf");
+    dict_add(d, "fdjsk43");
+    dict_add(d, "s");
+    dict_add(d, "jvu4893jfDJSkds8932ujfvn.`>IW");
+
+
+    char **result = suggestion_list(d, "afij4-8", 3, 3);
+
+    printf("%s %s %s\n", result[0], result[1], result[2]);
+
+    cr_assert_eq(0, strncmp(result[0], "afij4-8", MAXLEN), 
+                "suggestion_list() first result incorrect");
+    cr_assert_eq(0, strncmp(result[1], "afij4*8", MAXLEN), 
+                "suggestion_list() second result incorrect");
+    cr_assert_eq(0, strncmp(result[2], "flij4-8", MAXLEN), 
+                "suggestion_list() third result incorrect");
+}

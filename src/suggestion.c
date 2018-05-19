@@ -276,11 +276,23 @@ zset_t* suggestion_set_new(dict_t *d, char *str, int max_edits) {
 }
 
 char** suggestion_set_first_n(zset_t *set, int n) {
-
     assert(set != NULL);
 
+    int i;
+    int flag = 0;
+
     // Get items in decreasing edit distance
-    return zset_revrange(set, 0, n);
+    char **result = zset_revrange(set, 0, n-1);
+
+    for (i = 0; i < n; i++) {
+        if (flag) {
+            result[i] = NULL;
+        } else if (result[i] == NULL) {
+            flag = 1;
+        }
+    }
+
+    return result;
 }
 
 char** suggestion_list(dict_t *d, char *str, int max_edits, int amount) {
@@ -297,6 +309,10 @@ char** suggestion_list(dict_t *d, char *str, int max_edits, int amount) {
     char **results = suggestion_set_first_n(set, amount);
 
     // Remove all the items from the results
+    // If this doesn't happen you start getting the weirdest bugs
+    // Trust me
+    // Many hours were spent trying to figure out why random behavior 
+    // was happening in completely unrelated functions
     zset_remrangebyrank(set, 0, -1);
 
     free(set);

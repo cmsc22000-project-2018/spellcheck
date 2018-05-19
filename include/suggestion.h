@@ -68,6 +68,7 @@ zset_t* suggestion_set_new(dict_t *d, char *str, int max_edits);
  * 
  * Returns:
  *  - The first n strings matching above, or NULL if there was an error
+ *  - If there ween't enough matching strings, NULL is returned in each remaining spot
  */
 char** suggestion_set_first_n(zset_t *set, int n);
 

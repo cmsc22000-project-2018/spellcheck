@@ -182,7 +182,7 @@ char** zset_revrange(zset_t* z, int start, int stop)
         s[i] = (char*)malloc(sizeof(char)*(strlen(str + 1)));
 		strncpy(s[i], str, strlen(str) + 1);
 	}
-    s[i] == NULL;
+    s[i] = NULL;
 	return s;
 }
 
