@@ -77,13 +77,13 @@ char* underline_misspelled_sentence(char** misspelled, char* sentence, int eleme
 int add_to_misspelled(char *word, char** misspelled);
 
 /*
- * parse_string: parse string, generate underline
+ * parse_string: parse string, generating underline and list of bad words
  * parameters:
  *      - string (line) to be parsed
  *      - dictionary
  *      - underline: function generates underline, tailored to array
  *      - misspelled: misspelled words in the line
- * return: int indicating successtakes in a line, identifies incorrect words, and generates a string of underlines  
+ * return: int indicating successtakes in a line, identifies incorrect words and stores them in misspelled, and generates a string of underlines to be printed under that sentence
  */
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled);
 
@@ -177,7 +177,7 @@ int fileexists(const char* filename);
 /*
  * change_mode: helper for main_page, determine input mode
  * parameter: command line input from main_page
- * return: number of mode
+ * return: number indicating mode
  */
 int change_mode(char* arg);
 
