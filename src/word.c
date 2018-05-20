@@ -43,16 +43,15 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 	} else if (strcmp(word, "chequer") == 0) {
     	suggestions[0] = "checker";
     	suggestions[1] = "cheque";
-    	return 0;
+    	return EXIT_SUCCESS;;
 	} else if((strcmp(word, "cme") == 0)) {
     	suggestions[0] = "come";
     	suggestions[1] = "came";
-    	return 0;
+    	return EXIT_SUCCESS;;
 	} else if((strcmp(word, "m'y") == 0)) {
         suggestions[0] = "my";
         suggestions[1] = "me";
-    } else {
-        return EXIT_FAILURE;
     }
+
     return EXIT_FAILURE;
 }
