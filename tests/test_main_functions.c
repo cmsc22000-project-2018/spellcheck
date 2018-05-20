@@ -42,7 +42,9 @@ Test(scfunctions,save_corrections)
 
 // part 5 - help_page and main_page require command line inputs
 
-/* change_mode */ 
+/*
+ ***** change_mode tests *****
+ */ 
 Test(scfunctions, change_mode)
 {
     char* mode = "1";
@@ -75,7 +77,9 @@ Test(scfunctions, change_mode1)
 }
 
 
-/* fileexists */
+/*
+ ***** fileexists tests *****
+ */
 Test(scfunctions, fileexists)
 {
     int i = fileexists("test_short.txt");

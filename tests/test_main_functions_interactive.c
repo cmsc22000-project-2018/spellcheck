@@ -4,7 +4,9 @@
 #include "scfunctions.h"
 #include <string.h>
 
-
+/*
+ ***** underline_misspelled tests *****
+ */
 void check_underline_misspelled(char* wrong, char* underline, char* expected) {
 	underline_misspelled(wrong, underline);
 	//printf("%s\n", underline);
@@ -32,7 +34,6 @@ Test(scfunctions, underline_misspelled2) {
 }
 
 
-
 Test(scfunctions, underline_misspelled3) {
 	char *wrong = "wrng";
 	char *underline = (char *)malloc(50);
@@ -42,6 +43,9 @@ Test(scfunctions, underline_misspelled3) {
 }
 
 
+/*
+ ***** add_to_bdawords tests *****
+ */
 void check_add_to_badwords(char *badword, char** badwords) {
 	add_to_badwords(badword, badwords);
 	int result = -1;
@@ -66,6 +70,9 @@ Test(scfunctions, check_add_to_badwords) {
 
 
 
+/*
+ ***** correct_line tests *****
+ */
 void test_correct_line(char* line, char* old_word, char* new_word, char* expected) {
 
 	char* corrected = correct_line(line, old_word, new_word);
@@ -123,6 +130,9 @@ Test(scfunctions, correct_line3) {
 }
 
 
+/*
+ ***** underline_misspelled_sentence tests *****
+ */
 void check_underline_misspelled_sentence(char** badwords, char* sentence, int element, char* expected) {
 	char *underlined = underline_misspelled_sentence(badwords, sentence, element);
 

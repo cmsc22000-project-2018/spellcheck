@@ -13,7 +13,9 @@ char* fileinput = "Eye halve a spelling chequer\n";
  * While future testing will be conducted with shell testing library, note currently that parse_read_line has not
  * resulted in errors when being used in the shell command line */
 
-/* Testing file parsing function */
+/*
+ ***** parse_file tests *****
+ */
 Test(parser, parse_file)
 {
     char** array;
@@ -56,7 +58,6 @@ Test(parser, parse_file2)   // test for file with 200 lines
 
     array = parse_file("tests/test_parser2.txt");
     cr_assert_not_null(array,"test_parser: parse_file failed");
-// compare two strings
 
     char* c = "CHAPTER I. Down the Rabbit-Hole\n";
     int i = strcmp(array[0] , c);
@@ -74,7 +75,9 @@ Test(parser, parse_file2)   // test for file with 200 lines
     cr_assert_eq(i, 200, "parse_file wrong total line number");
 }
 
-/* parse_split_line test, returning string array representing each token*/
+/*
+ ***** testing parse_split_line *****
+ */
 Test(parser, parse_split_line)
 {
     char** array = calloc(20, sizeof(char*));

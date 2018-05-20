@@ -16,7 +16,7 @@ Test(word, is_in_array)
     cr_assert_eq(i, 1, "testing for is_in_array, failed");
 }
 
-
+/* testing is_in_array */
 Test(word, is_in_array0)
 {
     char* c = strdup("p");
@@ -37,6 +37,7 @@ Test(word, valid_word)
     cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
 }
 
+/* testing valid_word */
 Test(word, valid_word1)
 {
     char* c = strdup(".pac");
@@ -47,7 +48,7 @@ Test(word, valid_word1)
     cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
 }
 
-
+/* testing valid_word */
 Test(word, valid_word2)
 {
     char* c = strdup("p'ac");
@@ -78,6 +79,7 @@ Test(word, generate_suggestions)
     cr_assert_eq(i, 0, "suggestion output incorrect");
 }
 
+/* testing generate_suggestions */
 Test(word, generate_suggestions1)
 {
     char* c = strdup("life");
@@ -93,6 +95,7 @@ Test(word, generate_suggestions1)
     cr_assert_eq(i, EXIT_FAILURE, "int return value incorrect");
 }
 
+/* testing generate_suggestions */
 Test(word, generate_suggestions2)
 {
     char* c = strdup("chequer");
@@ -111,7 +114,7 @@ Test(word, generate_suggestions2)
     cr_assert_eq(i, 0, "suggestion output incorrect");
 }
 
-
+/* testing generate_suggestions */
 Test(word, generate_suggestions3)
 {
     char* c = strdup("cme");

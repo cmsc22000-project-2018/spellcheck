@@ -1,5 +1,5 @@
-#ifndef _WORD_H
-#define _WORD_H
+#ifndef INCLUDE_WORD_H_
+#define INCLUDE_WORD_H_
 #include <stdio.h>
 #include <strings.h>
 #include "dictionary.h"
