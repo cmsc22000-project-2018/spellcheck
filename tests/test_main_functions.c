@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "scfunctions.h"
+#include "main_functions.h"
 
 /*
  * Note that there are five parts to scfunctions.c: saving, editing, interactive, batch, main.

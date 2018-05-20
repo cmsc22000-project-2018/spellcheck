@@ -1,7 +1,7 @@
 #include <criterion/criterion.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "scfunctions.h"
+#include "main_functions.h"
 #include <string.h>
 
 /*
