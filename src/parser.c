@@ -55,7 +55,12 @@ char** parse_file(char* filename)
 /* read a command line and return a string */
 char* parse_read_line()
 {
-	char input[READ_BUFFERSIZE];
+	char* input = calloc(READ_BUFFERSIZE, sizeof(char*));
+    if (input == NULL) {
+        fprintf(stderr, "read_line: malloc failed");
+        exit(1);
+    }
+
 	char* rval;
 	memset(input, '\0', READ_BUFFERSIZE);
 	char* i = fgets(input, READ_BUFFERSIZE, stdin);
@@ -75,7 +80,8 @@ char* parse_read_line()
  */
 char **parse_split_line(char *line)
 {
-  int bufsize = LSH_TOK_BUFFERSIZE, position = 0;
+  int bufsize = LSH_TOK_BUFFERSIZE;
+  int position = 0;
   char **tokens = malloc(bufsize * sizeof(char*));
   char *token, **tokens_backup;
 

@@ -5,30 +5,25 @@
 #include "dictionary.h"
 
 /*
-typedef struct word {
-	char *word;
-        int is_misspelled; //0 if misspelled, 1 if no
-} word;
-*/
-
-/*
  * is_in_array: checks if a given punctuation is within a word
  * parameters: array of punctuations, word
- * returns: int (bool)
+ * returns: int
+ * -1 is if it is not in array
+ * 1 is if it is
  */
-int is_in_array(char* punctuation_array[], char* word);
+int is_in_array(char* word);
 
 /*
  * valid_word: checks that word is in dictionary
  * parameters: word, dictionary
- * returns: int (bool)
+ * returns: int (EXIT_SUCCESS OR FAILURE)
  */
-int valid_word(char* word, dict_t *dict);
+int valid_word(dict_t *dict, char* word);
 
 /*
  * generate_suggestions: receives
  * parameters: word, dictionary, array list to which suggestions are stored
- * returns: int (bool). FAILURE if no suggestions generated
+ * returns: int (EXIT_SUCCESS OR FAILURE). FAILURE if no suggestions generated
  */
 int generate_suggestions(char* word, dict_t* dict, char **suggestions);
 

@@ -58,9 +58,9 @@ char* modename(int mode)
 int main(int argc, char **argv)
 {
 	// filenames up to 100 char
-	char* dict_name = malloc(101 * sizeof(char*));
-	char* file_name = malloc(101 * sizeof(char*));
-	char* save_file = malloc(101 * sizeof(char*));
+	char* dict_name = malloc(401 * sizeof(char*));
+	char* file_name = malloc(401 * sizeof(char*));
+	char* save_file = malloc(401 * sizeof(char*));
 
 	// default dict name
 	strcpy(dict_name,"tests/sample_dict.txt");
@@ -153,7 +153,7 @@ int main(int argc, char **argv)
 		Initialize dictionary, declare names of files to be used
 	*/
 	dict_t* dict = dict_new();
-	if (dict_read(dict, dict_name) == EXIT_SUCCESS) {
+	if ((dict_read(dict, dict_name) == EXIT_SUCCESS) && mode != 1) {
 		printf("Dictionary Successfully Parsed!\n");
 	} else {
 		printf("Trouble reading dictionary, exiting program\n");
