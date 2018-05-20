@@ -43,14 +43,14 @@ void save_page(char* filename, char** lines, int* quit);
  * parameters:
  * returns:
  */
-void underline_misspelled(char *tkn, char* underline);
+void underline_misspelled(char *word, char* underline);
 
 /*
  * underline_misspelled: generate " " as underlines for non-misspelled words
  * parameters:
  * returns:
  */
-void underline_correct_spelling(char *tkn, char* underline);
+void underline_correct_spelling(char *word, char* underline);
 
 /*
  * underline_misspelled_sentence: given a list of bad words in order, underline them in sentence

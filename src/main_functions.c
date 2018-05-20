@@ -95,9 +95,9 @@ void save_page(char* filename, char** lines, int* quit)
  */
 
 // produces a set of underlines for the misspelled word
-void underline_misspelled(char *tkn, char* underline)
+void underline_misspelled(char *word, char* underline)
 {
-	int j = strlen(tkn);
+	int j = strlen(word);
     int i = 0;
 	for(; i < j; i++) {
     	strcat(underline, "^");
@@ -110,9 +110,9 @@ void underline_misspelled(char *tkn, char* underline)
 }
 
 // produces a set of spaces before the underline
-void underline_correct_spelling(char *tkn, char* underline)
+void underline_correct_spelling(char *word, char* underline)
 {
-	int j = strlen(tkn);
+	int j = strlen(word);
     int i = 0;
 	for(; i < j; i++) {
     		strcat(underline, " ");
