@@ -127,8 +127,8 @@ int main(int argc, char **argv)
 			strcpy(save_file,optarg);
             shell_input(optarg,"file save destination");
 			break;
-		default: /* If command line contains just the file at argv[1], write it into file_name */
 			shell_usage();
+            exit(0);
 			break;
 		}
 	}

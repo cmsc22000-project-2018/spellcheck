@@ -286,7 +286,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     printf("Enter the number of the replacement: ");
 
     int check = scanf("%d", &choice);
-    assert(check >= 0);
+    assert(!(check < 0));
 
     if (choice == 0) {
     	printf("Deleting %s.", misspelled[i]);
