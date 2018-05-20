@@ -1,10 +1,12 @@
 #include <criterion/criterion.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "scfunctions.h"
+#include "main_functions.h"
 #include <string.h>
 
-
+/*
+ ***** underline_misspelled tests *****
+ */
 void check_underline_misspelled(char* wrong, char* underline, char* expected) {
 	underline_misspelled(wrong, underline);
 	//printf("%s\n", underline);
@@ -32,7 +34,6 @@ Test(scfunctions, underline_misspelled2) {
 }
 
 
-
 Test(scfunctions, underline_misspelled3) {
 	char *wrong = "wrng";
 	char *underline = (char *)malloc(50);
@@ -42,12 +43,15 @@ Test(scfunctions, underline_misspelled3) {
 }
 
 
-void check_add_to_badwords(char *badword, char** badwords) {
-	add_to_badwords(badword, badwords);
+/*
+ ***** add_to_misspelled tests *****
+ */
+void check_add_to_misspelled(char *word, char** misspelled) {
+	add_to_misspelled(word, misspelled);
 	int result = -1;
 	int i = 0;
-	while (badwords[i] != NULL) {
-		if (strcmp(badwords[i], badword) == 0) {
+	while (misspelled[i] != NULL) {
+		if (strcmp(misspelled[i], word) == 0) {
 			result = 0;
 		}
 		i++;
@@ -57,15 +61,18 @@ void check_add_to_badwords(char *badword, char** badwords) {
 
 }
 
-Test(scfunctions, check_add_to_badwords) {
+Test(scfunctions, check_add_to_misspelled) {
 	char *badword = "wrod";
 	char* badwords[3] = {NULL, NULL, NULL};
-	check_add_to_badwords(badword, badwords);
+	check_add_to_misspelled(badword, badwords);
 
 }
 
 
 
+/*
+ ***** correct_line tests *****
+ */
 void test_correct_line(char* line, char* old_word, char* new_word, char* expected) {
 
 	char* corrected = correct_line(line, old_word, new_word);
@@ -123,6 +130,9 @@ Test(scfunctions, correct_line3) {
 }
 
 
+/*
+ ***** underline_misspelled_sentence tests *****
+ */
 void check_underline_misspelled_sentence(char** badwords, char* sentence, int element, char* expected) {
 	char *underlined = underline_misspelled_sentence(badwords, sentence, element);
 

@@ -7,10 +7,10 @@ RM = rm -f
 BIN = test-spellcheck
 LDLIBS = -lcriterion -lhiredis
 
-SRCTESTS = test_dictionary.c test_mock_trie.c test_parser.c test_suggestion.c test_word.c test_scfunctions.c test_scfunctions_interactive.c
-SRCFILES = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/suggestion.c ../src/zset_api.c ../src/shellstrings.c ../src/word.c
+TESTSRCS = test_main_functions_interactive.c test_word.c test_main_functions.c test_dictionary.c test_parser.c
+FILESRCS = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/main_functions.c ../src/shellstrings.c ../src/word.c
 
-SRCS = main.c $(SRCTESTS) $(SRCFILES)
+SRCS = main.c $(TESTSRCS) $(FILESRCS)
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all clean

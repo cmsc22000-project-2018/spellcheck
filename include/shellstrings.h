@@ -3,8 +3,8 @@
  * String output functions to be used in the shell
 */
 
-#ifndef _SHELLSTRINGS_H
-#define _SHELLSTRINGS_H
+#ifndef INCLUDE_SHELLSTRINGS_H_
+#define INCLUDE_SHELLSTRINGS_H_
 
 #include <stdio.h>
 #include <stdlib.h>

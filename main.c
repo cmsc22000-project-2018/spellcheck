@@ -3,7 +3,7 @@
 #include <string.h>
 #include "parser.h"
 #include "shellstrings.h"
-#include "scfunctions.h"
+#include "main_functions.h"
 #include "dictionary.h"
 
 /*
