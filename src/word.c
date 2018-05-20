@@ -4,6 +4,7 @@
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>	
+#include <ctype.h>
 #include "suggestion.h"
 
 int num_punctuation = 22;
@@ -33,6 +34,78 @@ int valid_word(char* word, dict_t* dict)
 	}
 }
 
+// helpers for generate_suggestions
+//return positive if sth is capitalized
+int cap_status(char l)
+{
+	return (!ispunct(l) && l >= 'A' && l <= 'Z');
+}
+
+// -1 if not a word 
+// 0 if not capitalized
+// 1 if first letter is capitalized (note "I" is included here)
+// 2 if everything is capitalized
+// 3 if inconsistent
+int check_cap(char* word)
+{
+	int len = strlen(word);
+	int i = 0;
+	int npunct = 0;
+	while (i < len)
+		if (ispunct(word[i])) npunct++; // number of punctuations in word
+
+	if (npunct == len) return -1; // no alphabet in word
+
+	// move to first letter, assuming punctuations like " and '
+	while(ispunct(word[i])) i++;
+
+	if (cap_status(word[i])) {	// only first word, everything, or inconsistent
+		int ncap = 1;	// number of capitalizations
+		for (i++ ; i < len; i++)
+			if (cap_status(word[i])) ncap++;
+
+		if (ncap == 1) return 1;
+		if (ncap == len - npunct) return 2;
+		return 3;	// inconsistent
+	}
+	// if control reaches here, then first letter of word is not capitalized
+	for (i = 0; i < len; i++)
+		if (cap_status(word[i])) return 3;
+
+	// if control reaches here, no letters are capitalized
+	return 0;
+}
+
+// decapitalize letters in a word
+char* word_decap(char* word)
+{
+	int i;
+	int len = strlen(word);
+	char* decap = strdup(word);
+
+	for (i = 0; i < len; i++)
+		if (cap_status(word[i])) {
+			decap[i] -= 'A' - 'a';
+		}
+	return decap;
+}
+
+// recapitalize
+char** recap(char** words) // int nsug, int flag)
+{
+
+
+	return words;	// temporary
+	/* @firat
+	int i = 0;
+	while (i < nsug) {
+		if () {
+
+		}
+	}
+	*/
+}
+
 // currently hard_coded; generates suggestions for a badly spelled word
 int generate_suggestions(dict_t* dict, char* word, char** suggestions, int max_edits, int amount)
 {
@@ -41,24 +114,30 @@ int generate_suggestions(dict_t* dict, char* word, char** suggestions, int max_e
         return EXIT_FAILURE;
     }
 
+/*
 // capitalize, set flag if necessary
-
+    int flag = check_cap(word);
+    char* decap_word = word_decap(word);
+*/
 
 // get dictionary
-    char** sug = suggestion_list(dict, word, max_edits, amount);
+    char** sug = suggestion_list(dict, word, max_edits, amount); // change word to decap_word later
 
 // check suggestion number is appropriate
     int i = 0;
     while (sug[amount] != NULL) i++;
     printf("no. of suggestions generated is %d\n", i);
-
-// decapitalize if necessary
+/*
+// recapitalize suggestions if necessary
+    if (flag > 0) sug = recap(sug) // nsug, flag); // needs to be loop!
+*/
 
 // copy into suggestions
-    int i;
     for (i = 0; i < amount; i++) {
         suggestions[i] = strdup(sug[i]);
     }	// free?
+
+
 
     return EXIT_SUCCESS;
 }
