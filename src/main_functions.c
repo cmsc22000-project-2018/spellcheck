@@ -257,7 +257,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     
     char *line_copy2 = malloc(strlen(line));
     strcpy(line_copy2, line); 
-    int max_no_suggestions = 2; //should the user decide this? maybe if there is a verbose mode
+    int max_no_suggestions = 1; //should the user decide this? maybe if there is a verbose mode
     int max_edits = 2;
 
     int length = strlen(line) / 3; //approximate 3 chars per word to be safe

@@ -37,7 +37,7 @@ int valid_word(char* word, dict_t* dict)
 int generate_suggestions(dict_t* dict, char* word, char** suggestions, int max_edits, int amount)
 {
 	if (dict == NULL) {
-        suggestions[i] = str; // no change if no dictionary
+        suggestions[0] = word; // no change if no dictionary
         return EXIT_FAILURE;
     }
 
@@ -45,19 +45,18 @@ int generate_suggestions(dict_t* dict, char* word, char** suggestions, int max_e
 
 
 // get dictionary
-    char** sug = suggestion_list(dict, word, max_edits, amout);
+    char** sug = suggestion_list(dict, word, max_edits, amount);
 
 // check suggestion number is appropriate
-    assert ();
-
+    assert (sug[amount-1] != NULL);
 
 // decapitalize if necessary
 
-
-    int i = 0;
-    for (int i = 0; i < amount; i++) {
-        suggestions[i] = sug[i];
-    }
+// copy into suggestions
+    int i;
+    for (i = 0; i < amount; i++) {
+        suggestions[i] = strdup(sug[i]);
+    }	// free?
 
     return EXIT_SUCCESS;
 }
