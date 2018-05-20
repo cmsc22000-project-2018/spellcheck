@@ -26,7 +26,6 @@
 /*
  *	I. Saving Files
  */
-// Accept a filename and an array of strings, then write that array into the file
 void save_corrections(char* filename, char** lines)
 {
 	FILE* f = fopen(filename,"w");
@@ -39,7 +38,6 @@ void save_corrections(char* filename, char** lines)
 	fclose(f);
 }
 
-// operates save_page
 void save_page(char* filename, char** lines, int* quit)
 {
 	int i = 1;
@@ -47,7 +45,6 @@ void save_page(char* filename, char** lines, int* quit)
     char* args = NULL;
     int verify = 0;
 
-// save shell
 	while (i) {
         shell_save();
 		shell_prompt();
@@ -94,7 +91,6 @@ void save_page(char* filename, char** lines, int* quit)
  *	II. Functions for editing strings
  */
 
-// produces a set of underlines for the misspelled word
 void underline_misspelled(char *word, char* underline)
 {
 	int j = strlen(word);
@@ -109,7 +105,6 @@ void underline_misspelled(char *word, char* underline)
 
 }
 
-// produces a set of spaces before the underline
 void underline_correct_spelling(char *word, char* underline)
 {
 	int j = strlen(word);
@@ -121,7 +116,6 @@ void underline_correct_spelling(char *word, char* underline)
 
 }
 
-//given a list of bad words in order, underline them in sentence
 char* underline_misspelled_sentence(char** misspelled, char* sentence, int element) {
 
 	char* underline = malloc(strlen(sentence));
@@ -164,7 +158,6 @@ char* underline_misspelled_sentence(char** misspelled, char* sentence, int eleme
 
 
 
-// add word in line to list of bad words (i.e. misspelled words not in the file)
 int add_to_misspelled(char *word, char** misspelled)
 {
 	if (word == NULL || misspelled == NULL) {
@@ -180,7 +173,6 @@ int add_to_misspelled(char *word, char** misspelled)
 	// printf("i is %d ", i);
 }
 
-//takes in a line, identifies incorrect words, and generates a string of underlines  
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 {
 	char *tkn = strtok(string, ": ,.-'\n'" ""); //words only separated by these punctuation
@@ -206,7 +198,6 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 }
 
 //reference from https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
-// replace an old, misspelled word with a new word in a string (line)
 char* correct_line(char* line, char* old_word, char* new_word)
 {
 	char buffer[2000] = {0}; //again, we might need to modify our size estimates
@@ -240,7 +231,6 @@ char* correct_line(char* line, char* old_word, char* new_word)
 
 
 
-//initialises each element in array (that stores misspelled words in a line) to NULL
 int initialize_misspelled(char **misspelled, int length)
 {
 
@@ -261,7 +251,6 @@ int initialize_misspelled(char **misspelled, int length)
  *	III. Interactive Mode
  */
 
-/* returns a corrected line after asking user for correction */
 char* edit_interactive(char* line, dict_t* dict, int linenumber)
 {
     char *line_copy = malloc(strlen(line));
@@ -369,7 +358,6 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 }
 
 
-/* interctive mode - open file, parse and work on later */
 char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in dictionary later
 {
 
@@ -431,7 +419,6 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
 	return line_copy;
 }
 
-// operates batch mode
 char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 {
 	if (verbosity) printf("\nBatch Mode: Verbose\n\n");
@@ -459,7 +446,6 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
  */
 
 
-/* Prints help page. Returns to main page via loop in main function */
 void help_page()
 {
     shell_help();
@@ -468,14 +454,12 @@ void help_page()
 	parse_read_line();      // accept any input in the command line
 }
 
-/* Check if file with name, given by string, exists */
 int fileexists(const char* filename)
 {
 	struct stat buffer;
 	return (stat(filename, &buffer) == 0);
 }
 
-/* helper for main_page, determine input mode */
 
 int change_mode(char* arg)
 {
@@ -489,7 +473,6 @@ int change_mode(char* arg)
     return 3;
 }
 
-/* operates main_page */
 void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 {
 	char* line;

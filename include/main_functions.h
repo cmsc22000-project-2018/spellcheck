@@ -41,14 +41,19 @@ void save_page(char* filename, char** lines, int* quit);
 /*
  * underline_misspelled: generate "^" as underlines for misspelled words
  * parameters:
- * returns:
+ *      - word to be underlined
+ *      - underline (character "^" is added to underline, which is a string to be printed
+ *      - below the line
+ * returns: void
  */
 void underline_misspelled(char *word, char* underline);
 
 /*
  * underline_misspelled: generate " " as underlines for non-misspelled words
  * parameters:
- * returns:
+ *      - word to be underlined
+ *      - underline (character " " is added to underline)
+ * returns: void
  */
 void underline_correct_spelling(char *word, char* underline);
 
@@ -58,7 +63,7 @@ void underline_correct_spelling(char *word, char* underline);
  *      - array of misspelled words
  *      - sentence to be edited
  *      - element
- * returns: corrected line
+ * returns: underline for line
  */
 char* underline_misspelled_sentence(char** misspelled, char* sentence, int element);
 
