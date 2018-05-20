@@ -295,8 +295,6 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 
     	if(success != -1) shell_interactive_replacements(misspelled[i], suggestions, max_no_suggestions);
 
-
-    
         //gets replacement choice from user
         int number2;
 

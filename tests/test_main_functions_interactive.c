@@ -44,14 +44,14 @@ Test(scfunctions, underline_misspelled3) {
 
 
 /*
- ***** add_to_bdawords tests *****
+ ***** add_to_misspelled tests *****
  */
-void check_add_to_badwords(char *badword, char** badwords) {
-	add_to_misspelled(badword, badwords);
+void check_add_to_misspelled(char *word, char** misspelled) {
+	add_to_misspelled(word, misspelled);
 	int result = -1;
 	int i = 0;
-	while (badwords[i] != NULL) {
-		if (strcmp(badwords[i], badword) == 0) {
+	while (misspelled[i] != NULL) {
+		if (strcmp(misspelled[i], word) == 0) {
 			result = 0;
 		}
 		i++;
@@ -61,10 +61,10 @@ void check_add_to_badwords(char *badword, char** badwords) {
 
 }
 
-Test(scfunctions, check_add_to_badwords) {
+Test(scfunctions, check_add_to_misspelled) {
 	char *badword = "wrod";
 	char* badwords[3] = {NULL, NULL, NULL};
-	check_add_to_badwords(badword, badwords);
+	check_add_to_misspelled(badword, badwords);
 
 }
 

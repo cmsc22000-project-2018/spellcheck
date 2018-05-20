@@ -32,7 +32,7 @@ int valid_word(char* word, dict_t* dict) {
 
 // currently hard_coded; generates suggestions for a badly spelled word
 int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
-//	assert (dict != NULL);
+	assert (dict != NULL);
 
 	if (strcmp(word, "splling") == 0) {
 		suggestions[0] = "spelling";
