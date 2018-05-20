@@ -257,8 +257,8 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     
     char *line_copy2 = malloc(strlen(line));
     strcpy(line_copy2, line); 
-    int max_no_suggestions = 2; //should the user decide this?
-
+    int max_no_suggestions = 2; //should the user decide this? maybe if there is a verbose mode
+    int max_edits = 2;
 
     int length = strlen(line) / 3; //approximate 3 chars per word to be safe
     char *misspelled[length]; //generates an empty array where the misspelled words in a line will be stored
@@ -296,7 +296,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 
     //replacing words according to user suggestions
       while (misspelled[i] != NULL) {
-    	int success = generate_suggestions(misspelled[i], dict, suggestions);
+    	int success = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
 
     	if(success != -1) {
     	printf("Possible replacements for word %s are: ", misspelled[i]);
@@ -392,7 +392,8 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
 {
     char *line_copy = malloc(strlen(line));
     strcpy(line_copy, line); //maintain a copy of the line to preserve original line: line will be parsed into individual words
-    int max_no_suggestions = 1; //need only one suggestion
+    int max_no_suggestions = 2; //need only one suggestion
+    int max_edits = 2;
 
     int length = strlen(line)/3; //approximate 3 chars per word to be safe
     char *misspelled[length]; //generates an empty array where the misspelled words in a line will be stored
@@ -408,7 +409,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
     int i = 0;
     //replacing words, printing out if batch mode
     while (misspelled[i] != NULL) {
-        int success = generate_suggestions(misspelled[i], dict, suggestions);
+        int success = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
 	    if (success == -1) suggestions[0] = misspelled[i];
     	    correct_line(line_copy, misspelled[i], suggestions[0]);
 	    if (verbosity) printf("WORD:%s\nREPLACEMENT:%s\n\n", misspelled[i], suggestions[0]);    // print list of replacement

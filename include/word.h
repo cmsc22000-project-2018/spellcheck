@@ -30,7 +30,7 @@ int valid_word(char* word, dict_t *dict);
  * parameters: word, dictionary, array list to which suggestions are stored
  * returns: int (bool). FAILURE if no suggestions generated
  */
-int generate_suggestions(char* word, dict_t* dict, char **suggestions);
+int generate_suggestions(dict_t* dict, char* word, char **suggestions, int max_edits, int amount);
 
 
 #endif

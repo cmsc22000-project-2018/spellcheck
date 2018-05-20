@@ -4,6 +4,7 @@
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>	
+#include "suggestion.h"
 
 int num_punctuation = 22;
 char* punctuation_array[] = {"+",",",":"," ",".","-","'","&","!","?",":",";","#","~","=","/","$","£","^","\n","_","<",">"};
@@ -33,15 +34,30 @@ int valid_word(char* word, dict_t* dict)
 }
 
 // currently hard_coded; generates suggestions for a badly spelled word
-int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
-//	assert (dict != NULL);
+int generate_suggestions(dict_t* dict, char* word, char** suggestions, int max_edits, int amount)
+{
+	if (dict == NULL) {
+        suggestions[i] = str; // no change if no dictionary
+        return EXIT_FAILURE;
+    }
 
-// initialize words - decapitalize if necessary
-    suggestions[0] = "my";
-    suggestions[1] = "me";
+// capitalize, set flag if necessary
 
-// generate suggestions: d, str, max_edits, edit_amount
 
-// else
-    return EXIT_FAILURE;
+// get dictionary
+    char** sug = suggestion_list(dict, word, max_edits, amout);
+
+// check suggestion number is appropriate
+    assert ();
+
+
+// decapitalize if necessary
+
+
+    int i = 0;
+    for (int i = 0; i < amount; i++) {
+        suggestions[i] = sug[i];
+    }
+
+    return EXIT_SUCCESS;
 }
