@@ -44,17 +44,6 @@
  *
  */
 
-char* modename(int mode)
-{
-	switch (mode) {
-		case 1: return "quiet batch mode"; 
-		case 2: return "verbose batch mode";
-		case 3: return "interactive mode";
-		default: break;
-	}
-	return "quiet batch mode";
-}
-
 int main(int argc, char **argv)
 {
 	// filenames up to 100 char
@@ -77,8 +66,10 @@ int main(int argc, char **argv)
 	char c;
 
 	/* If command line contains just the file at argv[1], write it into file_name */
-	if (fileexists(argv[1])) strcpy(file_name,argv[1]);
-
+	if (fileexists(argv[1]) || fileexists(argv[3])) {
+        shell_usage();
+        exit(0);
+    }
 
     // Parse the initial command line and 
 	while ((c = getopt(argc,argv,"d:i:v:s:q:")) != -1) {
@@ -153,32 +144,20 @@ int main(int argc, char **argv)
 		Initialize dictionary, declare names of files to be used
 	*/
 	dict_t* dict = dict_new();
-	if (dict_read(dict, dict_name) == EXIT_SUCCESS) {
-		printf("Dictionary Successfully Parsed!\n");
-	} else {
-		printf("Trouble reading dictionary, exiting program\n");
-        exit(0);
-	}
+    int msg = dict_read(dict, dict_name);
+    shell_dict_message(msg);
 
 	/*
-		Starting to Parse file!
+		Starting to Parse file! Print messages accordingly
 	 */
-	char* md = modename(mode);
-
-    if (mode != 1) {
-
-	    printf("\n\n========================================\n"
-                   "==========Editing Started With==========\n\n");
-	    printf("file: %s\n", file_name);
-	    printf("dictionary: %s\n", dict_name);
-	    printf("mode: %s \n\n", md);
-    }
-
-	/* Pause, to confirm start */
+	char* md = shell_modename(mode);
     if (mode == 3) {
-        printf("Enter any command to start %s\n\n", md);
+        shell_interactive_start(file_name, dict_name, md);
 	    parse_read_line();
+        shell_prompt();
         printf("\n\n");
+    } else {
+        shell_batch_start(file_name, dict_name, md);
     }
 
 	char** result=NULL;
@@ -194,8 +173,13 @@ int main(int argc, char **argv)
 			break;
 	}
 
+    // Success Message, print if not verbose
+    
 
     if (mode != 2) {	// Save file, a functionality unnecessary for verbose batch mode
+    // Success Message
+    shell_parse_success();
+
     md = strstr(save_file,".txt");
     	if (md != NULL) {
     		save_corrections(save_file, result);

@@ -1,4 +1,3 @@
-
 /* 
  * String output functions to be used in the shell
 */
@@ -123,6 +122,144 @@ void shell_help();
  */
 void shell_outro();
 
+/*
+ * shell_usage -  prints out correct command line usage cases
+ *
+ * No parameters or return value
+ *
+ */
 void shell_usage();
+
+/*
+ * shell_usage -  prints out correct command line usage cases
+ *
+ * No parameters or return value
+ *
+ */
+void shell_usage();
+
+
+/*
+ * shell_modename - prints out mode name (verbose, quiet or interactive)
+ * 
+ * Accepts flag int
+ *      note 1 is quiet, 2 is batch, 3 is interactive
+ */
+char* shell_modename(int mode);
+
+/*
+ * shell_dict_message - prints out success message after parsing dict, or failed message and exit.
+ *
+ * Parameters:
+ *  - i, which is either EXIT_SUCCESS or EXIT_FAILURE
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_dict_message(int i);
+
+/*
+ * shell_interactive_start - prints out interactive starting message
+ *
+ * Parameters:
+ *  - file, dictionary, mode names
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_interactive_start(char* file_name, char* dict_name, char* md);
+
+
+/*
+ * shell_batch_start - print out batch starting message
+ *
+ * Parameters:
+ *  - file, dictionary, mode names
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_batch_start(char* file_name, char* dict_name, char* md);
+
+
+/*
+ * shell_save_message - save message
+ *
+ * Parameters:
+ *  - None
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_save_message();
+
+/*
+ * shell_interactive_line_print: prints line, underlining errors
+ *
+ * Parameters:
+ *  - None.
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_interactive_line_print(int lnum, char* line, char* underline);
+
+/*
+ * shell_verbose_start - verbose start message 
+ *
+ * Parameters:
+ *  - None.
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_verbose_start();
+
+/*
+ * shell_line_number - print line number 
+ *
+ * Parameters:
+ *  - int (line number)
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_line_number(int lnum);
+
+/*
+ * shell_verbose_replacement - print error word and replacement
+ *
+ * Parameters:
+ *  - None.
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_verbose_replacement(char* word, char* sug);
+
+/*
+ * shell_interactive_replacements
+ *
+ * Parameters:
+ *  - word being replaced
+ *  - list of suggestions
+ *  - number of suggestions, for the loop
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_interactive_replacements(char* word, char** sug, int nsug);
+
+
+/*
+ * shell_parse_success - file editing success message
+ *
+ * Parameters:
+ *  - None
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_parse_success();
 
 #endif

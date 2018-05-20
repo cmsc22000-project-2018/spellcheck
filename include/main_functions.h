@@ -68,7 +68,7 @@ void underline_correct_spelling(char *word, char* underline);
 char* underline_misspelled_sentence(char** misspelled, char* sentence, int element);
 
 /*
- * add_to_misspelled: add an incorrect word to list of bad words
+ * add_to_misspelled: add an incorrect word to list of misspelled words
  * parameters:
  *      - word
  *      - list of misspelled words
@@ -77,7 +77,7 @@ char* underline_misspelled_sentence(char** misspelled, char* sentence, int eleme
 int add_to_misspelled(char *word, char** misspelled);
 
 /*
- * parse_string: parse string, generating underline and list of bad words
+ * parse_string: parse string, generating underline and list of misspelled words
  * parameters:
  *      - string (line) to be parsed
  *      - dictionary

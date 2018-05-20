@@ -63,8 +63,7 @@ void save_page(char* filename, char** lines, int* quit)
 		} else if (!strcmp(line, "c")) {
             
             while ((args == NULL) ^ i) {    // either user returns to main page, or inputs a vaid new destination
-                printf("\n\nEnter a viable file name (*.txt), or enter 'r' to return to the save page.\n\n");
-                shell_prompt();
+                shell_save_message();
                 verify = scanf("%s", line);
                 assert (!(verify < 0));
 
@@ -272,13 +271,8 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 
     parse_string(line, dict, underline, misspelled); //identify misspelled words and add to bad_word, 
     //add to underline function 
-    
-    printf("Current line number is %d: \n", linenumber);
-    printf("%s", line_copy);
-    printf("\n");
-    printf("%s", underline);
-    printf("\n\n");
 
+    shell_interactive_line_print(linenumber, line_copy, underline);
     // printf("Misspelled words in this sentence are: ");
 
     // int i = 0;
@@ -296,62 +290,41 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     int i = 0;
 
     //replacing words according to user suggestions
-      while (misspelled[i] != NULL) {
+    while (misspelled[i] != NULL) {
     	int success = generate_suggestions(misspelled[i], dict, suggestions);
 
-    	if(success != -1) {
-    	printf("Possible replacements for word %s are: ", misspelled[i]);
-    	printf("0: Delete Word. ");
-    	printf("1: No replacement. ");
-        int j = 0;
-    	for ( ; j < max_no_suggestions; j++) {
-    		printf("%d : %s ", j+2, suggestions[j]);
+    	if(success != -1) shell_interactive_replacements(misspelled[i], suggestions, max_no_suggestions);
 
-    	}  	
-
-       }
-       printf("\n\n");
 
     
-    //gets replacement choice from user
-    int number2;
-    printf("Enter the number of the replacement: ");
+        //gets replacement choice from user
+        int number2;
 
-    int check = scanf("%d", &number2);
-    assert(check >= 0);
+        int check = scanf("%d", &number2);
+        assert(check >= 0);
 
-    if (number2 == 0) {
-    	printf("Deleting %s.", misspelled[i]);
-    	correct_line(line_copy, misspelled[i], "");
-    	printf("New sentence is: \n\n");
-     	printf("%s\n\n", line_copy);
-     	//printf("%s\n", badwords[i+1]);
-     	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
+        if (number2 == 0) {
+    	    printf("Deleting %s.", misspelled[i]);
+        	correct_line(line_copy, misspelled[i], "");
+        	printf("New sentence is: \n\n");
+         	printf("%s\n\n", line_copy);
+         	//printf("%s\n", badwords[i+1]);
+         	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
+        } else if (number2 == 1) {
+        	printf("No changes made to %s. \n\n", misspelled[i]);
+        } else if (number2 > (max_no_suggestions+1)) {
+    	    shell_error("Please enter a valid number");
+        } else if (number2 != 1 || number2 != 0) { //1 if no replacement needed, 0 if word deleted
+    	    printf("Replacing %s with %s \n", misspelled[i], suggestions[number2-2]);
+        	correct_line(line_copy, misspelled[i], suggestions[number2-2]); //modifies line function
+        	printf("New sentence is: \n");
+         	printf("%s\n\n", line_copy);
+         	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
+        }
 
 
+	    i++;	// added loop changer
     }
-
-    else if (number2 == 1) {
-    	printf("No changes made to %s. \n\n", misspelled[i]);
-
-    }
-
-    else if (number2 > (max_no_suggestions+1)) {
-    	shell_error("Please enter a valid number");
-    }
-
-    else if (number2 != 1 || number2 != 0) { //1 if no replacement needed, 0 if word deleted
-    	printf("Replacing %s with %s \n", misspelled[i], suggestions[number2-2]);
-    	correct_line(line_copy, misspelled[i], suggestions[number2-2]); //modifies line function
-    	printf("New sentence is: \n");
-     	printf("%s\n\n", line_copy);
-     	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
-    }
-
-
-	i++;	// added loop changer
-  }
-
 	return line_copy;
 	// need a way for string to (a) preserve punctuations and (b) 
 	// @Sarika this would be where the program needs replace_word, ignore_word, alternate_spelling
@@ -412,7 +385,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
         int success = generate_suggestions(misspelled[i], dict, suggestions);
 	    if (success == -1) suggestions[0] = misspelled[i];
     	    correct_line(line_copy, misspelled[i], suggestions[0]);
-	    if (verbosity) printf("WORD:%s\nREPLACEMENT:%s\n\n", misspelled[i], suggestions[0]);    // print list of replacement
+	    if (verbosity) shell_verbose_replacement(misspelled[i], suggestions[0]);
 	    i++;
 	}
 
@@ -421,7 +394,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
 
 char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 {
-	if (verbosity) printf("\nBatch Mode: Verbose\n\n");
+	if (verbosity) shell_verbose_start();
 
 	char** lines;
 	lines = parse_file(filename);
@@ -433,11 +406,10 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 
 	int i=0;
 	while (lines[i] != NULL) {
-		if (verbosity) printf("Line number: %d\n",i+1);
+		if (verbosity) shell_line_number(i);
 		lines[i] = edit_batch(lines[i], dict, verbosity);
 		i++;
 	}
-
 	return lines;
 }
 
