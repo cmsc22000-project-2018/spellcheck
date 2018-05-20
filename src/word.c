@@ -48,7 +48,9 @@ int generate_suggestions(dict_t* dict, char* word, char** suggestions, int max_e
     char** sug = suggestion_list(dict, word, max_edits, amount);
 
 // check suggestion number is appropriate
-    assert (sug[amount-1] != NULL);
+    int i = 0;
+    while (sug[amount] != NULL) i++;
+    printf("no. of suggestions generated is %d\n", i);
 
 // decapitalize if necessary
 
