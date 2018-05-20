@@ -282,42 +282,16 @@ char** suggestion_set_first_n(zset_t *set, int n) {
     int flag = 0;
 
     // Get items in decreasing edit distance
-    char **result = zset_revrange(set, 0, n-1);
+    char **list = zset_revrange(set, 0, n-1);
 
-    for (i = 0; i < n; i++) {
-        if (flag) {
-            result[i] = NULL;
-        } else if (result[i] == NULL) {
-            flag = 1;
-        }
-    }
-
-    return result;
-}
-
-char** suggestion_list(dict_t *d, char *str, int max_edits, int amount) {
-
-    assert(d != NULL);
-    assert(str != NULL);
-
-    zset_t *set = suggestion_set_new(d, str, max_edits);
-    int i;
-    int flag = 0;
-
-    if (set == NULL) {
-        return NULL;
-    }
-
-    char **list = suggestion_set_first_n(set, amount);
-
-    char **results = (char**)malloc(sizeof(char*) * amount);
+    char **results = (char**)malloc(sizeof(char*) * n);
     if (results == NULL) {
         return NULL;
     }
 
     // Since len(list) could be less than amount, make a new list with 
     // NULL for any unsuccessful items
-    for (i = 0; i < amount; i++) {
+    for (i = 0; i < n; i++) {
         if (flag == 1) {
             results[i] = NULL;
         } else {
@@ -337,6 +311,22 @@ char** suggestion_list(dict_t *d, char *str, int max_edits, int amount) {
     }
 
     free(list);
+
+    return results;
+}
+
+char** suggestion_list(dict_t *d, char *str, int max_edits, int amount) {
+
+    assert(d != NULL);
+    assert(str != NULL);
+
+    zset_t *set = suggestion_set_new(d, str, max_edits);
+
+    if (set == NULL) {
+        return NULL;
+    }
+
+    char **results = suggestion_set_first_n(set, amount);
 
     // Remove all the items from the results
     // If this doesn't happen you start getting the weirdest bugs
