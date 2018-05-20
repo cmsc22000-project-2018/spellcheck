@@ -47,7 +47,7 @@ Test(scfunctions, underline_misspelled3) {
  ***** add_to_bdawords tests *****
  */
 void check_add_to_badwords(char *badword, char** badwords) {
-	add_to_badwords(badword, badwords);
+	add_to_misspelled(badword, badwords);
 	int result = -1;
 	int i = 0;
 	while (badwords[i] != NULL) {
