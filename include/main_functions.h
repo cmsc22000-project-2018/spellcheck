@@ -62,7 +62,7 @@ void underline_correct_spelling(char *word, char* underline);
  * paramters:
  *      - array of misspelled words
  *      - sentence to be edited
- *      - element
+ *      - element - number in char array indicating misspelled word
  * returns: underline for line
  */
 char* underline_misspelled_sentence(char** misspelled, char* sentence, int element);
@@ -72,7 +72,7 @@ char* underline_misspelled_sentence(char** misspelled, char* sentence, int eleme
  * parameters:
  *      - word
  *      - list of misspelled words
- * returns: int
+ * returns: int (EXIT_SUCCESS OR FAILURE)
  */
 int add_to_misspelled(char *word, char** misspelled);
 
@@ -83,7 +83,7 @@ int add_to_misspelled(char *word, char** misspelled);
  *      - dictionary
  *      - underline: function generates underline, tailored to array
  *      - misspelled: misspelled words in the line
- * return: int indicating successtakes in a line, identifies incorrect words and stores them in misspelled, and generates a string of underlines to be printed under that sentence
+ * return: int (EXIT_SUCCESS or FAILURE).
  */
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled);
 
@@ -104,7 +104,7 @@ char* correct_line(char* line, char* old_word, char* new_word);
  * parameters:
  *      - malloced array of misspelled words from interactive_mode
  *      - length of array
- * return: int indicating success
+ * return: int indicating success (EXIT_SUCCESS OR FAILURE)
  */
 int initialize_misspelled(char **misspelled, int length);
 
@@ -129,7 +129,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber);
  *      - name of file to be parsed
  *      - dictionary
  *      - pointer to int quit, which is a flag indicating whether or not spellcheck should terminate
- *
+ * return: char** array of lines, to be printed in save page
  */
 char** interactive_mode(char* filename, dict_t* dict, int* quit); //will pass in dictionary later
 
@@ -142,8 +142,10 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit); //will pass in
  *      - string of line to be edited
  *      - dictionary
  *      - flag indicating whether or not to print output
- * verbosity determines whether or not shell output exists */
-char* edit_batch(char* line, dict_t* dict, int verbosity);
+ *      verbosity determines whether or not shell output exists 
+ * return: string of filename, edited
+ */
+char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum);
 
 /* 
  * batch_mode: operates batch mode
@@ -152,6 +154,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity);
  *      - dictionary
  *      - flag indicating whether or not quit spellcheck after operation
  *      - flag indicating whether or not to print output
+ * return: char** array of lines, to be printed if quiet mode
  */
 char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity);
 
@@ -161,7 +164,7 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity);
 
 
 /*
- * help_page: Prints help page at request of user from mawin. Returns to main page via loop in main function
+ * help_page: Prints help page at request of user from main. Returns to main page via loop in main function
  * parameters: none 
  * return_values: none
  */

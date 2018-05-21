@@ -27,15 +27,29 @@ void shell_intro() {
 void shell_save() {
     printf(GREEN "File editing successful!\n\n" RESET);
 
+    printf("p               : print result of edit\n");
     printf("s               : save to existing file\n");
     printf("c               : save to custom file\n");
     printf("r               : return to home screen\n");
     printf("q               : quit program\n\n");
 }
 
+
 void shell_parse_success() {
     printf(GREEN "File editing successful!\n\n" RESET);
 }
+
+void shell_print(char** lines) {
+    int i = 0;
+
+    printf(BOLDWHITE "\nEdited text: \n\n");
+
+    while (lines[i] != NULL) {
+        printf("Line %d: %s", i+1, lines[i]);
+        i++;
+    }
+    printf("\n\n");
+;}
 
 /* See shellstrings.h */
 void shell_error(char* s) {
@@ -82,6 +96,7 @@ void shell_interactive_start(char* file_name, char* dict_name, char* md) {
     printf("\n" BOLDWHITE "------------------------------------------------------------\n" RESET);
     printf("file: %s\ndictionary: %s\nmode: %s\n\n", file_name, dict_name, md);
     printf("Enter any command to start interactive\n\n");
+    shell_prompt();
 }
 
 void shell_batch_start(char* file_name, char* dict_name, char* md) {
@@ -114,33 +129,40 @@ void shell_save_message() {
 }
 
 void shell_interactive_line_print(int lnum, char* line, char* underline) {
-    printf("Current line number is %d: \n", lnum);
-    printf("%s\n", line);
-    printf("%s\n\n", underline);
+    printf("Current line number is %d: \n\n", lnum);
+    printf(BOLDWHITE "%s" RESET, line);
+    printf(BOLDRED "%s" RESET, underline);
+    printf("\n\n");
 }
 
-void shell_interactive_replacements(char* word, char** sug, int nsug) {
-    printf("Possible replacements for word \"%s\" are: \n\n", word);
-    printf("0: Delete Word.\n");
-    printf("1: No replacement.\n");
-    int j = 0;
-    for ( ; j < nsug; j++) {
-        printf("%d: %s\n", j+2, sug[j]);
+void shell_interactive_replacements(char* word, char** sug) {
+    printf(BOLDWHITE "Possible replacements for word %s are:\n\n" RESET, word);
+    printf("0 : Delete Word. \n");
+    printf("1 : No replacement. \n");
+    int j;
+    for (j = 0; sug[j] != NULL; j++) {
+        printf("%d : %s \n", j+2, sug[j]);
     }
-    printf("\n\n");
-    shell_prompt();
 }
 
 void shell_verbose_start() {
-    printf("\nBatch mode: Verbose\n\n");
+    printf(BOLDWHITE "\n Printing Suggestions:\n\n" RESET);
 }
 
-void shell_line_number(int lnum) {
-    printf("Line number: %d\n", lnum+1);
-}
+void shell_verbose_chart(int lnum, char* misspelled, char** suggestions) {
+    printf(BOLDWHITE "%d\t\t\t" RESET, lnum); // print line number
+    int ntab = 3 - (strlen(misspelled) / 8); // number of tabs
+    int j;
+    printf(RED "%s" RESET, misspelled);
+    for (j = 0; j < ntab; j++) printf("\t");
 
-void shell_verbose_replacement(char* word, char* sug) {
-    printf("Word:%s\nReplacement: %s\n\n", word, sug);
-    shell_prompt();
+    j = 0;
+    while (suggestions[j] != NULL) {
+        printf(GREEN "%s" RESET, suggestions[j]);
+        if (suggestions[j + 1] != NULL) printf(", ");
+        j++;
+
+    }
+    printf("\n"); // print list of replacement
 }
 

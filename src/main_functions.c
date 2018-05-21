@@ -57,6 +57,9 @@ void save_page(char* filename, char** lines, int* quit)
         if (strlen(line) > 2) { // ensure that only one character is entered, otherwise cannot proceed
             shell_error("Please type in one of the indicated commands!");
             i = 1;
+        } else if (!strcmp(line,"p")) {
+        	shell_print(lines);
+        	i = 1;
         } else if (!strcmp(line, "s")) {
 			save_corrections(filename, lines);  // save to the same file destination, overwriting existing file
 			*quit = 1;
@@ -93,22 +96,18 @@ void save_page(char* filename, char** lines, int* quit)
 void underline_misspelled(char *word, char* underline)
 {
 	int j = strlen(word);
-    int i = 0;
-	for(; i < j; i++) {
+    int i;
+	for(i = 0; i < j; i++) {
     	strcat(underline, "^");
 	}
 		strcat(underline, " ");
-		// printf("start \n");
-		// printf("%s", underline);
-		// printf("end \n");
-
 }
 
 void underline_correct_spelling(char *word, char* underline)
 {
 	int j = strlen(word);
-    int i = 0;
-	for(; i < j; i++) {
+    int i;
+	for(i = 0; i < j; i++) {
     		strcat(underline, " ");
 	}
 		strcat(underline, " ");
@@ -123,25 +122,15 @@ char* underline_misspelled_sentence(char** misspelled, char* sentence, int eleme
 	while(misspelled[element] != NULL) {
 
 		char *ptr = strstr(sentence, misspelled[element]);
-
 		if(ptr != NULL) {
 
 			int pos = ptr - sentence;
+			int i;
+			for(i = 0; i < pos; i++) strcat(underline, " ");
 
-			int i = 0;
-			size_t j = 0;
-
-			for(; i < pos; i++) {
-
-				strcat(underline, " ");
-
-			}
-
-			for (; j < strlen(misspelled[element]); j++) {
-
-				strcat(underline, "^");
-
-			}
+            size_t j;
+            size_t slen = strlen(misspelled[element]);
+			for (j = 0; j < slen; j++) strcat(underline, "^");
 
 			sentence = ptr+strlen(misspelled[element]);
 
@@ -152,9 +141,7 @@ char* underline_misspelled_sentence(char** misspelled, char* sentence, int eleme
 	}
 
 	return underline;
-
 }
-
 
 
 int add_to_misspelled(char *word, char** misspelled)
@@ -168,32 +155,27 @@ int add_to_misspelled(char *word, char** misspelled)
 	}
 	misspelled[i] = word;
 	return EXIT_SUCCESS;
-	// printf("adding badword %s", badword);
-	// printf("i is %d ", i);
 }
 
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 {
-	char *tkn = strtok(string, ": ,.-'\n'" ""); //words only separated by these punctuation
+	char *tkn = strtok(string, ":; ,.-\n'\"'\t\r\n\a"); //words only separated by these punctuation
 	while (tkn != NULL) {
 
-		if (valid_word(tkn, dict) == EXIT_FAILURE){
-			//printf("%s ", tkn);
+		if (valid_word(dict, tkn) == EXIT_FAILURE){
 			underline_misspelled(tkn, underline);
 			add_to_misspelled(tkn, misspelled);
 		}
-		else if (valid_word(tkn, dict) == EXIT_SUCCESS) {
-			//printf("%s ", tkn);
+		else if (valid_word(dict, tkn) == EXIT_SUCCESS) {
 			underline_correct_spelling(tkn, underline);
 		}
 		else {
 			printf("error processing text");
 			return EXIT_FAILURE;
 		}
-		tkn = strtok(NULL, " ,.-");
+		tkn = strtok(NULL, " ,.-\";:\n\t\r\n\a");
 	}
 	return EXIT_SUCCESS;
-
 }
 
 //reference from https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
@@ -225,22 +207,19 @@ char* correct_line(char* line, char* old_word, char* new_word)
 	strcpy(line, buffer);
 
 	return line;
-
 }
 
 
 
 int initialize_misspelled(char **misspelled, int length)
 {
-
 	if (misspelled==NULL) {
 		return EXIT_FAILURE;
 	}
-    int i = 0;
-	for ( ; i < length; i++) {
+    int i;
+	for (i = 0; i < length; i++) {
     	misspelled[i] = NULL; //initialize each element to be NULL
     }
-
     return EXIT_SUCCESS;
 }
 
@@ -252,38 +231,21 @@ int initialize_misspelled(char **misspelled, int length)
 
 char* edit_interactive(char* line, dict_t* dict, int linenumber)
 {
-    char *line_copy = malloc(strlen(line));
-    strcpy(line_copy, line); //maintain a copy of the line to preserve original line: line will be parsed into individual words
-    
-    char *line_copy2 = malloc(strlen(line));
-    strcpy(line_copy2, line); 
+    char *line_copy = strdup(line);
     int max_no_suggestions = 2; //should the user decide this?
+    int max_edits = 2;
 
-
-    int length = strlen(line) / 3; //approximate 3 chars per word to be safe
+    int length = strlen(line) + 5;
     char *misspelled[length]; //generates an empty array where the misspelled words in a line will be stored
     initialize_misspelled(misspelled, length);
 
     char *underline = (char *)malloc(strlen(line + 1)); //generate an empty array where the underline will go
     underline[0] = '\0'; 
-    //char underline[strlen(line)] = "";
 
-
-    parse_string(line, dict, underline, misspelled); //identify misspelled words and add to bad_word, 
+    parse_string(line, dict, underline, misspelled); //identify misspelled words and add to misspelled
     //add to underline function 
 
-    shell_interactive_line_print(linenumber, line_copy, underline);
-    // printf("Misspelled words in this sentence are: ");
-
-    // int i = 0;
-    // while(badwords[i] != NULL) {
-    // 	printf("%d: %s ",i+1, badwords[i]);
-    // 	i++;
-    // }
-    // printf("\n");
-    // int number1;
-    // printf("Enter the number value of the word you would like to change: ");
-    // scanf("%d", &number1);
+    if (misspelled[0] != NULL) shell_interactive_line_print(linenumber, line_copy, underline);
 
     char *suggestions[max_no_suggestions]; //generates empty array where suggestions will be filled
  
@@ -291,62 +253,63 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 
     //replacing words according to user suggestions
     while (misspelled[i] != NULL) {
-    	int success = generate_suggestions(misspelled[i], dict, suggestions);
+    	int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
+	    if (rc == EXIT_FAILURE || suggestions[0] == NULL) {   // hard-coded; change later
+            strcpy(suggestions[0], "no other suggestions");
+            suggestions[1] = NULL;
+        }
+    	
+    	suggestions[max_no_suggestions] = NULL;
 
-    	if(success != -1) shell_interactive_replacements(misspelled[i], suggestions, max_no_suggestions);
+    	shell_interactive_replacements(misspelled[i], suggestions);
+        int choice = -1;
 
-        //gets replacement choice from user
-        int number2;
+    	do {
+    		shell_prompt();
+        	int check = scanf("%d", &choice);
 
-        int check = scanf("%d", &number2);
-        assert(check >= 0);
+        	if ((check < 0) | (choice > max_no_suggestions + 1)) {
+                shell_error("Please enter a valid number");
+                choice = -1;
+        	}
+        } while (choice < 0);
 
-        if (number2 == 0) {
-    	    printf("Deleting %s.", misspelled[i]);
+        if (choice == 0) {
+           	printf(BOLDRED "\nDeleting %s. " RESET, misspelled[i]);
         	correct_line(line_copy, misspelled[i], "");
-        	printf("New sentence is: \n\n");
-         	printf("%s\n\n", line_copy);
-         	//printf("%s\n", badwords[i+1]);
-         	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
-        } else if (number2 == 1) {
-        	printf("No changes made to %s. \n\n", misspelled[i]);
-        } else if (number2 > (max_no_suggestions+1)) {
-    	    shell_error("Please enter a valid number");
-        } else if (number2 != 1 || number2 != 0) { //1 if no replacement needed, 0 if word deleted
-    	    printf("Replacing %s with %s \n", misspelled[i], suggestions[number2-2]);
-        	correct_line(line_copy, misspelled[i], suggestions[number2-2]); //modifies line function
-        	printf("New sentence is: \n");
-         	printf("%s\n\n", line_copy);
-         	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
+           	printf("New sentence is:\n");
+         	printf(BOLDWHITE "%s" RESET, line_copy);
+         	printf(BOLDRED "%s\n" RESET, underline_misspelled_sentence(misspelled, line_copy, i+1));
+        } else if (choice == 1) {
+        	printf(BOLDWHITE "\nNo changes made to \"%s\". \n\n" RESET, misspelled[i]);
+        } else if (choice != 1 || choice != 0) { //1 if no replacement needed, 0 if word deleted
+        	printf(BOLDRED "\nReplacing %s with %s. " RESET, misspelled[i], suggestions[choice-2]);
+        	correct_line(line_copy, misspelled[i], suggestions[choice-2]); //modifies line function
+        	printf("New sentence is:\n");
+         	printf(BOLDWHITE "%s" RESET, line_copy);
+         	printf(BOLDRED "%s\n" RESET, underline_misspelled_sentence(misspelled, line_copy, i+1));
         }
 
-
-	    i++;	// added loop changer
+        i++;	// added loop changer
     }
+
+
+    free(underline);
+    free(line);
 	return line_copy;
-	// need a way for string to (a) preserve punctuations and (b) 
-	// @Sarika this would be where the program needs replace_word, ignore_word, alternate_spelling
 }
 
 
 char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in dictionary later
 {
-
-	size_t max_terminal_line_length = 500; // estiate
 	char** lines;
 	lines = parse_file(filename);
 
 	// step through phases
 	int i=0;
-	while (lines[i] != NULL) {	// potential error - one empty line in the middle of two full?	
+	while (lines[i] != NULL) {
 		int linenumber = i+1;
-		if (strlen(lines[i]) <= max_terminal_line_length) {
-			lines[i] = edit_interactive(lines[i], dict, linenumber);
-		}//edit interactive is called for each line 
-		else {
-			//deniz code here?
-
-		}
+		lines[i] = edit_interactive(lines[i], dict, linenumber);
 		i++;
 	}
 
@@ -360,30 +323,37 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in 
 // Adapted from sarika's edit_interactive
 // returns corrections to a list that contains misspelled words, or returns a corrected char** string
 // that can represent an array
-char* edit_batch(char* line, dict_t* dict, int verbosity)
+char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
 {
-    char *line_copy = malloc(strlen(line));
-    strcpy(line_copy, line); //maintain a copy of the line to preserve original line: line will be parsed into individual words
-    int max_no_suggestions = 1; //need only one suggestion
+    char *line_copy = strdup(line);
+    int max_no_suggestions = 2; //need only one suggestion
+    int max_edits = 2;
 
-    int length = strlen(line)/3; //approximate 3 chars per word to be safe
+    int length = strlen(line) + 5;
     char *misspelled[length]; //generates an empty array where the misspelled words in a line will be stored
     initialize_misspelled(misspelled, length);
 
-    char *underline = (char *)malloc(strlen(line + 1)); //generate an empty array where the underline will go
-    underline[0] = '\0'; 
+    char* underline = (char*) malloc(strlen(line+1));
+    underline[0] = '\0';
+
     parse_string(line, dict, underline, misspelled); //identify misspelled words and add to bad_word, 
-
     char *suggestions[max_no_suggestions]; //generates empty array where suggestions will be filled
-
 
     int i = 0;
     //replacing words, printing out if batch mode
     while (misspelled[i] != NULL) {
-        int success = generate_suggestions(misspelled[i], dict, suggestions);
-	    if (success == -1) suggestions[0] = misspelled[i];
-    	    correct_line(line_copy, misspelled[i], suggestions[0]);
-	    if (verbosity) shell_verbose_replacement(misspelled[i], suggestions[0]);
+        int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
+	    if (rc == EXIT_FAILURE || suggestions[0] == NULL) {   // hard-coded; change later
+            if (verbosity) strcpy(suggestions[0], "No suggestions");
+        }
+
+        suggestions[max_no_suggestions] = NULL;
+
+    	if (!verbosity) {   // in quiet mode, edit the file
+            correct_line(line_copy, misspelled[i], suggestions[0]);
+        }
+
+	    if (verbosity) shell_verbose_chart(lnum, misspelled[i], suggestions);
 	    i++;
 	}
 
@@ -400,12 +370,14 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 	if (lines == NULL) {
 		shell_error("file parsing error: check txt file");
 		*quit=1;
+		return lines;
 	}
+
+	if (verbosity) printf("LINE\t\t\tWORD\t\t\tSUGGESTIONS\n");
 
 	int i=0;
 	while (lines[i] != NULL) {
-		if (verbosity) shell_line_number(i);
-		lines[i] = edit_batch(lines[i], dict, verbosity);
+		lines[i] = edit_batch(lines[i], dict, verbosity, i + 1);
 		i++;
 	}
 	return lines;
@@ -475,8 +447,8 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 				shell_error("Please enter a valid file path for a new dictionary!");
 				*quit = 0;
 			} else {
-			dict_name=args[1];
-			printf("\n\nDictionary file is now %s\n\n\n",dict_name);
+			strcpy(dict_name, args[1]);
+			printf("\n\nDictionary file is now %s\n\n\n", dict_name);
 			*quit = 0;
 			}
 		} else if (!strcmp(args[0],"q")) { // quit

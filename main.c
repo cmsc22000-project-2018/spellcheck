@@ -47,12 +47,12 @@
 int main(int argc, char **argv)
 {
 	// filenames up to 100 char
-	char* dict_name = malloc(101 * sizeof(char*));
-	char* file_name = malloc(101 * sizeof(char*));
-	char* save_file = malloc(101 * sizeof(char*));
+	char* dict_name = malloc(401 * sizeof(char*));
+	char* file_name = malloc(401 * sizeof(char*));
+	char* save_file = malloc(401 * sizeof(char*));
 
 	// default dict name
-	strcpy(dict_name,"tests/sample_dict.txt");
+	strcpy(dict_name,"dict1.txt");
 
 	/*
 		1: quiet batch
@@ -118,8 +118,8 @@ int main(int argc, char **argv)
 			strcpy(save_file,optarg);
             shell_input(optarg,"file save destination");
 			break;
-		default: /* If command line contains just the file at argv[1], write it into file_name */
 			shell_usage();
+            exit(0);
 			break;
 		}
 	}
@@ -144,6 +144,7 @@ int main(int argc, char **argv)
 		Initialize dictionary, declare names of files to be used
 	*/
 	dict_t* dict = dict_new();
+
     int msg = dict_read(dict, dict_name);
     shell_dict_message(msg);
 
@@ -152,13 +153,14 @@ int main(int argc, char **argv)
 	 */
 	char* md = shell_modename(mode);
     if (mode == 3) {
-        shell_interactive_start(file_name, dict_name, md);
-	    parse_read_line();
-        shell_prompt();
-        printf("\n\n");
-    } else {
-        shell_batch_start(file_name, dict_name, md);
+    	char* anyinput = calloc(20, sizeof(char));
+		shell_interactive_start(file_name, dict_name, md);
+		scanf("%s", anyinput);
+		free(anyinput);
+    } else if (mode == 2) {
+    	shell_batch_start(file_name, dict_name, md);
     }
+
 
 	char** result=NULL;
 	// Execute either interactive or batch mode, and save file at end
@@ -189,6 +191,7 @@ int main(int argc, char **argv)
     	}
     }
 
+ //   if (!*quit) file_name = "";
   }
 
     shell_outro();

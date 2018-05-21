@@ -1,17 +1,17 @@
 #include <criterion/criterion.h>
 #include <stdio.h>
+#include <assert.h>
 #include <stdbool.h>
 #include "word.h"
 #include "dictionary.h"
 
-char* punct_array[] = {",", ".", " ", "\n"};
 
 /* testing is_in_array */
 Test(word, is_in_array)
 {
     char* c = strdup(".");
 
-    int i = is_in_array(punct_array, c);
+    int i = is_in_array(c);
 
     cr_assert_eq(i, 1, "testing for is_in_array, failed");
 }
@@ -21,7 +21,7 @@ Test(word, is_in_array0)
 {
     char* c = strdup("p");
 
-    int i = is_in_array(punct_array, c);
+    int i = is_in_array(c);
 
     cr_assert_eq(i, -1, "testing for is_in_array, failed");
 }
@@ -32,7 +32,7 @@ Test(word, valid_word)
     char* c = strdup(",pac");
     dict_t* dict = NULL;
 
-    int i = valid_word(c, dict);
+    int i = valid_word(dict, c);
 
     cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
 }
@@ -43,7 +43,7 @@ Test(word, valid_word1)
     char* c = strdup(".pac");
     dict_t* dict = NULL;
 
-    int i = valid_word(c, dict);
+    int i = valid_word(dict, c);
 
     cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
 }
@@ -54,7 +54,7 @@ Test(word, valid_word2)
     char* c = strdup("p'ac");
     dict_t* dict = NULL;
 
-    int i = valid_word(c, dict);
+    int i = valid_word(dict, c);
 
     cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
 }
@@ -64,12 +64,12 @@ Test(word, valid_word2)
 Test(word, generate_suggestions)
 {
     char* c = strdup("splling");
-    dict_t* dict = NULL;
     char* suggestions[2];
     if (suggestions == NULL) {
         fprintf(stderr,"malloc failed, generate_suggestions");
         exit(0);
     }
+    dict_t* dict = NULL;
 
     int i = generate_suggestions(c, dict, suggestions);
 
@@ -83,12 +83,12 @@ Test(word, generate_suggestions)
 Test(word, generate_suggestions1)
 {
     char* c = strdup("life");
-    dict_t* dict = NULL;
     char** suggestions = calloc(2, sizeof(char*));
     if (suggestions == NULL) {
         fprintf(stderr,"malloc failed, generate_suggestions1");
         exit(0);
     }
+    dict_t* dict = NULL;
 
     int i = generate_suggestions(c, dict, suggestions);
 
@@ -99,12 +99,12 @@ Test(word, generate_suggestions1)
 Test(word, generate_suggestions2)
 {
     char* c = strdup("chequer");
-    dict_t* dict = NULL;
     char** suggestions = calloc(2, sizeof(char*));
     if (suggestions == NULL) {
         fprintf(stderr,"malloc failed, generate_suggestions2");
         exit(0);
     }
+    dict_t* dict = NULL;
 
     int i = generate_suggestions(c, dict, suggestions);
 
@@ -124,7 +124,6 @@ Test(word, generate_suggestions3)
         fprintf(stderr,"malloc failed, generate_suggestions3");
         exit(0);
     }
-
     int i = generate_suggestions(c, dict, suggestions);
 
     cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");

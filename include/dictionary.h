@@ -2,8 +2,8 @@
  * A dictionary structure built using tries
  */
 
-#ifndef DICTIONARY_H_
-#define DICTIONARY_H_
+#ifndef INCLUDE_DICTIONARY_H_
+#define INCLUDE_DICTIONARY_H_
 
 #include "mock_trie.h"
 

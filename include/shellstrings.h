@@ -56,6 +56,17 @@ void shell_intro();
 void shell_save();
 
 /*
+ * shell_print - Print edited text for viewing
+ *
+ * Parameters:
+ * 	- None.
+ *
+ * Returns:
+ * 	- None.
+ */
+ void shell_print(char** lines);
+
+/*
  * shell_error - Default error prompt string for the shell.
  *
  * Parameters:
@@ -123,10 +134,20 @@ void shell_help();
 void shell_outro();
 
 /*
+<<<<<<< HEAD
  * shell_usage -  prints out correct command line usage cases
  *
  * No parameters or return value
  *
+=======
+ * shell_usage - command line usage instructions
+ *
+ * Parameters:
+ *  - None.
+ *
+ * Returns:
+ *  - None.
+>>>>>>> origin/integrate/suggestions
  */
 void shell_usage();
 
@@ -216,26 +237,15 @@ void shell_interactive_line_print(int lnum, char* line, char* underline);
 void shell_verbose_start();
 
 /*
- * shell_line_number - print line number 
+ * shell_verbose_start - verbose chart print 
  *
  * Parameters:
- *  - int (line number)
+ *  - 
  *
  * Returns:
  *  - None.
  */
-void shell_line_number(int lnum);
-
-/*
- * shell_verbose_replacement - print error word and replacement
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
- */
-void shell_verbose_replacement(char* word, char* sug);
+void shell_verbose_chart(int lnum, char* misspelled, char** suggestions);
 
 /*
  * shell_interactive_replacements
@@ -248,11 +258,22 @@ void shell_verbose_replacement(char* word, char* sug);
  * Returns:
  *  - None.
  */
-void shell_interactive_replacements(char* word, char** sug, int nsug);
+void shell_interactive_replacements(char* word, char** sug);
 
 
 /*
  * shell_parse_success - file editing success message
+ *
+ * Parameters:
+ *  - None
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_parse_success();
+
+/*
+ * shell_verbose_chart - prints chart in verbose mode
  *
  * Parameters:
  *  - None
