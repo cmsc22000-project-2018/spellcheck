@@ -73,7 +73,7 @@ zset_t* suggestion_set_new(dict_t *d, char *str, int max_edits);
 char** suggestion_set_first_n(zset_t *set, int n);
 
 /*
- * Returns the n closest words to a iven string in a dictionary
+ * Returns the n closest words to a given string in a dictionary
  * 
  * Parameters:
  *  - d: A dictionary. Must point to a dictionary allocated with dict_new
@@ -84,6 +84,7 @@ char** suggestion_set_first_n(zset_t *set, int n);
  * 
  * Returns: 
  *  - The first n strings matching above, or NULL if there was an error
+ *  - If there ween't enough matching strings, NULL is returned in each remaining spot
  * 
  */
 char** suggestion_list(dict_t *d, char *str, int max_edits, int amount);
