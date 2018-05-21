@@ -158,7 +158,7 @@ int add_to_misspelled(char *word, char** misspelled)
 
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 {
-	char *tkn = strtok(string, ": ,.-\n'\"'"); //words only separated by these punctuation
+	char *tkn = strtok(string, ": ,.-\n'\"'\t\r\n\a"); //words only separated by these punctuation
 	while (tkn != NULL) {
 
 		if (valid_word(dict, tkn) == EXIT_FAILURE){
@@ -172,7 +172,7 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 			printf("error processing text");
 			return EXIT_FAILURE;
 		}
-		tkn = strtok(NULL, " ,.-");
+		tkn = strtok(NULL, " ,.-\":'\n\t\r\n\a");
 	}
 	return EXIT_SUCCESS;
 }
@@ -232,6 +232,8 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 {
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; //should the user decide this?
+    int max_edits = 2;
+
     int length = strlen(line) + 5;
     char *misspelled[length]; //generates an empty array where the misspelled words in a line will be stored
     initialize_misspelled(misspelled, length);
@@ -256,7 +258,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 
     //replacing words according to user suggestions
     while (misspelled[i] != NULL) {
-    	int success = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
+    	int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
 
     	if(rc != -1) {
     	    printf(BOLDWHITE "Possible replacements for word %s are:\n\n" RESET, misspelled[i]);
@@ -333,6 +335,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
 {
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; //need only one suggestion
+    int max_edits = 2;
 
     int length = strlen(line) + 5;
     char *misspelled[length]; //generates an empty array where the misspelled words in a line will be stored
@@ -347,7 +350,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
     int i = 0;
     //replacing words, printing out if batch mode
     while (misspelled[i] != NULL) {
-        int rc = generate_suggestions(misspelled[i], dict, suggestions);
+        int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
 	    if (rc != EXIT_SUCCESS) {   // hard-coded; change later.
             suggestions[0] = misspelled[i];
         }
