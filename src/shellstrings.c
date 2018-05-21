@@ -94,14 +94,14 @@ void shell_interactive_start(char* file_name, char* dict_name, char* md) {
     printf("\n\n" BOLDWHITE "------------------------------------------------------------\n" RESET);
     printf(BOLDWHITE "--------------------EDITING STARTED WITH--------------------\n" RESET);
     printf("\n" BOLDWHITE "------------------------------------------------------------\n" RESET);
-    printf("file: %s\ndictionary: %s\nmode: %s\n\n", file_name, dict_name, md);
-    printf("Enter any command to start interactive\n\n");
+    printf(GREEN "file: %s\ndictionary: %s\nmode: %s\n\n" RESET, file_name, dict_name, md);
+    printf(BOLDWHITE "Enter any command to start interactive\n\n" RESET);
     shell_prompt();
 }
 
 void shell_batch_start(char* file_name, char* dict_name, char* md) {
     printf(BOLDWHITE "--------------------EDITING STARTED WITH--------------------\n" RESET);
-    printf("file: %s dictionary: %s\n mode: %s\n\n", file_name, dict_name, md);
+    printf("file: %s\ndictionary: %s\nmode: %s\n\n", file_name, dict_name, md);
 }
 
 void shell_dict_message(int i) {
@@ -146,7 +146,7 @@ void shell_interactive_replacements(char* word, char** sug) {
 }
 
 void shell_verbose_start() {
-    printf(BOLDWHITE "\n Printing Suggestions:\n\n" RESET);
+    printf(BOLDWHITE "\nPrinting Suggestions:\n\n" RESET);
 }
 
 void shell_verbose_chart(int lnum, char* misspelled, char** suggestions) {
