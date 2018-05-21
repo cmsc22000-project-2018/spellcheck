@@ -8,16 +8,16 @@ int main() {
     int i;    
     dict_t *d = dict_new();
     if (dict_read(d, "demo_dict.txt") == EXIT_SUCCESS) {
-        printf("\ndemo_dict.txt duccessfully read!\n");
+        printf("\n\ndemo_dict.txt successfully read!\n\n");
     }
 
 
     printf("\nThe first 8 words that are within an edit distance of 1 to \"soap\" are:\n");
-    char **soap1 = suggestion_list(d, "soap", 1, 10);
+    char **soap1 = suggestion_list(d, "soap", 1, 3);
 
     i = 0;
-    while (soap1[i] != NULL) {
-        printf("%s, ", soap1[i]);
+    while (i < 3 && soap1[i] != NULL) {
+        printf("%d. %s \n", i+1, soap1[i]);
         i++;
     }
     printf("\n");
@@ -28,7 +28,7 @@ int main() {
 
     i = 0;
     while (soap2[i] != NULL) {
-        printf("%s, ", soap2[i]);
+        printf("%d. %s \n", i+1, soap2[i]);
         i++;
     }
     printf("\n");
@@ -39,7 +39,7 @@ int main() {
 
     i = 0;
     while (longword[i] != NULL) {
-        printf("%s, ", longword[i]);
+        printf("%d. %s \n", i+1, longword[i]);
         i++;
     }
     printf("\n");
