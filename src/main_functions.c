@@ -57,6 +57,9 @@ void save_page(char* filename, char** lines, int* quit)
         if (strlen(line) > 2) { // ensure that only one character is entered, otherwise cannot proceed
             shell_error("Please type in one of the indicated commands!");
             i = 1;
+        } else if (!strcmp(line,"p")) {
+        	shell_print(lines);
+        	i = 1;
         } else if (!strcmp(line, "s")) {
 			save_corrections(filename, lines);  // save to the same file destination, overwriting existing file
 			*quit = 1;
@@ -142,7 +145,6 @@ char* underline_misspelled_sentence(char** misspelled, char* sentence, int eleme
 }
 
 
-
 int add_to_misspelled(char *word, char** misspelled)
 {
 	if (word == NULL || misspelled == NULL) {
@@ -158,7 +160,7 @@ int add_to_misspelled(char *word, char** misspelled)
 
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 {
-	char *tkn = strtok(string, ": ,.-\n'\"'\t\r\n\a"); //words only separated by these punctuation
+	char *tkn = strtok(string, ":; ,.-\n'\"'\t\r\n\a"); //words only separated by these punctuation
 	while (tkn != NULL) {
 
 		if (valid_word(dict, tkn) == EXIT_FAILURE){
@@ -172,7 +174,7 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 			printf("error processing text");
 			return EXIT_FAILURE;
 		}
-		tkn = strtok(NULL, " ,.-\":'\n\t\r\n\a");
+		tkn = strtok(NULL, " ,.-\";:\n\t\r\n\a");
 	}
 	return EXIT_SUCCESS;
 }
@@ -274,23 +276,24 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
         printf("\n\n");
 
     
-        int choice;
-        shell_prompt();
-        int check = scanf("%d", &choice);
-        assert(check != EOF);
+        int choice = -1;
 
-        if ((choice < 0) | (choice > max_no_suggestions + 1)) {
+    	do {
+    		shell_prompt();
+        	int check = scanf("%d", &choice);
+
+        	if ((check < 0) | (choice > max_no_suggestions + 1)) {
                 shell_error("Please enter a valid number");
-                printf("\n\n");
-        //        scan = 0;
-        }
+                choice = -1;
+        	}
+        } while (choice < 0);
 
         if (choice == 0) {
            	printf(BOLDRED "Deleting %s.\n" RESET, misspelled[i]);
         	correct_line(line_copy, misspelled[i], "");
            	printf("New sentence is: \n\n");
          	printf(BOLDWHITE "%s\n\n" RESET, line_copy);
-         	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
+         	printf(BOLDRED "%s\n" RESET, underline_misspelled_sentence(misspelled, line_copy, i+1));
         } else if (choice == 1) {
         	printf(BOLDWHITE "No changes made to \"%s\". \n\n" BOLDRED, misspelled[i]);
         } else if (choice != 1 || choice != 0) { //1 if no replacement needed, 0 if word deleted
@@ -298,12 +301,15 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
         	correct_line(line_copy, misspelled[i], suggestions[choice-2]); //modifies line function
         	printf("New sentence is: \n");
          	printf(BOLDWHITE "%s\n\n" RESET, line_copy);
-         	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
+         	printf(BOLDBLUE "%s\n" RESET, underline_misspelled_sentence(misspelled, line_copy, i+1));
         }
 
         i++;	// added loop changer
     }
 
+
+    free(underline);
+    free(line);
 	return line_copy;
 }
 
@@ -453,8 +459,8 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 				shell_error("Please enter a valid file path for a new dictionary!");
 				*quit = 0;
 			} else {
-			dict_name=args[1];
-			printf("\n\nDictionary file is now %s\n\n\n",dict_name);
+			strcpy(dict_name, args[1]);
+			printf("\n\nDictionary file is now %s\n\n\n", dict_name);
 			*quit = 0;
 			}
 		} else if (!strcmp(args[0],"q")) { // quit

@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 	char* save_file = malloc(401 * sizeof(char*));
 
 	// default dict name
-	strcpy(dict_name,"tests/sample_dict.txt");
+	strcpy(dict_name,"tests/test_dict1.txt");
 
 	/*
 		1: quiet batch

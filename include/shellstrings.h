@@ -57,6 +57,17 @@ void shell_intro();
 void shell_save();
 
 /*
+ * shell_print - Print edited text for viewing
+ *
+ * Parameters:
+ * 	- None.
+ *
+ * Returns:
+ * 	- None.
+ */
+ void shell_print(char** lines);
+
+/*
  * shell_error - Default error prompt string for the shell.
  *
  * Parameters:

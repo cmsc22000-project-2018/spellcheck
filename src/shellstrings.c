@@ -27,10 +27,22 @@ void shell_intro() {
 void shell_save() {
     printf(GREEN "File editing successful!\n\n" RESET);
 
+    printf("p               : print result of edit\n");
     printf("s               : save to existing file\n");
     printf("c               : save to custom file\n");
     printf("r               : return to home screen\n");
     printf("q               : quit program\n\n");
+}
+
+void shell_print(char** lines) {
+    int i = 0;
+
+    printf(BOLDWHITE "\n Edited text: \n\n");
+
+    while (lines[i] != NULL) {
+        printf("Line %d: %s\n", i+1, lines[i]);
+        i++;
+    }
 }
 
 /* See shellstrings.h */

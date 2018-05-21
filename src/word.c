@@ -92,8 +92,6 @@ char* word_decap(char* word)
 // recapitalize
 char** recap(char** words) // int nsug, int flag)
 {
-
-
 	return words;	// temporary
 	/* @firat
 	int i = 0;
@@ -131,12 +129,23 @@ int generate_suggestions(dict_t* dict, char* word, char** suggestions, int max_e
     if (flag > 0) sug = recap(sug) // nsug, flag); // needs to be loop!
 */
 
+// count number of valid suggestions returned.
+// If not requested number, return exit_failure
+	if (i < amount) {
+		return EXIT_FAILURE;
+	}
+
+
 // copy into suggestions
     for (i = 0; i < amount; i++) {
         suggestions[i] = strdup(sug[i]);
-    }	// free?
+    }
 
-
+    //free
+    int j;
+    for (j = 0; j < i; j++)
+    	free(sug[j]);
+    free(sug);
 
     return EXIT_SUCCESS;
 }
