@@ -37,12 +37,13 @@ void shell_save() {
 void shell_print(char** lines) {
     int i = 0;
 
-    printf(BOLDWHITE "\n Edited text: \n\n");
+    printf(BOLDWHITE "\nEdited text: \n\n");
 
     while (lines[i] != NULL) {
-        printf("Line %d: %s\n", i+1, lines[i]);
+        printf("Line %d: %s", i+1, lines[i]);
         i++;
     }
+    printf("\n\n");
 }
 
 /* See shellstrings.h */

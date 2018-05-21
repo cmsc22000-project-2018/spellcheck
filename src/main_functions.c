@@ -247,9 +247,8 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     //add to underline function 
 
     if (misspelled[0] != NULL) {
-    printf("Current line number is %d: \n", linenumber);
+    printf("Current line number is %d: \n\n", linenumber);
     printf(BOLDWHITE "%s" RESET, line_copy);
-    printf("\n");
     printf(BOLDRED "%s" RESET, underline);
     printf("\n\n");
     }
@@ -261,18 +260,21 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     //replacing words according to user suggestions
     while (misspelled[i] != NULL) {
     	int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
-
-    	if(rc != -1) {
-    	    printf(BOLDWHITE "Possible replacements for word %s are:\n\n" RESET, misspelled[i]);
-        	printf("0 : Delete Word. \n");
-        	printf("1 : No replacement. \n");
-            int j;
-        	for (j = 0; j < max_no_suggestions; j++) {
-       		printf("%d : %s \n", j+2, suggestions[j]);
-
-          	}  	
-
+	    if (rc == EXIT_FAILURE || suggestions[0] == NULL) {   // hard-coded; change later
+            strcpy(suggestions[0], "no other suggestions");
+            suggestions[1] = NULL;
         }
+    	
+    	suggestions[max_no_suggestions] = NULL;
+
+    	printf(BOLDWHITE "Possible replacements for word %s are:\n\n" RESET, misspelled[i]);
+        printf("0 : Delete Word. \n");
+        printf("1 : No replacement. \n");
+        int j;
+        for (j = 0; suggestions[j] != NULL; j++) {
+        	printf("%d : %s \n", j+2, suggestions[j]);
+        }  	
+
         printf("\n\n");
 
     
@@ -289,19 +291,19 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
         } while (choice < 0);
 
         if (choice == 0) {
-           	printf(BOLDRED "Deleting %s.\n" RESET, misspelled[i]);
+           	printf(BOLDRED "\nDeleting %s. " RESET, misspelled[i]);
         	correct_line(line_copy, misspelled[i], "");
-           	printf("New sentence is: \n\n");
-         	printf(BOLDWHITE "%s\n\n" RESET, line_copy);
+           	printf("New sentence is:\n");
+         	printf(BOLDWHITE "%s" RESET, line_copy);
          	printf(BOLDRED "%s\n" RESET, underline_misspelled_sentence(misspelled, line_copy, i+1));
         } else if (choice == 1) {
-        	printf(BOLDWHITE "No changes made to \"%s\". \n\n" BOLDRED, misspelled[i]);
+        	printf(BOLDWHITE "\nNo changes made to \"%s\". \n\n" RESET, misspelled[i]);
         } else if (choice != 1 || choice != 0) { //1 if no replacement needed, 0 if word deleted
-        	printf(BOLDGREEN "Replacing %s with %s \n" RESET, misspelled[i], suggestions[choice-2]);
+        	printf(BOLDRED "\nReplacing %s with %s. " RESET, misspelled[i], suggestions[choice-2]);
         	correct_line(line_copy, misspelled[i], suggestions[choice-2]); //modifies line function
-        	printf("New sentence is: \n");
-         	printf(BOLDWHITE "%s\n\n" RESET, line_copy);
-         	printf(BOLDBLUE "%s\n" RESET, underline_misspelled_sentence(misspelled, line_copy, i+1));
+        	printf("New sentence is:\n");
+         	printf(BOLDWHITE "%s" RESET, line_copy);
+         	printf(BOLDRED "%s\n" RESET, underline_misspelled_sentence(misspelled, line_copy, i+1));
         }
 
         i++;	// added loop changer
@@ -337,7 +339,7 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in 
 // Adapted from sarika's edit_interactive
 // returns corrections to a list that contains misspelled words, or returns a corrected char** string
 // that can represent an array
-char* edit_batch(char* line, dict_t* dict, int verbosity)
+char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
 {
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; //need only one suggestion
@@ -357,16 +359,33 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
     //replacing words, printing out if batch mode
     while (misspelled[i] != NULL) {
         int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
-	    if (rc != EXIT_SUCCESS) {   // hard-coded; change later.
-            suggestions[0] = misspelled[i];
+	    if (rc == EXIT_FAILURE || suggestions[0] == NULL) {   // hard-coded; change later
+            if (verbosity) strcpy(suggestions[0], "No suggestions");
         }
+
+        suggestions[max_no_suggestions] = NULL;
+
     	if (!verbosity) {   // in quiet mode, edit the file
             correct_line(line_copy, misspelled[i], suggestions[0]);
         }
+
+        int ntab = 3 - (strlen(misspelled[i]) / 8);	// number of tabs
 	    if (verbosity) {        // this is if verbose mode is enacted
-            printf(BOLDRED "WORD:%s\n" RESET, misspelled[i]);
-            printf(BOLDWHITE "REPLACEMENT:%s\n\n" RESET, suggestions[0]);    // print list of replacement
+	    	printf(BOLDWHITE "%d\t\t\t" RESET, lnum);
+
+	    	int j;
+            printf(RED "%s" RESET, misspelled[i]);
+	    	for (j = 0; i < ntab; i++) printf("\t");
+
+        	j = 0;
+        	while (suggestions[j] != NULL) {
+        		printf(GREEN "%s" RESET, suggestions[j]);
+        		if (suggestions[j + 1] != NULL) printf(", ");
+        		j++;
+        	}
+        	printf("\n"); // print list of replacement
         }
+
 	    i++;
 	}
 
@@ -375,7 +394,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
 
 char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 {
-	if (verbosity) printf("\nBatch Mode: Verbose\n\n");
+	if (verbosity) printf(BOLDWHITE "\nPrinting Suggestions:\n\n" RESET);
 
 	char** lines;
 	lines = parse_file(filename);
@@ -383,12 +402,14 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 	if (lines == NULL) {
 		shell_error("file parsing error: check txt file");
 		*quit=1;
+		return lines;
 	}
+
+	if (verbosity) printf("LINE\t\t\tWORD\t\t\tSUGGESTIONS\n");
 
 	int i=0;
 	while (lines[i] != NULL) {
-		if (verbosity) printf("Line number: %d\n",i+1); // print if verbose mode
-		lines[i] = edit_batch(lines[i], dict, verbosity);
+		lines[i] = edit_batch(lines[i], dict, verbosity, i + 1);
 		i++;
 	}
 
