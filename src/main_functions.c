@@ -245,9 +245,9 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 
     if (misspelled[0] != NULL) {
     printf("Current line number is %d: \n", linenumber);
-    printf("%s", line_copy);
+    printf(BOLDWHITE "%s" RESET, line_copy);
     printf("\n");
-    printf("%s", underline);
+    printf(BOLDRED "%s" RESET, underline);
     printf("\n\n");
     }
 
@@ -260,9 +260,9 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     	int rc = generate_suggestions(misspelled[i], dict, suggestions);
 
     	if(rc != -1) {
-    	    printf("Possible replacements for word %s are:\n\n", misspelled[i]);
-        	printf("0: Delete Word. \n");
-        	printf("1: No replacement. \n");
+    	    printf(BOLDWHITE "Possible replacements for word %s are:\n\n" RESET, misspelled[i]);
+        	printf("0 : Delete Word. \n");
+        	printf("1 : No replacement. \n");
             int j;
         	for (j = 0; j < max_no_suggestions; j++) {
        		printf("%d : %s \n", j+2, suggestions[j]);
@@ -274,6 +274,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 
     
         int choice;
+        shell_prompt();
         int check = scanf("%d", &choice);
         assert(check != EOF);
 
@@ -284,18 +285,18 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
         }
 
         if (choice == 0) {
-           	printf("Deleting %s.\n", misspelled[i]);
+           	printf(BOLDRED "Deleting %s.\n" RESET, misspelled[i]);
         	correct_line(line_copy, misspelled[i], "");
            	printf("New sentence is: \n\n");
-         	printf("%s\n\n", line_copy);
+         	printf(BOLDWHITE "%s\n\n" RESET, line_copy);
          	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
         } else if (choice == 1) {
-        	printf("No changes made to \"%s\". \n\n", misspelled[i]);
+        	printf(BOLDWHITE "No changes made to \"%s\". \n\n" BOLDRED, misspelled[i]);
         } else if (choice != 1 || choice != 0) { //1 if no replacement needed, 0 if word deleted
-        	printf("Replacing %s with %s \n", misspelled[i], suggestions[choice-2]);
+        	printf(BOLDGREEN "Replacing %s with %s \n" RESET, misspelled[i], suggestions[choice-2]);
         	correct_line(line_copy, misspelled[i], suggestions[choice-2]); //modifies line function
         	printf("New sentence is: \n");
-         	printf("%s\n\n", line_copy);
+         	printf(BOLDWHITE "%s\n\n" RESET, line_copy);
          	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
         }
 
@@ -355,7 +356,8 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
             correct_line(line_copy, misspelled[i], suggestions[0]);
         }
 	    if (verbosity) {        // this is if verbose mode is enacted
-            printf("WORD:%s\nREPLACEMENT:%s\n\n", misspelled[i], suggestions[0]);    // print list of replacement
+            printf(BOLDRED "WORD:%s\n" RESET, misspelled[i]);
+            printf(BOLDWHITE "REPLACEMENT:%s\n\n" RESET, suggestions[0]);    // print list of replacement
         }
 
 	    i++;

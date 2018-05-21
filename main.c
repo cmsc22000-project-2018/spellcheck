@@ -167,16 +167,18 @@ int main(int argc, char **argv)
 
     if (mode != 1) {
 
-	    printf("\n\n========================================\n"
-                   "==========Editing Started With==========\n\n");
-	    printf("file: %s\n", file_name);
+        printf(BOLDWHITE "\n\n============================================================\n"
+                   "=================== Editing Started With ===================\n"
+                   "============================================================\n\n" RESET);
+	    printf(GREEN "file: %s\n", file_name);
 	    printf("dictionary: %s\n", dict_name);
-	    printf("mode: %s \n\n", md);
+	    printf("mode: %s\n\n" RESET, md);
     }
 
 	/* Pause, to confirm start */
     if (mode == 3) {
-        printf("Enter any command to start %s\n\n", md);
+        printf(BOLDWHITE "Enter any command to start %s\n\n" RESET, md);
+        shell_prompt();
 	    parse_read_line();
         printf("\n\n");
     }
