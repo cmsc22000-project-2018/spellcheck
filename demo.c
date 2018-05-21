@@ -12,7 +12,7 @@ int main() {
     }
 
 
-    printf("\nThe first 8 words that are within an edit distance of 1 to \"soap\" are:\n");
+    printf("\nThe first 3 words that are within an edit distance of 1 to \"soap\" are:\n");
     char **soap1 = suggestion_list(d, "soap", 1, 3);
 
     i = 0;
