@@ -21,5 +21,5 @@ tests:
 	make -C ./tests
 
 clean:
-	-$(RM) $(OBJS) $(BIN)
+	-$(RM) $(OBJS) $(BIN) test_save.txt
 	make -C ./tests clean

@@ -19,7 +19,7 @@ script:
     - ./tests/test-spellcheck
     - make
     - ./spellcheck -v tests/test_short.txt
-    - ./spellcheck -q tests/test_short.txt -s test2.txt
+    - ./spellcheck -q tests/test_short.txt -s test_save.txt
     - ./spellcheck < test_main0.txt
     - ./spellcheck < test_main1.txt
     - make clean

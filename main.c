@@ -58,9 +58,9 @@ char* modename(int mode)
 int main(int argc, char **argv)
 {
 	// filenames up to 100 char
-	char* dict_name = malloc(101 * sizeof(char*));
-	char* file_name = malloc(101 * sizeof(char*));
-	char* save_file = malloc(101 * sizeof(char*));
+	char* dict_name = malloc(401 * sizeof(char*));
+	char* file_name = malloc(401 * sizeof(char*));
+	char* save_file = malloc(401 * sizeof(char*));
 
 	// default dict name
 	strcpy(dict_name,"tests/sample_dict.txt");
@@ -127,8 +127,8 @@ int main(int argc, char **argv)
 			strcpy(save_file,optarg);
             shell_input(optarg,"file save destination");
 			break;
-		default: /* If command line contains just the file at argv[1], write it into file_name */
 			shell_usage();
+            exit(0);
 			break;
 		}
 	}
@@ -154,9 +154,9 @@ int main(int argc, char **argv)
 	*/
 	dict_t* dict = dict_new();
 	if (dict_read(dict, dict_name) == EXIT_SUCCESS) {
-		printf("Dictionary Successfully Parsed!\n");
+		if (mode != 1) printf("Dictionary Successfully Parsed!\n");
 	} else {
-		printf("Trouble reading dictionary, exiting program\n");
+		if (mode != 1) printf("Trouble reading dictionary, exiting program\n");
         exit(0);
 	}
 
@@ -167,16 +167,18 @@ int main(int argc, char **argv)
 
     if (mode != 1) {
 
-	    printf("\n\n========================================\n"
-                   "==========Editing Started With==========\n\n");
-	    printf("file: %s\n", file_name);
+        printf(BOLDWHITE "\n\n============================================================\n"
+                   "=================== Editing Started With ===================\n"
+                   "============================================================\n\n" RESET);
+	    printf(GREEN "file: %s\n", file_name);
 	    printf("dictionary: %s\n", dict_name);
-	    printf("mode: %s \n\n", md);
+	    printf("mode: %s\n\n" RESET, md);
     }
 
 	/* Pause, to confirm start */
     if (mode == 3) {
-        printf("Enter any command to start %s\n\n", md);
+        printf(BOLDWHITE "Enter any command to start %s\n\n" RESET, md);
+        shell_prompt();
 	    parse_read_line();
         printf("\n\n");
     }

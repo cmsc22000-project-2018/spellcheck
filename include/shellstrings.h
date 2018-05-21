@@ -123,6 +123,15 @@ void shell_help();
  */
 void shell_outro();
 
+/*
+ * shell_usage - command line usage instructions
+ *
+ * Parameters:
+ *  - None.
+ *
+ * Returns:
+ *  - None.
+ */
 void shell_usage();
 
 #endif
