@@ -7,8 +7,9 @@ RM = rm -f
 BIN = test-spellcheck
 LDLIBS = -lcriterion -lhiredis
 
-TESTSRCS = test_main_functions_interactive.c test_word.c test_main_functions.c test_dictionary.c test_parser.c
-FILESRCS = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/main_functions.c ../src/shellstrings.c ../src/word.c
+#test_word.c in process of construction; add later
+TESTSRCS = test_main_functions_interactive.c test_main_functions.c test_dictionary.c test_parser.c
+FILESRCS = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/main_functions.c ../src/shellstrings.c ../src/word.c ../src/suggestion.c ../src/zset_api.c
 
 SRCS = main.c $(TESTSRCS) $(FILESRCS)
 OBJS = $(SRCS:.c=.o)

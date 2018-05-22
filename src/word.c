@@ -59,10 +59,10 @@ int word_check_cap(char* word)
 	// move to first letter, assuming punctuations like " and '
 	while(ispunct(word[i])) i++;
 
-	if (cap_status(word[i])) {	// only first word, everything, or inconsistent
+	if (word_cap_status(word[i])) {	// only first word, everything, or inconsistent
 		int ncap = 1;	// number of capitalizations
 		for (i++ ; i < len; i++)
-			if (cap_status(word[i])) ncap++;
+			if (word_cap_status(word[i])) ncap++;
 
 		if (ncap == 1) return 1;
 		if (ncap == len - npunct) return 2;
@@ -70,7 +70,7 @@ int word_check_cap(char* word)
 	}
 	// if control reaches here, then first letter of word is not capitalized
 	for (i = 0; i < len; i++)
-		if (cap_status(word[i])) return 3;
+		if (word_cap_status(word[i])) return 3;
 
 	// if control reaches here, no letters are capitalized
 	return 0;
@@ -84,7 +84,7 @@ char* word_decap(char* word)
 	char* decap = strdup(word);
 
 	for (i = 0; i < len; i++)
-		if (cap_status(word[i])) {
+		if (word_cap_status(word[i])) {
 			decap[i] -= 'A' - 'a';
 		}
 	return decap;
@@ -93,6 +93,7 @@ char* word_decap(char* word)
 // recapitalize
 char** word_recap(char** words, int wnum, int flag) // int nsug, int flag)
 {
+//	switch(flag)
 	return words;	// temporary
 	/* @firat
 	int i = 0;
@@ -100,7 +101,7 @@ char** word_recap(char** words, int wnum, int flag) // int nsug, int flag)
 		if () {
 
 		}
-	}
+	}ssss
 	*/
 }
 

@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "word.h"
 #include "dictionary.h"
+#include "suggestion.h"
 
 
 /* testing is_in_array */
@@ -26,35 +27,35 @@ Test(word, is_in_array0)
     cr_assert_eq(i, -1, "testing for is_in_array, failed");
 }
 
-/* testing valid_word */
+/* testing word_valid */
 Test(word, word_valid)
 {
     char* c = strdup(",pac");
     dict_t* dict = NULL;
 
-    int i = valid_word(dict, c);
+    int i = word_valid(dict, c);
 
     cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
 }
 
-/* testing valid_word */
+/* testing word_valid */
 Test(word, word_valid1)
 {
     char* c = strdup(".pac");
     dict_t* dict = NULL;
 
-    int i = valid_word(dict, c);
+    int i = word_valid(dict, c);
 
     cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
 }
 
-/* testing valid_word */
+/* testing word_valid */
 Test(word, word_valid2)
 {
     char* c = strdup("p'ac");
     dict_t* dict = NULL;
 
-    int i = valid_word(dict, c);
+    int i = word_valid(dict, c);
 
     cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
 }
@@ -295,10 +296,10 @@ Test(word, generate_suggestions)
         exit(0);
     }
     dict_t* dict = dict_new();
-    int i = dict_read("text1.txt");
+    int i = dict_read(dict, "text1.txt");
     assert(i != EXIT_FAILURE);
 
-    int i = generate_suggestions(c, dict, suggestions, 2, 2);
+    i = generate_suggestions(dict, c, suggestions, 2, 2);
 
     cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");
 
