@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <string.h>
+#include <assert.h>
 #include "parser.h"
 #include "shellstrings.h"
 #include "main_functions.h"
@@ -11,7 +12,7 @@
  *
  *	- parses through initial command line
  *	- in the absence of a file to parse, open main page, which can either do one of 4 things:
- *		- load a new dictionary (will replace the one that is parsed, if
+ *		- load a new dictionary (will replace the one that is parsed)
  *		- quit
  *		- 
  *
@@ -80,7 +81,6 @@ int main(int argc, char **argv)
 				return EXIT_FAILURE;
 			}
 			strcpy(dict_name,optarg);
-			shell_input(optarg, "dictionary");
 			break;
 		case 'i':
 			if (!fileexists(optarg)) {
@@ -108,7 +108,6 @@ int main(int argc, char **argv)
 			}
 			mode = 1;
 			strcpy(file_name,optarg);
-			shell_input(optarg, "target file");
 			break;
 		case 's':
             if (strstr(optarg,".txt\0") == NULL) {    // does not save to a *.txt file
@@ -116,7 +115,7 @@ int main(int argc, char **argv)
                   return EXIT_FAILURE;
             }
 			strcpy(save_file,optarg);
-            shell_input(optarg,"file save destination");
+            if (mode != 1) shell_input(optarg,"file save destination");
 			break;
 			shell_usage();
             exit(0);
@@ -146,7 +145,14 @@ int main(int argc, char **argv)
 	dict_t* dict = dict_new();
 
     int msg = dict_read(dict, dict_name);
-    shell_dict_message(msg);
+	if (mode == 1) {
+		if (msg == EXIT_FAILURE) {
+			shell_error("Failed to read in dictionary in quiet mode");
+			exit(0);
+		}
+	} else {
+		shell_dict_message(msg);
+	}
 
 	/*
 		Starting to Parse file! Print messages accordingly
@@ -155,7 +161,8 @@ int main(int argc, char **argv)
     if (mode == 3) {
     	char* anyinput = calloc(20, sizeof(char));
 		shell_interactive_start(file_name, dict_name, md);
-		scanf("%s", anyinput);
+		int check = scanf("%s", anyinput);
+		assert (!(check < 0));
 		free(anyinput);
     } else if (mode == 2) {
     	shell_batch_start(file_name, dict_name, md);
@@ -175,25 +182,22 @@ int main(int argc, char **argv)
 			break;
 	}
 
-    // Success Message, print if not verbose
-    
-
     if (mode != 2) {	// Save file, a functionality unnecessary for verbose batch mode
     // Success Message
-    shell_parse_success();
+    	if (mode == 3) shell_parse_success();
 
-    md = strstr(save_file,".txt");
-    	if (md != NULL) {
-    		save_corrections(save_file, result);
-    		*quit=1;
-    	} else {
-    		save_page(file_name, result, quit);
-    	}
+    	md = strstr(save_file,".txt");
+    		if (md != NULL) {
+    			save_corrections(save_file, result);
+    			*quit=1;
+    		} else {
+    			save_page(file_name, result, quit);
+    		}
     }
 
- //   if (!*quit) file_name = "";
+    if (!*quit) file_name = "";
   }
 
-    shell_outro();
+    if (mode != 1) shell_outro();
 	return 0;
 }

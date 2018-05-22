@@ -344,7 +344,10 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
     while (misspelled[i] != NULL) {
         int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
 	    if (rc == EXIT_FAILURE || suggestions[0] == NULL) {   // hard-coded; change later
-            if (verbosity) strcpy(suggestions[0], "No suggestions");
+            if (verbosity) {
+            	strcpy(suggestions[0], "No suggestions for this word");
+            	strcpy(suggestions[1], "within provided dictionary");
+            }
         }
 
         suggestions[max_no_suggestions] = NULL;

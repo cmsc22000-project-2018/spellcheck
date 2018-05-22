@@ -134,12 +134,6 @@ void shell_help();
 void shell_outro();
 
 /*
-<<<<<<< HEAD
- * shell_usage -  prints out correct command line usage cases
- *
- * No parameters or return value
- *
-=======
  * shell_usage - command line usage instructions
  *
  * Parameters:
@@ -147,18 +141,8 @@ void shell_outro();
  *
  * Returns:
  *  - None.
->>>>>>> origin/integrate/suggestions
  */
 void shell_usage();
-
-/*
- * shell_usage -  prints out correct command line usage cases
- *
- * No parameters or return value
- *
- */
-void shell_usage();
-
 
 /*
  * shell_modename - prints out mode name (verbose, quiet or interactive)
@@ -263,17 +247,6 @@ void shell_interactive_replacements(char* word, char** sug);
 
 /*
  * shell_parse_success - file editing success message
- *
- * Parameters:
- *  - None
- *
- * Returns:
- *  - None.
- */
-void shell_parse_success();
-
-/*
- * shell_verbose_chart - prints chart in verbose mode
  *
  * Parameters:
  *  - None
