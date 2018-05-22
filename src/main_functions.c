@@ -162,11 +162,11 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 	char *tkn = strtok(string, ":; ,.-\n'\"'\t\r\n\a"); //words only separated by these punctuation
 	while (tkn != NULL) {
 
-		if (valid_word(dict, tkn) == EXIT_FAILURE){
+		if (word_valid(dict, tkn) == EXIT_FAILURE){
 			underline_misspelled(tkn, underline);
 			add_to_misspelled(tkn, misspelled);
 		}
-		else if (valid_word(dict, tkn) == EXIT_SUCCESS) {
+		else if (word_valid(dict, tkn) == EXIT_SUCCESS) {
 			underline_correct_spelling(tkn, underline);
 		}
 		else {

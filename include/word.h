@@ -18,7 +18,7 @@ int is_in_array(char* word);
  * parameters: word, dictionary
  * returns: int (EXIT_SUCCESS OR FAILURE)
  */
-int valid_word(dict_t *dict, char* word);
+int word_valid(dict_t *dict, char* word);
 
 /*
  * generate_suggestions: return a list of suggestions
@@ -30,15 +30,15 @@ int generate_suggestions(dict_t* dict, char* word, char **suggestions, int max_e
 // helpers for generate_suggestions
 
 /*
- * ca_status - checks if a character is a letter & is capitalized
+ * word_cap_status - checks if a character is a letter & is capitalized
  * parameter: letter 
  * returns: boolean (0 if not capitalized, 1 if capitalized)
  */
 //return positive if sth is capitalized
-int cap_status(char l);
+int word_cap_status(char l);
 
 /*
- * check_cap - checks if a word has a type of capitalization
+ * word_check_cap - checks if a word has a type of capitalization
  * parameter: word
  * return cases:
  * -1 if not a word 
@@ -47,7 +47,7 @@ int cap_status(char l);
  * 2 if everything is capitalized
  * 3 if inconsistent
  */
-int check_cap(char* word);
+int word_check_cap(char* word);
 
 /*
  * word_decap - returns a decapitalized word
@@ -57,11 +57,11 @@ int check_cap(char* word);
 char* word_decap(char* word);
 
 /*
- * recap - recapitalize words
+ * word_recap - recapitalize words
  * parameter: array of words, number of words in array, flag (from check_cap)
  * returns - recapitalized words
  */
-char** recap(char** words); // int nsug, int flag);
+char** word_recap(char** words, int wnum, int flag); // int nsug, int flag);
 
 #endif
 

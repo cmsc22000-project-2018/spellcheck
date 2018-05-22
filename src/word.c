@@ -23,7 +23,8 @@ int is_in_array(char* word) {
 }
 
 // checks if word is valid -- does not have erroneous punctuations within
-int valid_word(dict_t* dict, char* word) {
+	// change to dict_chars_exists?
+int word_valid(dict_t* dict, char* word) {
 	if (is_in_array(word) == -1 && *word != '\n') {
 	    return dict_exists(dict, word);
 	}
@@ -35,7 +36,7 @@ int valid_word(dict_t* dict, char* word) {
 
 // helpers for generate_suggestions
 //return positive if sth is capitalized
-int cap_status(char l)
+int word_cap_status(char l)
 {
 	return (!ispunct(l) && l >= 'A' && l <= 'Z');
 }
@@ -45,7 +46,7 @@ int cap_status(char l)
 // 1 if first letter is capitalized (note "I" is included here)
 // 2 if everything is capitalized
 // 3 if inconsistent
-int check_cap(char* word)
+int word_check_cap(char* word)
 {
 	int len = strlen(word);
 	int i = 0;
@@ -90,7 +91,7 @@ char* word_decap(char* word)
 }
 
 // recapitalize
-char** recap(char** words) // int nsug, int flag)
+char** word_recap(char** words, int wnum, int flag) // int nsug, int flag)
 {
 	return words;	// temporary
 	/* @firat
