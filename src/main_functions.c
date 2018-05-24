@@ -424,7 +424,7 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 	char** args;
 
 	while (!(*quit)) {
-		shell_intro();
+		shell_main_menu();
 		shell_prompt();
 
 		line = parse_read_line();
