@@ -12,9 +12,9 @@
 
 /* See shellstrings.h */
 void shell_intro() {
-    printf(BOLDWHITE "------- Welcome to Spellcheck! ------\n\n" RESET);
+    printf("------- Welcome to Spellcheck! ------\n\n");
 
-    printf(BLUE "Please load a file to begin. Additionally, select an output mode and/or choose dictionary before running the program.\n\n" RESET);
+    printf("Please load a file to begin. Additionally, select an output mode and/or choose dictionary before running the program.\n\n");
 
     printf("f [/path/file.txt]           : open file\n");
     printf("d [/path/dictionary.txt]     : input custom dictionary file\n");
@@ -25,7 +25,7 @@ void shell_intro() {
 
 /* See shellstrings.h */
 void shell_save() {
-    printf(GREEN "File editing successful!\n\n" RESET);
+    printf("File editing successful!\n\n");
 
     printf("s               : save to existing file\n");
     printf("c               : save to custom file\n");
@@ -35,7 +35,7 @@ void shell_save() {
 
 /* See shellstrings.h */
 void shell_error(char* s) {
-	printf(RED "=> ERROR: %s <=\n" RESET, s);
+	printf("=> ERROR: %s <=\n", s);
 }
 
 /* See shellstrings.h */
@@ -49,7 +49,7 @@ void shell_usage() {
 
 /* See shellstrings.h */
 void shell_prompt() {
-    printf(BOLDWHITE "\nspellcheck >" RESET " ");
+    printf("\nspellcheck > ");
 }
 
 /* See shellstrings.h */
@@ -60,11 +60,11 @@ void shell_input(char* input_file, char* status) {
 
 /* See shellstrings.h */
 void shell_help() {
-    printf(BLUE "Spellcheck is a tool which searches for misspelled words and suggests alternative spellings given a text file.\n" RESET);
-    printf("For interactive mode, run:" BOLDWHITE "r [/path/file.txt]\n" RESET);
-    printf("For batch mode, exit the program, and run:" BOLDWHITE "$ ./spellcheck [/path/file.txt] [-flag]\n" RESET);
-    printf("Flags: " BOLDWHITE "-q" RESET " is for quiet, " BOLDWHITE "-v" RESET "is for verbose, and " BOLDWHITE "-s" RESET " is for saving a file to a custom destination.\n");
-    printf(BLUE "Enter any command to return to the previous page.\n" RESET);
+    printf("Spellcheck is a tool which searches for misspelled words and suggests alternative spellings given a text file.\n");
+    printf("For interactive mode, run: r [/path/file.txt]\n");
+    printf("For batch mode, exit the program, and run: $ ./spellcheck [/path/file.txt] [-flag]\n");
+    printf("Flags:  -q is for quiet, -v is for verbose, and -s is for saving a file to a custom destination.\n");
+    printf("Enter any command to return to the previous page.\n");
 }
 
 /* See shellstrings.h */
