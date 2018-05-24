@@ -3,40 +3,8 @@
 q
 $ ./spellcheck -v tests/test_short.txt
 >
-tests/test_short.txt has been accepted as the input file for target file!
-Dictionary Successfully Parsed!
-
-
-========================================
-==========Editing Started With==========
-
-file: tests/test_short.txt
-dictionary: tests/sample_dict.txt
-mode: verbose batch mode
-
-
-Batch Mode: Verbose
-
-Line number: 1
-WORD:splling			REPLACEMENT:spelling
-WORD:
-			REPLACEMENT:spelling
-Line number: 2
-WORD:cme			REPLACEMENT:come
-WORD:
-			REPLACEMENT:come
-File editing successful!
-
-s               : save to existing file
-c               : save to custom file
-r               : return to home screen
-q               : quit program
-
-
-spellcheck > Thank you for using Spellcheck. Bye!
-
-
-
+tests/test_short.txt has been accepted as the input file for target file!\nDictionary Successfully Parsed!\n\n\n============================================================\n=================== Editing Started With ===================\n============================================================\n\nfile: tests/test_short.txt\ndictionary: tests/sample_dict.txt\nmode: verbose batch mode\n\n\nBatch Mode: Verbose\n\nLine number: 1\nWORD:splling\nREPLACEMENT:spelling\n\nLine number: 2\nWORD:cme\nREPLACEMENT:come\n\nWORD:m'y\nREPLACEMENT:m'y\n\nThank you for using Spellcheck. Bye!\n"
+>2
 >= 0
 
 # test for the batch mode with verbose flag
@@ -45,18 +13,6 @@ spellcheck > Thank you for using Spellcheck. Bye!
 q
 $ ./spellcheck -q tests/test_short.txt
 >
-tests/test_short.txt has been accepted as the input file for target file!
-Dictionary Successfully Parsed!
-File editing successful!
-
-s               : save to existing file
-c               : save to custom file
-r               : return to home screen
-q               : quit program
-
-
-spellcheck > Thank you for using Spellcheck. Bye!
-
-
-
+tests/test_short.txt has been accepted as the input file for target file!\nFile editing successful!\n\ns               : save to existing file\nc               : save to custom file\nr               : return to home screen\nq               : quit program\n\n\nspellcheck > Thank you for using Spellcheck. Bye!\n"
+>2
 >= 0
