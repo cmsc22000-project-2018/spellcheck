@@ -357,8 +357,8 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
             correct_line(line_copy, misspelled[i], suggestions[0]);
         }
 	    if (verbosity) {        // this is if verbose mode is enacted
-            printf("WORD:%s\n" RESET, misspelled[i]);
-            printf("REPLACEMENT:%s\n\n" RESET, suggestions[0]);    // print list of replacement
+            printf("WORD:%s\n", misspelled[i]);
+            printf("REPLACEMENT:%s\n\n", suggestions[0]);    // print list of replacement
         }
 
 	    i++;
