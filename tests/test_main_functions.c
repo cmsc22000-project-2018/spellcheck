@@ -13,7 +13,7 @@
  */
 
 /* save_corrections tested */
-Test(scfunctions,save_corrections)
+Test(main_functions,save_corrections)
 {
     char* c = "test_save.txt";
     char** lines = calloc(2, sizeof(char*));
@@ -45,7 +45,7 @@ Test(scfunctions,save_corrections)
 /*
  ***** change_mode tests *****
  */ 
-Test(scfunctions, change_mode)
+Test(main_functions, change_mode)
 {
     char* mode = "1";
 
@@ -54,7 +54,7 @@ Test(scfunctions, change_mode)
     cr_assert_eq(i, 1, "return value wrong");
 }
 
-Test(scfunctions, change_mode0)
+Test(main_functions, change_mode0)
 {
     char* mode = "2";
 
@@ -63,31 +63,17 @@ Test(scfunctions, change_mode0)
     cr_assert_eq(i, 2, "return value wrong");
 }
 
-/* Not testing, due to printf being called in this corner case
-Test(scfunctions, change_mode1)
-{
-    char* mode = "4";
-    printf("Testing change_mode, scfunctions.c:"
-           "Expect to print out error message, "
-           "as this test checks whether function identifies error case\n");
-
-    int i = change_mode(mode);
-
-    cr_assert_eq(i, 3, "return value wrong");
-}
-*/
-
 /*
  ***** fileexists tests *****
  */
-Test(scfunctions, fileexists)
+Test(main_functions, fileexists)
 {
     int i = fileexists("test_short.txt");
 
     cr_assert_eq(i, 0, "file should exist");    // i=1 in linux, but i=0 in travis build.
 }
 
-Test(scfunctions, fileexists1)
+Test(main_functions, fileexists1)
 {
     int i = fileexists("test_sh.txt");
 

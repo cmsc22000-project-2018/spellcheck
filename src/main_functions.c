@@ -13,6 +13,7 @@
 #include <stdlib.h>	
 
 
+
 /* 
  *	Order of functions:
  *		I. Saving files
@@ -245,9 +246,9 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 
     if (misspelled[0] != NULL) {
     printf("Current line number is %d: \n", linenumber);
-    printf(BOLDWHITE "%s" RESET, line_copy);
+    printf("%s", line_copy);
     printf("\n");
-    printf(BOLDRED "%s" RESET, underline);
+    printf("%s", underline);
     printf("\n\n");
     }
 
@@ -260,7 +261,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     	int rc = generate_suggestions(misspelled[i], dict, suggestions);
 
     	if(rc != -1) {
-    	    printf(BOLDWHITE "Possible replacements for word %s are:\n\n" RESET, misspelled[i]);
+    	    printf("Possible replacements for word %s are:\n\n", misspelled[i]);
         	printf("0 : Delete Word. \n");
         	printf("1 : No replacement. \n");
             int j;
@@ -285,18 +286,18 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
         }
 
         if (choice == 0) {
-           	printf(BOLDRED "Deleting %s.\n" RESET, misspelled[i]);
+           	printf("Deleting %s.\n", misspelled[i]);
         	correct_line(line_copy, misspelled[i], "");
            	printf("New sentence is: \n\n");
-         	printf(BOLDWHITE "%s\n\n" RESET, line_copy);
+         	printf("%s\n\n", line_copy);
          	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
         } else if (choice == 1) {
-        	printf(BOLDWHITE "No changes made to \"%s\". \n\n" BOLDRED, misspelled[i]);
+        	printf("No changes made to \"%s\". \n\n", misspelled[i]);
         } else if (choice != 1 || choice != 0) { //1 if no replacement needed, 0 if word deleted
-        	printf(BOLDGREEN "Replacing %s with %s \n" RESET, misspelled[i], suggestions[choice-2]);
+        	printf("Replacing %s with %s \n", misspelled[i], suggestions[choice-2]);
         	correct_line(line_copy, misspelled[i], suggestions[choice-2]); //modifies line function
         	printf("New sentence is: \n");
-         	printf(BOLDWHITE "%s\n\n" RESET, line_copy);
+         	printf("%s\n\n", line_copy);
          	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
         }
 
