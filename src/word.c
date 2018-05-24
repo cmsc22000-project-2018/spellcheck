@@ -23,7 +23,8 @@ int is_in_array(char* word) {
 }
 
 // checks if word is valid -- does not have erroneous punctuations within
-int valid_word(dict_t* dict, char* word) {
+	// change to dict_chars_exists?
+int word_valid(dict_t* dict, char* word) {
 	if (is_in_array(word) == -1 && *word != '\n') {
 	    return dict_exists(dict, word);
 	}
@@ -35,7 +36,7 @@ int valid_word(dict_t* dict, char* word) {
 
 // helpers for generate_suggestions
 //return positive if sth is capitalized
-int cap_status(char l)
+int word_cap_status(char l)
 {
 	return (!ispunct(l) && l >= 'A' && l <= 'Z');
 }
@@ -45,7 +46,7 @@ int cap_status(char l)
 // 1 if first letter is capitalized (note "I" is included here)
 // 2 if everything is capitalized
 // 3 if inconsistent
-int check_cap(char* word)
+int word_check_cap(char* word)
 {
 	int len = strlen(word);
 	int i = 0;
@@ -58,10 +59,10 @@ int check_cap(char* word)
 	// move to first letter, assuming punctuations like " and '
 	while(ispunct(word[i])) i++;
 
-	if (cap_status(word[i])) {	// only first word, everything, or inconsistent
+	if (word_cap_status(word[i])) {	// only first word, everything, or inconsistent
 		int ncap = 1;	// number of capitalizations
 		for (i++ ; i < len; i++)
-			if (cap_status(word[i])) ncap++;
+			if (word_cap_status(word[i])) ncap++;
 
 		if (ncap == 1) return 1;
 		if (ncap == len - npunct) return 2;
@@ -69,7 +70,7 @@ int check_cap(char* word)
 	}
 	// if control reaches here, then first letter of word is not capitalized
 	for (i = 0; i < len; i++)
-		if (cap_status(word[i])) return 3;
+		if (word_cap_status(word[i])) return 3;
 
 	// if control reaches here, no letters are capitalized
 	return 0;
@@ -83,15 +84,16 @@ char* word_decap(char* word)
 	char* decap = strdup(word);
 
 	for (i = 0; i < len; i++)
-		if (cap_status(word[i])) {
+		if (word_cap_status(word[i])) {
 			decap[i] -= 'A' - 'a';
 		}
 	return decap;
 }
 
 // recapitalize
-char** recap(char** words) // int nsug, int flag)
+char** word_recap(char** words, int wnum, int flag) // int nsug, int flag)
 {
+//	switch(flag)
 	return words;	// temporary
 	/* @firat
 	int i = 0;
@@ -99,7 +101,7 @@ char** recap(char** words) // int nsug, int flag)
 		if () {
 
 		}
-	}
+	}ssss
 	*/
 }
 

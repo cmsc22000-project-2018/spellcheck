@@ -1,9 +1,20 @@
 h
 return
-f tests/test_short.txt
-begin
-1
+d dict2.txt
+f text2.txt
+start
+3
+2
+2
 2
 3
+2
+3
+2
+2
+2
+2
+2
+p
 c
-test_result.txt
+result2.txt
