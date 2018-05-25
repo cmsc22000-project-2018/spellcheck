@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 
 	/* If command line contains just the file at argv[1], write it into file_name */
 	if (fileexists(argv[1]) || fileexists(argv[3])) {
-        shell_usage();
+        shell_error(shell_error_format());
         exit(0);
     }
 
@@ -116,8 +116,7 @@ int main(int argc, char **argv)
             }
 			strcpy(save_file,optarg);
             if (mode != 1) shell_input(optarg,"file save destination");
-			break;
-			shell_usage();
+	        shell_error(shell_error_format());
             exit(0);
 			break;
 		}
@@ -145,13 +144,9 @@ int main(int argc, char **argv)
 	dict_t* dict = dict_new();
 
     int msg = dict_read(dict, dict_name);
-	if (mode == 1) {
-		if (msg == EXIT_FAILURE) {
-			shell_error("Failed to read in dictionary in quiet mode");
+	if (msg == EXIT_FAILURE) {
+			shell_error("Failed to read in dictionary. Exiting Spellcheck");
 			exit(0);
-		}
-	} else {
-		shell_dict_message(msg);
 	}
 
 	/*
@@ -160,12 +155,12 @@ int main(int argc, char **argv)
 	char* md = shell_modename(mode);
     if (mode == 3) {
     	char* anyinput = calloc(20, sizeof(char));
-		shell_interactive_start(file_name, dict_name, md);
+		shell_start_interactive(file_name, dict_name, md);
 		int check = scanf("%s", anyinput);
 		assert (!(check < 0));
 		free(anyinput);
     } else if (mode == 2) {
-    	shell_batch_start(file_name, dict_name, md);
+    	shell_start_batch(file_name, dict_name, md);
     }
 
 
@@ -184,7 +179,7 @@ int main(int argc, char **argv)
 
     if (mode != 2) {	// Save file, a functionality unnecessary for verbose batch mode
     // Success Message
-    	if (mode == 3) shell_parse_success();
+    	if (mode == 3) shell_edit_success();
 
     	md = strstr(save_file,".txt");
     		if (md != NULL) {
@@ -198,6 +193,6 @@ int main(int argc, char **argv)
     if (!*quit) file_name = "";
   }
 
-    if (mode != 1) shell_outro();
+    if (mode == 3) shell_outro();
 	return 0;
 }

@@ -31,19 +31,17 @@ void shell_main_menu() {
 
 /* See shellstrings.h */
 void shell_save() {
-    printf(GREEN "File editing successful!\n\n" RESET);
-
-    printf("p               : print all changes\n");
-    printf("s               : save changes to existing file\n");
-    printf("c               : save changes to custom file\n");
-    printf("r               : return to home screen (without saving)\n");
-    printf("q               : quit program (without saving)\n\n");
+    printf("p: print all changes\n");
+    printf("s: save changes to existing file\n");
+    printf("c: save changes to custom file\n");
+    printf("r: return to home screen (without saving)\n");
+    printf("q: quit program (without saving)\n\n");
 }
 
 /* Based on Borja's comments - the user doesn't need to see this. */
-// void shell_parse_success() {
-//     printf(GREEN "File parse successful!\n\n" RESET);
-// }
+void shell_edit_success() {
+     printf(GREEN "Editing successful!\n\n" RESET);
+}
 
 void shell_print(char** lines) {
     int i = 0;
@@ -73,11 +71,9 @@ char *shell_error_format() {
 }
 
 /* See shellstrings.h */
-char *shell_error_input(char* input_file, char* status) {
+void shell_input(char* input_file, char* status) {
     char *error_input = "has been accepted as the input file for";
     printf("%s %s %s!\n", input_file, error_input, status);
-
-    return error_input;
 }
 
 /* See shellstrings.h */
@@ -134,18 +130,6 @@ char* shell_modename(int mode) {
     }
     return "interactive mode";
 }
-
-/* Based on Borja's comments - User doesn't need to see this
- * Also, added a different error function for the else clause
- */
-// void shell_dict_message(int i) {
-//     if (i == EXIT_SUCCESS) {
-//         printf("Dictionary successfully parsed!\n");
-//     } else {
-//         printf("Trouble reading dictionary, exiting program\n");
-//         exit(0);
-//     }
-// }
 
 void shell_interactive_line_print(int lnum, char* line, char* underline) {
     printf("Current line number is %d:\n", lnum);

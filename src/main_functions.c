@@ -233,7 +233,6 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 {
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; //should the user decide this?
-    int max_edits = 2;
 
     int length = strlen(line) + 5;
     char *misspelled[length]; //generates an empty array where the misspelled words in a line will be stored
@@ -253,7 +252,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 
     //replacing words according to user suggestions
     while (misspelled[i] != NULL) {
-    	int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
+    	int rc = generate_suggestions(misspelled[i], dict, suggestions);
 	    if (rc == EXIT_FAILURE || suggestions[0] == NULL) {   // hard-coded; change later
             strcpy(suggestions[0], "no other suggestions");
             suggestions[1] = NULL;
@@ -327,7 +326,6 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
 {
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; //need only one suggestion
-    int max_edits = 2;
 
     int length = strlen(line) + 5;
     char *misspelled[length]; //generates an empty array where the misspelled words in a line will be stored
@@ -342,7 +340,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
     int i = 0;
     //replacing words, printing out if batch mode
     while (misspelled[i] != NULL) {
-        int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
+        int rc = generate_suggestions(misspelled[i], dict, suggestions);
 	    if (rc == EXIT_FAILURE || suggestions[0] == NULL) {   // hard-coded; change later
             if (verbosity) {
             	strcpy(suggestions[0], "No suggestions for this word");

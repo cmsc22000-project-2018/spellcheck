@@ -64,7 +64,7 @@ void shell_save();
  * Returns:
  *  - None.
  */
-// void shell_parse_success();
+void shell_edit_success();
 
 /*
  * shell_print - Print edited text for viewing
@@ -110,7 +110,7 @@ char *shell_error_format();
  * Returns:
  *  - None.
  */
-char *shell_error_input(char* input_file, char* mode);
+void shell_input(char* input_file, char* mode);
 
 /*
  * shell_erorr_dict - Error prompt regarding invalid dictionary file input for the shell.
@@ -146,7 +146,7 @@ char *shell_error_exit();
 void shell_help();
 
 /*
- * shell_interactive_start - prints out interactive starting message
+ * shell_start_interactive - prints out interactive starting message
  *
  * Parameters:
  *  - file, dictionary, mode names

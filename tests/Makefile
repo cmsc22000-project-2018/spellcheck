@@ -2,14 +2,13 @@
 
 CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -O2 -g -I../include/
-LDFLAGS = -L./hiredis -Wl,-rpath,./hiredis
 RM = rm -f
 BIN = test-spellcheck
-LDLIBS = -lcriterion -lhiredis
+LDLIBS = -lcriterion
 
 #test_word.c in process of construction; add later
 TESTSRCS = test_main_functions_interactive.c test_main_functions.c test_dictionary.c test_parser.c
-FILESRCS = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/main_functions.c ../src/shellstrings.c ../src/word.c ../src/suggestion.c ../src/zset_api.c
+FILESRCS = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/main_functions.c ../src/shellstrings.c ../src/word.c
 
 SRCS = main.c $(TESTSRCS) $(FILESRCS)
 OBJS = $(SRCS:.c=.o)
@@ -18,7 +17,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(BIN)
 
 $(BIN): $(SRCS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(SRCS) -o $(BIN) $(LDLIBS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(BIN) $(LDLIBS)
 
 clean:
-	-$(RM) $(OBJS) $(BIN)
+	-$(RM) $(OBJS) $(BIN) test_save.txt test_result.txt
