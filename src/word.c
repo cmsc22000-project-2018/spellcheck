@@ -99,19 +99,23 @@ int word_check_cap(char *word) {
  *  - word: A string (word).
  *
  * Returns:
- *  - char **: A string (word) that is decapitalized.
+ *  - None (Modifies the given string (word) array).
  */
-char *word_decap(char *word) {
-	int len = strlen(word);
-	char *decap = strdup(word);
+void words_decap(char **words) {
+    int i = 0;
+    int j = 0;
 
-	for (int i = 0; i < len; i++) {
-		if (isupper(word[i])) {
-			decap[i] -= 'A' - 'a';
-		}
+    while (i < sizeof(words)) {
+        while (j < strlen(words[i])) {
+            if (islower(words[i][j]) == 0) {
+                tolower(words[i][j]);
+            }
+
+            j++;
+        }
+
+        i++;
     }
-
-	return decap;
 }
 
 /*
@@ -123,9 +127,9 @@ char *word_decap(char *word) {
  *  - words: A string (word) array.
  *
  * Returns:
- *  - char **: A string (word) array of recapitalized words.
+ *  - None (Modifies the given string (word) array).
  */
-char **word_recap(char **words) {
+void words_recap(char **words) {
     int i = 0;
     int j = 0;
 
