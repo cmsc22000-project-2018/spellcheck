@@ -5,13 +5,13 @@
  */
 
 #include <stdio.h>
-#include <strings.h>
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>	
 #include <ctype.h>
-#include "suggestion.h"
+#include "word.h"
 #include "dictionary.h"
+#include "suggestion.h"
 
 /* See word.h */
 int word_valid(dict_t *dict, char *word) {
@@ -41,15 +41,16 @@ int word_valid(dict_t *dict, char *word) {
  *  - 3: Inconsistent capitalization.
  */
 int word_check_cap(char *word) {
-    int len = strlen(word);
+    int word_length = strlen(word);
     int i = 0;
-    int npunct = 0;
+    int num_punct = 0;
+    int num_cap = 0;
 
-    while (i < len) {
-        if (ispunct(word[i])) npunct++; // number of punctuations in word
+    while (i < word_length) {
+        if (ispunct(word[i])) num_punct++; // number of punctuations in word
     }
 
-	if (npunct == len) {
+	if (num_punct == word_length) {
         return -1; // no alphabet in word
     }
 
@@ -59,27 +60,27 @@ int word_check_cap(char *word) {
     }
 
 	if (isupper(word[i])) {	// only first word, everything, or inconsistent
-		int ncap = 1;	// number of capitalizations
+		num_cap++; // number of capitalizations
 		
-        for (i++ ; i < len; i++) {
+        for (i++ ; i < word_length; i++) {
 			if (isupper(word[i])) {
-                ncap++;
+                num_cap++;
             }
         }
 
-		if (ncap == 1) {
+		if (num_cap == 1) {
             return 1;
         }
 
-		if (ncap == len - npunct) {
+		if (num_cap == word_length - num_punct) {
             return 2;
         }
 
-		return 3;	// inconsistent
+		return 3; // inconsistent
 	}
 
 	// if control reaches here, then first letter of word is not capitalized
-	for (i = 0; i < len; i++) {
+	for (i = 0; i < word_length; i++) {
 		if (isupper(word[i])) {
             return 3;
         }
@@ -116,27 +117,29 @@ char *word_decap(char *word) {
 /*
  * Helper function for generate_suggestions()
  *
- * word_recap - Gets a decapitalized string (word) and recapitalizes it
+ * word_recap - Gets a decapitalized string (word) array and recapitalizes each string (word)
  *
  * Parameters:
  *  - words: A string (word) array.
- *  - word_number: Number of words in the array.
- *  - capitalization: State of capitalization from word_check_cap().
  *
  * Returns:
  *  - char **: A string (word) array of recapitalized words.
  */
-char **word_recap(char **words, int word_number, int capitalization) {
-//	switch(flag)
-	return words;	// temporary
-	/* @firat
-	int i = 0;
-	while (i < nsug) {
-		if () {
+char **word_recap(char **words) {
+    int i = 0;
+    int j = 0;
 
-		}
-	}ssss
-	*/
+    while (i < sizeof(words)) {
+        while (j < strlen(words[i])) {
+            if (isupper(words[i][j]) == 0) {
+                toupper(words[i][j]);
+            }
+
+            j++;
+        }
+
+        i++;
+    }
 }
 
 /* See word.h */
