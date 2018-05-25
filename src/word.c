@@ -14,10 +14,25 @@
 #include "suggestion.h"
 
 /* See word.h */
+int is_in_array(char* word) {
+    int num_punctuation = 22;
+    char* punctuation_array[] = {"+",",",":"," ",".","-","'","&","!","?",":",";",
+                                    "#","~","=","/","$","£","^","\n","_","<",">"};
+
+    int i;
+    for (i = 0; i < num_punctuation ; i++) {
+        if (strcmp(punctuation_array[i], word) == 0) {
+            return 1;
+        }
+    }
+    return -1;
+}
+
+/* See word.h */
 int word_valid(dict_t *dict, char *word) {
     assert(dict != NULL);
 
-    if (dict_chars_exists(word) == -1 && *word != '\n') {
+    if (is_in_array(word) == -1 && *word != '\n') {
 	    return dict_exists(dict, word);
     }
 
@@ -25,21 +40,7 @@ int word_valid(dict_t *dict, char *word) {
     return EXIT_SUCCESS;
 }
 
-/*
- * Helper function for generate_suggestions()
- *
- * word_check_cap - checks if a word has a type of capitalization
- *
- * Parameters:
- *  - word: A string (word).
- *
- * Returns:
- *  - -1: Error - Not a word.
- *  - 0: Not capitalized.
- *  - 1: First letter is capitalized (Note: "I" is included here).
- *  - 2: Every letter is capitalized.
- *  - 3: Inconsistent capitalization.
- */
+/* See word.h */
 int word_check_cap(char *word) {
     int word_length = strlen(word);
     int i = 0;
@@ -47,7 +48,9 @@ int word_check_cap(char *word) {
     int num_cap = 0;
 
     while (i < word_length) {
-        if (ispunct(word[i])) num_punct++; // number of punctuations in word
+        if (ispunct(word[i])) {
+            num_punct++; // number of punctuations in word
+        }
     }
 
 	if (num_punct == word_length) {
@@ -90,18 +93,8 @@ int word_check_cap(char *word) {
 	return 0;
 }
 
-/*
- * Helper function for generate_suggestions()
- *
- * words_lowercase - Gets a string (word) array and lowercases each string (word)
- *
- * Parameters:
- *  - word: A string (word).
- *
- * Returns:
- *  - None (Modifies the given string (word) array).
- */
-void words_lowercase(char **words) {
+/* See word.h */
+char *words_lowercase(char *words) {
     int i = 0;
     int j = 0;
 
@@ -118,31 +111,27 @@ void words_lowercase(char **words) {
     }
 }
 
-/*
- * Helper function for generate_suggestions()
- *
- * words_recap - Gets a string (word) array and capitalizes each string (word)
- *
- * Parameters:
- *  - words: A string (word) array.
- *
- * Returns:
- *  - None (Modifies the given string (word) array).
- */
-void words_capitalize(char **words) {
+/* See word.h */
+void words_capitalize(char **words, int flag) {
     int i = 0;
     int j = 0;
 
     while (i < sizeof(words)) {
-        while (j < strlen(words[i])) {
-            if (isupper(words[i][j]) == 0) {
-                toupper(words[i][j]);
-            }
-
-            j++;
+        if (flag == 1) {
+            toupper(words[i][0]);
         }
 
-        i++;
+        if (flag == 2) {
+            while (j < strlen(words[i])) {
+                if (isupper(words[i][j]) == 0) {
+                    toupper(words[i][j]);
+                }
+
+                j++;
+            }
+
+            i++;
+        }
     }
 }
 
