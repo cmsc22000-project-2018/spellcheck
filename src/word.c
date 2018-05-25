@@ -1,4 +1,9 @@
-#include "dictionary.h"
+/*
+ * A module to handle each word and provide suggestions
+ * 
+ * See word.h for function documentation
+ */
+
 #include <stdio.h>
 #include <strings.h>
 #include <string.h>
@@ -10,24 +15,31 @@
 
 /* See word.h */
 int word_valid(dict_t *dict, char *word) {
+    assert(dict != NULL);
+
     if (dict_chars_exists(word) == -1 && *word != '\n') {
 	    return dict_exists(dict, word);
     }
 
-    else {
-        // Assume word is correct as it represents punctuation
-        return EXIT_SUCCESS;
-    }
+    // Assume word is correct as it represents punctuation
+    return EXIT_SUCCESS;
 }
 
-/* See word.h */
-int word_cap_status(char l) {
-    int status = (!ispunct(l) && l >= 'A' && l <= 'Z');
-    
-    return status;
-}
-
-/* See word.h */
+/*
+ * Helper function for generate_suggestions()
+ *
+ * word_check_cap - checks if a word has a type of capitalization
+ *
+ * Parameters:
+ *  - word: A string (word).
+ *
+ * Returns:
+ *  - -1: Error - Not a word.
+ *  - 0: Not capitalized.
+ *  - 1: First letter is capitalized (Note: "I" is included here).
+ *  - 2: Every letter is capitalized.
+ *  - 3: Inconsistent capitalization.
+ */
 int word_check_cap(char *word) {
     int len = strlen(word);
     int i = 0;
@@ -46,11 +58,11 @@ int word_check_cap(char *word) {
         i++;
     }
 
-	if (word_cap_status(word[i])) {	// only first word, everything, or inconsistent
+	if (isupper(word[i])) {	// only first word, everything, or inconsistent
 		int ncap = 1;	// number of capitalizations
 		
         for (i++ ; i < len; i++) {
-			if (word_cap_status(word[i])) {
+			if (isupper(word[i])) {
                 ncap++;
             }
         }
@@ -68,7 +80,7 @@ int word_check_cap(char *word) {
 
 	// if control reaches here, then first letter of word is not capitalized
 	for (i = 0; i < len; i++) {
-		if (word_cap_status(word[i])) {
+		if (isupper(word[i])) {
             return 3;
         }
     }
@@ -77,13 +89,23 @@ int word_check_cap(char *word) {
 	return 0;
 }
 
-/* See word.h */
+/*
+ * Helper function for generate_suggestions()
+ *
+ * word_decap - Gets a string (word) and decapitalizes it
+ *
+ * Parameters:
+ *  - word: A string (word).
+ *
+ * Returns:
+ *  - char **: A string (word) that is decapitalized.
+ */
 char *word_decap(char *word) {
 	int len = strlen(word);
 	char *decap = strdup(word);
 
 	for (int i = 0; i < len; i++) {
-		if (word_cap_status(word[i])) {
+		if (isupper(word[i])) {
 			decap[i] -= 'A' - 'a';
 		}
     }
@@ -91,9 +113,20 @@ char *word_decap(char *word) {
 	return decap;
 }
 
-/* See word.h */
-char **word_recap(char **words, int wnum, int flag) // int nsug, int flag)
-{
+/*
+ * Helper function for generate_suggestions()
+ *
+ * word_recap - Gets a decapitalized string (word) and recapitalizes it
+ *
+ * Parameters:
+ *  - words: A string (word) array.
+ *  - word_number: Number of words in the array.
+ *  - capitalization: State of capitalization from word_check_cap().
+ *
+ * Returns:
+ *  - char **: A string (word) array of recapitalized words.
+ */
+char **word_recap(char **words, int word_number, int capitalization) {
 //	switch(flag)
 	return words;	// temporary
 	/* @firat
