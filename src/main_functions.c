@@ -1,3 +1,4 @@
+#include <stdlib.h> 
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -10,7 +11,6 @@
 #include "main_functions.h"
 #include "dictionary.h"
 #include "word.h"
-#include <stdlib.h>	
 
 
 /* 

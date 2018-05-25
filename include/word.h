@@ -1,17 +1,9 @@
 #ifndef INCLUDE_WORD_H_
 #define INCLUDE_WORD_H_
+
 #include <stdio.h>
 #include <strings.h>
 #include "dictionary.h"
-
-/*
- * is_in_array: checks if a given punctuation is within a word
- * parameters: array of punctuations, word
- * returns: int
- * -1 is if it is not in array
- * 1 is if it is
- */
-int is_in_array(char* word);
 
 /*
  * valid_word: checks that word is in dictionary
@@ -19,13 +11,6 @@ int is_in_array(char* word);
  * returns: int (EXIT_SUCCESS OR FAILURE)
  */
 int word_valid(dict_t *dict, char* word);
-
-/*
- * generate_suggestions: return a list of suggestions
- * parameters: word, dictionary, array list to which suggestions are stored
- * returns: int (EXIT_SUCCESS OR FAILURE). FAILURE if no suggestions generated
- */
-int generate_suggestions(dict_t* dict, char* word, char **suggestions, int max_edits, int amount);
 
 // helpers for generate_suggestions
 
@@ -47,21 +32,27 @@ int word_cap_status(char l);
  * 2 if everything is capitalized
  * 3 if inconsistent
  */
-int word_check_cap(char* word);
+int word_check_cap(char *word);
 
 /*
  * word_decap - returns a decapitalized word
  * parameter: word
  * returns: decapitalized word
  */
-char* word_decap(char* word);
+char* word_decap(char *word);
 
 /*
  * word_recap - recapitalize words
  * parameter: array of words, number of words in array, flag (from check_cap)
  * returns - recapitalized words
  */
-char** word_recap(char** words, int wnum, int flag); // int nsug, int flag);
+char** word_recap(char **words, int wnum, int flag); // int nsug, int flag);
+
+/*
+ * generate_suggestions: return a list of suggestions
+ * parameters: word, dictionary, array list to which suggestions are stored
+ * returns: int (EXIT_SUCCESS OR FAILURE). FAILURE if no suggestions generated
+ */
+int generate_suggestions(dict_t *dict, char *word, char **suggestions, int max_edits, int amount);
 
 #endif
-
