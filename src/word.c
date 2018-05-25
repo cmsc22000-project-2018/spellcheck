@@ -93,7 +93,7 @@ int word_check_cap(char *word) {
 /*
  * Helper function for generate_suggestions()
  *
- * word_decap - Gets a string (word) and decapitalizes it
+ * words_lowercase - Gets a string (word) array and lowercases each string (word)
  *
  * Parameters:
  *  - word: A string (word).
@@ -101,7 +101,7 @@ int word_check_cap(char *word) {
  * Returns:
  *  - None (Modifies the given string (word) array).
  */
-void words_decap(char **words) {
+void words_lowercase(char **words) {
     int i = 0;
     int j = 0;
 
@@ -121,7 +121,7 @@ void words_decap(char **words) {
 /*
  * Helper function for generate_suggestions()
  *
- * word_recap - Gets a decapitalized string (word) array and recapitalizes each string (word)
+ * words_recap - Gets a string (word) array and capitalizes each string (word)
  *
  * Parameters:
  *  - words: A string (word) array.
@@ -129,7 +129,7 @@ void words_decap(char **words) {
  * Returns:
  *  - None (Modifies the given string (word) array).
  */
-void words_recap(char **words) {
+void words_capitalize(char **words) {
     int i = 0;
     int j = 0;
 
