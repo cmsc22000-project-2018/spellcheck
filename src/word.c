@@ -1,9 +1,9 @@
-#include "dictionary.h"
 #include <stdio.h>
 #include <strings.h>
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>	
+#include "dictionary.h"
 
 // checks
 int is_in_array(char* word) {

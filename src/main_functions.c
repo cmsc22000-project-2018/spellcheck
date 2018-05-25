@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>	
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -10,7 +11,6 @@
 #include "main_functions.h"
 #include "dictionary.h"
 #include "word.h"
-#include <stdlib.h>	
 
 
 
@@ -234,18 +234,22 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 {
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; //should the user decide this?
-    int length = strlen(line) + 5;
-    char *misspelled[length]; //generates an empty array where the misspelled words in a line will be stored
-    initialize_misspelled(misspelled, length);
+    int length = strlen(line);
+    char **misspelled; //generates an empty array where the misspelled words in a line will be stored
+    misspelled = calloc(length, sizeof(char*));
+    if (misspelled == NULL) {
+    	fprintf(stderr,"edit_interactive: calloc failed");
+    	exit(0);
+    }
 
-    char *underline = (char *)malloc(strlen(line + 1)); //generate an empty array where the underline will go
+    char *underline = (char *)malloc(sizeof(char) * strlen(line + 1)); //generate an empty array where the underline will go
     underline[0] = '\0'; 
 
     parse_string(line, dict, underline, misspelled); //identify misspelled words and add to misspelled
     //add to underline function 
 
     if (misspelled[0] != NULL) {
-    printf("Current line number is %d: \n", linenumber);
+    printf("Line: %d\n", linenumber);
     printf("%s", line_copy);
     printf("\n");
     printf("%s", underline);
@@ -267,7 +271,6 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
             int j;
         	for (j = 0; j < max_no_suggestions; j++) {
        		printf("%d : %s \n", j+2, suggestions[j]);
-
           	}  	
 
         }
@@ -308,7 +311,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 }
 
 
-char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in dictionary later
+char** interactive_mode(char* filename, dict_t* dict, int* quit)
 {
 	char** lines;
 	lines = parse_file(filename);
@@ -337,10 +340,10 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
     int max_no_suggestions = 2; //need only one suggestion
 
     int length = strlen(line) + 5;
-    char *misspelled[length]; //generates an empty array where the misspelled words in a line will be stored
-    initialize_misspelled(misspelled, length);
+    char **misspelled; //generates an empty array where the misspelled words in a line will be stored
+    misspelled = calloc(length, sizeof(char*));
 
-    char* underline = (char*) malloc(strlen(line+1));
+    char* underline = (char*) malloc(sizeof(char) * strlen(line+1));
     underline[0] = '\0';
 
     parse_string(line, dict, underline, misspelled); //identify misspelled words and add to bad_word, 
@@ -377,6 +380,7 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 	if (lines == NULL) {
 		shell_error("file parsing error: check txt file");
 		*quit=1;
+		return NULL;
 	}
 
 	int i=0;
@@ -431,16 +435,19 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 		shell_prompt();
 
 		line = parse_read_line();
-		args = parse_split_line(line);
+		args = parse_split_line(line);	// line is now split into tokens
 
-		if (args == NULL || args [2] != NULL) { // 3 inputs, or no input
+		if (args == NULL || args [2] != NULL) { // 3 inputs, or no input: error message
 			shell_error("Please type in one of the indicated commands!");
 			*quit = 0;
-		} else if (!strcmp(args[0],"h")) { // Print help page and exit
+
+		} else if (!strcmp(args[0],"h")) { // Print help page, then wait for user input
 			help_page();
 			*quit = 0;
+
 		} else if (!strcmp(args[0],"f")) { // Check valid file path, then exit. If not, redo loop
-			if(!fileexists(args[1])) {
+
+			if(!fileexists(args[1])) {	//file path checking
 				shell_error("Please enter a valid file path for a new edit target!");
 				*quit = 0;
 			} else {
@@ -448,8 +455,10 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 			printf("\n\nInput file is now %s\n\n\n",file_name);
 			*quit=1;
 			}
-		} else if (!strcmp(args[0],"d")) { // Check file path validity for dicitonary
-			if(!fileexists(args[1])) {
+
+		} else if (!strcmp(args[0],"d")) {	// dictionary name change 
+
+			if(!fileexists(args[1])) {	// Check file path validity for dicitonary
 				shell_error("Please enter a valid file path for a new dictionary!");
 				*quit = 0;
 			} else {
@@ -457,8 +466,10 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 			printf("\n\nDictionary file is now %s\n\n\n",dict_name);
 			*quit = 0;
 			}
+
 		} else if (!strcmp(args[0],"q")) { // quit
 			*quit = 2;
+
 		} else if (!strcmp(args[0], "m")) { // change mode
 			printf("Mode number accepted: %d\n",atoi(args[1]));
             *mode = change_mode(args[1]);
@@ -467,6 +478,7 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name)
 			} else {
 				*quit = 1;
 			}
+
 		} else { // input bad
 			shell_error("Please type in one of the indicated commands!");
 			*quit = 0;

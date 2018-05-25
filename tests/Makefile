@@ -20,4 +20,4 @@ $(BIN): $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS) -o $(BIN) $(LDLIBS)
 
 clean:
-	-$(RM) $(OBJS) $(BIN)
+	-$(RM) $(OBJS) $(BIN) test_save.txt test_result.txt

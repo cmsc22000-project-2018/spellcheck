@@ -57,7 +57,7 @@ char* modename(int mode)
 
 int main(int argc, char **argv)
 {
-	// filenames up to 100 char
+	// filenames up to 400 char
 	char* dict_name = malloc(401 * sizeof(char*));
 	char* file_name = malloc(401 * sizeof(char*));
 	char* save_file = malloc(401 * sizeof(char*));
@@ -73,7 +73,6 @@ int main(int argc, char **argv)
 	int mode = 3;
 
 	/* Parse Command Line Args */
-	// Consider using sscanf
 	char c;
 
 	/* If command line contains just the file at argv[1], write it into file_name */
@@ -84,7 +83,7 @@ int main(int argc, char **argv)
 	while ((c = getopt(argc,argv,"d:i:v:s:q:")) != -1) {
 		switch (c) {
 		case 'd':
-			if (!fileexists(optarg)) {  // this checks if the file actuall exists
+			if (!fileexists(optarg)) {  // this checks if the file actually exists
 				shell_error("Dictionary input file path invalid");
 				return EXIT_FAILURE;
 			}
@@ -156,7 +155,7 @@ int main(int argc, char **argv)
 	if (dict_read(dict, dict_name) == EXIT_SUCCESS) {
 		if (mode != 1) printf("Dictionary Successfully Parsed!\n");
 	} else {
-		if (mode != 1) printf("Trouble reading dictionary, exiting program\n");
+		printf("Trouble reading dictionary, exiting program\n");
         exit(0);
 	}
 
@@ -190,14 +189,14 @@ int main(int argc, char **argv)
 			break;
 		case 2: result = batch_mode(file_name, dict, quit, 1); // pass in dictionary 
 			break;
-		case 3: result = interactive_mode(file_name, dict, quit); // pass in dictionary - to implement
+		case 3: result = interactive_mode(file_name, dict, quit); // pass in dictionary
 			break;
 		default:
 			break;
 	}
 
 
-    if (mode != 2) {	// Save file, a functionality unnecessary for verbose batch mode
+    if (mode != 2 && result != NULL) {	// Save file, a functionality unnecessary for verbose batch mode
     md = strstr(save_file,".txt");
     	if (md != NULL) {
     		save_corrections(save_file, result);
@@ -209,6 +208,6 @@ int main(int argc, char **argv)
 
   }
 
-    shell_outro();
+    if (mode != 1) shell_outro();
 	return 0;
 }

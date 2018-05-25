@@ -9,8 +9,6 @@
  */
 void check_underline_misspelled(char* wrong, char* underline, char* expected) {
 	underline_misspelled(wrong, underline);
-	//printf("%s\n", underline);
-
 
 	int result = strcmp(underline, expected);
 
@@ -76,8 +74,6 @@ Test(main_functions, check_add_to_misspelled) {
 void test_correct_line(char* line, char* old_word, char* new_word, char* expected) {
 
 	char* corrected = correct_line(line, old_word, new_word);
-	//printf("%s\n", corrected);
-
 
 	int result = strcmp(corrected, expected);
 
@@ -136,8 +132,6 @@ Test(main_functions, correct_line3) {
 void check_underline_misspelled_sentence(char** badwords, char* sentence, int element, char* expected) {
 	char *underlined = underline_misspelled_sentence(badwords, sentence, element);
 
-	//printf("%s", underlined);
-
 	int result = strcmp(underlined, expected);
 
     cr_assert_eq(result, 0, "underline_misspelled test failed");
@@ -149,8 +143,6 @@ Test(main_functions, underline_misspelled_sentence) {
 	badwords[1] = "splling";
 	badwords[2] = NULL;
 	char *line = "bd splling is bad";
-	// char *line = (char *)malloc(strlen(line_hard)+1);
-	// strcpy(line, line_hard);
 
 	char *expected = "^^ ^^^^^^^";
     check_underline_misspelled_sentence(badwords, line, 0, expected);
@@ -164,24 +156,7 @@ Test(main_functions, underline_misspelled_sentence2) {
 	badwords[2] = "bd";
 	badwords[3] = NULL;
 	char *line = "bd splling is bd";
-	// char *line = (char *)malloc(strlen(line_hard)+1);
-	// strcpy(line, line_hard);
 
 	char *expected = "^^ ^^^^^^^    ^^";
     check_underline_misspelled_sentence(badwords, line, 0, expected);
 }
-
-
-// Test(scfunctions, underline_misspelled_sentence3) {
-// 	char **badwords = (char *)malloc((sizeof(char*)*4));
-// 	badwords[0] = "bood";
-// 	badwords[1] = "splling";
-// 	badwords[2] = "bd";
-// 	badwords[3] = NULL;
-// 	char *line = "bd bood splling is bd";
-// 	// char *line = (char *)malloc(strlen(line_hard)+1);
-// 	// strcpy(line, line_hard);
-
-// 	char *expected = "^^ ^^^^^^^    ^^";
-//     check_underline_misspelled_sentence(badwords, line, 0, expected);
-// }

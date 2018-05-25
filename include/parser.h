@@ -12,7 +12,7 @@
  * current limit to each string is 1000 characters
  * return NULL if file could not be opened
  * parameter: filename
- * return: file
+ * return: array of strings, each representing a line
  */
 char** parse_file(char* filename);
 

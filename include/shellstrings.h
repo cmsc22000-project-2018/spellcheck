@@ -66,7 +66,7 @@ void shell_error(char* error_text);
 char *shell_error_usage();
 
 /*
- * shell_erorr_exit - Error prompt regarding exiting the program due to an error for the shell.
+ * shell_error_exit - Error prompt regarding exiting the program due to an error for the shell.
  *
  * Parameters:
  *  - None.
