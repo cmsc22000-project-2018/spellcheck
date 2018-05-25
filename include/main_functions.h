@@ -1,22 +1,27 @@
-#ifndef INCLUDE_MAIN_FUNCTIONS_H
-#define INCLUDE_MAIN_FUNCTIONS_H
+/*
+ * Main function library for the shell
+ */
+
+#ifndef INCLUDE_MAIN_FUNCTIONS_H_
+#define INCLUDE_MAIN_FUNCTIONS_H_
 
 #include "parser.h"
 #include "dictionary.h"
 #include "word.h"
-/* 
-	Order of functions:
-		I. Saving files
-		II. Functions for editing strings (lines)
-		III. Interactive Mode
-		IV. Batch Mode
-		V. Main Page
- */
 
+/* 
+    Order of functions:
+        I. Saving files
+        II. Functions for editing strings (lines)
+        III. Interactive Mode
+        IV. Batch Mode
+        V. Main Page
+ */
 
 /*
 	I. Saving Files
  */
+
 /*
  * save_corrections: writes lines (lines) to a file with name (filename)
  * parameters: name of file (saving destination), array of strings to be printed in file
@@ -38,6 +43,7 @@ void save_page(char* filename, char** lines, int* quit);
 /*
 	II. Functions for editing strings
 */
+
 /*
  * underline_misspelled: generate "^" as underlines for misspelled words
  * parameters:
@@ -190,6 +196,5 @@ int change_mode(char* arg);
  * return: void
  */
 void main_page(int* quit, int *mode, char* file_name, char* dict_name);
-
 
 #endif

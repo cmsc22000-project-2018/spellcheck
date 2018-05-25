@@ -1,3 +1,10 @@
+
+/*
+ * Main function library for the shell
+ *
+ * See main_functions.h for function documentation.
+ */
+
 #include <stdlib.h> 
 #include <stdio.h>
 #include <unistd.h>
@@ -6,12 +13,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include "main_functions.h"
 #include "shellstrings.h"
 #include "parser.h"
-#include "main_functions.h"
 #include "dictionary.h"
 #include "word.h"
-
 
 /* 
  *	Order of functions:
@@ -24,22 +30,25 @@
 
 
 /*
- *	I. Saving Files
+ * I. Saving Files
  */
-void save_corrections(char* filename, char** lines)
-{
+
+/* See main_functions.h */
+void save_corrections(char *filename, char **lines) {
 	FILE* f = fopen(filename,"w");
     assert(f != NULL);
+
 	int i = 0;
 	while (lines[i] != NULL) {
 		fprintf(f, "%s", lines[i]); // write lines into file
 		i++;
 	}
+
 	fclose(f);
 }
 
-void save_page(char* filename, char** lines, int* quit)
-{
+/* See main_functions.h */
+void save_page(char *filename, char **lines, int *quit) {
 	int i = 1;
     char line[256];
     char* args = NULL;
@@ -90,11 +99,11 @@ void save_page(char* filename, char** lines, int* quit)
 }
 
 /*
- *	II. Functions for editing strings
+ * II. Functions for editing strings
  */
 
-void underline_misspelled(char *word, char* underline)
-{
+/* See main_functions.h */
+void underline_misspelled(char *word, char* underline) {
 	int j = strlen(word);
     int i;
 	for(i = 0; i < j; i++) {
@@ -103,8 +112,8 @@ void underline_misspelled(char *word, char* underline)
 		strcat(underline, " ");
 }
 
-void underline_correct_spelling(char *word, char* underline)
-{
+/* See main_functions.h */
+void underline_correct_spelling(char *word, char* underline) {
 	int j = strlen(word);
     int i;
 	for(i = 0; i < j; i++) {
@@ -114,6 +123,7 @@ void underline_correct_spelling(char *word, char* underline)
 
 }
 
+/* See main_functions.h */
 char* underline_misspelled_sentence(char** misspelled, char* sentence, int element) {
 
 	char* underline = malloc(strlen(sentence));
@@ -143,7 +153,7 @@ char* underline_misspelled_sentence(char** misspelled, char* sentence, int eleme
 	return underline;
 }
 
-
+/* See main_functions.h */
 int add_to_misspelled(char *word, char** misspelled)
 {
 	if (word == NULL || misspelled == NULL) {
@@ -157,6 +167,7 @@ int add_to_misspelled(char *word, char** misspelled)
 	return EXIT_SUCCESS;
 }
 
+/* See main_functions.h */
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 {
 	char *tkn = strtok(string, ":; ,.-\n'\"'\t\r\n\a"); //words only separated by these punctuation
@@ -178,7 +189,7 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 	return EXIT_SUCCESS;
 }
 
-//reference from https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
+/* See main_functions.h */
 char* correct_line(char* line, char* old_word, char* new_word)
 {
 	char buffer[2000] = {0}; //again, we might need to modify our size estimates
@@ -209,10 +220,8 @@ char* correct_line(char* line, char* old_word, char* new_word)
 	return line;
 }
 
-
-
-int initialize_misspelled(char **misspelled, int length)
-{
+/* See main_functions.h */
+int initialize_misspelled(char **misspelled, int length) {
 	if (misspelled==NULL) {
 		return EXIT_FAILURE;
 	}
@@ -226,11 +235,11 @@ int initialize_misspelled(char **misspelled, int length)
 
 
 /*
- *	III. Interactive Mode
+ * III. Interactive Mode
  */
 
-char* edit_interactive(char* line, dict_t* dict, int linenumber)
-{
+/* See main_functions.h */
+char* edit_interactive(char* line, dict_t* dict, int linenumber) {
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; //should the user decide this?
 
@@ -298,9 +307,10 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
 	return line_copy;
 }
 
+/* See main_functions.h */
+char** interactive_mode(char* filename, dict_t* dict, int* quit) {
+    //will pass in dictionary later
 
-char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in dictionary later
-{
 	char** lines;
 	lines = parse_file(filename);
 
@@ -319,11 +329,13 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit) //will pass in 
 /* 
 	IV. Batch Mode
  */
+
 // Adapted from sarika's edit_interactive
 // returns corrections to a list that contains misspelled words, or returns a corrected char** string
 // that can represent an array
-char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
-{
+
+/* See main_functions.h */
+char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum) {
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; //need only one suggestion
 
@@ -361,8 +373,8 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
 	return line_copy;
 }
 
-char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
-{
+/* See main_functions.h */
+char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity) {
 	if (verbosity) shell_verbose_start();
 
 	char** lines;
@@ -385,27 +397,25 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 }
 
 /*
-	V. Main Page
+ *  V. Main Page
  */
 
-
-void help_page()
-{
+/* See main_functions.h */
+void help_page() {
     shell_help();
 	shell_prompt();
 
-	parse_read_line();      // accept any input in the command line
+	parse_read_line(); // accept any input in the command line
 }
 
-int fileexists(const char* filename)
-{
+/* See main_functions.h */
+int fileexists(const char* filename) {
 	struct stat buffer;
 	return (stat(filename, &buffer) == 0);
 }
 
-
-int change_mode(char* arg)
-{
+/* See main_functions.h */
+int change_mode(char* arg) {
 	int a = atoi(arg);
     if ((a == 1) | (a == 2) | (a == 3)) {
         return a;
@@ -416,8 +426,8 @@ int change_mode(char* arg)
     return 3;
 }
 
-void main_page(int* quit, int *mode, char* file_name, char* dict_name)
-{
+/* See main_functions.h */
+void main_page(int* quit, int *mode, char* file_name, char* dict_name) {
 	char* line;
 	char** args;
 
