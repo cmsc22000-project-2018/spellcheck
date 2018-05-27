@@ -21,7 +21,7 @@ int is_in_array(char* word) {
 
 // checks if word is valid -- does not have erroneous punctuations within
 int valid_word(dict_t* dict, char* word) {
-	 if (dict_chars_exists(word) && *word != '\n') {
+	 if (dict_chars_exists(dict, word) && *word != '\n') {
 	    return dict_exists(dict, word);
 	}
 	else {
