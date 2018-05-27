@@ -13,7 +13,7 @@ Test(word, is_in_array)
 
     int i = is_in_array(c);
 
-    cr_assert_eq(i, 1, "testing for is_in_array, failed");
+    cr_assert_eq(i, EXIT_SUCCESS, "testing for is_in_array, failed");
 }
 
 /* testing is_in_array */
@@ -23,7 +23,7 @@ Test(word, is_in_array0)
 
     int i = is_in_array(c);
 
-    cr_assert_eq(i, -1, "testing for is_in_array, failed");
+    cr_assert_eq(i, EXIT_FAILURE, "testing for is_in_array, failed");
 }
 
 /* testing valid_word */
