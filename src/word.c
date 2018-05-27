@@ -30,19 +30,19 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 
     suggestions[2] = NULL;
 
-	if (strncmp(word, "splling", 7) == 0) {
+	if (strcmp(word, "splling") == 0) {
 		suggestions[0] = "spelling";
 		suggestions[1] = "spilling";
 		return EXIT_SUCCESS;
-	} else if (strncmp(word, "chequer", 7) == 0) {
+	} else if (strcmp(word, "chequer") == 0) {
     	suggestions[0] = "checker";
     	suggestions[1] = "cheque";
     	return EXIT_SUCCESS;;
-	} else if((strncmp(word, "cme", 3) == 0)) {
+	} else if((strcmp(word, "cme") == 0)) {
     	suggestions[0] = "come";
     	suggestions[1] = "came";
     	return EXIT_SUCCESS;;
-	} else if((strncmp(word, "m'y", 3) == 0)) {
+	} else if((strcmp(word, "m'y") == 0)) {
         suggestions[0] = "my";
         suggestions[1] = "me";
         return EXIT_SUCCESS;
