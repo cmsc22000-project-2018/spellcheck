@@ -129,8 +129,8 @@ Test(main_functions, correct_line3) {
 /*
  ***** underline_misspelled_sentence tests *****
  */
-void check_underline_misspelled_sentence(char** badwords, char* sentence, int element, char* expected) {
-	char *underlined = underline_misspelled_sentence(badwords, sentence, element);
+void check_underline_misspelled_sentence(char** badwords, char* sentence, char* expected) {
+	char *underlined = underline_misspelled_sentence(badwords, sentence);
 
 	int result = strcmp(underlined, expected);
 
