@@ -1,10 +1,10 @@
 # Makefile based on libgeometry test Makefile
 
 CC = gcc
-CFLAGS = -fPIC -Wall -Wextra -O2 -g -I../include/ -lm
+CFLAGS = -fPIC -Wall -Wextra -O2 -g -I../include/
 RM = rm -f
 BIN = test-spellcheck
-LDLIBS = -lcriterion 
+LDLIBS = -lcriterion
 
 
 TESTSRCS = test_main_functions_interactive.c test_word.c test_main_functions.c test_dictionary.c test_parser.c
@@ -17,7 +17,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(BIN)
 
 $(BIN): $(SRCS)
-	$(CC) $(CFLAGS) $(SRCS) -o -lm $(BIN) $(LDLIBS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(BIN) $(LDLIBS)
 
 clean:
 	-$(RM) $(OBJS) $(BIN) test_save.txt test_result.txt
