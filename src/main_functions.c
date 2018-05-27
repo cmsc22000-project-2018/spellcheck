@@ -166,23 +166,84 @@ int add_to_misspelled(char *word, char** misspelled)
 	return EXIT_SUCCESS;
 }
 
+
+int num_punctuation = 21;
+char* punctuation_array[] = {"+",","," ",".","-","'","&","!","?",":",";","#","~","=","/","$","£","^","\n","_","<",">"};
+
+
+int is_in_array(char* punctuation_array[], char* word) {
+    for (int i = 0; i < num_punctuation ; i++) {
+        printf("comparing %s to %s", word, punctuation_array[i]);
+        if (strcmp(punctuation_array[i], word) == 0) {  
+            return EXIT_SUCCESS;   }
+    }
+    printf("exiting");
+    return EXIT_FAILURE;
+}
+
+int remove_prefix_punctuation(char *word) {
+    char prefix_char = malloc(sizeof(char));
+    prefix_char = word[0];
+     printf(" prefix is %s \n", &prefix_char);
+
+    if (is_in_array(punctuation_array, &prefix_char) == EXIT_SUCCESS) {
+        printf("has prefix");
+        memmove(word, word+1, strlen(word)); 
+        return EXIT_SUCCESS; //shaved off prefix punctuation 
+    }
+    else {
+        printf("no prefix");
+    }
+
+}
+
+int remove_trailing_punctuation(char *word) {
+    char trailing_char = malloc(sizeof(char));
+    trailing_char = word[(strlen(word)-1)];
+     printf(" trail is %s \n", &trailing_char);
+
+    if (is_in_array(punctuation_array, &trailing_char) == EXIT_SUCCESS) {
+        printf("has trail");
+        word[strlen(word)-1] = '\0';
+        return EXIT_SUCCESS; //shaved off prefix punctuation 
+    }
+    else {
+        printf("no trail");
+    }
+
+}
+
+char* remove_punctuation(char *word) { //removes trailing and prefix punctuation without modifying original word
+    char *shaved_word = (char *)malloc(strlen(word));
+    printf("remove word is %s \n", word);
+    strcpy(shaved_word, word);
+    printf("strcpy \n");
+    remove_prefix_punctuation(shaved_word);
+    printf("prfix \n");
+    remove_trailing_punctuation(shaved_word);
+    printf("suffix \n");
+    return shaved_word;
+}
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 {
-	char *tkn = strtok(string, ":;\t\n ,.-\"!?()<>`*^"); //words only separated by these punctuation
+	char *tkn = strtok(string," \n"); //words only separated by spaces and newline
 	while (tkn != NULL) {
 
-		if (valid_word(dict, tkn) == EXIT_FAILURE){
+		char* shaved_word = remove_punctuation(tkn);
+
+		if (valid_word(dict, shaved_word) == EXIT_FAILURE){
 			underline_misspelled(tkn, underline);
-			add_to_misspelled(tkn, misspelled);
+			add_to_misspelled(shaved_word, misspelled);
 		}
-		else if (valid_word(dict, tkn) == EXIT_SUCCESS) {
+		else if (valid_word(dict, shaved_word) == EXIT_SUCCESS) {
 			underline_correct_spelling(tkn, underline);
 		}
 		else {
 			printf("error processing text");
 			return EXIT_FAILURE;
 		}
-		tkn = strtok(NULL, ":;\t\n ,.-\"!?()<>`*^");
+		tkn = strtok(NULL," \n"); //spaces are the only delimeters
+		//strtok(NULL, ":;\t\n ,.-\"!?()<>`*^");
 	}
 	return EXIT_SUCCESS;
 }
