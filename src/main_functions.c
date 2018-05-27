@@ -177,22 +177,19 @@ int is_in_array(char* punctuation_array[], char* word) {
         if (strcmp(punctuation_array[i], word) == 0) {  
             return EXIT_SUCCESS;   }
     }
-    printf("exiting");
     return EXIT_FAILURE;
 }
 
 int remove_prefix_punctuation(char *word) {
     char prefix_char = malloc(sizeof(char));
     prefix_char = word[0];
-     printf(" prefix is %s \n", &prefix_char);
 
     if (is_in_array(punctuation_array, &prefix_char) == EXIT_SUCCESS) {
-        printf("has prefix");
         memmove(word, word+1, strlen(word)); 
         return EXIT_SUCCESS; //shaved off prefix punctuation 
     }
     else {
-        printf("no prefix");
+    	return EXIT_SUCCESS;
     }
 
 }
@@ -200,28 +197,21 @@ int remove_prefix_punctuation(char *word) {
 int remove_trailing_punctuation(char *word) {
     char trailing_char = malloc(sizeof(char));
     trailing_char = word[(strlen(word)-1)];
-     printf(" trail is %s \n", &trailing_char);
 
     if (is_in_array(punctuation_array, &trailing_char) == EXIT_SUCCESS) {
-        printf("has trail");
         word[strlen(word)-1] = '\0';
         return EXIT_SUCCESS; //shaved off prefix punctuation 
     }
     else {
-        printf("no trail");
     }
 
 }
 
 char* remove_punctuation(char *word) { //removes trailing and prefix punctuation without modifying original word
     char *shaved_word = (char *)malloc(strlen(word));
-    printf("remove word is %s \n", word);
     strcpy(shaved_word, word);
-    printf("strcpy \n");
     remove_prefix_punctuation(shaved_word);
-    printf("prfix \n");
     remove_trailing_punctuation(shaved_word);
-    printf("suffix \n");
     return shaved_word;
 }
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
@@ -243,7 +233,6 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 			return EXIT_FAILURE;
 		}
 		tkn = strtok(NULL," \n"); //spaces are the only delimeters
-		//strtok(NULL, ":;\t\n ,.-\"!?()<>`*^");
 	}
 	return EXIT_SUCCESS;
 }
@@ -365,6 +354,8 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         } else if (choice[0] == 's') { // skip
 
         	printf("\nNo changes made to \"%s\". \n\n", misspelled[i]);
+        	printf("%s\n", line_copy);
+         	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
 
         } else if (choice[0] == 'i') { // insert
 
