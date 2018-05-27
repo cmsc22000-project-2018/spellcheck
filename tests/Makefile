@@ -7,7 +7,7 @@ BIN = test-spellcheck
 LDLIBS = -lcriterion
 
 #test_word.c in process of construction; add later
-TESTSRCS = test_main_functions_interactive.c test_main_functions.c test_dictionary.c test_parser.c
+TESTSRCS = test_main_functions_interactive.c test_main_functions.c test_dictionary.c test_parser.c test_mock_trie.c
 FILESRCS = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/main_functions.c ../src/shellstrings.c ../src/word.c
 
 SRCS = main.c $(TESTSRCS) $(FILESRCS)
