@@ -14,13 +14,13 @@ Test(word, valid_word)
 
     int i = valid_word(dict, c);
 
-    cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
+    cr_assert_eq(i, EXIT_SUCCESS, "testing for punctuation, failed");
 }
 
 /* testing valid_word */
 Test(word, valid_word1)
 {
-    char* c = strdup(".checker");
+    char* c = strdup(";checker");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
