@@ -40,7 +40,7 @@ void shell_save() {
 
 /* See shellstrings.h */
 void shell_edit_success() {
-     printf(GREEN "\nSpellchecking Successful!\n\n" RESET);
+     printf(GREEN "\nSpellchecking Complete!\n\n" RESET);
 }
 
 /* See shellstrings.h */

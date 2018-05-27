@@ -293,13 +293,25 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         } else if (choice[0] == 'i') { // insert
 
         	char c[50];
-        	printf("\nEnter your replacement: ");
-        	int insertcheck = scanf("%s", c);
+        	char sig[10];
+	        int userconsent = 0;
+		    int insertcheck = 0;
 
-        	while (insertcheck < 0) {
-        		shell_error("\n\nPlease enter a valid input!\n");
-        		shell_prompt();
-        		insertcheck = scanf("%s\n", c);
+        	while (!userconsent) {
+	        	printf("\nEnter replacement: ");
+		        insertcheck = scanf("%s", c);
+
+    	    	while (insertcheck < 0) {
+        			shell_error("\n\nPlease enter a valid input!\n");
+        			shell_prompt();
+        			insertcheck = scanf("%s\n", c);
+        		}
+
+        		printf("Are you sure you wish to replace \"%s\" with \"%s\"? [y, n] :", misspelled[i], c);
+        		scanf("%s", sig);
+        		if (sig[0] == 'y') {
+        			userconsent = 1;
+        		}
         	}
 
         	char* newword = strdup(c);
