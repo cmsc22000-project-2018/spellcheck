@@ -174,7 +174,6 @@ int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
 //returns if a particular character is a punctuation char
 int is_in_punct_array(char* punctuation_array[], char* word) {
     for (int i = 0; i < num_punctuation ; i++) {
-        printf("comparing %s to %s", word, punctuation_array[i]);
         if (strcmp(punctuation_array[i], word) == 0) {  
             return EXIT_SUCCESS;   }
     }
