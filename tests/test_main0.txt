@@ -6,6 +6,7 @@ f tests/test_short.txt
 1
 i
 checker
+y
 2
 a
 d
