@@ -67,12 +67,17 @@ char* parse_read_line()
 
 	char* cmdlineinput;
 	memset(input, '\0', READ_BUFFERSIZE);
-	char* i = fgets(input, READ_BUFFERSIZE, stdin);
+	input = fgets(input, READ_BUFFERSIZE, stdin);
+
+  if (input == NULL) {
+    fprintf(stderr, "read_line: fgets failed");
+    exit(2);
+  }
 
 	int n = strlen(input);
 	cmdlineinput = strdup(input);
 	if (input[n-1] == '\n')
-		cmdlineinpiut[n-1] = '\0';
+		cmdlineinput[n-1] = '\0';
 
 	return cmdlineinput;
 }
