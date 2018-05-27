@@ -173,7 +173,7 @@ void shell_verbose_chart(int lnum, char* misspelled, char** suggestions) {
 }
 
 void shell_save_message() {
-    printf("\n\n Enter a viable file name [path/*.txt] or enter 'r' to return to previous page.\n\n");
+    printf("\n\nEnter a file name [path/*.txt] or enter 'r' to return to previous page.\n\n");
     shell_prompt();
 }
 
