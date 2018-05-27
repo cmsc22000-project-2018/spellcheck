@@ -129,7 +129,7 @@ char* underline_misspelled_sentence(char** misspelled, char* sentence) {
 
 			int pos = ptr - sentence;
 			int i;
-            size_t j;
+			size_t j;
 
 			for(i = 0; i < pos; i++)
 				strcat(underline, " ");
