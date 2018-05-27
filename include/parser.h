@@ -7,12 +7,11 @@
 /* Parsing Functions for Parsing Input Files */
 
 /*
- * parse_file:
- * returns with pointer to array of strings, each of which represent a line in a given file
- * current limit to each string is 1000 characters
- * return NULL if file could not be opened
+ * parse_file
  * parameter: filename
- * return: file
+ * returns with pointer to array of strings, each of which represent a line in a given file
+ * current limit to each string is 4096 characters, excluding the newline
+ * return NULL if file could not be opened
  */
 char** parse_file(char* filename);
 

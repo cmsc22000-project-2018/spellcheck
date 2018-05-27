@@ -7,8 +7,6 @@
 
 #include "dictionary.h"
 
-int is_in_array(char* word);
-
 /*
  * valid_word - checks that word is in dictionary
  *
@@ -17,7 +15,8 @@ int is_in_array(char* word);
  *  - word: A string.
  *
  * Returns:
- *  - int: EXIT_SUCCESS or EXIT_FAILURE
+ * EXIT_FAILURE if it is not in dictionary
+ * EXIT_SUCCESS if it is in dictionary
  */
 int word_valid(dict_t *dict, char* word);
 

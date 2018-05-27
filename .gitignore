@@ -5,5 +5,4 @@ spellcheck
 .DS_Store
 settings.json
 parser_testing.txt
-result.txt
-result2.txt
+test_result.txt

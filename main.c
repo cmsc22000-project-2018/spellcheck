@@ -47,7 +47,7 @@
 
 int main(int argc, char **argv)
 {
-	// filenames up to 100 char
+	// filenames up to 400 char
 	char* dict_name = malloc(401 * sizeof(char*));
 	char* file_name = malloc(401 * sizeof(char*));
 	char* save_file = malloc(401 * sizeof(char*));
@@ -63,7 +63,6 @@ int main(int argc, char **argv)
 	int mode = 3;
 
 	/* Parse Command Line Args */
-	// Consider using sscanf
 	char c;
 
 	/* If command line contains just the file at argv[1], write it into file_name */
@@ -76,11 +75,12 @@ int main(int argc, char **argv)
 	while ((c = getopt(argc,argv,"d:i:v:s:q:")) != -1) {
 		switch (c) {
 		case 'd':
-			if (!fileexists(optarg)) {  // this checks if the file actuall exists
+			if (!fileexists(optarg)) {  // this checks if the file actually exists
 				shell_error("Dictionary input file path invalid");
 				return EXIT_FAILURE;
 			}
 			strcpy(dict_name,optarg);
+			if (mode == 3) shell_input(optarg, "dictionary");
 			break;
 		case 'i':
 			if (!fileexists(optarg)) {
@@ -99,7 +99,6 @@ int main(int argc, char **argv)
 			}
 			mode = 2;
             strcpy(file_name,optarg);
-			shell_input(optarg, "target file");
 			break;
 		case 'q':
 			if (!fileexists(optarg)) {
@@ -115,10 +114,11 @@ int main(int argc, char **argv)
                   return EXIT_FAILURE;
             }
 			strcpy(save_file,optarg);
-            if (mode != 1) shell_input(optarg,"file save destination");
+            if (mode == 3) shell_input(optarg,"file save destination");
+			break;
+		default:
 	        shell_error(shell_error_format());
             exit(0);
-			break;
 		}
 	}
 
@@ -145,8 +145,8 @@ int main(int argc, char **argv)
 
     int msg = dict_read(dict, dict_name);
 	if (msg == EXIT_FAILURE) {
-			shell_error("Failed to read in dictionary. Exiting Spellcheck");
-			exit(0);
+		shell_error(shell_error_dict());
+		exit(0);
 	}
 
 	/*
@@ -163,7 +163,6 @@ int main(int argc, char **argv)
     	shell_start_batch(file_name, dict_name, md);
     }
 
-
 	char** result=NULL;
 	// Execute either interactive or batch mode, and save file at end
 	switch (mode) {
@@ -171,23 +170,28 @@ int main(int argc, char **argv)
 			break;
 		case 2: result = batch_mode(file_name, dict, quit, 1); // pass in dictionary 
 			break;
-		case 3: result = interactive_mode(file_name, dict, quit); // pass in dictionary - to implement
+		case 3: result = interactive_mode(file_name, dict, quit); // pass in dictionary
 			break;
 		default:
 			break;
 	}
 
-    if (mode != 2) {	// Save file, a functionality unnecessary for verbose batch mode
-    // Success Message
+
+	*quit = 1;
+    if (mode != 2 && result != NULL) {	// Save file, a functionality unnecessary for verbose batch mode
     	if (mode == 3) shell_edit_success();
 
     	md = strstr(save_file,".txt");
-    		if (md != NULL) {
-    			save_corrections(save_file, result);
-    			*quit=1;
-    		} else {
-    			save_page(file_name, result, quit);
-    		}
+    	
+    	if (md == NULL && mode == 1) {
+    		shell_print(lines);
+    		*quit = 1;
+   		} else if (md != NULL) {
+    		save_corrections(save_file, result);
+    		*quit=1;
+    	} else {
+    		save_page(file_name, result, quit);
+    	}
     }
 
     if (!*quit) file_name = "";

@@ -9,19 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Colors to be used in strings for the shell strings */
-#define RESET       "\033[0m"               // Reset color
-#define RED         "\033[31m"              // Red 
-#define GREEN       "\033[32m"              // Green
-#define YELLOW      "\033[33m"              // Yellow
-#define BLUE        "\033[34m"              // Blue
-#define WHITE       "\033[37m"              // White
-#define BOLDRED     "\033[1m\033[31m"       // Bold Red
-#define BOLDGREEN   "\033[1m\033[32m"       // Bold Green
-#define BOLDYELLOW  "\033[1m\033[33m"       // Bold Yellow
-#define BOLDBLUE    "\033[1m\033[34m"       // Bold Blue
-#define BOLDWHITE   "\033[1m\033[37m"       // Bold White
-
 /*
  * shell_prompt - Default text input prompt string for the shell.
  *
@@ -56,7 +43,7 @@ void shell_main_menu();
 void shell_save();
 
 /*
- * shell_parse_success - file editing success message
+ * shell_edit_success - file editing success message
  *
  * Parameters:
  *  - None
@@ -76,17 +63,6 @@ void shell_edit_success();
  * 	- None.
  */
  void shell_print(char** lines);
-
-/*
- * shell_error - Default error prompt string for the shell.
- *
- * Parameters:
- *  - error_text: String for the specific error text.
- *
- * Returns:
- *  - None.
- */
-void shell_error(char* error_text);
 
 /*
  * shell_error_format - Error prompt regarding a format error
@@ -124,15 +100,15 @@ void shell_input(char* input_file, char* mode);
 char *shell_error_dict(char *dict_file);
 
 /*
- * shell_erorr_exit - Error prompt regarding exiting the program due to an error for the shell.
+ * shell_error - Default error prompt string for the shell.
  *
  * Parameters:
- *  - None.
+ *  - error_text: String for the specific error text.
  *
  * Returns:
- *  - char *: String for the error text.
+ *  - None.
  */
-char *shell_error_exit();
+void shell_error(char* error_text);
 
 /*
  * shell_help - Default text input prompt string for the shell.
@@ -177,27 +153,18 @@ void shell_start_batch(char* file_name, char* dict_name, char* md);
 char* shell_modename(int mode);
 
 /*
- * shell_dict_message - prints out success message after parsing dict, or failed message and exit.
- *
- * Parameters:
- *  - i, which is either EXIT_SUCCESS or EXIT_FAILURE
- *
- * Returns:
- *  - None.
- */
-// void shell_dict_message(int i);
-
-
-/*
  * shell_interactive_line_print: prints line, underlining errors
  *
  * Parameters:
- *  - None.
- *
+ *  - lnum: line number
+ *	- line: string of the line being edited
+ *	- underline: string of underlines, highlighting error words
+ *  - returnflag: if the line is the final line, an additional newline character must be printed
+ *		to avoid 
  * Returns:
  *  - None.
  */
-void shell_interactive_line_print(int lnum, char* line, char* underline);
+void shell_interactive_line_print(int lnum, char* line, char* underline, int returnflag);
 
 /*
  * shell_interactive_replacements
@@ -205,34 +172,12 @@ void shell_interactive_line_print(int lnum, char* line, char* underline);
  * Parameters:
  *  - word being replaced
  *  - list of suggestions
- *  - number of suggestions, for the loop
+ *  - flag indicating whether suggestion generation succeeded or not
  *
  * Returns:
  *  - None.
  */
-void shell_interactive_replacements(char* word, char** sug);
-
-/*
- * shell_verbose_start - verbose start message 
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
- */
-void shell_verbose_start();
-
-/*
- * shell_verbose_start - verbose chart print 
- *
- * Parameters:
- *  - 
- *
- * Returns:
- *  - None.
- */
-void shell_verbose_chart(int lnum, char* misspelled, char** suggestions);
+void shell_interactive_replacements(char* word, char** sug, int flag);
 
 /*
  * shell_save_message - save message
@@ -255,5 +200,19 @@ void shell_save_message();
  *  - None.
  */
 void shell_outro();
+
+/*
+ * shell_verbose_start - verbose chart print 
+ *
+ * Parameters:
+ *  - line number
+ *	- misspelled word
+ *	- generated suggestions
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_verbose_chart(int lnum, char* misspelled, char** suggestions);
+
 
 #endif

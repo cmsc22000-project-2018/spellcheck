@@ -6,54 +6,64 @@
 #include "dictionary.h"
 #include "suggestion.h"
 
-
-/* testing is_in_array */
-Test(word, is_in_array)
+/* testing valid_word */
+Test(word, valid_word)
 {
-    char* c = strdup(".");
+    char* c = strdup("have");
+    dict_t* dict = dict_new();
+    dict_read(dict, "tests/sample_dict.txt");
 
-    int i = is_in_array(c);
+    int i = valid_word(dict, c);
 
-    cr_assert_eq(i, 1, "testing for is_in_array, failed");
+    cr_assert_eq(i, EXIT_SUCCESS, "testing for punctuation, failed");
 }
 
-/* testing is_in_array */
-Test(word, is_in_array0)
-{
-    char* c = strdup("p");
 
-    int i = is_in_array(c);
-
-    cr_assert_eq(i, -1, "testing for is_in_array, failed");
-}
-
+<<<<<<< HEAD
 /* testing word_valid */
 Test(word, word_valid)
+=======
+/* testing valid_word */
+Test(word, valid_word1)
+>>>>>>> origin/dev
 {
-    char* c = strdup(",pac");
-    dict_t* dict = NULL;
+    char* c = strdup(";checker");
+    dict_t* dict = dict_new();
+    dict_read(dict, "tests/sample_dict.txt");
 
     int i = word_valid(dict, c);
 
     cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
 }
 
+<<<<<<< HEAD
 /* testing word_valid */
 Test(word, word_valid1)
+=======
+/* testing valid_word */
+Test(word, valid_word2)
+>>>>>>> origin/dev
 {
-    char* c = strdup(".pac");
-    dict_t* dict = NULL;
+    char* c = strdup("p'ac");
+    dict_t* dict = dict_new();
+    dict_read(dict, "tests/sample_dict.txt");
 
     int i = word_valid(dict, c);
 
     cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
 }
 
+<<<<<<< HEAD
 /* testing word_valid */
 Test(word, word_valid2)
+=======
+/* testing valid_word */
+Test(word, valid_word3)
+>>>>>>> origin/dev
 {
-    char* c = strdup("p'ac");
-    dict_t* dict = NULL;
+    char* c = strdup("ac");
+    dict_t* dict = dict_new();
+    dict_read(dict, "tests/sample_dict.txt");
 
     int i = word_valid(dict, c);
 
@@ -70,7 +80,8 @@ Test(word, generate_suggestions)
         fprintf(stderr,"malloc failed, generate_suggestions");
         exit(0);
     }
-    dict_t* dict = NULL;
+    dict_t* dict = dict_new();
+    dict_read(dict, "tests/sample_dict.txt");
 
     int i = generate_suggestions(c, dict, suggestions);
 
@@ -89,7 +100,8 @@ Test(word, generate_suggestions1)
         fprintf(stderr,"malloc failed, generate_suggestions1");
         exit(0);
     }
-    dict_t* dict = NULL;
+    dict_t* dict = dict_new();
+    dict_read(dict, "tests/sample_dict.txt");
 
     int i = generate_suggestions(c, dict, suggestions);
 
@@ -105,7 +117,8 @@ Test(word, generate_suggestions2)
         fprintf(stderr,"malloc failed, generate_suggestions2");
         exit(0);
     }
-    dict_t* dict = NULL;
+    dict_t* dict = dict_new();
+    dict_read(dict, "tests/sample_dict.txt");
 
     int i = generate_suggestions(c, dict, suggestions);
 
@@ -119,16 +132,41 @@ Test(word, generate_suggestions2)
 Test(word, generate_suggestions3)
 {
     char* c = strdup("cme");
-    dict_t* dict = NULL;
     char** suggestions = calloc(2, sizeof(char*));
     if (suggestions == NULL) {
         fprintf(stderr,"malloc failed, generate_suggestions3");
         exit(0);
     }
+    dict_t* dict = dict_new();
+    dict_read(dict, "tests/sample_dict.txt");
+
     int i = generate_suggestions(c, dict, suggestions);
 
     cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");
 
     i = strncmp("come", suggestions[0], 5);
     cr_assert_eq(i, 0, "suggestion output incorrect");
+<<<<<<< HEAD
 }
+=======
+}
+
+/* testing generate_suggestions */
+Test(word, generate_suggestions4)
+{
+    char* c = strdup("cme");
+    char** suggestions = calloc(2, sizeof(char*));
+    if (suggestions == NULL) {
+        fprintf(stderr,"malloc failed, generate_suggestions3");
+        exit(0);
+    }
+    dict_t* dict = NULL;
+
+    int i = generate_suggestions(c, dict, suggestions);
+
+    cr_assert_eq(i, EXIT_FAILURE, "int return value incorrect");
+
+    i = strncmp("no suggestions", suggestions[0], 14);
+    cr_assert_eq(i, 0, "suggestion output incorrect");
+}
+>>>>>>> origin/dev

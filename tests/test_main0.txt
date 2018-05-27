@@ -1,20 +1,16 @@
 h
 return
-d dict2.txt
-f text2.txt
-start
-3
+d
+f asdf
+f tests/test_short.txt
+1
+i
+checker
 2
-2
-2
-3
-2
-3
-2
-2
-2
-2
-2
+a
+d
+1
+s
 p
 c
-result2.txt
+test_result.txt
