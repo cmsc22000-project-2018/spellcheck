@@ -8,7 +8,7 @@
  * is_in_array: checks if a given punctuation is within a word
  * parameters: dictionary, word
  * returns: int
- * EXIT_FAILURE is if it is not in array
+ * EXIT_FAILURE if 
  * EXIT_SUCCESS is if it is
  */
 int word_chars_exists(dict_t* dict, char* word);

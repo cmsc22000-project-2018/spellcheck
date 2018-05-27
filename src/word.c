@@ -13,7 +13,9 @@ int word_chars_exists(dict_t* dict, char* word) {
 
 */
     int i;
-	for (i = 0; i < num_punctuation ; i++) {
+    int len = strlen(word);
+
+	for (i = 0; i < len ; i++) {
 		if (dict_chars_exists(dict, word[i]) == EXIT_FAILURE) {
 			return EXIT_SUCCESS;
         }
