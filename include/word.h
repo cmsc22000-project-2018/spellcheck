@@ -6,12 +6,12 @@
 
 /*
  * is_in_array: checks if a given punctuation is within a word
- * parameters: array of punctuations, word
+ * parameters: dictionary, word
  * returns: int
  * EXIT_FAILURE is if it is not in array
  * EXIT_SUCCESS is if it is
  */
-int is_in_array(char* word);
+int word_chars_exists(dict_t* dict, char* word);
 
 /*
  * valid_word: checks that word is in dictionary

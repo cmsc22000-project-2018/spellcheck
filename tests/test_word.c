@@ -30,7 +30,8 @@ Test(word, is_in_array0)
 Test(word, valid_word)
 {
     char* c = strdup(",pac");
-    dict_t* dict = NULL;
+    dict_t* dict = dict_new();
+    dict_read(dict, "tests/sample_dict.txt");
 
     int i = valid_word(dict, c);
 
@@ -41,7 +42,8 @@ Test(word, valid_word)
 Test(word, valid_word1)
 {
     char* c = strdup(".pac");
-    dict_t* dict = NULL;
+    dict_t* dict = dict_new();
+    dict_read(dict, "tests/sample_dict.txt");
 
     int i = valid_word(dict, c);
 
@@ -52,7 +54,8 @@ Test(word, valid_word1)
 Test(word, valid_word2)
 {
     char* c = strdup("p'ac");
-    dict_t* dict = NULL;
+    dict_t* dict = dict_new();
+    dict_read(dict, "tests/sample_dict.txt");
 
     int i = valid_word(dict, c);
 

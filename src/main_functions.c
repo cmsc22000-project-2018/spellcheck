@@ -120,6 +120,7 @@ void underline_correct_spelling(char *word, char* underline)
 char* underline_misspelled_sentence(char** misspelled, char* sentence) {
 
 	char* underline = malloc(strlen(sentence));
+	underline[0] = '\0';
 	int element = 0;
 
 	while(misspelled[element] != NULL) {

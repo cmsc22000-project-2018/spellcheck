@@ -6,22 +6,24 @@
 #include "dictionary.h"
 
 // checks
-int is_in_array(char* word) {
-    int num_punctuation = 22;
+int word_chars_exists(dict_t* dict, char* word) {
+/*    int num_punctuation = 22;
     char* punctuation_array[] = {"+",",",":"," ",".","-","'","&","!","?",":",";",
                                     "#","~","=","/","$","£","^","\n","_","<",">"};
 
+*/
     int i;
 	for (i = 0; i < num_punctuation ; i++) {
-		if (strcmp(punctuation_array[i], word) == 0) {
-			return EXIT_SUCCESS;	}
+		if (dict_chars_exists(dict, word[i]) == EXIT_FAILURE) {
+			return EXIT_SUCCESS;
+        }
 	}
 	return EXIT_FAILURE;
 }
 
 // checks if word is valid -- does not have erroneous punctuations within
 int valid_word(dict_t* dict, char* word) {
-	 if (dict_chars_exists(dict, word) && *word != '\n') {
+	 if (word_chars_exists(dict, word) == EXIT_FAILURE && *word != '\n') {
 	    return dict_exists(dict, word);
 	}
 	else {
