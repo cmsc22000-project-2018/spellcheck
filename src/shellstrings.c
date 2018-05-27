@@ -40,7 +40,7 @@ void shell_save() {
 
 /* See shellstrings.h */
 void shell_edit_success() {
-     printf(GREEN "Spellchecking Successful!\n\n" RESET);
+     printf(GREEN "\nSpellchecking Successful!\n\n" RESET);
 }
 
 /* See shellstrings.h */
@@ -111,15 +111,8 @@ void shell_help() {
 void shell_start_interactive(char* file_name, char* dict_name, char* md) {
     printf("\n\n" BOLDWHITE "------------------------------------------------------------\n" RESET);
     printf(BOLDWHITE "--------------------EDITING STARTED WITH--------------------\n" RESET);
-    printf("\n" BOLDWHITE "------------------------------------------------------------\n" RESET);
+    printf(BOLDWHITE "------------------------------------------------------------\n" RESET);
     printf(GREEN "file: %s\ndictionary: %s\nmode: %s\n\n" RESET, file_name, dict_name, md);
-    printf(BOLDWHITE "Enter any command to start interactive\n\n" RESET);
-    shell_prompt();
-}
-
-void shell_start_batch(char* file_name, char* dict_name, char* md) {
-    printf(BOLDWHITE "--------------------EDITING STARTED WITH--------------------\n" RESET);
-    printf("file: %s\ndictionary: %s\nmode: %s\n\n", file_name, dict_name, md);
 }
 
 char* shell_modename(int mode) {
@@ -137,28 +130,27 @@ void shell_interactive_line_print(int lnum, char* line, char* underline, int ret
     printf(BOLDWHITE "%s" RESET, line);
     if (returnflag) printf("\n");
     printf(BOLDRED "%s" RESET, underline);
-    printf("\n\n");
+    printf("\n");
 }
 
 
 void shell_interactive_replacements(char* word, char** sug, int flag) {
+    int j = 0;
     if (flag == EXIT_FAILURE) {
-        suggestions[0] = flag; // to avoid error
-        suggestions[1] = flag;
-        printf("\nNo suggestions have been generated for %s.\n", misspelled[i]);
+        sug[0] = word;
+        printf("\nNo suggestions have been generated for %s.\n", word);
         printf("\nd : Delete Word.\n");
         printf("i : Input Word.\n");
         printf("s : Skip.\n");
     } else {
         printf("\nPossible replacements for word %s are:\n\n", word);
-        int j = 0;
         while (sug[j] != NULL) {
             printf("%d : %s \n", j + 1, sug[j]);
             j++;
+        }
         printf("\nd : Delete Word.\n");
         printf("i : Input Word.\n");
         printf("s : Skip.\n");
-        }
     }
 }
 

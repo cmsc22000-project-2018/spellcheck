@@ -251,14 +251,14 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
 
     if (misspelled[0] != NULL) shell_interactive_line_print(linenumber, line_copy, underline, returnflag);
 
-    char *suggestions[max_no_suggestions]; //generates empty array where suggestions will be filled
- 
+    char *suggestions[max_no_suggestions + 1]; //generates empty array where suggestions will be filled
+    suggestions[max_no_suggestions] = NULL;
+
     int i = 0;
 
     //replacing words according to user suggestions
     while (misspelled[i] != NULL) {
     	int rc = generate_suggestions(misspelled[i], dict, suggestions);
-        suggestions[max_no_suggestions] = NULL;
 
         shell_interactive_replacements(misspelled[i], suggestions, rc);
 
@@ -276,6 +276,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         		check = 1;
         	}
         }
+
 
         if (choice[0] == 'd') {	// delete
 
@@ -317,13 +318,9 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
          	printf("%s\n", line_copy);
          	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
         }
-
         i++;	// added loop changer
     }
 
-
-    free(underline);
-    free(line);
 	return line_copy;
 }
 
@@ -372,7 +369,8 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
     underline[0] = '\0';
 
     parse_string(line, dict, underline, misspelled); //identify misspelled words and add to misspelled
-    char *suggestions[max_no_suggestions]; //generates empty array where suggestions will be filled
+    char *suggestions[max_no_suggestions + 1]; //generates empty array where suggestions will be filled
+    suggestions[max_no_suggestions] = NULL;
 
     int i = 0;
     //replacing words, printing out if batch mode

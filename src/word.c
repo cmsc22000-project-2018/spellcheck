@@ -12,7 +12,7 @@
 #include "dictionary.h"
 
 // checks if word is valid -- does not have erroneous punctuations within
-int valid_word(dict_t* dict, char* word) {
+int word_valid(dict_t* dict, char* word) {
     if (dict_chars_exists(dict, *word) == EXIT_SUCCESS && *word != '\n') {
 	    return dict_exists(dict, word);
 	}
@@ -27,8 +27,6 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
         suggestions[1] = NULL;
         return EXIT_FAILURE;
     }
-
-    suggestions[2] = NULL;
 
 	if (strncmp(word, "splling", 7) == 0) {
 		suggestions[0] = "spelling";

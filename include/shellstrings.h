@@ -9,6 +9,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define RESET       "\033[0m"               // Reset color
+#define RED         "\033[31m"              // Red
+#define YELLOW      "\033[33m"              // Yellow
+#define GREEN       "\033[32m"              // Green
+#define BLUE        "\033[34m"              // Blue
+#define WHITE       "\033[37m"              // White
+#define BOLDRED     "\033[1m\033[31m"       // Bold Red
+#define BOLDGREEN   "\033[1m\033[32m"       // Bold Green
+#define BOLDYELLOW  "\033[1m\033[33m"       // Bold Yellow
+#define BOLDBLUE    "\033[1m\033[34m"       // Bold Blue
+#define BOLDWHITE   "\033[1m\033[37m"       // Bold White
+
 /*
  * shell_prompt - Default text input prompt string for the shell.
  *
@@ -132,17 +144,6 @@ void shell_help();
  */
 void shell_start_interactive(char* file_name, char* dict_name, char* md);
 
-
-/*
- * shell_batch_start - print out batch starting message
- *
- * Parameters:
- *  - file, dictionary, mode names
- *
- * Returns:
- *  - None.
- */
-void shell_start_batch(char* file_name, char* dict_name, char* md);
 
 /*
  * shell_modename - prints out mode name (verbose, quiet or interactive)

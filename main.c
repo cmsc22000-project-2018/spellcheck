@@ -145,22 +145,16 @@ int main(int argc, char **argv)
 
     int msg = dict_read(dict, dict_name);
 	if (msg == EXIT_FAILURE) {
-		shell_error(shell_error_dict());
+		shell_error(shell_error_dict(dict_name));
 		exit(0);
 	}
 
 	/*
-		Starting to Parse file! Print messages accordingly
+		Starting to Parse file! Printing messages accordingly
 	 */
 	char* md = shell_modename(mode);
     if (mode == 3) {
-    	char* anyinput = calloc(20, sizeof(char));
 		shell_start_interactive(file_name, dict_name, md);
-		int check = scanf("%s", anyinput);
-		assert (!(check < 0));
-		free(anyinput);
-    } else if (mode == 2) {
-    	shell_start_batch(file_name, dict_name, md);
     }
 
 	char** result=NULL;
@@ -184,7 +178,7 @@ int main(int argc, char **argv)
     	md = strstr(save_file,".txt");
     	
     	if (md == NULL && mode == 1) {
-    		shell_print(lines);
+    		shell_print(result);
     		*quit = 1;
    		} else if (md != NULL) {
     		save_corrections(save_file, result);
