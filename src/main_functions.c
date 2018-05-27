@@ -117,10 +117,10 @@ void underline_correct_spelling(char *word, char* underline)
 
 }
 
-char* underline_misspelled_sentence(char** misspelled, char* sentence, int element) {
+char* underline_misspelled_sentence(char** misspelled, char* sentence) {
 
 	char* underline = malloc(strlen(sentence));
-	underline[0] = '\0'; 
+	int element = 0;
 
 	while(misspelled[element] != NULL) {
 
@@ -129,11 +129,14 @@ char* underline_misspelled_sentence(char** misspelled, char* sentence, int eleme
 
 			int pos = ptr - sentence;
 			int i;
-			for(i = 0; i < pos; i++) strcat(underline, " ");
-
             size_t j;
+
+			for(i = 0; i < pos; i++)
+				strcat(underline, " ");
+
             size_t slen = strlen(misspelled[element]);
-			for (j = 0; j < slen; j++) strcat(underline, "^");
+			for (j = 0; j < slen; j++)
+				strcat(underline, "^");
 
 			sentence = ptr+strlen(misspelled[element]);
 
@@ -215,21 +218,6 @@ char* correct_line(char* line, char* old_word, char* new_word)
 }
 
 
-
-int initialize_misspelled(char **misspelled, int length)
-{
-	if (misspelled==NULL) {
-		return EXIT_FAILURE;
-	}
-    int i;
-	for (i = 0; i < length; i++) {
-    	misspelled[i] = NULL; //initialize each element to be NULL
-    }
-    return EXIT_SUCCESS;
-}
-
-
-
 /*
  *	III. Interactive Mode
  */
@@ -247,7 +235,6 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
     }
 
     char *underline = (char *)malloc(sizeof(char) * strlen(line + 1)); //generate an empty array where the underline will go
-    underline[0] = '\0'; 
 
     parse_string(line, dict, underline, misspelled); //identify misspelled words and add to misspelled
     //add to underline function 
@@ -310,7 +297,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         	correct_line(line_copy, misspelled[i], "");
 
          	printf("%s\n", line_copy);
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, i+1));
+         	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
 
         } else if (choice[0] == 's') { // skip
 
@@ -333,7 +320,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         	correct_line(line_copy, misspelled[i], newword); //modifies line function
 
          	printf("%s\n", line_copy);
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, i+1));
+         	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
 
         } else if (isdigit(choice[0]) > 0 && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
 
@@ -342,7 +329,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         	correct_line(line_copy, misspelled[i], suggestions[c]); //modifies line function
 
          	printf("%s\n", line_copy);
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, i+1));
+         	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
         }
 
         i++;	// added loop changer
@@ -392,7 +379,6 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
     }
 
     char *underline = (char *)malloc(sizeof(char) * strlen(line + 1)); //generate an empty array where the underline will go
-    underline[0] = '\0'; 
 
     parse_string(line, dict, underline, misspelled); //identify misspelled words and add to misspelled
     char *suggestions[max_no_suggestions]; //generates empty array where suggestions will be filled

@@ -62,10 +62,9 @@ void underline_correct_spelling(char *word, char* underline);
  * paramters:
  *      - array of misspelled words
  *      - sentence to be edited
- *      - element - number in char array indicating misspelled word
  * returns: underline for line
  */
-char* underline_misspelled_sentence(char** misspelled, char* sentence, int element);
+char* underline_misspelled_sentence(char** misspelled, char* sentence);
 
 /*
  * add_to_misspelled: add an incorrect word to list of misspelled words
@@ -97,16 +96,6 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
  * return: edited line 
  */
 char* correct_line(char* line, char* old_word, char* new_word);
-
-//initialises each element in array (that stores misspelled words in a line) to NULL
-/*
- * initialize_misspelled: initialize array to be used in edit_interactive/edit_batch
- * parameters:
- *      - malloced array of misspelled words from interactive_mode
- *      - length of array
- * return: int indicating success (EXIT_SUCCESS OR FAILURE)
- */
-int initialize_misspelled(char **misspelled, int length);
 
 /*
 	III. Interactive Mode
