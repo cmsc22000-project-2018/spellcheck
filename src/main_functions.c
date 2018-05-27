@@ -167,11 +167,12 @@ int add_to_misspelled(char *word, char** misspelled)
 }
 
 
-int num_punctuation = 21;
+
 char* punctuation_array[] = {"+",","," ",".","-","'","&","!","?",":",";","#","~","=","/","$","£","^","\n","_","<",">"};
+int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
 
-
-int is_in_array(char* punctuation_array[], char* word) {
+//returns if a particular character is a punctuation char
+int is_in_punct_array(char* punctuation_array[], char* word) {
     for (int i = 0; i < num_punctuation ; i++) {
         printf("comparing %s to %s", word, punctuation_array[i]);
         if (strcmp(punctuation_array[i], word) == 0) {  
@@ -180,11 +181,12 @@ int is_in_array(char* punctuation_array[], char* word) {
     return EXIT_FAILURE;
 }
 
+//removes the prefix of a word if it is is a punctuation char
 int remove_prefix_punctuation(char *word) {
     char prefix_char = malloc(sizeof(char));
     prefix_char = word[0];
 
-    if (is_in_array(punctuation_array, &prefix_char) == EXIT_SUCCESS) {
+    if (is_in_punct_array(punctuation_array, &prefix_char) == EXIT_SUCCESS) {
         memmove(word, word+1, strlen(word)); 
         return EXIT_SUCCESS; //shaved off prefix punctuation 
     }
@@ -194,19 +196,22 @@ int remove_prefix_punctuation(char *word) {
 
 }
 
+//removes the suffix of a word if it is the punctuation char
 int remove_trailing_punctuation(char *word) {
     char trailing_char = malloc(sizeof(char));
     trailing_char = word[(strlen(word)-1)];
 
-    if (is_in_array(punctuation_array, &trailing_char) == EXIT_SUCCESS) {
+    if (is_in_punct_array(punctuation_array, &trailing_char) == EXIT_SUCCESS) {
         word[strlen(word)-1] = '\0';
         return EXIT_SUCCESS; //shaved off prefix punctuation 
     }
     else {
+    	return EXIT_SUCCESS;
     }
 
 }
 
+//shaves off trailing and prefix punctuation
 char* remove_punctuation(char *word) { //removes trailing and prefix punctuation without modifying original word
     char *shaved_word = (char *)malloc(strlen(word));
     strcpy(shaved_word, word);
@@ -214,6 +219,7 @@ char* remove_punctuation(char *word) { //removes trailing and prefix punctuation
     remove_trailing_punctuation(shaved_word);
     return shaved_word;
 }
+
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 {
 	char *tkn = strtok(string," \n"); //words only separated by spaces and newline
@@ -232,7 +238,7 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 			printf("error processing text");
 			return EXIT_FAILURE;
 		}
-		tkn = strtok(NULL," \n"); //spaces are the only delimeters
+		tkn = strtok(NULL," \n"); //spaces and \n are the only delimeters
 	}
 	return EXIT_SUCCESS;
 }
@@ -411,7 +417,6 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit)
     *quit = 0;
 	return lines;
 }
-
 /* 
 	IV. Batch Mode
  */
