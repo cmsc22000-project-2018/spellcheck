@@ -478,7 +478,7 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 	if (lines == NULL) {
 		shell_error("file parsing error: check txt file");
 		*quit=1;
-		return lines;
+		return NULL;
 	}
 
 	if (verbosity) printf("LINE\t\t\tWORD\t\t\tSUGGESTIONS\n");
