@@ -23,10 +23,11 @@ void shell_main_menu() {
                 "Additionally, select an output mode and/or "
                 "choose dictionary before running the program.\n\n" RESET);
 
-    printf("f [/path/file.txt]           : open file\n");
-    printf("d [/path/dictionary.txt]     : input custom dictionary file\n");
-    printf("h                            : help\n");
-    printf("q                            : quit program\n");
+    printf("f [/path/file.txt]       : open file\n");
+    printf("d [/path/dictionary.txt] : input custom dictionary file\n");
+    printf("m [number]               : mode [1 - quiet, 2 - verbose, 3 - interactive]\n");
+    printf("h                        : help\n");
+    printf("q                        : quit program\n");
 }
 
 /* See shellstrings.h */
@@ -96,16 +97,18 @@ char *shell_error_exit() {
 
 /* See shellstrings.h */
 void shell_help() {
-    printf(BLUE "Spellcheck is a tool which searches for misspelled words "
-           "and suggests alternative spellings given a text file.\n" RESET);
-    printf("Currently, you are in the interactive mode.\n");
+    printf(BLUE "\nSpellcheck is a tool which searches for misspelled words "
+           "and suggests alternative spellings given a text file.\n\n" RESET);
+    printf("Currently, you are in interactive mode. Return to the previous page to input a file.\n\n");
     printf("To run in batch mode, exit the program with the command " BOLDWHITE "exit" RESET
-           ", and run: " BOLDWHITE "$ ./spellcheck -f /path/file.txt\n" RESET);
+           ", and run: " BOLDWHITE "$ ./spellcheck [-flag] /path/file.txt." RESET);
     printf("Flags: " BOLDWHITE "-q" RESET " is for quiet, and " BOLDWHITE
-           "-v" RESET " is for verbose.\n");
+           "-v" RESET " is for verbose.\n\n");
     printf("To input a custom dictionary to the program, include " BOLDWHITE 
-           "-d /path/dictionary.txt" RESET " at the end of the command line.\n");
-    printf(BLUE "\nEnter any command to return to the previous page." RESET "\n");
+           "-d /path/dictionary.txt" RESET ", and\n");
+    printf("to provide a file saving destination, include " BOLDWHITE 
+           "-s /path/filename.txt" RESET ".\n\n");
+    printf(BLUE "\nEnter any command to return to the previous page." RESET "\n\n");
 }
 
 void shell_start_interactive(char* file_name, char* dict_name, char* md) {
@@ -156,15 +159,15 @@ void shell_interactive_replacements(char* word, char** sug, int flag) {
 
 
 void shell_verbose_chart(int lnum, char* misspelled, char** suggestions) {
-    printf(BOLDWHITE "%d\t\t\t" RESET, lnum); // print line number
+    printf("%d\t\t\t", lnum); // print line number
     int ntab = 3 - (strlen(misspelled) / 8); // number of tabs
     int j;
-    printf(RED "%s" RESET, misspelled);
+    printf("%s", misspelled);
     for (j = 0; j < ntab; j++) printf("\t");
 
     j = 0;
     while (suggestions[j] != NULL) {
-        printf(GREEN "%s" RESET, suggestions[j]);
+        printf("%s", suggestions[j]);
         if (suggestions[j + 1] != NULL) printf(", ");
         j++;
 

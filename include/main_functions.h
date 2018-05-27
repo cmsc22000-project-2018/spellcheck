@@ -24,7 +24,9 @@
 
 /*
  * save_corrections: writes lines (lines) to a file with name (filename)
- * parameters: name of file (saving destination), array of strings to be printed in file
+ * parameters:
+ *      - name of file (saving destination)
+ *      - array of strings to be printed in file
  * returns: void
  */
 void save_corrections(char* filename, char** lines);
@@ -36,6 +38,7 @@ void save_corrections(char* filename, char** lines);
  *      - name of file (saving destination)
  *      - array of strings to be printed in file
  *      - a pointer to an int, which is a flag to main indicating whether spellcheck should exit
+ *          1 is exit, 0 is continue
  * returns: void
  */
 void save_page(char* filename, char** lines, int* quit);
