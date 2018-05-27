@@ -4,7 +4,7 @@
 #include <assert.h>
 #include "parser.h"
 
-#define MAXCHAR 1025	// limit is 1024
+#define MAXCHAR 4098
 #define INITLINE 100
 #define READ_BUFFERSIZE 256
 #define LSH_TOK_BUFFERSIZE 64

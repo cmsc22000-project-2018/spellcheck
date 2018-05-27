@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>	
 #include <unistd.h>
+#include <ctype.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdlib.h>
@@ -264,43 +265,86 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber)
     while (misspelled[i] != NULL) {
     	int rc = generate_suggestions(misspelled[i], dict, suggestions);
 
-    	if(rc != -1) {
-    	    printf("Possible replacements for word %s are:\n\n", misspelled[i]);
-        	printf("0 : Delete Word. \n");
-        	printf("1 : No replacement. \n");
-            int j;
-        	for (j = 0; j < max_no_suggestions; j++) {
-       		printf("%d : %s \n", j+2, suggestions[j]);
-          	}  	
+    	if (rc == -1) {
+			suggestions[0] = misspelled[i];	// to avoid error
+			suggestions[1] = misspelled[i];
+			suggestions[2] = NULL;
+			printf("\nNo suggestions have been generated for %s.\n", misspelled[i]);
+       		printf("\nd : Delete Word.\n");
+       		printf("i : Input Word.\n");
+        	printf("s : Skip.\n");
 
+    	} else {
+    	    printf("\nPossible replacements for word %s are:\n\n", misspelled[i]);
+            int j = 0;
+        	while (suggestions[j] != NULL) {
+       			printf("%d : %s \n", j + 1, suggestions[j]);
+       			j++;
+       		}
+       		printf("\nd : Delete Word.\n");
+       		printf("i : Input Word.\n");
+        	printf("s : Skip.\n");
         }
+
         printf("\n\n");
 
-    
-        int choice;
-        shell_prompt();
-        int check = scanf("%d", &choice);
-        assert(check != EOF);
+        char choice[10];
+        int check = 0;
 
-        if ((choice < 0) | (choice > max_no_suggestions + 1)) {
-                shell_error("Please enter a valid number");
-                printf("\n\n");
-        //        scan = 0;
+      while (!check) {
+    		shell_prompt();
+        	check = scanf("%s", choice);
+
+        	if (!(choice[0] == 's') && !(choice[0] == 'd') && !(choice[0] == 'i') && !(isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions))) {
+                shell_error("Please enter a valid input");
+                check = 0;
+        	} else {
+        		check = 1;
+        	}
         }
 
-        if (choice == 0) {
-           	printf("Deleting %s.\n", misspelled[i]);
+        if (choice[0] == 'd') {	// delete
+
+           	printf("\nDeleting %s. ", misspelled[i]);
         	correct_line(line_copy, misspelled[i], "");
-           	printf("New sentence is: \n\n");
-         	printf("%s\n\n", line_copy);
+
+           	printf("New sentence is:\n");
+         	printf("%s", line_copy);
+         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, i+1));
+
+        } else if (choice[0] == 's') { // skip
+
+        	printf("\nNo changes made to \"%s\". \n\n", misspelled[i]);
+
+        } else if (choice[0] == 'i') { // insert
+
+        	char c[50];
+        	printf("\nEnter your replacement: ");
+        	int insertcheck = scanf("%s", c);
+
+        	while (insertcheck < 0) {
+        		shell_error("\n\nPlease enter a valid input!\n");
+        		shell_prompt();
+        		insertcheck = scanf("%s\n", c);
+        	}
+
+        	char* newword = strdup(c);
+        	printf("\nReplacing %s with %s. ", misspelled[i], newword);
+        	correct_line(line_copy, misspelled[i], newword); //modifies line function
+
+        	printf("New sentence is:\n");
+         	printf("%s", line_copy);
          	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
-        } else if (choice == 1) {
-        	printf("No changes made to \"%s\". \n\n", misspelled[i]);
-        } else if (choice != 1 || choice != 0) { //1 if no replacement needed, 0 if word deleted
-        	printf("Replacing %s with %s \n", misspelled[i], suggestions[choice-2]);
-        	correct_line(line_copy, misspelled[i], suggestions[choice-2]); //modifies line function
-        	printf("New sentence is: \n");
-         	printf("%s\n\n", line_copy);
+
+        } else if (isdigit(choice[0]) > 0 && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
+        	printf("Inside number conditional\n");
+
+        	int c = atoi(&choice[0]) - 1;
+        	printf("\nReplacing %s with %s. ", misspelled[i], suggestions[c]);
+        	correct_line(line_copy, misspelled[i], suggestions[c]); //modifies line function
+
+        	printf("New sentence is:\n");
+         	printf("%s", line_copy);
          	printf("%s\n", underline_misspelled_sentence(misspelled, line_copy, i+1));
         }
 
@@ -334,12 +378,12 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit)
 // Adapted from sarika's edit_interactive
 // returns corrections to a list that contains misspelled words, or returns a corrected char** string
 // that can represent an array
-char* edit_batch(char* line, dict_t* dict, int verbosity)
+char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
 {
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; //need only one suggestion
 
-    int length = strlen(line) + 5;
+    int length = strlen(line);
     char **misspelled; //generates an empty array where the misspelled words in a line will be stored
     misspelled = calloc(length, sizeof(char*));
 
@@ -353,15 +397,19 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
     //replacing words, printing out if batch mode
     while (misspelled[i] != NULL) {
         int rc = generate_suggestions(misspelled[i], dict, suggestions);
-	    if (rc != EXIT_SUCCESS) {   // hard-coded; change later.
-            suggestions[0] = misspelled[i];
+
+	    if (rc != EXIT_SUCCESS) {
+            if (verbosity) suggestions[0] = "No suggestions were generated"; 
+            if (!verbosity) suggestions[0] = misspelled[i];
+            suggestions[1] = NULL;
         }
+
     	if (!verbosity) {   // in quiet mode, edit the file
             correct_line(line_copy, misspelled[i], suggestions[0]);
         }
+
 	    if (verbosity) {        // this is if verbose mode is enacted
-            printf("WORD:%s\n", misspelled[i]);
-            printf("REPLACEMENT:%s\n\n", suggestions[0]);    // print list of replacement
+	    	shell_verbose_chart(lnum, misspelled[i], suggestions);
         }
 
 	    i++;
@@ -372,7 +420,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity)
 
 char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 {
-	if (verbosity) printf("\nBatch Mode: Verbose\n\n");
+	if (verbosity) printf("\nPrinting Suggestions:\n");
 
 	char** lines;
 	lines = parse_file(filename);
@@ -380,16 +428,16 @@ char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity)
 	if (lines == NULL) {
 		shell_error("file parsing error: check txt file");
 		*quit=1;
-		return NULL;
+		return lines;
 	}
+
+	if (verbosity) printf("LINE\t\t\tWORD\t\t\tSUGGESTIONS\n");
 
 	int i=0;
 	while (lines[i] != NULL) {
-		if (verbosity) printf("Line number: %d\n",i+1); // print if verbose mode
-		lines[i] = edit_batch(lines[i], dict, verbosity);
+		lines[i] = edit_batch(lines[i], dict, verbosity, i + 1);
 		i++;
 	}
-
 	return lines;
 }
 

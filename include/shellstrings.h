@@ -55,28 +55,6 @@ void shell_save();
 void shell_error(char* error_text);
 
 /*
- * shell_error_usage - Error prompt regarding misusage of the program for the shell.
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - char *: String for the error text.
- */
-char *shell_error_usage();
-
-/*
- * shell_error_exit - Error prompt regarding exiting the program due to an error for the shell.
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - char *: String for the error text.
- */
-char *shell_error_exit();
-
-/*
  * shell_input - Input file confirmation prompt for the shell.
  *
  * Parameters:
@@ -120,5 +98,19 @@ void shell_outro();
  *  - None.
  */
 void shell_usage();
+
+/*
+ * shell_verbose_start - verbose chart print 
+ *
+ * Parameters:
+ *  - line number
+ *	- misspelled word
+ *	- generated suggestions
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_verbose_chart(int lnum, char* misspelled, char** suggestions);
+
 
 #endif

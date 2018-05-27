@@ -34,8 +34,8 @@ void shell_save() {
 }
 
 /* See shellstrings.h */
-void shell_error(char* s) {
-	printf("=> ERROR: %s <=\n", s);
+void shell_error(char* error_text) {
+	printf("=> ERROR: %s <=\n", error_text);
 }
 
 /* See shellstrings.h */
@@ -72,5 +72,22 @@ void shell_outro() {
     printf("Thank you for using Spellcheck. Bye!\n");
 }
 
+/* See shellstrings.h */
+void shell_verbose_chart(int lnum, char* misspelled, char** suggestions) {
+    printf("%d\t\t\t", lnum); // print line number
+    int ntab = 3 - (strlen(misspelled) / 8); // number of tabs
+    int j;
+    printf("%s", misspelled);
+    for (j = 0; j < ntab; j++) printf("\t");
+
+    j = 0;
+    while (suggestions[j] != NULL) {
+        printf("%s", suggestions[j]);
+        if (suggestions[j + 1] != NULL) printf(", ");
+        j++;
+
+    }
+    printf("\n"); // print list of replacement
+}
 
 

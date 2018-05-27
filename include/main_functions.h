@@ -147,7 +147,7 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit);
  *      verbosity determines whether or not shell output exists 
  * return: string of filename, edited
  */
-char* edit_batch(char* line, dict_t* dict, int verbosity);
+char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum);
 
 /* 
  * batch_mode: operates batch mode

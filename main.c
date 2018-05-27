@@ -174,14 +174,6 @@ int main(int argc, char **argv)
 	    printf("mode: %s\n\n", md);
     }
 
-	/* Pause, to confirm start */
-    if (mode == 3) {
-        printf("Enter any command to start %s\n\n", md);
-        shell_prompt();
-	    parse_read_line();
-        printf("\n\n");
-    }
-
 	char** result=NULL;
 	// Execute either interactive or batch mode, and save file at end
 	switch (mode) {

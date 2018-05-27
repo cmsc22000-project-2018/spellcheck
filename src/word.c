@@ -2,7 +2,7 @@
 #include <strings.h>
 #include <string.h>
 #include <assert.h>
-#include <stdlib.h>	
+#include <stdlib.h>
 #include "dictionary.h"
 
 // checks
@@ -14,14 +14,14 @@ int is_in_array(char* word) {
     int i;
 	for (i = 0; i < num_punctuation ; i++) {
 		if (strcmp(punctuation_array[i], word) == 0) {
-			return 1;	}
+			return EXIT_SUCCESS;	}
 	}
-	return -1;
+	return EXIT_FAILURE;
 }
 
 // checks if word is valid -- does not have erroneous punctuations within
 int valid_word(dict_t* dict, char* word) {
-	 if (is_in_array(word) == -1 && *word != '\n') {
+	 if (is_in_array(word) == EXIT_FAILURE && *word != '\n') {
 	    return dict_exists(dict, word);
 	}
 	else {
@@ -33,8 +33,12 @@ int valid_word(dict_t* dict, char* word) {
 // currently hard_coded; generates suggestions for a badly spelled word
 int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 	if (dict == NULL) { // hard_coded; to change with suggestion.c
-        suggestions[0] = word;
+        suggestions[0] = "no suggestions";
+        suggestions[1] = NULL;
+        return EXIT_FAILURE;
     }
+    
+    suggestions[2] = NULL;
 
 	if (strcmp(word, "splling") == 0) {
 		suggestions[0] = "spelling";
@@ -51,6 +55,7 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 	} else if((strcmp(word, "m'y") == 0)) {
         suggestions[0] = "my";
         suggestions[1] = "me";
+        return EXIT_SUCCESS;
     }
 
     return EXIT_FAILURE;
