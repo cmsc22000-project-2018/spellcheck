@@ -283,8 +283,8 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
            	printf("\nDeleting %s.\n", misspelled[i]);
         	correct_line(line_copy, misspelled[i], "");
 
-         	printf("%s\n", line_copy);
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
+         	printf(BOLDWHITE "%s\n" RESET, line_copy);
+         	printf(BOLDRED "%s" RESET, underline_misspelled_sentence(misspelled, line_copy));
 
         } else if (choice[0] == 's') { // skip
 
@@ -307,7 +307,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         			insertcheck = scanf("%s\n", c);
         		}
 
-        		printf("Are you sure you wish to replace \"%s\" with \"%s\"? [y, n] :", misspelled[i], c);
+        		printf("Are you sure you wish to replace \"%s\" with \"%s\"? [y, n] : ", misspelled[i], c);
         		scanf("%s", sig);
         		if (sig[0] == 'y') {
         			userconsent = 1;
@@ -315,11 +315,11 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         	}
 
         	char* newword = strdup(c);
-        	printf("\nReplacing %s with %s. \n", misspelled[i], newword);
+        	printf("\nReplacing \"%s\" with \"%s\". \n", misspelled[i], newword);
         	correct_line(line_copy, misspelled[i], newword); //modifies line function
 
-         	printf("%s\n", line_copy);
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
+         	printf(BOLDWHITE "%s\n" RESET, line_copy);
+         	printf(BOLDRED "%s" RESET, underline_misspelled_sentence(misspelled, line_copy));
 
         } else if (isdigit(choice[0]) > 0 && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
 
@@ -327,8 +327,8 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         	printf("\nReplacing %s with %s. \n", misspelled[i], suggestions[c]);
         	correct_line(line_copy, misspelled[i], suggestions[c]); //modifies line function
 
-         	printf("%s\n", line_copy);
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
+         	printf(BOLDWHITE "%s\n" RESET, line_copy);
+         	printf(BOLDRED "%s" RESET, underline_misspelled_sentence(misspelled, line_copy));
         }
         i++;	// added loop changer
     }
@@ -486,7 +486,7 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name) {
 				*quit = 0;
 			} else {
 			strcpy(file_name,args[1]);
-			printf("\n\nInput file is now %s\n\n\n",file_name);
+			printf("\n\nInput file is now %s\n",file_name);
 			*quit=1;
 			}
 
@@ -497,7 +497,7 @@ void main_page(int* quit, int *mode, char* file_name, char* dict_name) {
 				*quit = 0;
 			} else {
 			strcpy(dict_name, args[1]);
-			printf("\n\nDictionary file is now %s\n\n\n", dict_name);
+			printf("\n\nDictionary file is now %s\n", dict_name);
 			*quit = 0;
 			}
 
