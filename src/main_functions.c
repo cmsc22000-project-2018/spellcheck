@@ -168,7 +168,7 @@ int add_to_misspelled(char *word, char** misspelled)
 
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 {
-	char *tkn = strtok(string, ": ,.-\n'\"'"); //words only separated by these punctuation
+	char *tkn = strtok(string, ":;\t\n ,.-\"!?()<>`*^"); //words only separated by these punctuation
 	while (tkn != NULL) {
 
 		if (valid_word(dict, tkn) == EXIT_FAILURE){
@@ -182,7 +182,7 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 			printf("error processing text");
 			return EXIT_FAILURE;
 		}
-		tkn = strtok(NULL, " ,.-");
+		tkn = strtok(NULL, ":;\t\n ,.-\"!?()<>`*^");
 	}
 	return EXIT_SUCCESS;
 }
