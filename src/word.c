@@ -11,7 +11,6 @@
 
 // checks if word is valid -- does not have erroneous punctuations within
 int valid_word(dict_t* dict, char* shaved_word) {
-    printf(" word is %s \n", shaved_word);
     if (dict_chars_exists(dict, *shaved_word) == EXIT_SUCCESS && *shaved_word != '\n') {
 	    return dict_exists(dict, shaved_word);
 	}

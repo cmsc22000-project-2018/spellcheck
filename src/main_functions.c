@@ -99,8 +99,8 @@ void save_page(char* filename, char** lines, int* quit)
 void underline_misspelled(char *word, char* underline)
 {
 	int j = strlen(word);
-    int i;
-	for(i = 0; i < j; i++) {
+    int i = 0;
+	for(; i < j; i++) {
     	strcat(underline, "^");
 	}
 		strcat(underline, " ");
@@ -109,8 +109,8 @@ void underline_misspelled(char *word, char* underline)
 void underline_correct_spelling(char *word, char* underline)
 {
 	int j = strlen(word);
-    int i;
-	for(i = 0; i < j; i++) {
+    int i = 0;
+	for(; i < j; i++) {
     		strcat(underline, " ");
 	}
 		strcat(underline, " ");
@@ -173,7 +173,8 @@ int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
 
 //returns if a particular character is a punctuation char
 int is_in_punct_array(char* punctuation_array[], char* word) {
-    for (int i = 0; i < num_punctuation ; i++) {
+	int i = 0;
+    for (; i < num_punctuation ; i++) {
         if (strcmp(punctuation_array[i], word) == 0) {  
             return EXIT_SUCCESS;   }
     }
