@@ -9,10 +9,8 @@
 int valid_word(dict_t* dict, char* word) {
     if (dict_chars_exists(dict, *word) == EXIT_SUCCESS && *word != '\n') {
 	    return dict_exists(dict, word);
-	} else {
-		return EXIT_SUCCESS; //automatically assume word is correct as it represents punctuation
 	}
-    return EXIT_SUCCESS;
+		return EXIT_SUCCESS; //automatically assume word is correct as it represents punctuation
 }
 
 // currently hard_coded; generates suggestions for a badly spelled word
