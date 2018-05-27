@@ -145,7 +145,7 @@ Test(main_functions, underline_misspelled_sentence) {
 	char *line = "bd splling is bad";
 
 	char *expected = "^^ ^^^^^^^";
-    check_underline_misspelled_sentence(badwords, line, 0, expected);
+    check_underline_misspelled_sentence(badwords, line, expected);
 }
 
 
@@ -158,5 +158,5 @@ Test(main_functions, underline_misspelled_sentence2) {
 	char *line = "bd splling is bd";
 
 	char *expected = "^^ ^^^^^^^    ^^";
-    check_underline_misspelled_sentence(badwords, line, 0, expected);
+    check_underline_misspelled_sentence(badwords, line, expected);
 }
