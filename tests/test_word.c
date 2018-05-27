@@ -5,35 +5,10 @@
 #include "word.h"
 #include "dictionary.h"
 
-
-/* testing is_in_array */
-Test(word, word_chars_exists)
-{
-    char* c = strdup(".");
-    dict_t* dict = dict_new();
-    dict_read(dict, "tests/sample_dict.txt");
-
-    int i = word_chars_exists(dict, c);
-
-    cr_assert_eq(i, EXIT_SUCCESS, "testing for is_in_array, failed");
-}
-
-/* testing is_in_array */
-Test(word, word_chars_exists0)
-{
-    char* c = strdup("p");
-    dict_t* dict = dict_new();
-    dict_read(dict, "tests/sample_dict.txt");
-
-    int i = word_chars_exists(dict, c);
-
-    cr_assert_eq(i, EXIT_FAILURE, "testing for is_in_array, failed");
-}
-
 /* testing valid_word */
 Test(word, valid_word)
 {
-    char* c = strdup(",pac");
+    char* c = strdup("have");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
@@ -45,7 +20,7 @@ Test(word, valid_word)
 /* testing valid_word */
 Test(word, valid_word1)
 {
-    char* c = strdup(".pac");
+    char* c = strdup(".checker");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 

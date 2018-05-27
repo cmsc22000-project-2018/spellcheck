@@ -5,30 +5,11 @@
 #include <stdlib.h>
 #include "dictionary.h"
 
-// checks
-int word_chars_exists(dict_t* dict, char* word) {
-/*    int num_punctuation = 22;
-    char* punctuation_array[] = {"+",",",":"," ",".","-","'","&","!","?",":",";",
-                                    "#","~","=","/","$","£","^","\n","_","<",">"};
-
-*/
-    int i;
-    int len = strlen(word);
-
-	for (i = 0; i < len ; i++) {
-		if (dict_chars_exists(dict, word[i]) == EXIT_FAILURE) {
-			return EXIT_SUCCESS;
-        }
-	}
-	return EXIT_FAILURE;
-}
-
 // checks if word is valid -- does not have erroneous punctuations within
 int valid_word(dict_t* dict, char* word) {
-	 if (word_chars_exists(dict, word) == EXIT_FAILURE && *word != '\n') {
+    if (dict_chars_exists(dict, *word) == EXIT_SUCCESS && *word != '\n') {
 	    return dict_exists(dict, word);
-	}
-	else {
+	} else {
 		return EXIT_SUCCESS; //automatically assume word is correct as it represents punctuation
 	}
     return EXIT_SUCCESS;
