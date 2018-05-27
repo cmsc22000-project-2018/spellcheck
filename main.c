@@ -88,7 +88,7 @@ int main(int argc, char **argv)
 				return EXIT_FAILURE;
 			}
 			strcpy(dict_name,optarg);
-			shell_input(optarg, "dictionary");
+			if (mode == 3) shell_input(optarg, "dictionary");
 			break;
 		case 'i':
 			if (!fileexists(optarg)) {
@@ -107,7 +107,6 @@ int main(int argc, char **argv)
 			}
 			mode = 2;
             strcpy(file_name,optarg);
-			shell_input(optarg, "target file");
 			break;
 		case 'q':
 			if (!fileexists(optarg)) {
@@ -116,7 +115,6 @@ int main(int argc, char **argv)
 			}
 			mode = 1;
 			strcpy(file_name,optarg);
-			shell_input(optarg, "target file");
 			break;
 		case 's':
             if (strstr(optarg,".txt\0") == NULL) {    // does not save to a *.txt file
@@ -124,11 +122,11 @@ int main(int argc, char **argv)
                   return EXIT_FAILURE;
             }
 			strcpy(save_file,optarg);
-            shell_input(optarg,"file save destination");
+            if (mode == 3) shell_input(optarg,"file save destination");
 			break;
+		default:
 			shell_usage();
             exit(0);
-			break;
 		}
 	}
 
@@ -153,7 +151,7 @@ int main(int argc, char **argv)
 	*/
 	dict_t* dict = dict_new();
 	if (dict_read(dict, dict_name) == EXIT_SUCCESS) {
-		if (mode != 1) printf("Dictionary Successfully Parsed!\n");
+		if (mode == 3) printf("Dictionary Successfully Parsed!\n");
 	} else {
 		printf("Trouble reading dictionary, exiting program\n");
         exit(0);
@@ -164,7 +162,7 @@ int main(int argc, char **argv)
 	 */
 	char* md = modename(mode);
 
-    if (mode != 1) {
+    if (mode == 3) {
 
         printf("\n\n============================================================\n"
                    "=================== Editing Started With ===================\n"
@@ -189,7 +187,10 @@ int main(int argc, char **argv)
 
 
     if (mode != 2 && result != NULL) {	// Save file, a functionality unnecessary for verbose batch mode
-    md = strstr(save_file,".txt");
+    	if (mode == 3) printf("Spellcheck successful!\n\n");
+
+    	md = strstr(save_file,".txt");
+    	
     	if (md != NULL) {
     		save_corrections(save_file, result);
     		*quit=1;
@@ -200,6 +201,6 @@ int main(int argc, char **argv)
 
   }
 
-    if (mode != 1) shell_outro();
+    if (mode == 3) shell_outro();
 	return 0;
 }

@@ -1,9 +1,16 @@
 h
 return
+d
+f asdf
 f tests/test_short.txt
-begin
 1
+i
+checker
 2
-3
+a
+d
+1
+s
+p
 c
 test_result.txt

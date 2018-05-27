@@ -121,7 +121,7 @@ int initialize_misspelled(char **misspelled, int length);
  *      - linenumber - number of line
  * return: edited line
  */
-char* edit_interactive(char* line, dict_t* dict, int linenumber);
+char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag);
 
 /*
  * interctive mode: open file, parse and edit
@@ -130,6 +130,10 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber);
  *      - dictionary
  *      - *quit - pointer to a flag indicating whether or not spellcheck should terminate
  *			note 0 means continue, 1 means quit
+ *		- returnflag - indicates if line being parsed is the last line.
+ *			in this case, there is a formatting issue in printing out the line that needs to be resolved,
+ *			because the text file that was read does not have a newline character
+ *			at the end of the file.
  * return: char** array of lines, to be printed in save page
  */
 char** interactive_mode(char* filename, dict_t* dict, int* quit);

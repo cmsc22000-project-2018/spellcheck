@@ -25,13 +25,25 @@ void shell_intro() {
 
 /* See shellstrings.h */
 void shell_save() {
-    printf("File editing successful!\n\n");
-
-    printf("s               : save to existing file\n");
-    printf("c               : save to custom file\n");
-    printf("r               : return to home screen\n");
-    printf("q               : quit program\n\n");
+    printf("p : print all changes\n");
+    printf("s : save to existing file\n");
+    printf("c : save to custom file\n");
+    printf("r : return to home screen\n");
+    printf("q : quit program\n\n");
 }
+
+/* See shellstrings.h */
+void shell_print(char** lines) {
+    int i = 0;
+
+    printf("\n\n");
+    while (lines[i] != NULL) {
+        printf("%s", lines[i]);
+        i++;
+    }
+    printf("\n\n");
+}
+
 
 /* See shellstrings.h */
 void shell_error(char* error_text) {
