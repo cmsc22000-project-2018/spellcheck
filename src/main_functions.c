@@ -168,14 +168,15 @@ int add_to_misspelled(char *word, char** misspelled)
 
 
 
-char* punctuation_array[] = {"+",","," ",".","-","'","&","!","?",":",";","#","~","=","/","$","£","^","\n","_","<",">"};
-int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
+
 
 //returns if a particular character is a punctuation char
-int is_in_punct_array(char* punctuation_array[], char* word) {
+int is_in_punct_array(char letter) {
+	char punctuation_array[] = {'+',',',' ','.','-','\'','&','!','?',':',';','#','~','=','/','$','^','\n','_','<','>', '\"'};
+	int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
 	int i = 0;
     for (; i < num_punctuation ; i++) {
-        if (strcmp(punctuation_array[i], word) == 0) {  
+        if ((punctuation_array[i] - letter) == 0) {  
             return EXIT_SUCCESS;   }
     }
     return EXIT_FAILURE;
@@ -183,32 +184,27 @@ int is_in_punct_array(char* punctuation_array[], char* word) {
 
 //removes the prefix of a word if it is is a punctuation char
 int remove_prefix_punctuation(char *word) {
-    char prefix_char = malloc(sizeof(char));
+    char prefix_char;
     prefix_char = word[0];
 
-    if (is_in_punct_array(punctuation_array, &prefix_char) == EXIT_SUCCESS) {
+    while (is_in_punct_array(prefix_char) == EXIT_SUCCESS) {
         memmove(word, word+1, strlen(word)); 
+        prefix_char = word[0];
+    }
         return EXIT_SUCCESS; //shaved off prefix punctuation 
-    }
-    else {
-    	return EXIT_SUCCESS;
-    }
-
 }
 
 //removes the suffix of a word if it is the punctuation char
 int remove_trailing_punctuation(char *word) {
-    char trailing_char = malloc(sizeof(char));
+    char trailing_char;
+    
     trailing_char = word[(strlen(word)-1)];
 
-    if (is_in_punct_array(punctuation_array, &trailing_char) == EXIT_SUCCESS) {
+    while (is_in_punct_array(trailing_char) == EXIT_SUCCESS) {
         word[strlen(word)-1] = '\0';
+        trailing_char = word[strlen(word)-1]; //check next trailing character
+    }
         return EXIT_SUCCESS; //shaved off prefix punctuation 
-    }
-    else {
-    	return EXIT_SUCCESS;
-    }
-
 }
 
 //shaves off trailing and prefix punctuation
