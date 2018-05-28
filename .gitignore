@@ -5,6 +5,11 @@ spellcheck
 .DS_Store
 settings.json
 parser_testing.txt
+<<<<<<< HEAD
 test_result.txt
 spellcheck.dSYM/
 test_save.txt
+=======
+test_save.txt 
+test_result.txt
+>>>>>>> origin/dev

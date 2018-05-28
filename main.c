@@ -88,7 +88,6 @@ int main(int argc, char **argv)
 				return EXIT_FAILURE;
 			}
 			mode = 3;
-			shell_input(optarg, "target file");
             strcpy(file_name,optarg);
 			// if file name is not valid, print error
 			break;
@@ -132,7 +131,7 @@ int main(int argc, char **argv)
 
 	/* main page: activated if there is no file to be parsed.
 	   can open help page, quit, or load filename / dictname */
-	main_page(quit, &mode, file_name, dict_name);
+	main_page(file_name, dict_name, quit, &mode);
 	if ((*quit) == 2) { // user selected "quit" in main_page
 		shell_outro();
 		return 0;
@@ -142,7 +141,6 @@ int main(int argc, char **argv)
 		Initialize dictionary, declare names of files to be used
 	*/
 	dict_t* dict = dict_new();
-
     int msg = dict_read(dict, dict_name);
 	if (msg == EXIT_FAILURE) {
 		shell_error(shell_error_dict(dict_name));
@@ -187,9 +185,6 @@ int main(int argc, char **argv)
     		save_page(file_name, result, quit);
     	}
     }
-
-    if (!*quit) file_name = "";
-  }
 
     if (mode == 3) shell_outro();
 	return 0;

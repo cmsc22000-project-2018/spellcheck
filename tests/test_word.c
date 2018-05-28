@@ -6,26 +6,21 @@
 #include "dictionary.h"
 #include "suggestion.h"
 
-/* testing valid_word */
-Test(word, valid_word)
+/* testing word_valid */
+Test(word, word_valid)
 {
     char* c = strdup("have");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = valid_word(dict, c);
+    int i = word_valid(dict, c);
 
-    cr_assert_eq(i, EXIT_SUCCESS, "testing for punctuation, failed");
+    cr_assert_eq(i, EXIT_SUCCESS, "testing for word_valid failed");
 }
 
 
-<<<<<<< HEAD
 /* testing word_valid */
-Test(word, word_valid)
-=======
-/* testing valid_word */
-Test(word, valid_word1)
->>>>>>> origin/dev
+Test(word, word_valid0)
 {
     char* c = strdup(";checker");
     dict_t* dict = dict_new();
@@ -33,16 +28,11 @@ Test(word, valid_word1)
 
     int i = word_valid(dict, c);
 
-    cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
+    cr_assert_eq(i, EXIT_FAILURE, "testing for word_valid failed");
 }
 
-<<<<<<< HEAD
 /* testing word_valid */
 Test(word, word_valid1)
-=======
-/* testing valid_word */
-Test(word, valid_word2)
->>>>>>> origin/dev
 {
     char* c = strdup("p'ac");
     dict_t* dict = dict_new();
@@ -50,16 +40,11 @@ Test(word, valid_word2)
 
     int i = word_valid(dict, c);
 
-    cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
+    cr_assert_eq(i, EXIT_FAILURE, "testing for word_valid failed");
 }
 
-<<<<<<< HEAD
 /* testing word_valid */
 Test(word, word_valid2)
-=======
-/* testing valid_word */
-Test(word, valid_word3)
->>>>>>> origin/dev
 {
     char* c = strdup("ac");
     dict_t* dict = dict_new();
@@ -67,7 +52,7 @@ Test(word, valid_word3)
 
     int i = word_valid(dict, c);
 
-    cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
+    cr_assert_eq(i, EXIT_FAILURE, "testing for word_valid failed");
 }
 
 /* testing generate_suggestions
@@ -146,9 +131,6 @@ Test(word, generate_suggestions3)
 
     i = strncmp("come", suggestions[0], 5);
     cr_assert_eq(i, 0, "suggestion output incorrect");
-<<<<<<< HEAD
-}
-=======
 }
 
 /* testing generate_suggestions */
@@ -169,4 +151,3 @@ Test(word, generate_suggestions4)
     i = strncmp("no suggestions", suggestions[0], 14);
     cr_assert_eq(i, 0, "suggestion output incorrect");
 }
->>>>>>> origin/dev

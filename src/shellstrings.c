@@ -32,11 +32,11 @@ void shell_main_menu() {
 
 /* See shellstrings.h */
 void shell_save() {
-    printf("p: print all changes\n");
-    printf("s: save changes to existing file\n");
-    printf("c: save changes to custom file\n");
-    printf("r: return to home screen (without saving)\n");
-    printf("q: quit program (without saving)\n\n");
+    printf("p : print all changes\n");
+    printf("s : save to existing file\n");
+    printf("c : save to custom file\n");
+    printf("r : re-edit file\n");
+    printf("q : quit program\n\n");
 }
 
 /* See shellstrings.h */
@@ -155,6 +155,7 @@ void shell_interactive_replacements(char* word, char** sug, int flag) {
         printf("i : Input Word.\n");
         printf("s : Skip.\n");
     }
+    printf("\n\n");
 }
 
 

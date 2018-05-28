@@ -53,6 +53,41 @@ void save_page(char *filename, char **lines, int *quit);
  */
 
 /*
+ * is_in_punct_array - determines if charater is a punctuation
+ * parameter: character
+ * return: returns EXIT_SUCCESS if a character is a punctuation char
+ */
+
+int is_in_punct_array(char letter);
+
+/* 
+ * remove_prefix_punctuation - removes any punctuation characters
+ * at the beginning of a string of alphabets
+ * parameter: word (string)
+ * return: EXIT_SUCCESS if word has no punctuation characters or
+ *		   if word has been successfully shaved of prefix punctuations
+ */
+int remove_prefix_punctuation(char *word); 
+
+
+/*
+ * remove_trailing_punctuation - removes any punctuation characters
+ * that trail a string of alphabets
+ * parameter: word (string)
+ * return: EXIT_SUCCESS if word has no punctuation characters or
+ *		   if word has been successfully shaved of trailing punctuations
+ */
+int remove_trailing_punctuation(char *word); 
+
+/* 
+ * remove_punctuation - combines remove_trailing_punctuation and remove_prefix_punctuation,
+ * to remove trailing and prefix punctuation without modifying original word
+ * parameter: word (string)
+ * return: word (string) with removed surrounding punctuations
+ */
+char* remove_punctuation(char *word);
+
+/*
  * underline_misspelled - Generates '^' under misspelled words
  *
  * Parameters:
@@ -87,7 +122,7 @@ void underline_correct_spelling(char *word, char *underline);
  * Returns:
  *  - char *: String (Sentence) underline for the line.
  */
-char *underline_misspelled_sentence(char **misspelled, char *sentence);
+char* underline_misspelled_sentence(char** misspelled, char* sentence, char* underline);
 
 /*
  * add_to_misspelled - Adds a misspelled word to a list of misspelled words
@@ -249,6 +284,6 @@ int change_mode(char *arg);
  * Returns:
  *  - Nothing.
  */
-void main_page(char *filename, char *dict, int *quit, int *mode);
+void main_page(char *file_name, char *dict_name, int *quit, int* mode);
 
 #endif

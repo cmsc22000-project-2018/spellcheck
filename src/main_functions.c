@@ -71,6 +71,8 @@ void save_page(char *filename, char **lines, int *quit) {
         } else if (!strcmp(line,"p")) {
         	shell_print(lines);
         	i = 1;
+        } else if (!strcmp(line, "r")) {
+        	*quit = 0;
         } else if (!strcmp(line, "s")) {
 			save_corrections(filename, lines);  // save to the same file destination, overwriting existing file
 			*quit = 1;
@@ -87,9 +89,6 @@ void save_page(char *filename, char **lines, int *quit) {
 
             *quit = 1;
             if (i == 0) save_corrections(line, lines);  // save to different file destination
-
-		} else if (!strcmp(line, "r")) {
-			*quit = 0;
 		} else if (!strcmp(line, "q")) {
 			*quit = 1;
 		} else {
@@ -107,8 +106,8 @@ void save_page(char *filename, char **lines, int *quit) {
 /* See main_functions.h */
 void underline_misspelled(char *word, char* underline) {
 	int j = strlen(word);
-    int i;
-	for(i = 0; i < j; i++) {
+    int i = 0;
+	for(; i < j; i++) {
     	strcat(underline, "^");
 	}
 		strcat(underline, " ");
@@ -117,8 +116,8 @@ void underline_misspelled(char *word, char* underline) {
 /* See main_functions.h */
 void underline_correct_spelling(char *word, char* underline) {
 	int j = strlen(word);
-    int i;
-	for(i = 0; i < j; i++) {
+    int i = 0;
+	for(; i < j; i++) {
     		strcat(underline, " ");
 	}
 		strcat(underline, " ");
@@ -126,10 +125,7 @@ void underline_correct_spelling(char *word, char* underline) {
 }
 
 /* See main_functions.h */
-
-char* underline_misspelled_sentence(char** misspelled, char* sentence) {
-
-	char* underline = malloc(strlen(sentence));
+char* underline_misspelled_sentence(char** misspelled, char* sentence, char *underline) {
 	underline[0] = '\0';
 	int element = 0;
 
@@ -175,26 +171,80 @@ int add_to_misspelled(char *word, char** misspelled)
 }
 
 /* See main_functions.h */
+int is_in_punct_array(char letter) {
+	char punctuation_array[] = {'+',',',' ','.','-','\'','&','!','?',':',';','#','~','=','/','$','^','\n','_','<','>', '\"'};
+	int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
+	int i = 0;
+    for (; i < num_punctuation ; i++) {
+        if ((punctuation_array[i] - letter) == 0) {  
+            return EXIT_SUCCESS;   }
+    }
+    return EXIT_FAILURE;
+}
+
+/* See main_functions.h */
+int remove_prefix_punctuation(char *word) {
+    char prefix_char;
+    prefix_char = word[0];
+
+
+    while (is_in_punct_array(prefix_char) == EXIT_SUCCESS) {
+        memmove(word, word+1, strlen(word)); 
+        prefix_char = word[0];
+    }
+        return EXIT_SUCCESS; //shaved off prefix punctuation 
+}
+
+/* See main_functions.h */
+int remove_trailing_punctuation(char *word) {
+    char trailing_char;
+    
+    trailing_char = word[(strlen(word)-1)];
+
+    while (is_in_punct_array(trailing_char) == EXIT_SUCCESS) {
+        word[strlen(word)-1] = '\0';
+        trailing_char = word[strlen(word)-1]; //check next trailing character
+    }
+        return EXIT_SUCCESS; //shaved off prefix punctuation 
+}
+
+/* See main_functions.h */
+char* remove_punctuation(char *word) { //removes trailing and prefix punctuation without modifying original word
+    char *shaved_word = (char *)malloc(strlen(word));
+    strcpy(shaved_word, word);
+    remove_prefix_punctuation(shaved_word);
+    remove_trailing_punctuation(shaved_word);
+    return shaved_word;
+}
+
+
+/* See main_functions.h */
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 {
-	char *tkn = strtok(string, ":;\t\r\a\n ,.-\"!?()<>`*^"); //words only separated by these punctuation
-	while (tkn != NULL) {
+    char *string_copy = strdup(string);
+    char *tkn = strtok(string," \n"); //words only separated by spaces and newline
+    while (tkn != NULL) {
 
-		if (word_valid(dict, tkn) == EXIT_FAILURE){
-			underline_misspelled(tkn, underline);
-			add_to_misspelled(tkn, misspelled);
-		}
-		else if (word_valid(dict, tkn) == EXIT_SUCCESS) {
-			underline_correct_spelling(tkn, underline);
-		}
-		else {
-			printf("error processing text");
-			return EXIT_FAILURE;
-		}
-		tkn = strtok(NULL, ":;\t\n\r\a ,.-\"!?()<>`*^");
-	}
-	return EXIT_SUCCESS;
+        char* shaved_word = remove_punctuation(tkn);
+
+        if (word_valid(dict, shaved_word) == EXIT_FAILURE){
+            add_to_misspelled(shaved_word, misspelled);
+        }
+
+        else if (word_valid(dict, shaved_word) == EXIT_SUCCESS) { // do nothing
+
+        } else {        
+            printf("error processing text");
+            return EXIT_FAILURE;
+        }
+
+        tkn = strtok(NULL," \n"); //spaces and \n are the only delimeters
+    }
+
+    underline_misspelled_sentence(misspelled, string_copy, underline);
+    return EXIT_SUCCESS;
 }
+
 
 /* See main_functions.h */
 char* correct_line(char* line, char* old_word, char* new_word)
@@ -269,7 +319,9 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
     		shell_prompt();
         	check = scanf("%s", choice);
 
-        	if (!(choice[0] == 's') && !(choice[0] == 'd') && !(choice[0] == 'i') && !(isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions))) {
+        	if (!(choice[0] == 's') && !(choice[0] == 'd') && !(choice[0] == 'i')
+        		&& !(isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions))) {
+
                 shell_error("Please enter a valid input");
                 check = 0;
         	} else {
@@ -277,21 +329,24 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         	}
         }
 
-
         if (choice[0] == 'd') {	// delete
-
-           	printf("\nDeleting %s.\n", misspelled[i]);
         	correct_line(line_copy, misspelled[i], "");
 
-         	printf(BOLDWHITE "%s\n" RESET, line_copy);
-         	printf(BOLDRED "%s" RESET, underline_misspelled_sentence(misspelled, line_copy));
+         	printf(BOLDWHITE "%s" RESET, line_copy);
+            /* if the line is the last line being edited, the last character is
+             * EOF, not \n. */
+            if(returnflag) printf("\n"); // ,           
+         	printf(BOLDRED "%s" RESET, underline_misspelled_sentence(misspelled, line_copy, underline));
 
         } else if (choice[0] == 's') { // skip
-
-        	printf("\nNo changes made to \"%s\". \n\n", misspelled[i]);
+        	// print the edited line
+        	printf(BOLDWHITE "%s" RESET, line_copy);
+        	/* if the line is the last line being edited, the last character is
+        	 * EOF, not \n. */
+        	if(returnflag) printf("\n"); // ,
+         	printf(BOLDRED "%s" RESET, underline_misspelled_sentence(misspelled, line_copy, underline));
 
         } else if (choice[0] == 'i') { // insert
-
         	char c[50];
         	char sig[10];
 	        int userconsent = 0;
@@ -308,27 +363,32 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         		}
 
         		printf("Are you sure you wish to replace \"%s\" with \"%s\"? [y, n] : ", misspelled[i], c);
-        		scanf("%s", sig);
-        		if (sig[0] == 'y') {
-        			userconsent = 1;
-        		}
+                userconsent = scanf("%s", sig);
+                if (sig[0] == 'y') {
+                    userconsent = 1;
+                } else {
+                    userconsent = 0;
+                }
         	}
 
         	char* newword = strdup(c);
         	printf("\nReplacing \"%s\" with \"%s\". \n", misspelled[i], newword);
         	correct_line(line_copy, misspelled[i], newword); //modifies line function
 
-         	printf(BOLDWHITE "%s\n" RESET, line_copy);
-         	printf(BOLDRED "%s" RESET, underline_misspelled_sentence(misspelled, line_copy));
-
-        } else if (isdigit(choice[0]) > 0 && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
-
+         	printf(BOLDWHITE "%s" RESET, line_copy);
+            /* if the line is the last line being edited, the last character is
+             * EOF, not \n. */
+            if (returnflag) printf("\n");
+         	printf(BOLDRED "%s" RESET, underline_misspelled_sentence(misspelled, line_copy, underline));
+        } else if (isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
+        	// Replace misspelled word with chosen replacement
         	int c = atoi(&choice[0]) - 1;
-        	printf("\nReplacing %s with %s. \n", misspelled[i], suggestions[c]);
+        	printf("\nReplacing %s with %s.\n\n", misspelled[i], suggestions[c]);
         	correct_line(line_copy, misspelled[i], suggestions[c]); //modifies line function
 
          	printf(BOLDWHITE "%s\n" RESET, line_copy);
-         	printf(BOLDRED "%s" RESET, underline_misspelled_sentence(misspelled, line_copy));
+            if (returnflag) printf("\n");
+         	printf(BOLDRED "%s" RESET, underline_misspelled_sentence(misspelled, line_copy, underline));
         }
         i++;	// added loop changer
     }
@@ -345,8 +405,10 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit)
 	// step through phases
 	int i = 0;
 	int flag = 0;
+	int linenumber;
+
 	while (lines[i] != NULL) {
-		int linenumber = i+1;
+		linenumber = i+1;
 		if (lines[i+1] == NULL) flag = 1;	// last line
 		lines[i] = edit_interactive(lines[i], dict, linenumber, flag);
 		i++;
@@ -355,7 +417,6 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit)
     *quit = 0;
 	return lines;
 }
-
 /* 
 	IV. Batch Mode
  */
@@ -460,7 +521,7 @@ int change_mode(char* arg) {
 }
 
 /* See main_functions.h */
-void main_page(int* quit, int *mode, char* file_name, char* dict_name) {
+void main_page(char *file_name, char *dict_name, int *quit, int *mode) {
 	char* line;
 	char** args;
 

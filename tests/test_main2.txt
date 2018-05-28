@@ -1,0 +1,16 @@
+f tests/test_punct.txt
+i
+have
+y
+i
+Spelling
+y
+s
+2
+i
+with
+y
+d
+1
+s
+q

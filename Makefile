@@ -2,7 +2,7 @@
 
 CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -O2 -g -I./include/
-RM = rm -f
+RM = rm -rf
 BIN = spellcheck
 
 SRCS = main.c src/mock_trie.c src/dictionary.c src/parser.c src/word.c src/main_functions.c src/shellstrings.c
@@ -18,5 +18,5 @@ tests:
 	make -C ./tests
 
 clean:
-	-$(RM) $(OBJS) $(BIN)
+	-$(RM) $(OBJS) $(BIN) spellcheck.dSYM
 	make -C ./tests clean

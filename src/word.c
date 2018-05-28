@@ -11,12 +11,13 @@
 #include "word.h"
 #include "dictionary.h"
 
-// checks if word is valid -- does not have erroneous punctuations within
+
+/* See word.h */
 int word_valid(dict_t* dict, char* word) {
     if (dict_chars_exists(dict, *word) == EXIT_SUCCESS && *word != '\n') {
-	    return dict_exists(dict, word);
+        return dict_exists(dict, word);
 	}
-		return EXIT_FAILURE;
+	return EXIT_FAILURE;
 }
 
 
@@ -28,19 +29,19 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
         return EXIT_FAILURE;
     }
 
-	if (strncmp(word, "splling", 7) == 0) {
+	if (strcmp(word, "splling") == 0) {
 		suggestions[0] = "spelling";
 		suggestions[1] = "spilling";
 		return EXIT_SUCCESS;
-	} else if (strncmp(word, "chequer", 7) == 0) {
+	} else if (strcmp(word, "chequer") == 0) {
     	suggestions[0] = "checker";
     	suggestions[1] = "cheque";
     	return EXIT_SUCCESS;;
-	} else if((strncmp(word, "cme", 3) == 0)) {
+	} else if((strcmp(word, "cme") == 0)) {
     	suggestions[0] = "come";
     	suggestions[1] = "came";
     	return EXIT_SUCCESS;;
-	} else if((strncmp(word, "m'y", 3) == 0)) {
+	} else if((strcmp(word, "m'y") == 0)) {
         suggestions[0] = "my";
         suggestions[1] = "me";
         return EXIT_SUCCESS;
