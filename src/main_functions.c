@@ -300,7 +300,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
     //add to underline function 
 
     if (misspelled[0] != NULL) {
-    printf("Line: %d\n", linenumber);
+    printf("\nLine: %d\n", linenumber);
     printf("%s", line_copy);
     if (returnflag) printf("\n");
     printf("%s\n", underline);
@@ -318,13 +318,13 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
 			suggestions[0] = misspelled[i];	// to avoid error
 			suggestions[1] = misspelled[i];
 			suggestions[2] = NULL;
-			printf("\nNo suggestions have been generated for %s.\n", misspelled[i]);
+			printf("\nNo suggestions have been generated for \"%s\".\n", misspelled[i]);
        		printf("\nd : Delete Word.\n");
        		printf("i : Input Word.\n");
         	printf("s : Skip.\n");
 
     	} else {
-    	    printf("\nPossible replacements for word %s are:\n\n", misspelled[i]);
+    	    printf("\nPossible replacements for word \"%s\" are:\n\n", misspelled[i]);
             int j = 0;
         	while (suggestions[j] != NULL) {
        			printf("%d : %s \n", j + 1, suggestions[j]);
@@ -354,8 +354,6 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
 
 
         if (choice[0] == 'd') {	// delete
-
-           	printf("\nDeleting %s.\n", misspelled[i]);
         	correct_line(line_copy, misspelled[i], "");
 
          	printf("%s\n", line_copy);
@@ -364,35 +362,65 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         } else if (choice[0] == 's') { // skip
 
         	printf("\nNo changes made to \"%s\". \n\n", misspelled[i]);
-        	printf("%s\n", line_copy);
+         	printf("\n%s", line_copy);
+        	/* if the line is the last line being edited, the last character is
+        	 * EOF, not \n. */
+        	if(returnflag) printf("\n"); // ,
+         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
+        } else if (choice[0] == 's') { // skip
+
+        	// print the edited line
+        	printf("\n%s", line_copy);
+        	/* if the line is the last line being edited, the last character is
+        	 * EOF, not \n. */
+        	if(returnflag) printf("\n"); // ,
          	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
 
         } else if (choice[0] == 'i') { // insert
+			char c[50];
+			char sig[10];
+			int userconsent = 0;
+			int insertcheck = 0;
 
-        	char c[50];
-        	printf("\nEnter your replacement: ");
-        	int insertcheck = scanf("%s", c);
+			// process of accepting replacment inputs
+			while (!userconsent) {
+				printf("\nEnter replacement: ");
+				insertcheck = scanf("%s", c);
 
-        	while (insertcheck < 0) {
-        		shell_error("\n\nPlease enter a valid input!\n");
-        		shell_prompt();
-        		insertcheck = scanf("%s\n", c);
-        	}
 
-        	char* newword = strdup(c);
-        	printf("\nReplacing %s with %s. \n", misspelled[i], newword);
-        	correct_line(line_copy, misspelled[i], newword); //modifies line function
+				while (insertcheck < 0) {
+					shell_error("\n\nPlease enter a valid input!\n");
+					shell_prompt();
+					insertcheck = scanf("%s\n", c);
+				}
+
+				printf("Are you sure you wish to replace \"%s\" with \"%s\"? [y, n] : ", misspelled[i], c);
+				scanf("%s", sig);
+				if (sig[0] == 'y') {
+					userconsent = 1;
+				}
+			}
+
+			char* newword = strdup(c);
+			printf("\nReplacing \"%s\" with \"%s\". \n", misspelled[i], newword);
+			correct_line(line_copy, misspelled[i], newword); //modifies line function
 
          	printf("%s\n", line_copy);
+        	/* if the line is the last line being edited, the last character is
+        	 * EOF, not \n. */
+         	if (returnflag) printf("\n");
          	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
 
         } else if (isdigit(choice[0]) > 0 && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
 
+        	// Replace misspelled word with chosen replacement
         	int c = atoi(&choice[0]) - 1;
-        	printf("\nReplacing %s with %s. \n", misspelled[i], suggestions[c]);
+        	printf("\nReplacing %s with %s.\n\n", misspelled[i], suggestions[c]);
         	correct_line(line_copy, misspelled[i], suggestions[c]); //modifies line function
-
-         	printf("%s\n", line_copy);
+        	/* if the line is the last line being edited, the last character is
+        	 * EOF, not \n. */
+         	printf("%s", line_copy);
+         	if (returnflag) printf("\n");
          	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
         }
 

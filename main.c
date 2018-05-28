@@ -96,7 +96,6 @@ int main(int argc, char **argv)
 				return EXIT_FAILURE;
 			}
 			mode = 3;
-			shell_input(optarg, "target file");
             strcpy(file_name,optarg);
 			// if file name is not valid, print error
 			break;
@@ -150,9 +149,7 @@ int main(int argc, char **argv)
 		Initialize dictionary, declare names of files to be used
 	*/
 	dict_t* dict = dict_new();
-	if (dict_read(dict, dict_name) == EXIT_SUCCESS) {
-		if (mode == 3) printf("Dictionary Successfully Parsed!\n");
-	} else {
+	if (dict_read(dict, dict_name) == EXIT_FAILURE) {
 		printf("Trouble reading dictionary, exiting program\n");
         exit(0);
 	}
@@ -169,7 +166,7 @@ int main(int argc, char **argv)
                    "============================================================\n\n");
 	    printf("file: %s\n", file_name);
 	    printf("dictionary: %s\n", dict_name);
-	    printf("mode: %s\n\n", md);
+	    printf("mode: %s\n", md);
     }
 
 	char** result=NULL;
