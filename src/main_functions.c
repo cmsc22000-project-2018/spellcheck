@@ -98,8 +98,8 @@ void save_page(char* filename, char** lines, int* quit)
 void underline_misspelled(char *word, char* underline)
 {
 	int j = strlen(word);
-    int i = 0;
-	for(; i < j; i++) {
+    int i;
+	for(i = 0; i < j; i++) {
     	strcat(underline, "^");
 	}
 		strcat(underline, " ");
@@ -108,8 +108,8 @@ void underline_misspelled(char *word, char* underline)
 void underline_correct_spelling(char *word, char* underline)
 {
 	int j = strlen(word);
-    int i = 0;
-	for(; i < j; i++) {
+    int i;
+	for(i = 0; i < j; i++) {
     		strcat(underline, " ");
 	}
 		strcat(underline, " ");
@@ -155,23 +155,28 @@ int add_to_misspelled(char *word, char** misspelled)
 	if (word == NULL || misspelled == NULL) {
 		return EXIT_FAILURE;
 	}
+
 	int i = 0;
 	while(misspelled[i] != NULL) {
 		i++;
 	}
+
 	misspelled[i] = word;
 	return EXIT_SUCCESS;
 }
 
 //returns if a particular character is a punctuation char
 int is_in_punct_array(char letter) {
-	char punctuation_array[] = {'+',',',' ','.','-','\'','&','!','?',':',';','#','~','=','/','$','^','\n','_','<','>', '\"'};
+	char punctuation_array[] = "+, .-\'&!?:;#~=/$^\n_<>\"";
 	int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
-	int i = 0;
-    for (; i < num_punctuation ; i++) {
+	int i;
+
+    for (i = 0; i < num_punctuation ; i++) {
         if ((punctuation_array[i] - letter) == 0) {  
-            return EXIT_SUCCESS;   }
+            return EXIT_SUCCESS;
+        }
     }
+
     return EXIT_FAILURE;
 }
 
@@ -455,7 +460,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
     	exit(0);
     }
 
-    char *underline = (char *)malloc(sizeof(char) * strlen(line + 1)); //generate an empty array where the underline will go
+    char *underline = (char *)malloc(sizeof(char) * (strlen(line) + 1)); //generate an empty array where the underline will go
     underline[0] = '\0';
 
     parse_string(line, dict, underline, misspelled); //identify misspelled words and add to misspelled
@@ -467,8 +472,12 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
         int rc = generate_suggestions(misspelled[i], dict, suggestions);
 
 	    if (rc == EXIT_FAILURE) {
-            if (verbosity) suggestions[0] = "No suggestions generated"; 
-            if (!verbosity) suggestions[0] = misspelled[i];
+            if (verbosity) {
+                suggestions[0] = "No suggestions generated"; 
+            } else {
+                suggestions[0] = misspelled[i];
+            }
+
             suggestions[1] = NULL;
         }
 
