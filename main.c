@@ -186,6 +186,8 @@ int main(int argc, char **argv)
     	}
     }
 
+  }
     if (mode == 3) shell_outro();
+
 	return 0;
 }
