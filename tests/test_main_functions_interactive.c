@@ -140,7 +140,7 @@ void check_underline_misspelled_sentence(char** badwords, char* sentence, char* 
 Test(main_functions, underline_misspelled_sentence) {
 	char **badwords = (char **)malloc((sizeof(char*)*3));
 	char *line = "bd splling is bad";
-	char *underline = (char *)malloc(sizeof(char) * strlen(line + 1));
+	char *underline = (char *)malloc(sizeof(char) * (strlen(line) + 1));
 	badwords[0] = "bd";
 	badwords[1] = "splling";
 	badwords[2] = NULL;
@@ -153,7 +153,7 @@ Test(main_functions, underline_misspelled_sentence) {
 Test(main_functions, underline_misspelled_sentence2) {
 	char *line = "bd splling is bd";
 	char **badwords = (char **)malloc((sizeof(char*)*4));
-	char *underline = (char *)malloc(sizeof(char) * strlen(line + 1));
+	char *underline = (char *)malloc(sizeof(char) * (strlen(line) + 1));
 	badwords[0] = "bd";
 	badwords[1] = "splling";
 	badwords[2] = "bd";
@@ -230,7 +230,7 @@ void check_remove_trailing_punctuation(char* word, char* expected) {
 
 Test(main_functions, remove_trailing_punctuation1) {
     char* sample = "...words...";
-    char *buffer = (char *) malloc(sizeof(char) * strlen(sample) + 1);
+    char *buffer = (char *) malloc(sizeof(char) * (strlen(sample) + 1));
 	strcpy(buffer, sample);
     char* expected = "...words"; 
     check_remove_trailing_punctuation(buffer, expected);
@@ -250,7 +250,7 @@ Test(main_functions, remove_trailing_punctuation3) {
 
 Test(main_functions, remove_trailing_punctuation4) {
     char* sample = "words.!?!?!.";
-    char *buffer = (char *) malloc(sizeof(char) * strlen(sample) + 1);
+    char *buffer = (char *) malloc(sizeof(char) * (strlen(sample) + 1));
 	strcpy(buffer, sample);
     char* expected = "words"; 
     check_remove_trailing_punctuation(buffer, expected);

@@ -286,7 +286,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
     	exit(0);
     }
 
-    char *underline = (char *)malloc(sizeof(char) * strlen(line) + 1); //generate an empty array where the underline will go
+    char *underline = (char *)malloc(sizeof(char) * (strlen(line) + 1)); //generate an empty array where the underline will go
     underline[0] = '\0';
 
     parse_string(line, dict, underline, misspelled); //identify misspelled words and add to misspelled
