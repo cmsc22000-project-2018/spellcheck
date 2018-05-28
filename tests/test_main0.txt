@@ -5,7 +5,10 @@ f asdf
 f tests/test_short.txt
 1
 i
+checkre
+n
 checker
+y
 2
 a
 d

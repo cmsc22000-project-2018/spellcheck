@@ -62,6 +62,8 @@ void save_page(char* filename, char** lines, int* quit)
         } else if (!strcmp(line,"p")) {
         	shell_print(lines);
         	i = 1;
+        } else if (!strcmp(line, "r")) {
+        	*quit = 0;
         } else if (!strcmp(line, "s")) {
 			save_corrections(filename, lines);  // save to the same file destination, overwriting existing file
 			*quit = 1;
@@ -79,9 +81,6 @@ void save_page(char* filename, char** lines, int* quit)
 
             *quit = 1;
             if (i == 0) save_corrections(line, lines);  // save to different file destination
-
-		} else if (!strcmp(line, "r")) {
-			*quit = 0;
 		} else if (!strcmp(line, "q")) {
 			*quit = 1;
 		} else {
@@ -151,8 +150,6 @@ char* underline_misspelled_sentence(char** misspelled, char* sentence, char *und
 
 }
 
-
-
 int add_to_misspelled(char *word, char** misspelled)
 {
 	if (word == NULL || misspelled == NULL) {
@@ -165,10 +162,6 @@ int add_to_misspelled(char *word, char** misspelled)
 	misspelled[i] = word;
 	return EXIT_SUCCESS;
 }
-
-
-
-
 
 //returns if a particular character is a punctuation char
 int is_in_punct_array(char letter) {
@@ -226,12 +219,9 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 		char* shaved_word = remove_punctuation(tkn);
 
 		if (valid_word(dict, shaved_word) == EXIT_FAILURE){
-			//underline_misspelled(tkn, underline);
 			add_to_misspelled(shaved_word, misspelled);
 		}
 		else if (valid_word(dict, shaved_word) == EXIT_SUCCESS) {
-			//underline_correct_spelling(tkn, underline);
-			//underline = underline_misspelled_sentence(misspelled, string);
 		}
 		else {
 			printf("error processing text");
@@ -239,10 +229,7 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 		}
 		tkn = strtok(NULL," \n"); //spaces and \n are the only delimeters
 	}
-	//printf("string is %s \n", string_copy);
 	underline_misspelled_sentence(misspelled, string_copy, underline);
-	//printf("misspelled example is %s \n", misspelled[0]);
-	//printf("Underline is %s \n", underline);
 	return EXIT_SUCCESS;
 }
 
@@ -308,7 +295,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
     }
 
     char *suggestions[max_no_suggestions]; //generates empty array where suggestions will be filled
- 
+
     int i = 0;
 
     //replacing words according to user suggestions
@@ -317,13 +304,11 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
 
     	if (rc == EXIT_FAILURE) {
 			suggestions[0] = misspelled[i];	// to avoid error
-			suggestions[1] = misspelled[i];
 			suggestions[2] = NULL;
 			printf("\nNo suggestions have been generated for \"%s\".\n", misspelled[i]);
        		printf("\nd : Delete Word.\n");
        		printf("i : Input Word.\n");
         	printf("s : Skip.\n");
-
     	} else {
     	    printf("\nPossible replacements for word \"%s\" are:\n\n", misspelled[i]);
             int j = 0;
@@ -344,7 +329,9 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
     		shell_prompt();
         	check = scanf("%s", choice);
 
-        	if (!(choice[0] == 's') && !(choice[0] == 'd') && !(choice[0] == 'i') && !(isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions))) {
+        	if (!(choice[0] == 's') && !(choice[0] == 'd') && !(choice[0] == 'i')
+        		&& !(isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions))) {
+
                 shell_error("Please enter a valid input");
                 check = 0;
         	} else {
@@ -357,21 +344,15 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         if (choice[0] == 'd') {	// delete
         	correct_line(line_copy, misspelled[i], "");
 
-         	printf("%s\n", line_copy);
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
-
-        } else if (choice[0] == 's') { // skip
-
-        	printf("\nNo changes made to \"%s\". \n\n", misspelled[i]);
-         	printf("\n%s", line_copy);
+         	printf("%s", line_copy);
         	/* if the line is the last line being edited, the last character is
         	 * EOF, not \n. */
-        	if(returnflag) printf("\n"); // ,
+        	if(returnflag) printf("\n"); // ,         	
          	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
-        } else if (choice[0] == 's') { // skip
 
+        } else if (choice[0] == 's') { // skip
         	// print the edited line
-        	printf("\n%s", line_copy);
+        	printf("%s", line_copy);
         	/* if the line is the last line being edited, the last character is
         	 * EOF, not \n. */
         	if(returnflag) printf("\n"); // ,
@@ -406,18 +387,18 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
 			printf("\nReplacing \"%s\" with \"%s\". \n", misspelled[i], newword);
 			correct_line(line_copy, misspelled[i], newword); //modifies line function
 
-         	printf("%s\n", line_copy);
+         	printf("%s", line_copy);
         	/* if the line is the last line being edited, the last character is
         	 * EOF, not \n. */
          	if (returnflag) printf("\n");
          	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
 
-        } else if (isdigit(choice[0]) > 0 && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
-
+        } else if (isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
         	// Replace misspelled word with chosen replacement
         	int c = atoi(&choice[0]) - 1;
         	printf("\nReplacing %s with %s.\n\n", misspelled[i], suggestions[c]);
         	correct_line(line_copy, misspelled[i], suggestions[c]); //modifies line function
+
         	/* if the line is the last line being edited, the last character is
         	 * EOF, not \n. */
          	printf("%s", line_copy);
@@ -440,8 +421,10 @@ char** interactive_mode(char* filename, dict_t* dict, int* quit)
 	// step through phases
 	int i = 0;
 	int flag = 0;
+	int linenumber;
+
 	while (lines[i] != NULL) {
-		int linenumber = i+1;
+		linenumber = i+1;
 		if (lines[i+1] == NULL) flag = 1;	// last line
 		lines[i] = edit_interactive(lines[i], dict, linenumber, flag);
 		i++;
