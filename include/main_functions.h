@@ -10,201 +10,245 @@
 #include "word.h"
 
 /* 
-    Order of functions:
-        I. Saving files
-        II. Functions for editing strings (lines)
-        III. Interactive Mode
-        IV. Batch Mode
-        V. Main Page
+ * Order of functions:
+ *   I. Saving files
+ *   II. Functions for editing strings (lines)
+ *   III. Interactive Mode
+ *   IV. Batch Mode
+ *   V. Main Menu
  */
 
 /*
-	I. Saving Files
+ * I. Saving Files
  */
 
 /*
- * save_corrections: writes lines (lines) to a file with name (filename)
- * parameters:
- *      - name of file (saving destination)
- *      - array of strings to be printed in file
- * returns: void
+ * save_corrections - Writes lines to a file
+ *
+ * Parameters:
+ *  - filename: File being input
+ *  - lines: Array of strings.
+ *
+ * Returns:
+ *  - Nothing (Modifies the file that was input).
  */
-void save_corrections(char* filename, char** lines);
+void save_corrections(char *filename, char **lines);
 
 /*
- * save_page: prints save_page, accepting command line inputs until save_file name is accepted, or
- * user chooses to return to page / quit
- * parameters:
- *      - name of file (saving destination)
- *      - array of strings to be printed in file
- *      - a pointer to an int, which is a flag to main indicating whether spellcheck should exit
- *          1 is exit, 0 is continue
- * returns: void
+ * save_page - Prints the save page, going through command line inputs
+ * until the program exits through saving or discarding changes
+ *
+ * Parameters:
+ *  - filename: File being input
+ *  - lines: Array of strings.
+ *  - quit: Pointer to int (Flag to main() indicating whether spellcheck should exit).
+ *
+ * Returns:
+ *  - Nothing (Saves to file).
  */
-void save_page(char* filename, char** lines, int* quit);
+void save_page(char *filename, char **lines, int *quit);
 
 /*
-	II. Functions for editing strings
-*/
-
-/*
- * underline_misspelled: generate "^" as underlines for misspelled words
- * parameters:
- *      - word to be underlined
- *      - underline (character "^" is added to underline, which is a string to be printed
- *      - below the line
- * returns: void
+ * II. Functions for editing strings
  */
-void underline_misspelled(char *word, char* underline);
 
 /*
- * underline_misspelled: generate " " as underlines for non-misspelled words
- * parameters:
- *      - word to be underlined
- *      - underline (character " " is added to underline)
- * returns: void
+ * underline_misspelled - Generates '^' under misspelled words
+ *
+ * Parameters:
+ *  - word: String (word) to be underlined.
+ *  - underline: String (word).
+ *
+ * Returns:
+ *  - Nothing ('^' is added to underline).
  */
-void underline_correct_spelling(char *word, char* underline);
+void underline_misspelled(char *word, char *underline);
 
 /*
- * underline_misspelled_sentence: given a list of misspelled words in order, underline them in sentence
- * paramters:
- *      - array of misspelled words
- *      - sentence to be edited
- * returns: underline for line
+ * underline_correct_spelling - Generates ' ' as underlines for non-misspelled words
+ *
+ * Parameters:
+ *  - word: String (word) to be underlined.
+ *  - underline: String (word).
+ *
+ * Returns:
+ *  - Nothing (' ' is added to underline).
  */
-char* underline_misspelled_sentence(char** misspelled, char* sentence);
+void underline_correct_spelling(char *word, char *underline);
 
 /*
- * add_to_misspelled: add an incorrect word to list of misspelled words
- * parameters:
- *      - word
- *      - list of misspelled words
- * returns: int (EXIT_SUCCESS OR FAILURE)
+ * underline_misspelled_sentence - Given a list of misspelled words in order,
+ * underlines them in sentence
+ *
+ * Paramters:
+ *  - misspelled: Array of string (misspelled words).
+ *  - sentence: String (Sentence to be edited).
+ *
+ * Returns:
+ *  - char *: String (Sentence) underline for the line.
  */
-int add_to_misspelled(char *word, char** misspelled);
+char *underline_misspelled_sentence(char **misspelled, char *sentence);
 
 /*
- * parse_string: parse string, generating underline and list of misspelled words
- * parameters:
- *      - string (line) to be parsed
- *      - dictionary
- *      - underline: function generates underline, tailored to array
- *      - misspelled: misspelled words in the line
- * return: int (EXIT_SUCCESS or FAILURE).
+ * add_to_misspelled - Adds a misspelled word to a list of misspelled words
+ *
+ * Parameters:
+ *  - word: A string (word).
+ *  - misspelled: Array of string (misspelled words).
+ *
+ * Returns:
+ *  - int: EXIT_SUCCESS or EXIT_FAILURE.
  */
-int parse_string(char* string, dict_t *dict, char *underline, char** misspelled);
+int add_to_misspelled(char *word, char **misspelled);
 
-//reference from https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
 /*
- * correct_line: replace word in array
- * parameters:
- *      - line to be edited
- *      - old word (misspelled)
- *      - new word (correction)
- * return: edited line 
+ * parse_string - Parses a string, generates underline and a list of misspelled words
+ *
+ * Parameters:
+ *  - string: String (line) to be parsed.
+ *  - dict: Dictionary file.
+ *  - underline: String (word).
+ *  - misspelled: Array of string (misspelled words in the line).
+ *
+ * Returns:
+ *  - int: EXIT_SUCCESS or EXIT_FAILURE.
  */
-char* correct_line(char* line, char* old_word, char* new_word);
+int parse_string(char *string, dict_t *dict, char *underline, char **misspelled);
 
 /*
-	III. Interactive Mode
-
-*/
-
-/*
- * edit_interactive: returns a line which has been corrected accepting inputs from user
- * parameters:
- *      - line - line to be edited
- *      - dict - dictionary
- *      - linenumber - number of line
- * return: edited line
+ * correct_line - Replaces a word in a string array
+ *
+ * Source: https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
+ *
+ * Parameters:
+ *  - line: String (line to be edited).
+ *  - old_word: String (Misspelled word).
+ *  - new_word: String (Corrected word).
+ *
+ * Returns:
+ *  - char *: String (Edited line with corrections).
  */
-char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag);
+char *correct_line(char *line, char *old_word, char *new_word);
 
 /*
- * interctive mode: open file, parse and edit
- * parameters:
- *      - filename - name of file to be parsed
- *      - dictionary
- *      - *quit - pointer to a flag indicating whether or not spellcheck should terminate
- *			note 0 means continue, 1 means quit
- *		- returnflag - indicates if line being parsed is the last line.
- *			in this case, there is a formatting issue in printing out the line that needs to be resolved,
- *			because the text file that was read does not have a newline character
- *			at the end of the file.
- * return: char** array of lines, to be printed in save page
+ * III. Interactive Mode
  */
-char** interactive_mode(char* filename, dict_t* dict, int* quit);
+
+/*
+ * edit_interactive - Returns a string (line) corrected by inputs from the user
+ *
+ * Parameters:
+ *  - line: String (Line to be edited).
+ *  - dict: Dictionary file.
+ *  - linenumber: Number of lines.
+ *  - returnflag: Integer as flag.
+ *
+ * Returns:
+ *  - char *: String (Edited line).
+ */
+char *edit_interactive(char *line, dict_t *dict, int linenumber, int returnflag);
+
+/*
+ * interctive mode - Takes a file, parses and edits it
+ *
+ * Parameters:
+ *  - filename: File being input.
+ *  - dict - Dictionary file.
+ *  - quit - Pointer to a flag indicating whether or not spellcheck should terminate
+ *			 (0: Continue, 1: Quit).
+ *
+ * Returns:
+ *  - char **: Array of string pointers (lines to be printed in save page).
+ */
+char **interactive_mode(char *filename, dict_t *dict, int *quit);
 
 /* 
-	IV. Batch Mode
+ * IV. Batch Mode
  */
+
 /*
- * edit_batch: returns a line which has been corrected with automatic suggestions
- * parameters:
- *      - line - string of line to be edited
- *      - dict - dictionary
- *      - verbosity - flag indicating whether or not to print output
- *			note 0 means quiet, 1 means verbose
- *      verbosity determines whether or not shell output exists 
- * return: string of filename, edited
+ * edit_batch - Returns a line that has been corrected with suggestions
+ *
+ * Parameters:
+ *  - line - String (Line to be edited).
+ *  - dict - Dictionary file.
+ *  - verbosity - Flag indicating whether or not to print output
+ *	              (0: Quiet, 1: Verbose).
+ *
+ * Returns:
+ *  - char **: String (Edited file).
  */
-char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum);
+char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum);
 
 /* 
- * batch_mode: operates batch mode
- * parameters: 
- *      - mode - name of file to be parsed
- *      - dict - dictionary
- *      - quit - flag indicating whether or not quit spellcheck after operation
- *			note 0 means continue, 1 means quit
- *      - verbosity - flag indicating whether or not to print output
- *			note 0 means quiet, 1 means verbose
- * return: char** array of lines, to be printed if quiet mode
+ * batch_mode - Operates batch mode
+ *
+ * Parameters: 
+ *  - filename - File being input.
+ *  - dict - Dictionary file.
+ *  - quit - Pointer to a flag indicating whether or not spellcheck should terminate
+ *           (0: Continue, 1: Quit).
+ *  - verbosity - Flag indicating whether or not to print output
+ *                (0: Quiet, 1: Verbose).
+ *
+ * Returns:
+ *  - char**: Array of strings (lines to be printed).
  */
-char** batch_mode(char* filename, dict_t* dict, int* quit, int verbosity);
+char **batch_mode(char *filename, dict_t *dict, int *quit, int verbosity);
 
 /*
-	V. Main Page
+ * V. Main Menu
  */
 
 /*
- * help_page: Prints help page at request of user from main. Returns to main page via loop in main function
- * parameter: none 
- * return_values: none
+ * help_page - Prints the help page.
+ *
+ * Parameters:
+ *  - None.
+ * 
+ * Returns:
+ *  - None.
  */
 void help_page();
 
 /* 
- * fileexists: check if file with name, given by string, exists
- * parameter: filename
- * return: int (bool)
- 			1 means exists, 0 means not
+ * fileexists - Checks if the file being input exists or not
+ *
+ * Parameters:
+ *  - filename: File being input.
+ *
+ * Returns:
+ *  - int: Pseudoboolean - 1: Exists, 0: Does not exist.
  */
-int fileexists(const char* filename);
+int fileexists(const char *filename);
 
 /*
- * change_mode: helper for main_page, determine input mode
- * parameter: command line input from main_page
- * return: number indicating mode
- * 			1 means quiet, 2 verbose, 3 interactive
+ * Helper function for main_page()
+ *
+ * change_mode - Determines input mode
+ *
+ * Parameters:
+ *  - arg: String (Command line input from main_page()).
+ *
+ * Returns:
+ *  - int: Number indicating mode - 1: Quiet, 2: Verbose, 3: Interactive.
  */
-int change_mode(char* arg);
+int change_mode(char *arg);
 
 /*
- * main_page: operates main page
- 		- prints out the main page and waits for user to respond with
- 		  commands to enter a file name, dictionary name, help page
- 		  request, or quit
- * parameters:
- *		- flag indicating whether or not spellcheck exits
- *			0 is continue, 1 is quit
- *		- flag indicating mode
- *			1 is quiet, 2 is verbose, 3 is 
- *		- file_name - file name / path
- *		- dict_name - dictionary file name / path
- * return: void
+ * main_page - Operates main page
+ *
+ *
+ * Parameters:
+ *  - filename - File being input.
+ *  - dict - Dictionary file.
+ *  - quit - Pointer to a flag indicating whether or not spellcheck should terminate
+ *           (0: Continue, 1: Quit).
+ *	- mode - Flag indicating mode (1: Quiet, 2: Verbose, 3: Interactive).
+ *
+ * Returns:
+ *  - Nothing.
  */
-void main_page(int* quit, int *mode, char* file_name, char* dict_name);
+void main_page(char *filename, char *dict, int *quit, int *mode);
 
 #endif
