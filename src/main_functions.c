@@ -377,9 +377,11 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
 				}
 
 				printf("Are you sure you wish to replace \"%s\" with \"%s\"? [y, n] : ", misspelled[i], c);
-				scanf("%s", sig);
+				userconsent = scanf("%s", sig);
 				if (sig[0] == 'y') {
 					userconsent = 1;
+				} else {
+					userconsent = 0;
 				}
 			}
 

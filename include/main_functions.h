@@ -39,6 +39,42 @@ void save_page(char* filename, char** lines, int* quit);
 /*
 	II. Functions for editing strings
 */
+
+/*
+ * is_in_punct_array - determines if charater is a punctuation
+ * parameter: character
+ * return: returns EXIT_SUCCESS if a character is a punctuation char
+ */
+
+int is_in_punct_array(char letter);
+
+/* 
+ * remove_prefix_punctuation - removes any punctuation characters
+ * at the beginning of a string of alphabets
+ * parameter: word (string)
+ * return: EXIT_SUCCESS if word has no punctuation characters or
+ *		   if word has been successfully shaved of prefix punctuations
+ */
+int remove_prefix_punctuation(char *word); 
+
+
+/*
+ * remove_trailing_punctuation - removes any punctuation characters
+ * that trail a string of alphabets
+ * parameter: word (string)
+ * return: EXIT_SUCCESS if word has no punctuation characters or
+ *		   if word has been successfully shaved of trailing punctuations
+ */
+int remove_trailing_punctuation(char *word); 
+
+/* 
+ * remove_punctuation - combines remove_trailing_punctuation and remove_prefix_punctuation,
+ * to remove trailing and prefix punctuation without modifying original word
+ * parameter: word (string)
+ * return: word (string) with removed surrounding punctuations
+ */
+char* remove_punctuation(char *word);
+
 /*
  * underline_misspelled: generate "^" as underlines for misspelled words
  * parameters:
@@ -198,24 +234,6 @@ int change_mode(char* arg);
  * return: void
  */
 void main_page(int* quit, int *mode, char* file_name, char* dict_name);
-
-/*
-returns if a character is a punctuation char, based on an array defined within the function
-*/
-
-int is_in_punct_array(char letter);
-
-/* removes any punctuation characters at the beginning of a string of alphabets */
-int remove_prefix_punctuation(char *word); 
-
-
-/*removes any punctuation characters that trail a string of alphabets */
-int remove_trailing_punctuation(char *word); 
-
-/* combines the aformenetioned functions:
- removes trailing and prefix punctuation without modifying original word
-*/
-char* remove_punctuation(char *word);
 
 
 #endif
