@@ -163,3 +163,96 @@ Test(main_functions, underline_misspelled_sentence2) {
 	char *expected = "^^ ^^^^^^^    ^^";
     check_underline_misspelled_sentence(badwords, line, underline, expected);
 }
+
+
+
+
+/*testing is_in_punct_array */
+
+void check_is_in_punct_array(char letter, int expected) {
+	int result = is_in_punct_array(letter);
+
+    cr_assert_eq(expected, result, "check_is_in_punct_array test failed");
+}
+
+
+Test(main_functions, is_in_punct_array) {
+    check_is_in_punct_array('"', EXIT_SUCCESS);
+}
+
+Test(main_functions, is_in_punct_array3) {
+    check_is_in_punct_array('?', EXIT_SUCCESS);
+}
+
+Test(main_functions, is_in_punct_array4) {
+    check_is_in_punct_array('0', EXIT_FAILURE);
+}
+
+
+Test(main_functions, is_in_punct_array2) {
+    check_is_in_punct_array('a', EXIT_FAILURE);
+}
+
+
+void check_remove_prefix_punctuation(char* word, char* expected) {
+	remove_prefix_punctuation(word);
+
+	int result = strcmp(word, expected);
+
+    cr_assert_eq(result, 0, "remove_prefix_punctuation test failed");
+}
+
+Test(main_functions, remove_prefix_punctuation) {
+	char buffer[8] = "...words";
+    char* expected = "words"; 
+    check_remove_prefix_punctuation(buffer, expected);
+}
+
+Test(main_functions, remove_prefix_punctuation2) {
+	char buffer[7] = "..words";
+    char* expected = "words"; 
+    check_remove_prefix_punctuation(buffer, expected);
+}
+
+Test(main_functions, remove_prefix_punctuation3) {
+	char buffer[9] = "??words?";
+    char* expected = "words?"; 
+    check_remove_prefix_punctuation(buffer, expected);
+}
+
+void check_remove_trailing_punctuation(char* word, char* expected) {
+	remove_trailing_punctuation(word);
+
+	int result = strcmp(word, expected);
+
+    cr_assert_eq(result, 0, "remove_trailing_punctuation test failed");
+}
+
+Test(main_functions, remove_trailing_punctuation1) {
+    char* sample = "...words...";
+    char *buffer = (char *) malloc(sizeof(char) * strlen(sample) + 1);
+	strcpy(buffer, sample);
+    char* expected = "...words"; 
+    check_remove_trailing_punctuation(buffer, expected);
+}
+
+Test(main_functions, remove_trailing_punctuation2) {
+	char buffer[6] = "words.";
+    char* expected = "words"; 
+    check_remove_trailing_punctuation(buffer, expected);
+}
+
+Test(main_functions, remove_trailing_punctuation3) {
+	char buffer[8] = "??words?";
+    char* expected = "??words"; 
+    check_remove_trailing_punctuation(buffer, expected);
+}
+
+Test(main_functions, remove_trailing_punctuation4) {
+    char* sample = "words.!?!?!.";
+    char *buffer = (char *) malloc(sizeof(char) * strlen(sample) + 1);
+	strcpy(buffer, sample);
+    char* expected = "words"; 
+    check_remove_trailing_punctuation(buffer, expected);
+}
+

@@ -187,6 +187,7 @@ int remove_prefix_punctuation(char *word) {
     char prefix_char;
     prefix_char = word[0];
 
+
     while (is_in_punct_array(prefix_char) == EXIT_SUCCESS) {
         memmove(word, word+1, strlen(word)); 
         prefix_char = word[0];

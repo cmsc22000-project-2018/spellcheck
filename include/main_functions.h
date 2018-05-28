@@ -199,5 +199,23 @@ int change_mode(char* arg);
  */
 void main_page(int* quit, int *mode, char* file_name, char* dict_name);
 
+/*
+returns if a character is a punctuation char, based on an array defined within the function
+*/
+
+int is_in_punct_array(char letter);
+
+/* removes any punctuation characters at the beginning of a string of alphabets */
+int remove_prefix_punctuation(char *word); 
+
+
+/*removes any punctuation characters that trail a string of alphabets */
+int remove_trailing_punctuation(char *word); 
+
+/* combines the aformenetioned functions:
+ removes trailing and prefix punctuation without modifying original word
+*/
+char* remove_punctuation(char *word);
+
 
 #endif
