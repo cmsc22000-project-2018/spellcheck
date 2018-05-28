@@ -130,7 +130,9 @@ void save_page(char *filename, char **lines, int *quit) {
 
 /* See main_functions.h */
 void underline_misspelled(char *word, char *underline) {
-    for (int i = 0; i < strlen(word); i++) {
+    int i = 0;
+
+    for (i = 0; i < strlen(word); i++) {
         strcat(underline, "^");
     }
 
@@ -139,7 +141,9 @@ void underline_misspelled(char *word, char *underline) {
 
 /* See main_functions.h */
 void underline_correct_spelling(char *word, char *underline) {
-    for (int i = 0; i < strlen(word); i++) {
+    int i = 0;
+
+    for (i = 0; i < strlen(word); i++) {
         strcat(underline, " ");
     }
 
@@ -150,16 +154,18 @@ void underline_correct_spelling(char *word, char *underline) {
 char *underline_misspelled_sentence(char **misspelled, char *sentence, char *underline) {
     underline[0] = '\0';
     int element = 0;
+    int i = 0;
+    size_t j = 0;
 
     while(misspelled[element] != NULL) {
         char *ptr = strstr(sentence, misspelled[element]);
 
         if (ptr != NULL) {
-            for (int i = 0; i < ptr - sentence; i++) {
+            for (i = 0; i < ptr - sentence; i++) {
 				strcat(underline, " ");
             }
 
-            for (size_t j = 0; j < strlen(misspelled[element]); j++) {
+            for (j = 0; j < strlen(misspelled[element]); j++) {
                 strcat(underline, "^");
             }
 
@@ -197,7 +203,9 @@ int is_in_punct_array(char letter) {
 
     int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
 
-    for (int i = 0; i < num_punctuation; i++) {
+    int i = 0;
+
+    for (i = 0; i < num_punctuation; i++) {
         if ((punctuation_array[i] - letter) == 0) {  
             return EXIT_SUCCESS;
         }
