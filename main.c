@@ -196,8 +196,6 @@ int main(int argc, char **argv)
     	}
     }
 
-
-    if (*quit == 0) file_name = "";
   }
 
     if (mode == 3) shell_outro();

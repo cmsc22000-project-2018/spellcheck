@@ -62,6 +62,8 @@ void save_page(char* filename, char** lines, int* quit)
         } else if (!strcmp(line,"p")) {
         	shell_print(lines);
         	i = 1;
+        } else if (!strcmp(line, "r")) {
+        	*quit = 0;
         } else if (!strcmp(line, "s")) {
 			save_corrections(filename, lines);  // save to the same file destination, overwriting existing file
 			*quit = 1;
