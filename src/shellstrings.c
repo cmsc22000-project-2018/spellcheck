@@ -28,7 +28,6 @@ void shell_save() {
     printf("p : print all changes\n");
     printf("s : save to existing file\n");
     printf("c : save to custom file\n");
-    printf("r : return to home screen\n");
     printf("q : quit program\n\n");
 }
 

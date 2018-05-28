@@ -166,7 +166,7 @@ int main(int argc, char **argv)
                    "============================================================\n\n");
 	    printf("file: %s\n", file_name);
 	    printf("dictionary: %s\n", dict_name);
-	    printf("mode: %s\n", md);
+	    printf("mode: %s\n\n", md);
     }
 
 	char** result=NULL;
@@ -184,7 +184,7 @@ int main(int argc, char **argv)
 
 
     if (mode != 2 && result != NULL) {	// Save file, a functionality unnecessary for verbose batch mode
-    	if (mode == 3) printf("Spellcheck successful!\n\n");
+    	if (mode == 3) printf("\n\nSpellcheck successful!\n\n");
 
     	md = strstr(save_file,".txt");
     	
@@ -196,6 +196,8 @@ int main(int argc, char **argv)
     	}
     }
 
+
+    if (*quit == 0) file_name = "";
   }
 
     if (mode == 3) shell_outro();
