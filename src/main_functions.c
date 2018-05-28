@@ -117,9 +117,9 @@ void underline_correct_spelling(char *word, char* underline)
 
 }
 
-char* underline_misspelled_sentence(char** misspelled, char* sentence) {
+char* underline_misspelled_sentence(char** misspelled, char* sentence, char *underline) {
+//given an array of misspelled words, generates an underline for an occurence in sentence
 
-	char* underline = malloc(strlen(sentence));
 	underline[0] = '\0';
 	int element = 0;
 
@@ -218,17 +218,19 @@ char* remove_punctuation(char *word) { //removes trailing and prefix punctuation
 
 int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 {
+	char *string_copy = strdup(string);
 	char *tkn = strtok(string," \n"); //words only separated by spaces and newline
 	while (tkn != NULL) {
 
 		char* shaved_word = remove_punctuation(tkn);
 
 		if (valid_word(dict, shaved_word) == EXIT_FAILURE){
-			underline_misspelled(tkn, underline);
+			//underline_misspelled(tkn, underline);
 			add_to_misspelled(shaved_word, misspelled);
 		}
 		else if (valid_word(dict, shaved_word) == EXIT_SUCCESS) {
-			underline_correct_spelling(tkn, underline);
+			//underline_correct_spelling(tkn, underline);
+			//underline = underline_misspelled_sentence(misspelled, string);
 		}
 		else {
 			printf("error processing text");
@@ -236,6 +238,10 @@ int parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
 		}
 		tkn = strtok(NULL," \n"); //spaces and \n are the only delimeters
 	}
+	//printf("string is %s \n", string_copy);
+	underline_misspelled_sentence(misspelled, string_copy, underline);
+	//printf("misspelled example is %s \n", misspelled[0]);
+	//printf("Underline is %s \n", underline);
 	return EXIT_SUCCESS;
 }
 
@@ -345,19 +351,21 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         	}
         }
 
+
+
         if (choice[0] == 'd') {	// delete
 
            	printf("\nDeleting %s.\n", misspelled[i]);
         	correct_line(line_copy, misspelled[i], "");
 
          	printf("%s\n", line_copy);
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
+         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
 
         } else if (choice[0] == 's') { // skip
 
         	printf("\nNo changes made to \"%s\". \n\n", misspelled[i]);
         	printf("%s\n", line_copy);
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
+         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
 
         } else if (choice[0] == 'i') { // insert
 
@@ -376,7 +384,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         	correct_line(line_copy, misspelled[i], newword); //modifies line function
 
          	printf("%s\n", line_copy);
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
+         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
 
         } else if (isdigit(choice[0]) > 0 && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
 
@@ -385,7 +393,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
         	correct_line(line_copy, misspelled[i], suggestions[c]); //modifies line function
 
          	printf("%s\n", line_copy);
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy));
+         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
         }
 
         i++;	// added loop changer

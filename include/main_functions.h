@@ -65,7 +65,7 @@ void underline_correct_spelling(char *word, char* underline);
  *      - sentence to be edited
  * returns: underline for line
  */
-char* underline_misspelled_sentence(char** misspelled, char* sentence);
+char* underline_misspelled_sentence(char** misspelled, char* sentence, char* underline);
 
 /*
  * add_to_misspelled: add an incorrect word to list of misspelled words
