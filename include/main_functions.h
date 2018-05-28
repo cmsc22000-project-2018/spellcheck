@@ -113,7 +113,7 @@ void underline_correct_spelling(char *word, char *underline);
 
 /*
  * underline_misspelled_sentence - Given a list of misspelled words in order,
- * underlines them in sentence
+ *                                 underlines them in a sentence
  *
  * Paramters:
  *  - misspelled: Array of string (misspelled words).
@@ -122,7 +122,7 @@ void underline_correct_spelling(char *word, char *underline);
  * Returns:
  *  - char *: String (Sentence) underline for the line.
  */
-char* underline_misspelled_sentence(char** misspelled, char* sentence, char* underline);
+char *underline_misspelled_sentence(char **misspelled, char *sentence, char *underline);
 
 /*
  * add_to_misspelled - Adds a misspelled word to a list of misspelled words
@@ -273,7 +273,6 @@ int change_mode(char *arg);
 /*
  * main_page - Operates main page
  *
- *
  * Parameters:
  *  - filename - File being input.
  *  - dict - Dictionary file.
@@ -284,6 +283,6 @@ int change_mode(char *arg);
  * Returns:
  *  - Nothing.
  */
-void main_page(char *file_name, char *dict_name, int *quit, int* mode);
+void main_page(char *filename, char *dict, int *quit, int *mode);
 
 #endif
