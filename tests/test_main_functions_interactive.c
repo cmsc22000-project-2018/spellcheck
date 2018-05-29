@@ -277,7 +277,7 @@ void check_remove_punctuation(char* word, char* expected) {
     cr_assert_eq(result, 0, "remove_trailing_punctuation test failed");
 }
 
-Test(main_functions, remove_trailing_punctuation1) {
+Test(main_functions, remove_punctuation1) {
     char* sample = "...words...";
     char *buffer = (char *) malloc(sizeof(char) * (strlen(sample) + 1));
 	strcpy(buffer, sample);
@@ -285,19 +285,19 @@ Test(main_functions, remove_trailing_punctuation1) {
     check_remove_punctuation(buffer, expected);
 }
 
-Test(main_functions, remove_trailing_punctuation2) {
+Test(main_functions, remove_punctuation2) {
 	char buffer[6] = "words.";
     char* expected = "words"; 
     check_remove_punctuation(buffer, expected);
 }
 
-Test(main_functions, remove_trailing_punctuation3) {
+Test(main_functions, remov_punctuation3) {
 	char buffer[8] = "??words?";
     char* expected = "words"; 
     check_remove_punctuation(buffer, expected);
 }
 
-Test(main_functions, remove_trailing_punctuation4) {
+Test(main_functions, remove_punctuation4) {
     char* sample = "!!words.!?!?!.";
     char *buffer = (char *) malloc(sizeof(char) * (strlen(sample) + 1));
 	strcpy(buffer, sample);
