@@ -165,9 +165,9 @@ Test(main_functions, underline_misspelled_sentence2) {
 }
 
 
-
-
-/*testing is_in_punct_array */
+/*
+ ***** is_in_punct_array tests *****
+ */
 
 void check_is_in_punct_array(char letter, int expected) {
 	int result = is_in_punct_array(letter);
@@ -194,6 +194,10 @@ Test(main_functions, is_in_punct_array2) {
 }
 
 
+/*
+ ***** remove_prefix_punctuation tests *****
+ */
+
 void check_remove_prefix_punctuation(char* word, char* expected) {
 	remove_prefix_punctuation(word);
 
@@ -219,6 +223,10 @@ Test(main_functions, remove_prefix_punctuation3) {
     char* expected = "words?"; 
     check_remove_prefix_punctuation(buffer, expected);
 }
+
+/*
+ ***** remove_trailing_punctuation tests *****
+ */
 
 void check_remove_trailing_punctuation(char* word, char* expected) {
 	remove_trailing_punctuation(word);
@@ -256,3 +264,43 @@ Test(main_functions, remove_trailing_punctuation4) {
     check_remove_trailing_punctuation(buffer, expected);
 }
 
+
+/*
+ ***** remove_punctuation tests *****
+ */
+
+void check_remove_punctuation(char* word, char* expected) {
+	remove_punctuation(word);
+
+	int result = strcmp(word, expected);
+
+    cr_assert_eq(result, 0, "remove_trailing_punctuation test failed");
+}
+
+Test(main_functions, remove_trailing_punctuation1) {
+    char* sample = "...words...";
+    char *buffer = (char *) malloc(sizeof(char) * (strlen(sample) + 1));
+	strcpy(buffer, sample);
+    char* expected = "words"; 
+    check_remove_punctuation(buffer, expected);
+}
+
+Test(main_functions, remove_trailing_punctuation2) {
+	char buffer[6] = "words.";
+    char* expected = "words"; 
+    check_remove_punctuation(buffer, expected);
+}
+
+Test(main_functions, remove_trailing_punctuation3) {
+	char buffer[8] = "??words?";
+    char* expected = "words"; 
+    check_remove_punctuation(buffer, expected);
+}
+
+Test(main_functions, remove_trailing_punctuation4) {
+    char* sample = "!!words.!?!?!.";
+    char *buffer = (char *) malloc(sizeof(char) * (strlen(sample) + 1));
+	strcpy(buffer, sample);
+    char* expected = "words"; 
+    check_remove_punctuation(buffer, expected);
+}
