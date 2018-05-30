@@ -42,6 +42,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
     }
 
     char *suggestions[max_no_suggestions]; //generates empty array where suggestions will be filled
+    suggestions[max_no_suggestions] = NULL;
 
     int i = 0;
 
