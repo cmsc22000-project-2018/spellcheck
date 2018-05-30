@@ -109,7 +109,13 @@ int dict_exists(dict_t *d, char *str) {
         return EXIT_FAILURE;
     }
 
-    return trie_contains(d->dict, str);
+    int rc = trie_contains(d->dict, str);
+
+    if (rc == 0) {
+        return EXIT_SUCCESS;
+    }
+
+    return EXIT_FAILURE;
 }
 
 /* See dictionary.h */
@@ -127,7 +133,13 @@ int dict_add(dict_t *d, char *str) {
         return EXIT_FAILURE;
     }
 
-    return trie_insert(d->dict, str);
+    int rc = trie_insert(d->dict, str);
+
+    if (rc == 0) {
+        return EXIT_SUCCESS;
+    }
+
+    return EXIT_FAILURE;
 }
 
 /* See dictionary.h */
