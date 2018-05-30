@@ -37,7 +37,7 @@ dict_t* dict_new() {
 int dict_init(dict_t *d) {
     assert(d != NULL);
 
-    trie_t *t = trie_new();
+    trie_t *t = trie_new("dict");
     if (t == NULL) {
         return EXIT_FAILURE;
     }
@@ -109,7 +109,7 @@ int dict_exists(dict_t *d, char *str) {
         return EXIT_FAILURE;
     }
 
-    return trie_exists(d->dict, str);
+    return trie_contains(d->dict, str);
 }
 
 /* See dictionary.h */
@@ -127,7 +127,7 @@ int dict_add(dict_t *d, char *str) {
         return EXIT_FAILURE;
     }
 
-    return trie_add(d->dict, str);
+    return trie_insert(d->dict, str);
 }
 
 /* See dictionary.h */
