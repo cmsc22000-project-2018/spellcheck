@@ -286,7 +286,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
     	exit(0);
     }
 
-    char *underline = (char *)malloc(sizeof(char) * strlen(line) + 1); //generate an empty array where the underline will go
+    char *underline = (char *)malloc(sizeof(char) * strlen(line + 1)); //generate an empty array where the underline will go
     underline[0] = '\0';
 
     parse_string(line, dict, underline, misspelled); //identify misspelled words and add to misspelled
@@ -471,10 +471,6 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
     while (misspelled[i] != NULL) {
         int rc = generate_suggestions(misspelled[i], dict, suggestions);
 
-        /* if no suggestions are generated,
-         * in verbose - print "no suggestions"
-         * in quiet - save the word as is
-         */
 	    if (rc == EXIT_FAILURE) {
             if (verbosity) {
                 suggestions[0] = "No suggestions generated"; 
