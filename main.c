@@ -176,11 +176,11 @@ int main(int argc, char **argv)
 	char** result=NULL;
 	// Execute either interactive or batch mode, and save file at end
 	switch (mode) {
-		case 1: result = batch_mode(file_name, dict, quit, QUIET_MODE); // pass in dictionary
+		case QUIET_MODE: result = batch_mode(file_name, dict, quit, QUIET_MODE); // pass in dictionary
 			break;
-		case 2: result = batch_mode(file_name, dict, quit, VERBOSE_MODE); // pass in dictionary 
+		case VERBOSE_MODE: result = batch_mode(file_name, dict, quit, VERBOSE_MODE); // pass in dictionary 
 			break;
-		case 3: result = interactive_mode(file_name, dict, quit); // pass in dictionary
+		case INTERACTIVE_MODE: result = interactive_mode(file_name, dict, quit); // pass in dictionary
 			break;
 		default:
 			break;
@@ -194,7 +194,7 @@ int main(int argc, char **argv)
     	
     	if (md != NULL) {
     		save_corrections(save_file, result);
-    		*quit = true;
+    		*quit = false;
     	} else {
     		save_page(file_name, result, quit);
     	}

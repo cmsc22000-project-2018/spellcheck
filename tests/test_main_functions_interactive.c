@@ -142,27 +142,27 @@ Test(main_functions_edit, underline_misspelled_sentence2) {
  */
 
 void check_is_in_punct_array(char letter, int expected) {
-	int result = is_in_punct_array(letter);
+	bool result = is_in_punct_array(letter);
 
     cr_assert_eq(expected, result, "check_is_in_punct_array test failed");
 }
 
 
 Test(main_functions_edit, is_in_punct_array) {
-    check_is_in_punct_array('"', EXIT_SUCCESS);
+    check_is_in_punct_array('"', TRUE);
 }
 
 Test(main_functions_edit, is_in_punct_array3) {
-    check_is_in_punct_array('?', EXIT_SUCCESS);
+    check_is_in_punct_array('?', TRUE);
 }
 
 Test(main_functions_edit, is_in_punct_array4) {
-    check_is_in_punct_array('0', EXIT_FAILURE);
+    check_is_in_punct_array('0', FALSE);
 }
 
 
 Test(main_functions_edit, is_in_punct_array2) {
-    check_is_in_punct_array('a', EXIT_FAILURE);
+    check_is_in_punct_array('a', FALSE);
 }
 
 

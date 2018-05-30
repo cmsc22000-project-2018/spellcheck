@@ -19,7 +19,6 @@
  * printing in criterion testing was discouraged.
  */
 
-
 /* Test edit_batch */
 Test(main_functions_batch, edit_batch)
 {
@@ -33,7 +32,9 @@ Test(main_functions_batch, edit_batch)
 
 	char* newline = edit_batch(line, dict, QUIET_MODE, 1);
 
-	printf("%s\n", newline);
+	i = strncmp("Eye have, a spelling checker\n", newline, 19);
+
+	cr_assert_eq(i, 0, "edit_batch failed");
 }
 
 /* Test edit_batch */
@@ -49,5 +50,7 @@ Test(main_functions_batch, edit_batch2)
 
 	char* newline = edit_batch(line, dict, QUIET_MODE, 1);
 
-	printf("%s\n", newline);
+	i = strncmp("It come with thy my PC.", newline, 14);
+
+	cr_assert_eq(i, 0, "edit_batch failed");
 }
