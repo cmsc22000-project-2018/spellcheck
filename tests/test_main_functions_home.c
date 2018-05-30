@@ -25,7 +25,7 @@ Test(main_functions_home, change_mode0)
     cr_assert_eq(i, VERBOSE_MODE, "return value wrong");
 }
 
-Test(main_functions_home, change_mode0)
+Test(main_functions_home, change_mode1)
 {
     char* mode = "-1";
 

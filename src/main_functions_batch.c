@@ -33,6 +33,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
 
     parse_string(line, dict, underline, misspelled); //identify misspelled words and add to misspelled
     char *suggestions[max_no_suggestions]; //generates empty array where suggestions will be filled
+    suggestions[max_no_suggestions] = NULL;
 
     int i = 0;
     //replacing words, printing out if batch mode
@@ -89,6 +90,6 @@ char** batch_mode(char* filename, dict_t* dict, bool* quit, int verbosity)
 		i++;
 	}
 
-    *quit = true;
+    *quit = false;
 	return lines;
 }
