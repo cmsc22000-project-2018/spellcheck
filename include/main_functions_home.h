@@ -40,8 +40,9 @@ bool fileexists(const char* filename);
 int change_mode(char* arg);
 
 /*
- * main_page: prints out the main page and waits for user to respond with
- *			  commands to enter a file name, dictionary name, help page request, or quit
+ * main_page: prints out the shellstring main page and waits for user to respond with
+ *			  commands to enter a file name, dictionary name, help page request, or quit.
+ *			  Editing process begins when filename is entered.
  * parameters:
  *      - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
  *		- flag indicating mode

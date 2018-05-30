@@ -15,7 +15,7 @@
  */
 
 /* save_corrections tested */
-Test(main_functions_save,save_corrections)
+Test(main_functions_save, save_corrections)
 {
     char* c = "test_save.txt";
     char** lines = calloc(2, sizeof(char*));

@@ -7,15 +7,15 @@
 #include "dictionary.h"
 
 /*
- * Functions for Editing Strings: 
-*/
+ * Functions for Editing Strings
+ */
 
 /*
  * is_in_punct_array: determines if charater is a punctuation
  *
  * parameter: character
  *
- * return: returns EXIT_SUCCESS if a character is a punctuation char
+ * return: returns true if a character is a punctuation char
  */
 
 bool is_in_punct_array(char letter);
@@ -79,7 +79,8 @@ int add_to_misspelled(char *word, char** misspelled);
  * parameters:
  *      - string (line) to be parsed
  *      - dictionary
- *      - underline: string of ' ' and '^', highlighting misspelled words in sentence
+ *      - underline: string of ' ' and '^', highlighting misspelled words in sentence to be printed out in terminal
+ *		  this is initialized in edit_batch and edit_interactive as a malloc'd array with length of edit target string.
  *      - misspelled: char** array of misspelled words in the line
  *
  * return: void
