@@ -158,7 +158,6 @@ void shell_interactive_replacements(char* word, char** sug, int flag) {
     printf("\n\n");
 }
 
-
 void shell_verbose_chart(int lnum, char* misspelled, char** suggestions) {
     printf("%d\t\t\t", lnum); // print line number
     int ntab = 3 - (strlen(misspelled) / 8); // number of tabs
@@ -179,9 +178,4 @@ void shell_verbose_chart(int lnum, char* misspelled, char** suggestions) {
 void shell_save_message() {
     printf("\n\nEnter a file name [path/*.txt] or enter 'r' to return to previous page.\n\n");
     shell_prompt();
-}
-
-/* See shellstrings.h */
-void shell_outro() {
-    printf("Spellcheck ran successfully. Goodbye!\n");
 }

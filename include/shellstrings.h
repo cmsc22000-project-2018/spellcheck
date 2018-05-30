@@ -69,7 +69,7 @@ void shell_edit_success();
  * shell_print - Print edited text for viewing
  *
  * Parameters:
- * 	- None.
+ * 	- lines: string array, each representing edited line of file.
  *
  * Returns:
  * 	- None.
@@ -93,12 +93,14 @@ char *shell_error_format();
  *
  * Parameters:
  *  - input_file: String of the file input by the user.
- *  - mode: String for the mode being used (either quiet or verbose) 
+ *  - status: String for the file type - dictionary or 
+ *				this is a string because shell_input is used
+ *				to print a confirmation message on the screen
  *
  * Returns:
  *  - None.
  */
-void shell_input(char* input_file, char* mode);
+void shell_input(char* input_file, char* status);
 
 /*
  * shell_erorr_dict - Error prompt regarding invalid dictionary file input for the shell.
@@ -192,23 +194,12 @@ void shell_interactive_replacements(char* word, char** sug, int flag);
 void shell_save_message();
 
 /*
- * shell_outro - Outro text for the shell.
+ * shell_verbose_chart - verbose chart print 
  *
  * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
- */
-void shell_outro();
-
-/*
- * shell_verbose_start - verbose chart print 
- *
- * Parameters:
- *  - line number
- *	- misspelled word
- *	- generated suggestions
+ *	- lnum: line number
+ *	- misspelled: misspelled word
+ *	- suggestions: char** array of generated suggestions
  *
  * Returns:
  *  - None.

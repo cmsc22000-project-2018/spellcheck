@@ -2,10 +2,15 @@
 #include <getopt.h>
 #include <string.h>
 #include <assert.h>
+#include <stdbool.h>
 #include "parser.h"
 #include "shellstrings.h"
-#include "main_functions.h"
 #include "dictionary.h"
+#include "main_functions_batch.h"
+#include "main_functions_interactive.h"
+#include "main_functions_save.h"
+#include "main_functions_edit.h"
+#include "main_functions_home.h"
 
 /*
  *	Main function
@@ -45,6 +50,17 @@
  *
  */
 
+char* modename(int mode)
+{
+	switch (mode) {
+		case QUIET_MODE: return "quiet batch mode"; 
+		case VERBOSE_MODE: return "verbose batch mode";
+		case INTERACTIVE_MODE: return "interactive mode";
+		default: break;
+	}
+	return "quiet batch mode";
+}
+
 int main(int argc, char **argv)
 {
 	// filenames up to 400 char
@@ -60,7 +76,7 @@ int main(int argc, char **argv)
 		2: verbose batch
 		3: interactive
 	*/
-	int mode = 3;
+	int mode = INTERACTIVE_MODE;
 
 	/* Parse Command Line Args */
 	char c;
@@ -121,19 +137,18 @@ int main(int argc, char **argv)
 		}
 	}
 
-	int *quit = malloc(sizeof(int*)); // this enables return to main page, should user choose it at save_page
-	*quit = 0;
+	bool *quit = malloc(sizeof(bool*));
+	*quit = true;
 
-  while (!(*quit)) {
+  while ((*quit) == true) {
 	if (fileexists(file_name)) {	// if file exists, then bypass main page
-		*quit = 1;
+		*quit = false;
 	}
 
 	/* main page: activated if there is no file to be parsed.
 	   can open help page, quit, or load filename / dictname */
-	main_page(file_name, dict_name, quit, &mode);
-	if ((*quit) == 2) { // user selected "quit" in main_page
-		shell_outro();
+	main_page(quit, &mode, file_name, dict_name);
+	if (mode == QUIT) { // user selected "quit" in main_page
 		return 0;
 	}
 
@@ -151,43 +166,41 @@ int main(int argc, char **argv)
 		Starting to Parse file! Printing messages accordingly
 	 */
 	char* md = shell_modename(mode);
-    if (mode == 3) {
+    if (mode == INTERACTIVE_MODE) {
 		shell_start_interactive(file_name, dict_name, md);
     }
 
 	char** result=NULL;
 	// Execute either interactive or batch mode, and save file at end
 	switch (mode) {
-		case 1: result = batch_mode(file_name, dict, quit, 0); // pass in dictionary
+		case QUIET_MODE: result = batch_mode(file_name, dict, quit, QUIET_MODE); // pass in dictionary
 			break;
-		case 2: result = batch_mode(file_name, dict, quit, 1); // pass in dictionary 
+		case VERBOSE_MODE: result = batch_mode(file_name, dict, quit, VERBOSE_MODE); // pass in dictionary 
 			break;
-		case 3: result = interactive_mode(file_name, dict, quit); // pass in dictionary
+		case INTERACTIVE_MODE: result = interactive_mode(file_name, dict, quit); // pass in dictionary
 			break;
 		default:
 			break;
 	}
 
 
-	*quit = 1;
-    if (mode != 2 && result != NULL) {	// Save file, a functionality unnecessary for verbose batch mode
-    	if (mode == 3) shell_edit_success();
+    if (mode != VERBOSE_MODE && result != NULL) {	// Save file, a functionality unnecessary for verbose batch mode
+    	if (mode == INTERACTIVE_MODE) shell_edit_success();
 
     	md = strstr(save_file,".txt");
     	
     	if (md == NULL && mode == 1) {
     		shell_print(result);
-    		*quit = 1;
+    		*quit = false;
    		} else if (md != NULL) {
     		save_corrections(save_file, result);
-    		*quit=1;
+    		*quit = false;
     	} else {
     		save_page(file_name, result, quit);
     	}
     }
 
   }
-    if (mode == 3) shell_outro();
 
 	return 0;
 }
