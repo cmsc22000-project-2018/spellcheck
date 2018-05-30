@@ -80,7 +80,7 @@ void main_page(bool* quit, int *mode, char* file_name, char* dict_name)
 			} else {
 			dict_name=args[1];
 			printf("\n\nDictionary file is now %s\n\n\n",dict_name);
-			*quit = false;
+			*quit = true;
 			}
 
 		} else if (!strcmp(args[0],"q")) { // quit

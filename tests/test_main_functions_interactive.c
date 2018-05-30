@@ -149,20 +149,20 @@ void check_is_in_punct_array(char letter, int expected) {
 
 
 Test(main_functions_edit, is_in_punct_array) {
-    check_is_in_punct_array('"', TRUE);
+    check_is_in_punct_array('"', true);
 }
 
 Test(main_functions_edit, is_in_punct_array3) {
-    check_is_in_punct_array('?', TRUE);
+    check_is_in_punct_array('?', true);
 }
 
 Test(main_functions_edit, is_in_punct_array4) {
-    check_is_in_punct_array('0', FALSE);
+    check_is_in_punct_array('0', false);
 }
 
 
 Test(main_functions_edit, is_in_punct_array2) {
-    check_is_in_punct_array('a', FALSE);
+    check_is_in_punct_array('a', false);
 }
 
 
