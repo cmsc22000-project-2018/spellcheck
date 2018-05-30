@@ -1,12 +1,12 @@
 # Makefile based on template at https://gist.github.com/xuhdev/1873316
 
-
 CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -O2 -g -I./include/
 RM = rm -rf
 BIN = spellcheck
 
-SRCS = main.c src/mock_trie.c src/dictionary.c src/parser.c src/word.c src/main_functions.c src/shellstrings.c
+SHELLSRCS = src/main_functions_batch.c src/main_functions_interactive.c src/main_functions_save.c src/main_functions_edit.c src/main_functions_home.c
+SRCS = main.c src/mock_trie.c src/dictionary.c src/parser.c src/word.c src/shellstrings.c $(SHELLSRCS)
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all tests clean

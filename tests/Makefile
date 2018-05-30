@@ -8,7 +8,8 @@ LDLIBS = -lcriterion
 
 
 TESTSRCS = test_main_functions_interactive.c test_word.c test_main_functions.c test_dictionary.c test_parser.c
-FILESRCS = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/main_functions.c ../src/shellstrings.c ../src/word.c
+SHELLFILESRCS = ../src/main_functions_home.c ../src/main_functions_save.c ../src/main_functions_interactive.c ../src/main_functions_edit.c ../src/main_functions_batch.c
+FILESRCS = ../src/dictionary.c ../src/mock_trie.c ../src/parser.c ../src/shellstrings.c ../src/word.c $(SHELLFILESRCS)
 
 SRCS = main.c $(TESTSRCS) $(FILESRCS)
 OBJS = $(SRCS:.c=.o)

@@ -90,17 +90,6 @@ void shell_input(char* input_file, char* mode);
 void shell_help();
 
 /*
- * shell_outro - Outro text for the shell.
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
- */
-void shell_outro();
-
-/*
  * shell_usage - command line usage instructions
  *
  * Parameters:
