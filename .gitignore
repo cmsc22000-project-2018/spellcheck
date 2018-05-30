@@ -7,3 +7,4 @@ settings.json
 parser_testing.txt
 test_save.txt 
 test_result.txt
+*.rdb
