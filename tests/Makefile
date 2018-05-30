@@ -21,4 +21,4 @@ $(BIN): $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS) -o $(BIN) $(LDFLAGS) $(LDLIBS)
 
 clean:
-	-$(RM) $(OBJS) $(BIN) test_save.txt test_result.txt *.rdb
+	-$(RM) $(OBJS) $(BIN) test_save.txt test_result.txt *.rdb ../parser_testing.txt ../test_save.txt parser_testing.txt test_save.txt
