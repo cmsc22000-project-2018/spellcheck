@@ -121,10 +121,10 @@ void parse_string(char* string, dict_t *dict, char *underline, char** misspelled
 
 		char* shaved_word = remove_punctuation(tkn);
 
-		if (valid_word(dict, shaved_word) == EXIT_FAILURE){
+		if (valid_word(dict, shaved_word) == false){
 			add_to_misspelled(shaved_word, misspelled);
 		}
-		else if (valid_word(dict, shaved_word) == EXIT_SUCCESS) {
+		else if (valid_word(dict, shaved_word) == true) {
 		}
 		else {
 			shell_error("error processing text");

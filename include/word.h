@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <strings.h>
 #include "dictionary.h"
+#include <stdbool.h>
+
 
 /*
  * valid_word: checks that word is in dictionary
@@ -11,7 +13,7 @@
  * EXIT_FAILURE if it is not in array
  * EXIT_SUCCESS if it is in dictionary
  */
-int valid_word(dict_t *dict, char* word);
+bool valid_word(dict_t *dict, char* word);
 
 /*
  * generate_suggestions: receives a dictionary, word, and an allocated array of suggestions

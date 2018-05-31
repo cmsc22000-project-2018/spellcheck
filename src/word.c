@@ -4,15 +4,21 @@
 #include <assert.h>
 #include <stdlib.h>
 #include "dictionary.h"
+#include <stdbool.h>
 
 
 
 
 
 // checks if word is valid -- does not have erroneous punctuations within
-int valid_word(dict_t* dict, char* shaved_word) {
+bool valid_word(dict_t* dict, char* shaved_word) {
     if (dict_chars_exists(dict, *shaved_word) == EXIT_SUCCESS && *shaved_word != '\n') {
-	    return dict_exists(dict, shaved_word);
+	     if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
+            return true;
+         }
+         else {
+            return false;
+         }
 	}
 		return EXIT_FAILURE;
 }
