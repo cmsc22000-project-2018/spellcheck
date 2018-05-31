@@ -15,9 +15,10 @@ before_install:
     - cd ..
 
 script:
+    - make
+    - redis-cli MODULE LOAD api/lib/redis-tries/module/trie.so
     - make tests
     - ./tests/test-spellcheck
-    - make
     - ./spellcheck -v tests/test_short.txt
     - ./spellcheck -q tests/test_short.txt -s test_save.txt
     - ./spellcheck < tests/test_main0.txt
