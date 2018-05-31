@@ -14,8 +14,8 @@ before_install:
 
 script:
     - make tests
-    - make
     - ./tests/test-spellcheck
+    - make
     - ./spellcheck -v tests/test_short.txt
     - ./spellcheck -q tests/test_short.txt -s test_save.txt
     - ./spellcheck < tests/test_main0.txt
