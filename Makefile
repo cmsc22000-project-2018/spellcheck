@@ -7,7 +7,8 @@ LDLIBS = -lredisApi
 RM = rm -rf
 BIN = spellcheck
 
-SRCS = main.c src/dictionary.c src/parser.c src/word.c src/main_functions.c src/shellstrings.c
+SHELLSRCS = src/main_functions_batch.c src/main_functions_interactive.c src/main_functions_save.c src/main_functions_edit.c src/main_functions_home.c
+SRCS = main.c src/dictionary.c src/parser.c src/word.c src/shellstrings.c $(SHELLSRCS)
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all tests clean

@@ -47,7 +47,7 @@ void shell_save();
  * shell_print - Print edited text for viewing
  *
  * Parameters:
- * 	- None.
+ * 	- lines: string array, each representing edited line of file.
  *
  * Returns:
  * 	- None.
@@ -56,7 +56,7 @@ void shell_save();
 
 
 /*
- * shell_error - Default error prompt string for the shell.
+ * shell_error - Error message printing function for shell, with a string input for specific error
  *
  * Parameters:
  *  - error_text: String for the specific error text.
@@ -71,12 +71,14 @@ void shell_error(char* error_text);
  *
  * Parameters:
  *  - input_file: String of the file input by the user.
- *  - mode: String for the mode being used (either quiet or verbose) 
+ *  - status: String for the file type - dictionary or 
+ *				this is a string because shell_input is used
+ *				to print a confirmation message on the screen
  *
  * Returns:
  *  - None.
  */
-void shell_input(char* input_file, char* mode);
+void shell_input(char* input_file, char* status);
 
 /*
  * shell_help - Default text input prompt string for the shell.
@@ -90,17 +92,6 @@ void shell_input(char* input_file, char* mode);
 void shell_help();
 
 /*
- * shell_outro - Outro text for the shell.
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
- */
-void shell_outro();
-
-/*
  * shell_usage - command line usage instructions
  *
  * Parameters:
@@ -112,12 +103,12 @@ void shell_outro();
 void shell_usage();
 
 /*
- * shell_verbose_start - verbose chart print 
+ * shell_verbose_chart - verbose chart print 
  *
  * Parameters:
- *  - line number
- *	- misspelled word
- *	- generated suggestions
+ *	- lnum: line number
+ *	- misspelled: misspelled word
+ *	- suggestions: char** array of generated suggestions
  *
  * Returns:
  *  - None.

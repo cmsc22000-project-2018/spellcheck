@@ -1,10 +1,15 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <string.h>
+#include <stdbool.h>
 #include "parser.h"
 #include "shellstrings.h"
-#include "main_functions.h"
 #include "dictionary.h"
+#include "main_functions_batch.h"
+#include "main_functions_interactive.h"
+#include "main_functions_save.h"
+#include "main_functions_edit.h"
+#include "main_functions_home.h"
 
 /*
  *	Main function
@@ -47,9 +52,9 @@
 char* modename(int mode)
 {
 	switch (mode) {
-		case 1: return "quiet batch mode"; 
-		case 2: return "verbose batch mode";
-		case 3: return "interactive mode";
+		case QUIET_MODE: return "quiet batch mode"; 
+		case VERBOSE_MODE: return "verbose batch mode";
+		case INTERACTIVE_MODE: return "interactive mode";
 		default: break;
 	}
 	return "quiet batch mode";
@@ -70,7 +75,7 @@ int main(int argc, char **argv)
 		2: verbose batch
 		3: interactive
 	*/
-	int mode = 3;
+	int mode = INTERACTIVE_MODE;
 
 	/* Parse Command Line Args */
 	char c;
@@ -129,19 +134,18 @@ int main(int argc, char **argv)
 		}
 	}
 
-	int *quit = malloc(sizeof(int*)); // this enables return to main page, should user choose it at save_page
-	*quit = 0;
+	bool *quit = malloc(sizeof(bool*));
+	*quit = true;
 
-  while (!(*quit)) {
+  while ((*quit) == true) {
 	if (fileexists(file_name)) {	// if file exists, then bypass main page
-		*quit = 1;
+		*quit = false;
 	}
 
 	/* main page: activated if there is no file to be parsed.
 	   can open help page, quit, or load filename / dictname */
 	main_page(quit, &mode, file_name, dict_name);
-	if ((*quit) == 2) { // user selected "quit" in main_page
-		shell_outro();
+	if (mode == QUIT) { // user selected "quit" in main_page
 		return 0;
 	}
 
@@ -159,7 +163,7 @@ int main(int argc, char **argv)
 	 */
 	char* md = modename(mode);
 
-    if (mode == 3) {
+    if (mode == INTERACTIVE_MODE) {
 
         printf("\n\n============================================================\n"
                    "=================== Editing Started With ===================\n"
@@ -172,25 +176,25 @@ int main(int argc, char **argv)
 	char** result=NULL;
 	// Execute either interactive or batch mode, and save file at end
 	switch (mode) {
-		case 1: result = batch_mode(file_name, dict, quit, 0); // pass in dictionary
+		case QUIET_MODE: result = batch_mode(file_name, dict, quit, QUIET_MODE); // pass in dictionary
 			break;
-		case 2: result = batch_mode(file_name, dict, quit, 1); // pass in dictionary 
+		case VERBOSE_MODE: result = batch_mode(file_name, dict, quit, VERBOSE_MODE); // pass in dictionary 
 			break;
-		case 3: result = interactive_mode(file_name, dict, quit); // pass in dictionary
+		case INTERACTIVE_MODE: result = interactive_mode(file_name, dict, quit); // pass in dictionary
 			break;
 		default:
 			break;
 	}
 
 
-    if (mode != 2 && result != NULL) {	// Save file, a functionality unnecessary for verbose batch mode
-    	if (mode == 3) printf("\n\nSpellcheck successful!\n\n");
+    if (mode != VERBOSE_MODE && result != NULL) {	// Save file, a functionality unnecessary for verbose batch mode
+    	if (mode == INTERACTIVE_MODE) printf("\n\nSpellcheck successful!\n\n");
 
     	md = strstr(save_file,".txt");
     	
     	if (md != NULL) {
     		save_corrections(save_file, result);
-    		*quit=1;
+    		*quit = false;
     	} else {
     		save_page(file_name, result, quit);
     	}
@@ -198,6 +202,5 @@ int main(int argc, char **argv)
 
   }
 
-    if (mode == 3) shell_outro();
 	return 0;
 }
