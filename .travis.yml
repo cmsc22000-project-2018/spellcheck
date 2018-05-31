@@ -13,9 +13,8 @@ before_install:
     - sudo redis-server&
 
 script:
-    - make
-    - redis-cli MODULE LOAD api/lib/redis-tries/module/trie.so
     - make tests
+    - make
     - ./tests/test-spellcheck
     - ./spellcheck -v tests/test_short.txt
     - ./spellcheck -q tests/test_short.txt -s test_save.txt
