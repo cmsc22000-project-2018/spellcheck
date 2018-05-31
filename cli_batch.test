@@ -1,6 +1,6 @@
 # test for the batch mode with verbose flag
 <
-q
+
 $ ./spellcheck -v tests/test_short.txt
 >
 tests/test_short.txt has been accepted as the input file for target file!
