@@ -1,7 +1,10 @@
+# CLI Testing
 The spellcheck team is testing the command line inputs using the ShelltestRunner program.
 
 The program takes in input, expected output, expected stderr, and expected stdout.
 It is important to note that the program is very precise in the sense that it even counts all the white spaces in between the lines. Therefore, it is really important to make sure all the white spaces are included in the expected outcomes, otherwise the tests fail.
+
+## How to download the program
 
 Instructions on downloading the program and its further use can be found in the following link: https://github.com/simonmichael/shelltestrunner
 
@@ -9,14 +12,15 @@ For our purposes, the information that I outlined below should be enough. You ca
 
 stack install shelltestrunner-1.9
 
-Commands for running the batch tests
-shelltest cli_batch.test
+## How to run the tests
+Command for running the batch tests:
+shelltest tests/cli_batch.test
 
 NOTE: If the terminal says "shelltest:not found", you may need to run the following in your terminal:
 export PATH=$PATH:/Users/[your user name]/.local/bin
 
 -----------------------------------------------------------
-
+## Useful flags for debugging purposes
 Some flags that make it easier to spot the differences are as follows:
 
 -diff only shows the differences between the expected and the actual, and ignores the parts that actually match.
