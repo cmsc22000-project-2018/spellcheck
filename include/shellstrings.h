@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 #define RESET       "\033[0m"               // Reset color
@@ -30,7 +31,7 @@
  * Returns:
  *  - None.
  */
-void shell_prompt();
+void shell_prompt(bool color);
 
 /*
  * shell_intro - Introduction text for the shell.
@@ -41,7 +42,7 @@ void shell_prompt();
  * Returns:
  *  - None.
  */
-void shell_main_menu();
+void shell_main_menu(bool color);
 
 /*
  * shell_save - Modification saving text for the shell.
@@ -52,7 +53,7 @@ void shell_main_menu();
  * Returns:
  *  - None.
  */
-void shell_save();
+void shell_save(bool color);
 
 /*
  * shell_edit_success - file editing success message
@@ -63,7 +64,7 @@ void shell_save();
  * Returns:
  *  - None.
  */
-void shell_edit_success();
+void shell_edit_success(bool color);
 
 /*
  * shell_print - Print edited text for viewing
@@ -74,7 +75,21 @@ void shell_edit_success();
  * Returns:
  * 	- None.
  */
- void shell_print(char** lines);
+ void shell_print(char **lines, bool color);
+
+/*
+ * shell_input - Input file confirmation prompt for the shell.
+ *
+ * Parameters:
+ *  - input_file: String of the file input by the user.
+ *  - status: String for the file type - dictionary or 
+ *              this is a string because shell_input is used
+ *              to print a confirmation message on the screen
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_input(char *input_file, char *status, bool color);
 
 /*
  * shell_error_format - Error prompt regarding a format error
@@ -89,20 +104,6 @@ void shell_edit_success();
 char *shell_error_format();
 
 /*
- * shell_input - Input file confirmation prompt for the shell.
- *
- * Parameters:
- *  - input_file: String of the file input by the user.
- *  - status: String for the file type - dictionary or 
- *				this is a string because shell_input is used
- *				to print a confirmation message on the screen
- *
- * Returns:
- *  - None.
- */
-void shell_input(char* input_file, char* status);
-
-/*
  * shell_erorr_dict - Error prompt regarding invalid dictionary file input for the shell.
  *
  * Parameters:
@@ -111,7 +112,7 @@ void shell_input(char* input_file, char* status);
  * Returns:
  *  - char *: String for the error text.
  */
-char *shell_error_dict(char *dict_file);
+char *shell_error_dict(char *dict);
 
 /*
  * shell_error - Default error prompt string for the shell.
@@ -122,7 +123,7 @@ char *shell_error_dict(char *dict_file);
  * Returns:
  *  - None.
  */
-void shell_error(char* error_text);
+void shell_error(char *error_text, bool color);
 
 /*
  * shell_help - Default text input prompt string for the shell.
@@ -133,7 +134,7 @@ void shell_error(char* error_text);
  * Returns:
  *  - None.
  */
-void shell_help();
+void shell_help(bool color);
 
 /*
  * shell_start_interactive - prints out interactive starting message
@@ -144,7 +145,7 @@ void shell_help();
  * Returns:
  *  - None.
  */
-void shell_start_interactive(char* file_name, char* dict_name, char* md);
+void shell_start_interactive(char *filename, char *dict, char *md, bool color);
 
 
 /*
@@ -153,7 +154,7 @@ void shell_start_interactive(char* file_name, char* dict_name, char* md);
  * Accepts flag int
  *      note 1 is quiet, 2 is batch, 3 is interactive
  */
-char* shell_modename(int mode);
+char *shell_modename(int mode);
 
 /*
  * shell_interactive_line_print: prints line, underlining errors
@@ -167,7 +168,7 @@ char* shell_modename(int mode);
  * Returns:
  *  - None.
  */
-void shell_interactive_line_print(int lnum, char* line, char* underline, int returnflag);
+void shell_interactive_line_print(int lnum, char *line, char *underline, int returnflag, bool color);
 
 /*
  * shell_interactive_replacements
@@ -180,18 +181,7 @@ void shell_interactive_line_print(int lnum, char* line, char* underline, int ret
  * Returns:
  *  - None.
  */
-void shell_interactive_replacements(char* word, char** sug, int flag);
-
-/*
- * shell_save_message - save message
- *
- * Parameters:
- *  - None
- *
- * Returns:
- *  - None.
- */
-void shell_save_message();
+void shell_interactive_replacements(char *word, char **sug, int flag, bool color);
 
 /*
  * shell_verbose_chart - verbose chart print 
@@ -204,7 +194,17 @@ void shell_save_message();
  * Returns:
  *  - None.
  */
-void shell_verbose_chart(int lnum, char* misspelled, char** suggestions);
+void shell_verbose_chart(int lnum, char *misspelled, char **suggestions);
 
+/*
+ * shell_save_message - save message
+ *
+ * Parameters:
+ *  - None
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_save_message(bool color);
 
 #endif
