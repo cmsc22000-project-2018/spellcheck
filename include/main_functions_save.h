@@ -1,8 +1,8 @@
 #ifndef INCLUDE_MAIN_FUNCTIONS_SAVE_H_
 #define INCLUDE_MAIN_FUNCTIONS_SAVE_H_
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 
 /*
@@ -19,7 +19,7 @@
  *
  * returns: void
  */
-void save_corrections(char* filename, char** lines);
+void save_corrections(char *filename, char **lines);
 
 /*
  * save_page: prints save_page, accepting command line inputs until user prints file, 
@@ -32,6 +32,6 @@ void save_corrections(char* filename, char** lines);
  *
  * returns: void
  */
-void save_page(char* filename, char** lines, bool* quit);
+void save_page(char *filename, char **lines, bool *quit);
 
 #endif

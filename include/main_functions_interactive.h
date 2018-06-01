@@ -1,8 +1,8 @@
 #ifndef INCLUDE_MAIN_FUNCTIONS_INTERACTIVE_H_
 #define INCLUDE_MAIN_FUNCTIONS_INTERACTIVE_H_
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "dictionary.h"
 
 /*
@@ -21,7 +21,7 @@
  *      - linenumber - number of line
  * return: edited line
  */
-char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag);
+char *edit_interactive(char *line, dict_t *dict, int linenumber, int returnflag);
 
 /*
  * interactive_mode: open file to parse and store in list, edit each line, then return list
@@ -35,6 +35,6 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
  *			at the end of the file.
  * return: char** array of lines, to be printed in save page
  */
-char** interactive_mode(char* filename, dict_t* dict, bool* quit);
+char **interactive_mode(char *filename, dict_t *dict, bool *quit);
 
 #endif

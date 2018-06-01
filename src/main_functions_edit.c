@@ -1,67 +1,66 @@
+#include <stdlib.h>
 #include <stdio.h>
-#include <stdlib.h>	
+#include <stdbool.h>
 #include <unistd.h>
 #include <ctype.h>
-#include <stdbool.h>
-#include <sys/stat.h>
 #include <sys/types.h>
-#include <stdlib.h>
+#include <sys/stat.h>
 #include <string.h>
 #include <assert.h>
 #include "shellstrings.h"
 #include "parser.h"
-#include "main_functions_edit.h"
 #include "dictionary.h"
 #include "word.h"
+#include "main_functions_edit.h"
+
+// Given an array of misspelled words, generates an underline
+// for an occurence in sentence
 
 /* See main_functions_edit.h */
-char* underline_misspelled_sentence(char** misspelled, char* sentence, char *underline) {
-//given an array of misspelled words, generates an underline for an occurence in sentence
-
+char *underline_misspelled_sentence(char **misspelled, char *sentence, char *underline) {
 	underline[0] = '\0';
 	int element = 0;
 
-	while(misspelled[element] != NULL) {
-
+	while (misspelled[element] != NULL) {
 		char *ptr = strstr(sentence, misspelled[element]);
-		if(ptr != NULL) {
-
+		if (ptr != NULL) {
 			int pos = ptr - sentence;
 			int i;
 			size_t j;
 
-			for(i = 0; i < pos; i++)
+			for (i = 0; i < pos; i++) {
 				strcat(underline, " ");
+            }
 
             size_t slen = strlen(misspelled[element]);
-			for (j = 0; j < slen; j++)
+
+			for (j = 0; j < slen; j++) {
 				strcat(underline, "^");
+            }
 
-			sentence = ptr+strlen(misspelled[element]);
-
+			sentence = ptr + strlen(misspelled[element]);
 		}
 
 		element++;
-
 	}
 
 	return underline;
-
 }
 
 /* See main_functions_edit.h */
-int add_to_misspelled(char *word, char** misspelled)
-{
+int add_to_misspelled(char *word, char** misspelled) {
 	if (word == NULL || misspelled == NULL) {
 		return EXIT_FAILURE;
 	}
 
 	int i = 0;
-	while(misspelled[i] != NULL) {
+
+	while (misspelled[i] != NULL) {
 		i++;
 	}
 
 	misspelled[i] = word;
+
 	return EXIT_SUCCESS;
 }
 
@@ -86,7 +85,7 @@ void remove_prefix_punctuation(char *word) {
     prefix_char = word[0];
 
     while (is_in_punct_array(prefix_char) == true) {
-        memmove(word, word+1, strlen(word)); 
+        memmove(word, word + 1, strlen(word)); 
         prefix_char = word[0];
     }
 }
@@ -95,49 +94,54 @@ void remove_prefix_punctuation(char *word) {
 void remove_trailing_punctuation(char *word) {
     char trailing_char;
     
-    trailing_char = word[(strlen(word)-1)];
+    trailing_char = word[(strlen(word) - 1)];
 
     while (is_in_punct_array(trailing_char) == true) {
-        word[strlen(word)-1] = '\0';
-        trailing_char = word[strlen(word)-1]; //check next trailing character
+        word[strlen(word) - 1] = '\0';
+        trailing_char = word[strlen(word) - 1]; //check next trailing character
     }
 }
 
 /* See main_functions_edit.h */
-char* remove_punctuation(char *word) { //removes trailing and prefix punctuation without modifying original word
+char *remove_punctuation(char *word) { //removes trailing and prefix punctuation without modifying original word
     char *shaved_word = (char *)malloc(strlen(word));
+    
     strcpy(shaved_word, word);
     remove_prefix_punctuation(shaved_word);
     remove_trailing_punctuation(shaved_word);
+    
     return shaved_word;
 }
 
 /* See main_functions_edit.h */
-void parse_string(char* string, dict_t *dict, char *underline, char** misspelled)
-{
+void parse_string(char *string, dict_t *dict, char *underline, char **misspelled) {
 	char *string_copy = strdup(string);
 	char *tkn = strtok(string," \n"); //words only separated by spaces and newline
-	while (tkn != NULL) {
-
-		char* shaved_word = remove_punctuation(tkn);
+	
+    while (tkn != NULL) {
+		char *shaved_word = remove_punctuation(tkn);
 
 		if (word_valid(dict, shaved_word) == EXIT_FAILURE){
 			add_to_misspelled(shaved_word, misspelled);
 		}
+
 		else if (word_valid(dict, shaved_word) == EXIT_SUCCESS) {
+            continue;
 		}
+
 		else {
-			shell_error("error processing text");
-			return ;
+			shell_error("Error processing text", false);
+			return;
 		}
+
 		tkn = strtok(NULL," \n"); //spaces and \n are the only delimeters
 	}
+
 	underline_misspelled_sentence(misspelled, string_copy, underline);
 }
 
 /* See main_functions_edit.h */
-char* correct_line(char* line, char* old_word, char* new_word)
-{
+char *correct_line(char *line, char *old_word, char *new_word) {
 	char buffer[2000] = {0}; //again, we might need to modify our size estimates
 	char *insert_point = &buffer[0];
 	char *tmp = line;
