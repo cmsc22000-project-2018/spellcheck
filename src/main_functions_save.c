@@ -44,7 +44,7 @@ void save_page(char *filename, char **lines, bool *quit) {
         }
 
         else if (!strcmp(line,"p")) {
-        	shell_print(lines, false);
+        	shell_print(lines);
         	i = 1;
         }
 

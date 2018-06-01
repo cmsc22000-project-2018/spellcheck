@@ -22,7 +22,7 @@
  * parameter: none 
  * return_values: none
  */
-void help_page();
+void help_page(bool *color);
 
 /* 
  * fileexists: check if file with name, given by string, exists
@@ -51,7 +51,7 @@ int change_mode(char *arg);
  *		- dict_name: string indicating dictionary file name
  * return: void
  */
-void main_page(bool *quit, int *mode, char *filename, char *dict);
+void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color);
 
 
 #endif

@@ -31,7 +31,7 @@
  * Returns:
  *  - None.
  */
-void shell_prompt(bool color);
+void shell_prompt(bool *color);
 
 /*
  * shell_intro - Introduction text for the shell.
@@ -42,7 +42,7 @@ void shell_prompt(bool color);
  * Returns:
  *  - None.
  */
-void shell_main_menu(bool color);
+void shell_main_menu(bool *color);
 
 /*
  * shell_save - Modification saving text for the shell.
@@ -53,7 +53,7 @@ void shell_main_menu(bool color);
  * Returns:
  *  - None.
  */
-void shell_save(bool color);
+void shell_save(bool *color);
 
 /*
  * shell_edit_success - file editing success message
@@ -64,7 +64,7 @@ void shell_save(bool color);
  * Returns:
  *  - None.
  */
-void shell_edit_success(bool color);
+void shell_edit_success(bool *color);
 
 /*
  * shell_print - Print edited text for viewing
@@ -75,7 +75,7 @@ void shell_edit_success(bool color);
  * Returns:
  * 	- None.
  */
- void shell_print(char **lines, bool color);
+ void shell_print(char **lines);
 
 /*
  * shell_input - Input file confirmation prompt for the shell.
@@ -89,7 +89,18 @@ void shell_edit_success(bool color);
  * Returns:
  *  - None.
  */
-void shell_input(char *input_file, char *status, bool color);
+void shell_input(char *filename, char *status, bool *color);
+
+/*
+ * shell_error - Default error prompt string for the shell.
+ *
+ * Parameters:
+ *  - error_text: String for the specific error text.
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_error(char *error_text, bool *color);
 
 /*
  * shell_error_format - Error prompt regarding a format error
@@ -107,7 +118,7 @@ char *shell_error_format();
  * shell_erorr_dict - Error prompt regarding invalid dictionary file input for the shell.
  *
  * Parameters:
- *  - dict_file: String for the name of the inputted dictionary file.
+ *  - dict: String for the name of the inputted dictionary file.
  *
  * Returns:
  *  - char *: String for the error text.
@@ -115,15 +126,48 @@ char *shell_error_format();
 char *shell_error_dict(char *dict);
 
 /*
- * shell_error - Default error prompt string for the shell.
+ * shell_erorr_filename - Error prompt regarding invalid text file input for the shell.
  *
  * Parameters:
- *  - error_text: String for the specific error text.
+ *  - filename: String for the name of the inputted dictionary file.
  *
  * Returns:
- *  - None.
+ *  - char *: String for the error text.
  */
-void shell_error(char *error_text, bool color);
+char *shell_error_file(char *filename);
+
+/*
+ * shell_error_exit - Error prompt regarding the shell exiting
+ *
+ * Parameters:
+ *  - None.
+ *
+ * Returns:
+ *  - char *: String for the error text.
+ */
+char *shell_error_exit();
+
+/*
+ * shell_error_parse - Error prompt regarding the parse operation for he shell
+ *
+ * Parameters:
+ *  - None.
+ *
+ * Returns:
+ *  - char *: String for the error text.
+ */
+char *shell_error_parse();
+
+/*
+ * shell_error_suggestion - Error prompt regarding the suggestion operation for he shell
+ *
+ * Parameters:
+ *  - None.
+ *
+ * Returns:
+ *  - char *: String for the error text.
+ */
+char *shell_error_suggestion();
 
 /*
  * shell_help - Default text input prompt string for the shell.
@@ -134,7 +178,7 @@ void shell_error(char *error_text, bool color);
  * Returns:
  *  - None.
  */
-void shell_help(bool color);
+void shell_help(bool *color);
 
 /*
  * shell_start_interactive - prints out interactive starting message
@@ -145,7 +189,7 @@ void shell_help(bool color);
  * Returns:
  *  - None.
  */
-void shell_start_interactive(char *filename, char *dict, char *md, bool color);
+void shell_start_interactive(char *filename, char *dict, char *md, bool *color);
 
 
 /*
@@ -168,7 +212,7 @@ char *shell_modename(int mode);
  * Returns:
  *  - None.
  */
-void shell_interactive_line_print(int lnum, char *line, char *underline, int returnflag, bool color);
+void shell_interactive_line_print(int lnum, char *line, char *underline, int returnflag, bool *color);
 
 /*
  * shell_interactive_replacements
@@ -181,7 +225,7 @@ void shell_interactive_line_print(int lnum, char *line, char *underline, int ret
  * Returns:
  *  - None.
  */
-void shell_interactive_replacements(char *word, char **sug, int flag, bool color);
+void shell_interactive_replacements(char *word, char **sug, int flag, bool *color);
 
 /*
  * shell_verbose_chart - verbose chart print 
@@ -205,6 +249,6 @@ void shell_verbose_chart(int lnum, char *misspelled, char **suggestions);
  * Returns:
  *  - None.
  */
-void shell_save_message(bool color);
+void shell_save_message(bool *color);
 
 #endif

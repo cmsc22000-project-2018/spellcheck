@@ -10,9 +10,9 @@
 #include "main_functions_home.h"
 
 /* See main_functions_home.h */
-void help_page() {
-    shell_help(false);
-	shell_prompt(false);
+void help_page(bool *color) {
+    shell_help(color);
+	shell_prompt(color);
 
 	// Accept any input in the command line
 	parse_read_line();
@@ -34,7 +34,7 @@ int change_mode(char *arg) {
 	}
 
 	else {
-        shell_error("Input invalid: return to mode 3, interactive mode", false);
+        shell_error("Input invalid: Returning to interactive mode", false);
 
         /*
          * The default is 3, given this function is only called in main_page(),
@@ -47,7 +47,7 @@ int change_mode(char *arg) {
 }
 
 /* See main_functions_home.h */
-void main_page(bool *quit, int *mode, char *filename, char *dict) {
+void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 	char *line;
 	char **args;
 
@@ -65,7 +65,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict) {
 		}
 
 		else if (!strcmp(args[0], "h")) { // Print help page, then wait for user input
-			help_page();
+			help_page(color);
 			
 			*quit = true;
 		}

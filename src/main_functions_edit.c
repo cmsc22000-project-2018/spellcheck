@@ -142,9 +142,11 @@ void parse_string(char *string, dict_t *dict, char *underline, char **misspelled
 
 /* See main_functions_edit.h */
 char *correct_line(char *line, char *old_word, char *new_word) {
-	char buffer[2000] = {0}; //again, we might need to modify our size estimates
+	char buffer[2000] = {0}; // Might need to modify the size estimate
+
 	char *insert_point = &buffer[0];
 	char *tmp = line;
+    
 	int old_length = strlen(old_word);
 	int new_length = strlen(new_word);
 

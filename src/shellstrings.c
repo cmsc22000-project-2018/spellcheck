@@ -12,8 +12,8 @@
 #include "shellstrings.h"
 
 /* See shellstrings.h */
-void shiell_prompt(bool color) {
-    if (color == true) {
+void shell_prompt(bool *color) {
+    if (*color == true) {
         printf(BOLDWHITE "\nspellcheck >" RESET " ");
     }
 
@@ -23,17 +23,18 @@ void shiell_prompt(bool color) {
 }
 
 /* See shellstrings.h */
-void shell_main_menu(bool color) {
-    if (color == true) {
+void shell_main_menu(bool *color) {
+    if (*color == true) {
         printf(BOLDWHITE "------- Welcome to Spellcheck! ------\n\n"
 
                          "Please load a file to begin. "
                          "Additionally, select an output mode and/or "
                          "choose dictionary before running the program.\n\n" RESET);
 
-        printf(BOLDWHITE "f [/path/file.txt]" RESET "       : Input text file\n");
+        printf(BOLDWHITE "i [/path/file.txt]" RESET "       : Input text file\n");
         printf(BOLDWHITE "d [/path/dictionary.txt]" RESET " : Input custom dictionary file\n");
         printf(BOLDWHITE "m [number]" RESET "               : Mode [1 - Quiet, 2 - Verbose, 3 - Interactive]\n");
+        printf(BOLDWHITE "c" RESET "                        : Enable color\n");
         printf(BOLDWHITE "h" RESET "                        : Help\n");
         printf(BOLDWHITE "q" RESET "                        : Quit program\n");
     }
@@ -45,17 +46,18 @@ void shell_main_menu(bool color) {
                "Additionally, select an output mode and/or "
                "choose dictionary before running the program.\n\n");
 
-        printf("f [/path/file.txt]       : Input text file\n");
+        printf("i [/path/file.txt]       : Input text file\n");
         printf("d [/path/dictionary.txt] : Input custom dictionary file\n");
         printf("m [number]               : Mode [1 - Quiet, 2 - Verbose, 3 - Interactive]\n");
+        printf("c                        : Enable color\n");
         printf("h                        : Help\n");
         printf("q                        : Quit program\n");
     }
 }
 
 /* See shellstrings.h */
-void shell_save(bool color) {
-    if (color == true) {
+void shell_save(bool *color) {
+    if (*color == true) {
         printf(BOLDWHITE "p" RESET " : Print all modifications\n");
         printf(BOLDWHITE "s" RESET " : Save to existing file\n");
         printf(BOLDWHITE "c" RESET " : Save to custom file\n");
@@ -73,8 +75,8 @@ void shell_save(bool color) {
 }
 
 /* See shellstrings.h */
-void shell_edit_success(bool color) {
-    if (color == true) {
+void shell_edit_success(bool *color) {
+    if (*color == true) {
         printf(GREEN "\nSpellcheck complete!\n" RESET);
     }
 
@@ -84,24 +86,30 @@ void shell_edit_success(bool color) {
 }
 
 /* See shellstrings.h */
-void shell_print(char **lines, bool color) {
+void shell_print(char **lines) {
     int i = 0;
 
     while (lines[i] != NULL) {
         printf("%s\n", lines[i]);
+        
         i++;
     }
 }
 
 /* See shellstrings.h */
-void shell_input(char *input_file, char *status, bool color) {
-    char *input = "has been accepted as the input file for";
-    printf("%s %s %s!\n", input_file, input, status);
+void shell_input(char *filename, char *status, bool *color) {
+    if (*color == true) {
+        printf(BOLDWHITE "%s" RESET " has been accepted as " BOLDWHITE "%s" RESET ".\n", filename, status);
+    }
+
+    else {
+        printf("%s has been accepted as %s.\n", filename, status);
+    }
 }
 
 /* See shellstrings.h */
-void shell_error(char *error_text, bool color) {
-    if (color == true) {
+void shell_error(char *error_text, bool *color) {
+    if (*color == true) {
 	   printf(RED "ERROR:" RESET " %s\n", error_text);
     }
 
@@ -114,7 +122,7 @@ void shell_error(char *error_text, bool color) {
 char *shell_error_format() {
     char *error_format =
     "Please use designated format:\n"
-    "./spellcheck [-f /path/file.txt] [-d /path/dictionary.txt] [-q or -v]\n"
+    "./spellcheck [-i /path/file.txt] [-d /path/dictionary.txt] [-q or -v]\n"
     "For help, run without command line arguments and enter help page.";
 
     return error_format;
@@ -130,6 +138,15 @@ char *shell_error_dict(char *dict) {
 }
 
 /* See shellstrings.h */
+char *shell_error_file (char *filename) {
+    char *error_file =
+    "Trouble reading text file ";
+    strcat(error_file, filename);
+
+    return error_file;
+}
+
+/* See shellstrings.h */
 char *shell_error_exit() {
     char *error_exit =
     "Encountered an error -  Program exiting automatically.";
@@ -138,39 +155,71 @@ char *shell_error_exit() {
 }
 
 /* See shellstrings.h */
-void shell_help(bool color) {
-    if (color == true) {
-        printf(BOLDWHITE "Spellcheck is a tool which searches for misspelled words "
-               "and suggests alternative spellings given a text file.\n" RESET
-               "Currently, you are in interactive mode. Return to the previous page to input a file.\n"
-               "To run in batch mode, exit the program with the command " BOLDWHITE "exit" RESET
-               ", and run: " BOLDWHITE "$ ./spellcheck [-flag] /path/file.txt.\n" RESET
-               "Flags: " BOLDWHITE "-q" RESET " is for quiet, and " BOLDWHITE
+char *shell_error_parse() {
+    char *error_parse =
+    "File parsing for failed - Check input file.";
+
+    return error_parse;
+}
+
+/* See shellstrings.h */
+char *shell_error_suggestion() {
+    char *error_suggestion =
+    "No suggestions were generated for this word.";
+
+    return error_suggestion;
+}
+
+/* See shellstrings.h */
+void shell_help(bool *color) {
+    if (*color == true) {
+        printf(BOLDWHITE "------- Help Page ------\n" RESET
+
+               "\nSpellcheck is a tool which searches for misspelled words "
+               "and suggests alternative spellings given a text file.\n"
+               
+               "\nCurrently, you are in interactive mode. Return to the previous page to input a file.\n"
+               
+               "\nTo run in batch mode, exit the program with the command " BOLDWHITE "exit" RESET
+               ", and run: " BOLDWHITE "$ ./spellcheck -i /path/file.txt" RESET ".\n"
+               
+               "\nFlags: " BOLDWHITE "-q" RESET " is for quiet, and " BOLDWHITE
                "-v" RESET " is for verbose.\n"
-               "To input a custom dictionary to the program, use " BOLDWHITE 
+               
+               "\nTo input a custom dictionary to the program, use " BOLDWHITE 
                "-d /path/dictionary.txt" RESET ", and to provide a file saving destination, "
                "use " BOLDWHITE  "-s /path/filename.txt" RESET ".\n"
+               
+               "\nTo enable color inside the program, use the " BOLDWHITE "-c" RESET " flag.\n"
 
-               BOLDWHITE "Enter any command to return to the previous page." RESET "\n");
+               BOLDWHITE "\nEnter any command to return to the previous page." RESET "\n");
     }
 
     else {
-        printf("Spellcheck is a tool which searches for misspelled words "
+        printf("------- Help Page ------\n"
+
+               "\nSpellcheck is a tool which searches for misspelled words "
                "and suggests alternative spellings given a text file.\n"
-               "Currently, you are in interactive mode. Return to the previous page to input a file.\n"
-               "To run in batch mode, exit the program with the command 'exit', "
+               
+               "\nCurrently, you are in interactive mode. Return to the previous page to input a file.\n"
+               
+               "\nTo run in batch mode, exit the program with the command 'exit', "
                "and run: '$ ./spellcheck [-flag] /path/file.txt'.\n"
-               "Flags: '-q' is for quiet, and '-v' is for verbose.\n"
-               "To input a custom dictionary to the program, use " 
+               
+               "\nFlags: '-q' is for quiet, and '-v' is for verbose.\n"
+               
+               "\nTo input a custom dictionary to the program, use " 
                "'-d /path/dictionary.txt', and to provide a file saving destination, "
                "use '-s /path/filename.txt'.\n"
+               
+               "\nTo enable color inside the program, use the '-c' flag.\n"
 
-               "Enter any command to return to the previous page.\n");
+               "\n-- Enter any command to return to the previous page. --\n");
     }
 }
 
-void shell_start_interactive(char *filename, char *dict, char *md, bool color) {
-    if (color == true) {
+void shell_start_interactive(char *filename, char *dict, char *md, bool *color) {
+    if (*color == true) {
         printf(BOLDWHITE "File         :" RESET " %s\n"
                BOLDWHITE "Dictionary   :" RESET " %s\n"
                BOLDWHITE "Mode         :" RESET " %s\n", filename, dict, md);
@@ -193,8 +242,8 @@ char *shell_modename(int mode) {
     return "Interactive Mode";
 }
 
-void shell_interactive_line_print(int lnum, char *line, char *underline, int returnflag, bool color) {
-    if (color == true) {
+void shell_interactive_line_print(int lnum, char *line, char *underline, int returnflag, bool *color) {
+    if (*color == true) {
         printf(BOLDWHITE "Location:" RESET " %d:%s\n" , lnum, line);
 
         // if (returnflag) {
@@ -216,7 +265,7 @@ void shell_interactive_line_print(int lnum, char *line, char *underline, int ret
 }
 
 
-void shell_interactive_replacements(char *word, char **sug, int flag, bool color) {
+void shell_interactive_replacements(char *word, char **sug, int flag, bool *color) {
     int j = 0;
 
     if (flag == EXIT_FAILURE) {
@@ -242,7 +291,8 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool color
 }
 
 void shell_verbose_chart(int lnum, char *misspelled, char **suggestions) {
-    printf("%d\t\t\t", lnum); // print line number
+    // Prints the location
+    printf("%d\t\t\t", lnum);
     
     int ntab = 3 - (strlen(misspelled) / 8); // number of tabs
     
@@ -269,8 +319,8 @@ void shell_verbose_chart(int lnum, char *misspelled, char **suggestions) {
     printf("\n"); // print list of replacement
 }
 
-void shell_save_message(bool color) {
-    if (color == true) {
+void shell_save_message(bool *color) {
+    if (*color == true) {
         printf("\n" BOLDWHITE "Enter a file name [path/*.txt] or enter 'r' to return to previous page." RESET "\n");
     }
 

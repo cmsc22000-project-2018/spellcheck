@@ -22,11 +22,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int returnflag)
 
     // Generates an empty array where the misspelled words in a line will be stored
     char **misspelled = calloc(length, sizeof(char*));
-    
-    if (misspelled == NULL) {
-        fprintf(stderr, "ERROR (edit_interactive): calloc() failed.\n");
-    	exit(0);
-    }
+    assert(misspelled != NULL);
 
     // Generates an empty array where the underline will go
     char *underline = (char *)malloc(sizeof(char) * (strlen(line) + 1));

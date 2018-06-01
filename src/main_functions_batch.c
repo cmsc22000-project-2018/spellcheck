@@ -18,15 +18,10 @@
 char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
 	char *line_copy = strdup(line);
     int max_no_suggestions = 2; //Should the user decide this?
-    int length = strlen(line);
 
     // Generates an empty array where the misspelled words in a line will be stored
-    char **misspelled = calloc(length, sizeof(char*));
-
-    if (misspelled == NULL) {
-    	fprintf(stderr, "ERROR (edit_interactive): calloc() failed.\n");
-    	exit(0);
-    }
+    char **misspelled = calloc(strlen(line), sizeof(char *));
+    assert(misspelled != NULL);
 
     // Generates an empty array where the underline will go
     char *underline = (char *)malloc(sizeof(char) * (strlen(line) + 1));
@@ -40,9 +35,9 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
     suggestions[max_no_suggestions] = NULL;
 
     int i = 0;
-
     //Replacing words, printing if batch mode
     while (misspelled[i] != NULL) {
+        // Generates suggestions and fills the variable 'suggestions'
         int rc = generate_suggestions(misspelled[i], dict, suggestions);
 
         /* 
@@ -52,7 +47,8 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
          */
 	    if (rc == EXIT_FAILURE) {
             if (verbosity == VERBOSE_MODE) {
-                suggestions[0] = "No suggestions generated"; 
+                shell_error(shell_error_suggestion(), false);
+                // suggestions[0] = "No suggestions generated"; 
             }
 
             else {
@@ -88,7 +84,7 @@ char **batch_mode(char *filename, dict_t *dict, bool *quit, int verbosity) {
 
 	// If lineparse_file returns NULL
 	if (lines == NULL) {
-		shell_error("file parsing error: check txt file", false);
+		shell_error(shell_error_parse(), false);
 		
         *quit = false;
 
