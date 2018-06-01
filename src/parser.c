@@ -27,7 +27,6 @@ char** parse_file(char* filename)
 	int n = 0;
 	int i = INITLINE;
 	char str[MAXCHAR];
-  char add[MAXCHAR];
 	char** lines;
 	lines = calloc(i, sizeof(char*));
 	if (lines == NULL) {
