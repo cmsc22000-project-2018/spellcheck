@@ -13,7 +13,6 @@
 #include "main_functions_edit.h"
 #include "main_functions_interactive.h"
 
-
 /* See main_functions_interactive.h */
 char *edit_interactive(char *line, dict_t *dict, int linenumber, int returnflag) {
     char *line_copy = strdup(line);

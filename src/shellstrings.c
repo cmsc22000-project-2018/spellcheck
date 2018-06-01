@@ -31,7 +31,7 @@ void shell_main_menu(bool *color) {
                          "Additionally, select an output mode and/or "
                          "choose dictionary before running the program.\n\n" RESET);
 
-        printf(BOLDWHITE "i [/path/file.txt]" RESET "       : Input text file\n");
+        printf(BOLDWHITE "f [/path/file.txt]" RESET "       : Input text file\n");
         printf(BOLDWHITE "d [/path/dictionary.txt]" RESET " : Input custom dictionary file\n");
         printf(BOLDWHITE "m [number]" RESET "               : Mode [1 - Quiet, 2 - Verbose, 3 - Interactive]\n");
         printf(BOLDWHITE "c" RESET "                        : Enable/Disable color\n");
