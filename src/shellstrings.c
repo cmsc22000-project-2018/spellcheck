@@ -114,6 +114,10 @@ void shell_error(char *error_text, bool *color) {
     }
 }
 
+void shell_usage() {
+    printf("Usage: ./spellcheck [filename.txt] [-flag] [~/path/file.txt] [-saveflag] [~/path/destination.txt]\n");
+}
+
 /* See shellstrings.h */
 void shell_help(bool *color) {
     if (*color == true) {
@@ -208,11 +212,9 @@ void shell_interactive_line_print(int lnum, char *line, char *underline, int ret
 
 
 void shell_interactive_replacements(char *word, char **sug, int flag, bool *color) {
-    int j;
+    int j = 0;
 
     if (*color == true) {
-        j = 0;
-
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
             printf("No suggestions have been generated for " BOLDWHITE "%s" RESET ".\n", word);
@@ -234,8 +236,6 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
             printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
         }
     } else {
-        j = 0;
-
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
             printf("No suggestions have been generated for %s.\n", word);

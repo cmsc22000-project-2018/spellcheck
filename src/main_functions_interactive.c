@@ -52,32 +52,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int returnflag)
     while (misspelled[i] != NULL) {
     	int rc = generate_suggestions(misspelled[i], dict, suggestions);
 
-    	if (rc == EXIT_FAILURE) {
-			suggestions[0] = misspelled[i];	// to avoid error
-			suggestions[2] = NULL;
-			printf("\nNo suggestions have been generated for \"%s\".\n", misspelled[i]);
-       		printf("\nd : Delete Word.\n");
-       		printf("i : Input Word.\n");
-        	printf("s : Skip.\n");
-    	}
-
-        else {
-    	    printf("\nPossible replacements for word \"%s\" are:\n\n", misspelled[i]);
-            
-            int j = 0;
-
-        	while (suggestions[j] != NULL) {
-       			printf("%d : %s \n", j + 1, suggestions[j]);
-       			
-                j++;
-       		}
-
-       		printf("\nd : Delete Word.\n");
-       		printf("i : Input Word.\n");
-        	printf("s : Skip.\n");
-        }
-
-        printf("\n\n");
+        shell_interactive_replacements(misspelled[i], suggestions, rc, false);
 
         char choice[10];
         int check = 0;

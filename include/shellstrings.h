@@ -262,4 +262,16 @@ void shell_verbose_chart(int lnum, char *misspelled, char **suggestions);
  */
 void shell_save_message(bool *color);
 
+/*
+ * shell_usage - command line usage instructions
+ *
+ * Parameters:
+ *  - None.
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_usage();
+
+
 #endif

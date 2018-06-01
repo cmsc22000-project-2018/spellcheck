@@ -4,7 +4,7 @@
 #include <assert.h>
 #include "parser.h"
 
-#define MAXCHAR 4098
+#define MAXCHAR 1025
 #define INITLINE 100
 #define READ_BUFFERSIZE 256
 #define LSH_TOK_BUFFERSIZE 64
@@ -23,7 +23,7 @@ char** parse_file(char* filename)
 		return NULL;
 	}
 
-    // initialization
+  // initialization
 	int n = 0;
 	int i = INITLINE;
 	char str[MAXCHAR];
@@ -34,8 +34,6 @@ char** parse_file(char* filename)
 		exit(0);
 	}
 
-    // read each line into a string. This size is currently limited at 1025 lines (1024, including terminating char).
-    // resize if necessary while reading file
 	while(fgets(str, MAXCHAR, f) != 0) {
     if (n >= i) {
       i += i;
@@ -51,6 +49,7 @@ char** parse_file(char* filename)
 	}
   lines[n] = NULL;
 
+
 	fclose(f);
 	return lines;
 }
@@ -59,7 +58,7 @@ char** parse_file(char* filename)
 /* read a command line and return a string */
 char* parse_read_line()
 {
-	char* input = calloc(READ_BUFFERSIZE, sizeof(char*));
+	char* input = calloc(READ_BUFFERSIZE, sizeof(char));
     if (input == NULL) {
         fprintf(stderr, "read_line: calloc failed");
         exit(1);
@@ -71,7 +70,7 @@ char* parse_read_line()
 
   if (input == NULL) {
     fprintf(stderr, "read_line: fgets failed");
-    exit(2);
+    exit(1);
   }
 
 	int n = strlen(input);

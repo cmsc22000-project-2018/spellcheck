@@ -10,16 +10,20 @@
 #include <ctype.h>
 #include "word.h"
 #include "dictionary.h"
+#include <stdbool.h>
 
 
 /* See word.h */
-int word_valid(dict_t* dict, char* word) {
-    if (dict_chars_exists(dict, *word) == EXIT_SUCCESS && *word != '\n') {
-        return dict_exists(dict, word);
-	}
-	return EXIT_FAILURE;
+bool valid_word(dict_t* dict, char* shaved_word) {
+    if (dict_chars_exists(dict, *shaved_word) == EXIT_SUCCESS && *shaved_word != '\n') {
+        if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
+           return true;
+        } else {
+            return false;
+        }
+    }
+    return false;
 }
-
 
 /* See word.h */
 int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
@@ -28,6 +32,8 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
         suggestions[1] = NULL;
         return EXIT_FAILURE;
     }
+
+    suggestions[2] = NULL;
 
 	if (strcmp(word, "splling") == 0) {
 		suggestions[0] = "spelling";

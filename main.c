@@ -42,8 +42,8 @@
  *  ...
  *  and so on, with different combinations.
  *
- *  Largest possible number of argc: 8
- *	> ./spellcheck file.txt -d my_dict.txt -q misspelled.txt -s savefilename.txt
+ *  Largest possible number of argc: 9
+ *	> ./spellcheck file.txt -d my_dict.txt -q misspelled.txt -s savefilename.txt -c
  */
 
 char *modename(int mode) {
@@ -57,11 +57,16 @@ char *modename(int mode) {
 		default:
             break;
 	}
-
-	return "Quiet Batch Mode";
+	return "Interactive Mode";
 }
 
 int main(int argc, char *argv[]) {
+
+	if (argc > 9) {
+		shell_usage();
+		exit(1);
+	}
+
 	// filenames up to 400 char
 	char *dict = malloc(401 * sizeof(char *));
 	char *filename = malloc(401 * sizeof(char *));
@@ -90,7 +95,7 @@ int main(int argc, char *argv[]) {
     }
 
     // Parse the initial command line and 
-	while ((c = getopt(argc, argv, "d:i:v:s:q:c:")) != -1) {
+	while ((c = getopt(argc, argv, "d:i:v:s:q:c")) != -1) {
 		switch (c) {
             case 'd':
                 if (!fileexists(optarg)) {  // this checks if the file actually exists
@@ -98,9 +103,9 @@ int main(int argc, char *argv[]) {
 				    return EXIT_FAILURE;
                 }
 
-                strcpy(dict,optarg);
+                strcpy(dict, optarg);
 
-                if (mode == 3) {
+                if (mode == INTERACTIVE_MODE) {
                     shell_input(optarg, "dictionary", color);
                 }
 
@@ -151,7 +156,7 @@ int main(int argc, char *argv[]) {
 
                 strcpy(save_file,optarg);
             
-                if (mode == 3) {
+                if (mode == INTERACTIVE_MODE) {
                     shell_input(optarg, "file save destination", color);
                 }
 
@@ -188,7 +193,6 @@ int main(int argc, char *argv[]) {
 		 // Initialize dictionary, declare names of files to be used
         dict_t *new_dict = dict_new();
         int msg = dict_read(new_dict, dict);
-
         if (msg == EXIT_FAILURE) {
             shell_error("Invalid dictionary file input.", color);
             exit(0);
@@ -224,7 +228,6 @@ int main(int argc, char *argv[]) {
             }
 
             md = strstr(save_file, ".txt");
-
             if (md == NULL && mode == 1) {
                 shell_print(result);
                 *quit = false;

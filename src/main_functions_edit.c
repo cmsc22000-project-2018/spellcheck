@@ -121,14 +121,11 @@ void parse_string(char *string, dict_t *dict, char *underline, char **misspelled
     while (tkn != NULL) {
 		char *shaved_word = remove_punctuation(tkn);
 
-		if (word_valid(dict, shaved_word) == EXIT_FAILURE){
+		if (valid_word(dict, shaved_word) == false){
 			add_to_misspelled(shaved_word, misspelled);
 		}
-
-		else if (word_valid(dict, shaved_word) == EXIT_SUCCESS) {
-            continue;
+		else if (valid_word(dict, shaved_word) == true) {
 		}
-
 		else {
 			shell_error("Error processing text.", false);
 			return;
@@ -136,6 +133,10 @@ void parse_string(char *string, dict_t *dict, char *underline, char **misspelled
 
 		tkn = strtok(NULL," \n"); //spaces and \n are the only delimeters
 	}
+
+    int counter = 0;
+    while (misspelled[counter] != NULL) counter ++;
+    misspelled[counter] = NULL;
 
 	underline_misspelled_sentence(misspelled, string_copy, underline);
 }

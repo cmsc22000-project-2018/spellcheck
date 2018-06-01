@@ -6,19 +6,16 @@
 #define INCLUDE_WORD_H_
 
 #include "dictionary.h"
+#include <stdbool.h>
+
 
 /*
- * valid_word - checks that word is in dictionary
- *
- * Parameters:
- *  - dict: A dictionary pointer. Must point to already allocated memory.
- *  - word: A string.
- *
- * Returns:
- * EXIT_FAILURE if it is not in dictionary
- * EXIT_SUCCESS if it is in dictionary
+ * valid_word: checks that word is in dictionary
+ * parameters: word, dictionary
+ * returns: bool (true if in dictionary, false if not)
+ * 
  */
-int word_valid(dict_t *dict, char* word);
+bool valid_word(dict_t *dict, char* word);
 
 /*
  * generate_suggestions - Returns a list of possible suggestions
