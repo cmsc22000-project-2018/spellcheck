@@ -3,51 +3,29 @@
 
 $ ./spellcheck -v tests/test_short.txt
 >
-tests/test_short.txt has been accepted as the input file for target file!
-Dictionary Successfully Parsed!
 
-
-============================================================
-=================== Editing Started With ===================
-============================================================
-
-file: tests/test_short.txt
-dictionary: tests/sample_dict.txt
-mode: verbose batch mode
-
-
-Batch Mode: Verbose
-
-Line number: 1
-WORD:splling
-REPLACEMENT:spelling
-
-Line number: 2
-WORD:cme
-REPLACEMENT:come
-
-WORD:m'y
-REPLACEMENT:m'y
-
-Thank you for using Spellcheck. Bye!
+LINE			WORD			SUGGESTIONS
+1			splling			spelling, spilling
+1			chequer			checker, cheque
+2			cme			come, came
+2			thy			No suggestions generated
+2			m'y			my, me
+2			PC			No suggestions generated
 >2
 >= 0
 
-# test for the batch mode with verbose flag
-# test for the batch mode with verbose flag
+# test for the batch mode with quiet flag
 <
 q
 $ ./spellcheck -q tests/test_short.txt
 >
-tests/test_short.txt has been accepted as the input file for target file!
-File editing successful!
-
-s               : save to existing file
-c               : save to custom file
-r               : return to home screen
-q               : quit program
+p : print all changes
+s : save to existing file
+c : save to custom file
+r : re-edit file
+q : quit program
 
 
-spellcheck > Thank you for using Spellcheck. Bye!
+spellcheck > 
 >2
 >= 0
