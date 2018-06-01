@@ -25,9 +25,7 @@ void shell_prompt(bool *color) {
 /* See shellstrings.h */
 void shell_main_menu(bool *color) {
     if (*color == true) {
-        printf(BOLDWHITE "------------- Spellcheck ------------\n\n"
-
-                         "Please load a file to begin. "
+        printf(BOLDWHITE "Please load a file to begin. "
                          "Additionally, select an output mode and/or "
                          "choose dictionary before running the program.\n\n" RESET);
 
@@ -40,9 +38,7 @@ void shell_main_menu(bool *color) {
     }
 
     else {
-        printf("------------- Spellcheck ------------\n\n"
-
-               "Please load a file to begin. "
+        printf("Please load a file to begin. "
                "Additionally, select an output mode and/or "
                "choose dictionary before running the program.\n\n");
 
@@ -167,46 +163,44 @@ void shell_help(bool *color) {
 }
 
 void shell_start_interactive(char *filename, char *dict, char *md, bool *color) {
-    if (*color == true) {
+    if (*color == true) {   // only printing this out in verbose
         printf(BOLDWHITE "File         :" RESET " %s\n"
                BOLDWHITE "Dictionary   :" RESET " %s\n"
                BOLDWHITE "Mode         :" RESET " %s\n", filename, dict, md);
-    }
-
-    else {
-        printf("File         : %s\n"
-               "Dictionary   : %s\n"
-               "Mode         : %s\n", filename, dict, md);
     }
 }
 
 char *shell_modename(int mode) {
     switch (mode) {
-        case 1: return "Quiet Batch Mode";
-        case 2: return "Verbose Batch Mode";
-        case 3: return "Interactive Mode";
-        default: break;
+        case 1:
+            return "Quiet Batch Mode";
+        case 2:
+            return "Verbose Batch Mode";
+        case 3: 
+            return "Interactive Mode";
+        default:
+            break;
     }
     return "Interactive Mode";
 }
 
 void shell_interactive_line_print(int lnum, char *line, char *underline, int returnflag, bool *color) {
     if (*color == true) {
-        printf(BOLDWHITE "Location:" RESET " %d:%s\n" , lnum, line);
+        printf(BOLDWHITE "Location:" RESET " %d:%s" , lnum, line);
 
-        // if (returnflag) {
-        //     printf("\n");
-        // }
+        if (returnflag) {
+             printf("\n");
+        }
 
         printf(BOLDRED "%s" RESET "\n", underline);
     }
 
     else {
-        printf("Location: %d:%s\n", lnum, line);
+        printf("Location: %d:%s", lnum, line);
 
-        // if (returnflag) {
-        //     printf("\n");
-        // }
+        if (returnflag) {
+             printf("\n");
+        }
 
         printf("%s\n", underline);
     }
@@ -214,27 +208,54 @@ void shell_interactive_line_print(int lnum, char *line, char *underline, int ret
 
 
 void shell_interactive_replacements(char *word, char **sug, int flag, bool *color) {
-    int j = 0;
+    int j;
 
-    if (flag == EXIT_FAILURE) {
-        sug[0] = word;
-        printf("No suggestions have been generated for " BOLDWHITE "%s" RESET ".\n", word);
-        printf(BOLDWHITE "d" RESET " : Delete existing word.\n");
-        printf(BOLDWHITE "i" RESET " : Input new word.\n");
-        printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
-    }
+    if (*color == true) {
+        j = 0;
 
-    else {
-        printf("\nPossible replacements for word %s are:\n", word);
-
-        while (sug[j] != NULL) {
-            printf("%d : %s \n", j + 1, sug[j]);
-            j++;
+        if (flag == EXIT_FAILURE) {
+            sug[0] = word;
+            printf("No suggestions have been generated for " BOLDWHITE "%s" RESET ".\n", word);
+            printf(BOLDWHITE "d" RESET " : Delete existing word.\n");
+            printf(BOLDWHITE "i" RESET " : Input new word.\n");
+            printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
         }
 
-        printf(BOLDWHITE "d" RESET " : Delete existing word.\n");
-        printf(BOLDWHITE "i" RESET " : Input new word.\n");
-        printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
+        else {
+            printf("\nPossible replacements for word %s are:\n", word);
+
+            while (sug[j] != NULL) {
+                printf("%d : %s \n", j + 1, sug[j]);
+                j++;
+            }
+
+            printf(BOLDWHITE "d" RESET " : Delete existing word.\n");
+            printf(BOLDWHITE "i" RESET " : Input new word.\n");
+            printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
+        }
+    } else {
+        j = 0;
+
+        if (flag == EXIT_FAILURE) {
+            sug[0] = word;
+            printf("No suggestions have been generated for %s.\n", word);
+            printf("d : Delete existing word.\n");
+            printf("i : Input new word.\n");
+            printf("s : Skip word replacement.\n");
+        }
+
+        else {
+            printf("\nPossible replacements for word %s are:\n", word);
+
+            while (sug[j] != NULL) {
+                printf("%d : %s \n", j + 1, sug[j]);
+                j++;
+            }
+
+            printf( "d : Delete existing word.\n");
+            printf( "i : Input new word.\n");
+            printf( "s : Skip word replacement.\n");
+        }
     }
 }
 

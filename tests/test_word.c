@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include "word.h"
 #include "dictionary.h"
-#include "suggestion.h"
 
 /* testing word_valid */
 Test(word, word_valid)

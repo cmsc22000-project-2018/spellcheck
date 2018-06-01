@@ -19,10 +19,8 @@
  *	- in the absence of a file to parse, open main page, which can either do one of 4 things:
  *		- load a new dictionary (will replace the one that is parsed)
  *		- quit
- *		- 
- *
- *	- launch either interactive or batch mode
- *	- save file
+ *		- launch either interactive or batch mode
+ *		- save file
  *
  *  Sample inputs:
  *
@@ -30,23 +28,22 @@
  *	> ./spellcheck: opens main page
  *
  *  Two inputs
- *	> Not possible to determine whether entered filename is for dict or editing
- *	> Print error messages and exit
+ *	> ./spellcheck [filename.txt]
  *
- *  Three inputs
- *	> ./spellcheck -d [dictname.txt]: stores 
+ *	Other flags:
+ *	> -d [dictname.txt]: changes dictionary
  *
- *	> ./spellcheck -i [filename.txt]: interactive mode
+ *	> -i/-q/-v : interactive, quiet, verbose mode
  *
- *	> ./spellcheck -q [filename.txt]: quiet mode
+ *	> -s [filename.txt]: file saving destination 
  *
- *	> ./spellcheck -v [filename.txt]: verbose mode
+ *	> -c : colored strings
  *
  *  ...
  *  and so on, with different combinations.
  *
- *  Largest possible number of argc: 7
- *	> ./spellcheck -d my_dict.txt -q misspelled.txt -s savefilename.txt
+ *  Largest possible number of argc: 8
+ *	> ./spellcheck file.txt -d my_dict.txt -q misspelled.txt -s savefilename.txt
  */
 
 char *modename(int mode) {
@@ -88,9 +85,8 @@ int main(int argc, char *argv[]) {
 	char c;
 
 	// If command line contains just the file at argv[1], write it into filename
-	if (fileexists(argv[1]) || fileexists(argv[3])) {
-        shell_error("Invalid format.", color);
-        exit(0);
+	if (fileexists(argv[1])) {
+		filename = strdup(argv[1]);
     }
 
     // Parse the initial command line and 
@@ -163,7 +159,6 @@ int main(int argc, char *argv[]) {
 
             case 'c':
                 *color = true;
-
                 break;
 
             default:
