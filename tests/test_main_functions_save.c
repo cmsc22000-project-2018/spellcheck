@@ -18,7 +18,7 @@
 Test(main_functions_save, save_corrections)
 {
     char* c = "test_save.txt";
-    char** lines = calloc(2, sizeof(char*));
+    char** lines = calloc(3, sizeof(char*));
     lines[0] = "Life is a journey";
     lines[1] = "Down a sleepless well";
 
