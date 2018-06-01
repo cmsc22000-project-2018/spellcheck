@@ -21,7 +21,6 @@ q                            : quit program
 
 spellcheck > 
 
-
 Input file is now tests/test_short.txt
 
 
@@ -39,8 +38,7 @@ mode: interactive mode
 Enter any command to start interactive mode
 
 
-
-
+spellcheck > 
 
 Current line number is 1: 
 Eye have, a splling checker 
@@ -59,16 +57,16 @@ Possible replacements for word splling are:
 spellcheck > No changes made to "splling". 
 
 Current line number is 2: 
-It cme with m'y Pea Sea. 
+It cme with m'y Pea Sea.
 
    ^^^      ^^^           
 
 Possible replacements for word cme are:
 
-0 : Delete Word.
-1 : No replacement
-2 : come
-3 : came
+0 : Delete Word. 
+1 : No replacement. 
+2 : come 
+3 : came 
 
 
 
@@ -76,16 +74,24 @@ spellcheck > No changes made to "cme".
 
 Possible replacements for word m'y are:
 
-0 : Delete Word.
-1 : No replacement.
-2 : my
-3 : me
-
+0 : Delete Word. 
+1 : No replacement. 
+2 : my 
+3 : me 
 
 
 
 spellcheck > No changes made to "m'y". 
 
+File editing successful!
+
+s               : save to existing file
+c               : save to custom file
+r               : return to home screen
+q               : quit program
+
+
+spellcheck > => ERROR: Please type in one of the indicated commands! <=
 File editing successful!
 
 s               : save to existing file
