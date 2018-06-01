@@ -44,7 +44,19 @@ void shell_intro();
 void shell_save();
 
 /*
- * shell_error - Default error prompt string for the shell.
+ * shell_print - Print edited text for viewing
+ *
+ * Parameters:
+ * 	- lines: string array, each representing edited line of file.
+ *
+ * Returns:
+ * 	- None.
+ */
+ void shell_print(char** lines);
+
+
+/*
+ * shell_error - Error message printing function for shell, with a string input for specific error
  *
  * Parameters:
  *  - error_text: String for the specific error text.
@@ -55,38 +67,18 @@ void shell_save();
 void shell_error(char* error_text);
 
 /*
- * shell_error_usage - Error prompt regarding misusage of the program for the shell.
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - char *: String for the error text.
- */
-char *shell_error_usage();
-
-/*
- * shell_erorr_exit - Error prompt regarding exiting the program due to an error for the shell.
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - char *: String for the error text.
- */
-char *shell_error_exit();
-
-/*
  * shell_input - Input file confirmation prompt for the shell.
  *
  * Parameters:
  *  - input_file: String of the file input by the user.
- *  - mode: String for the mode being used (either quiet or verbose) 
+ *  - status: String for the file type - dictionary or 
+ *				this is a string because shell_input is used
+ *				to print a confirmation message on the screen
  *
  * Returns:
  *  - None.
  */
-void shell_input(char* input_file, char* mode);
+void shell_input(char* input_file, char* status);
 
 /*
  * shell_help - Default text input prompt string for the shell.
@@ -100,17 +92,6 @@ void shell_input(char* input_file, char* mode);
 void shell_help();
 
 /*
- * shell_outro - Outro text for the shell.
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
- */
-void shell_outro();
-
-/*
  * shell_usage - command line usage instructions
  *
  * Parameters:
@@ -120,5 +101,19 @@ void shell_outro();
  *  - None.
  */
 void shell_usage();
+
+/*
+ * shell_verbose_chart - verbose chart print 
+ *
+ * Parameters:
+ *	- lnum: line number
+ *	- misspelled: misspelled word
+ *	- suggestions: char** array of generated suggestions
+ *
+ * Returns:
+ *  - None.
+ */
+void shell_verbose_chart(int lnum, char* misspelled, char** suggestions);
+
 
 #endif

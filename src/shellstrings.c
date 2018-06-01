@@ -12,9 +12,7 @@
 
 /* See shellstrings.h */
 void shell_intro() {
-    printf("------- Welcome to Spellcheck! ------\n\n");
-
-    printf("Please load a file to begin. Additionally, select an output mode and/or choose dictionary before running the program.\n\n");
+    printf("\nPlease load a file to begin. Additionally, select an output mode and/or choose a dictionary before running the program.\n");
 
     printf("f [/path/file.txt]           : open file\n");
     printf("d [/path/dictionary.txt]     : input custom dictionary file\n");
@@ -25,26 +23,34 @@ void shell_intro() {
 
 /* See shellstrings.h */
 void shell_save() {
-    printf("File editing successful!\n\n");
-
-    printf("s               : save to existing file\n");
-    printf("c               : save to custom file\n");
-    printf("r               : return to home screen\n");
-    printf("q               : quit program\n\n");
+    printf("p : print all changes\n");
+    printf("s : save to existing file\n");
+    printf("c : save to custom file\n");
+    printf("r : re-edit file\n");
+    printf("q : quit program\n\n");
 }
 
 /* See shellstrings.h */
-void shell_error(char* s) {
-	printf("=> ERROR: %s <=\n", s);
+void shell_print(char** lines) {
+    int i = 0;
+
+    printf("\n\n");
+    while (lines[i] != NULL) {
+        printf("%s", lines[i]);
+        i++;
+    }
+    printf("\n\n");
+}
+
+
+/* See shellstrings.h */
+void shell_error(char* error_text) {
+	printf("=> ERROR: %s <=\n", error_text);
 }
 
 /* See shellstrings.h */
 void shell_usage() {
-    char *u =
-    "Please use designated format:\n\n"
-    "./spellcheck [-flag] [~/path/file.txt] [-saveflag] [~/path/destination.txt] \n\n"
-    "For help, run without command line arguments and enter help page\n";
-    printf("%s", u);
+    printf("Usage: ./spellcheck [-flag] [~/path/file.txt] [-saveflag] [~/path/destination.txt]\n");
 }
 
 /* See shellstrings.h */
@@ -68,9 +74,21 @@ void shell_help() {
 }
 
 /* See shellstrings.h */
-void shell_outro() {
-    printf("Thank you for using Spellcheck. Bye!\n");
-}
+void shell_verbose_chart(int lnum, char* misspelled, char** suggestions) {
+    printf("%d\t\t\t", lnum); // print line number
+    int ntab = 3 - (strlen(misspelled) / 8); // number of tabs
+    int j;
+    printf("%s", misspelled);
+    for (j = 0; j < ntab; j++) printf("\t");
 
+    j = 0;
+    while (suggestions[j] != NULL) {
+        printf("%s", suggestions[j]);
+        if (suggestions[j + 1] != NULL) printf(", ");
+        j++;
+
+    }
+    printf("\n"); // print list of replacement
+}
 
 

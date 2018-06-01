@@ -1,0 +1,19 @@
+h
+return
+d
+f asdf
+f tests/test_short.txt
+1
+i
+checkre
+n
+checker
+y
+2
+a
+d
+1
+s
+p
+c
+test_result.txt

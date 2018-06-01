@@ -2,4 +2,3 @@ d tests/sample_dict.txt
 m 4
 m 2
 f tests/test_short.txt
-s

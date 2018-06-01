@@ -2,12 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "parser.h"
 
-#define MAXCHAR 1025	// limit is 1024
-#define INITLINE 200
+#define MAXCHAR 1025
+#define INITLINE 100
 #define READ_BUFFERSIZE 256
 #define LSH_TOK_BUFFERSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
@@ -25,27 +23,32 @@ char** parse_file(char* filename)
 		return NULL;
 	}
 
-    // initialization
+  // initialization
 	int n = 0;
 	int i = INITLINE;
 	char str[MAXCHAR];
 	char** lines;
 	lines = calloc(i, sizeof(char*));
 	if (lines == NULL) {
-		fprintf(stderr, "lineparse_file: malloc failed\n");
+		fprintf(stderr, "lineparse_file: calloc failed\n");
 		exit(0);
 	}
 
-    // read each line into a string. This size is currently limited at 1025 lines (1024, including terminating char).
-    // resize if necessary while reading file
 	while(fgets(str, MAXCHAR, f) != 0) {
+    if (n >= i) {
+      i += i;
+      lines = realloc(lines, i * sizeof (char*));
+      if (lines == NULL) {
+        fprintf(stderr, "lineparse_file: realloc failed\n");
+        exit(0);
+      }
+    }
+
 		lines[n] = strdup(str);
 		n++;
 	}
-	while(n < i) {  // initialize the rest of the lines, which do not hold new characters
-		lines[n] = NULL;
-		n++;
-	}
+  lines[n] = NULL;
+
 
 	fclose(f);
 	return lines;
@@ -55,23 +58,27 @@ char** parse_file(char* filename)
 /* read a command line and return a string */
 char* parse_read_line()
 {
-	char* input = calloc(READ_BUFFERSIZE, sizeof(char*));
+	char* input = calloc(READ_BUFFERSIZE, sizeof(char));
     if (input == NULL) {
-        fprintf(stderr, "read_line: malloc failed");
+        fprintf(stderr, "read_line: calloc failed");
         exit(1);
     }
 
-	char* rval;
+	char* cmdlineinput;
 	memset(input, '\0', READ_BUFFERSIZE);
-	char* i = fgets(input, READ_BUFFERSIZE, stdin);
-    assert(i != NULL);      // even empty lines will probably have '\0; test to see if works
+	input = fgets(input, READ_BUFFERSIZE, stdin);
+
+  if (input == NULL) {
+    fprintf(stderr, "read_line: fgets failed");
+    exit(1);
+  }
 
 	int n = strlen(input);
-	rval = strdup(input);
+	cmdlineinput = strdup(input);
 	if (input[n-1] == '\n')
-		rval[n-1] = '\0';
+		cmdlineinput[n-1] = '\0';
 
-	return rval;
+	return cmdlineinput;
 }
 
 /*
@@ -82,11 +89,11 @@ char **parse_split_line(char *line)
 {
   int bufsize = LSH_TOK_BUFFERSIZE;
   int position = 0;
-  char **tokens = malloc(bufsize * sizeof(char*));
+  char **tokens = calloc(bufsize, sizeof(char*));
   char *token, **tokens_backup;
 
   if (!tokens) {
-    fprintf(stderr, "lsh: allocation error\n");
+    fprintf(stderr, "parse_split_line: calloc error\n");
     exit(EXIT_FAILURE);
   }
 
@@ -102,7 +109,7 @@ char **parse_split_line(char *line)
       tokens = realloc(tokens, bufsize * sizeof(char*));
       if (!tokens) {
 		free(tokens_backup);
-        fprintf(stderr, "lsh: allocation error\n");
+        fprintf(stderr, "parse_split_line: realloc error\n");
         exit(EXIT_FAILURE);
       }
     }

@@ -1,9 +1,0 @@
-h
-return
-f tests/test_short.txt
-begin
-1
-2
-3
-c
-test_result.txt
