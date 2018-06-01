@@ -2,19 +2,22 @@
 
 CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -O2 -g -I./include/
-LDFLAGS = -shared
-RM = rm -f
+RM = rm -rf
+BIN = spellcheck
 
-# We'll need these when we have something beyond a testing binary
-SRCS = src/mock_trie.c src/dictionary.c
+SHELLSRCS = src/main_functions_batch.c src/main_functions_interactive.c src/main_functions_save.c src/main_functions_edit.c src/main_functions_home.c
+SRCS = main.c src/mock_trie.c src/dictionary.c src/parser.c src/word.c src/shellstrings.c $(SHELLSRCS)
 OBJS = $(SRCS:.c=.o)
 
-.PHONY: all
+.PHONY: all tests clean
+all: $(BIN)
 
-.PHONY: clean tests
-clean:
-	-$(RM) $(OBJS) $(LIBS)
-	make -C ./tests clean
+$(BIN): $(SRCS)
+	$(CC) $(CFLAGS) -o $(BIN) $(SRCS)
 
 tests:
 	make -C ./tests
+
+clean:
+	-$(RM) $(OBJS) $(BIN) spellcheck.dSYM
+	make -C ./tests clean

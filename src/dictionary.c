@@ -63,7 +63,7 @@ int dict_free(dict_t *d) {
     free(d);
 
     return EXIT_SUCCESS;
-}
+}   
 
 int dict_chars_exists(dict_t *d, char c) {
     assert(d != NULL);
