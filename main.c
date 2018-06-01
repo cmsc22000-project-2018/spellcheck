@@ -52,10 +52,14 @@
 char* modename(int mode)
 {
 	switch (mode) {
-		case QUIET_MODE: return "quiet batch mode"; 
-		case VERBOSE_MODE: return "verbose batch mode";
-		case INTERACTIVE_MODE: return "interactive mode";
-		default: break;
+		case QUIET_MODE:
+			return "quiet batch mode"; 
+		case VERBOSE_MODE:
+			return "verbose batch mode";
+		case INTERACTIVE_MODE:
+			return "interactive mode";
+		default:
+			break;
 	}
 	return "quiet batch mode";
 }
@@ -164,23 +168,22 @@ int main(int argc, char **argv)
 	char* md = modename(mode);
 
     if (mode == INTERACTIVE_MODE) {
-
-        printf("\n\n============================================================\n"
-                   "=================== Editing Started With ===================\n"
-                   "============================================================\n\n");
-	    printf("file: %s\n", file_name);
-	    printf("dictionary: %s\n", dict_name);
-	    printf("mode: %s\n\n", md);
+        printf("\n\n=============================================================\n"
+                   "====================== Editing Started ======================\n"
+                   "=============================================================\n\n");
     }
 
 	char** result=NULL;
 	// Execute either interactive or batch mode, and save file at end
 	switch (mode) {
-		case QUIET_MODE: result = batch_mode(file_name, dict, quit, QUIET_MODE); // pass in dictionary
+		case QUIET_MODE:
+			result = batch_mode(file_name, dict, quit, QUIET_MODE); // pass in dictionary
 			break;
-		case VERBOSE_MODE: result = batch_mode(file_name, dict, quit, VERBOSE_MODE); // pass in dictionary 
+		case VERBOSE_MODE: 
+			result = batch_mode(file_name, dict, quit, VERBOSE_MODE); // pass in dictionary 
 			break;
-		case INTERACTIVE_MODE: result = interactive_mode(file_name, dict, quit); // pass in dictionary
+		case INTERACTIVE_MODE:
+			result = interactive_mode(file_name, dict, quit); // pass in dictionary
 			break;
 		default:
 			break;

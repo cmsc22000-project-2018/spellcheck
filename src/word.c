@@ -6,24 +6,19 @@
 #include "dictionary.h"
 #include <stdbool.h>
 
-
-
-
-
-// checks if word is valid -- does not have erroneous punctuations within
+/* See word.h */
 bool valid_word(dict_t* dict, char* shaved_word) {
     if (dict_chars_exists(dict, *shaved_word) == EXIT_SUCCESS && *shaved_word != '\n') {
-	     if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
+	   if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
             return true;
-         }
-         else {
+        } else {
             return false;
-         }
+        }
 	}
-		return EXIT_FAILURE;
+	return false;
 }
 
-// currently hard_coded; generates suggestions for a badly spelled word
+/* See word.h */
 int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 	if (dict == NULL) { // hard_coded; to change with suggestion.c
         suggestions[0] = "no suggestions";
