@@ -5,51 +5,51 @@
 #include "word.h"
 #include "dictionary.h"
 
-/* testing word_valid */
-Test(word, word_valid)
+/* testing valid_word */
+Test(word, valid_word)
 {
     char* c = strdup("have");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = word_valid(dict, c);
+    int i = valid_word(dict, c);
 
     cr_assert_eq(i, true, "testing for punctuation, failed");
 }
 
 
-/* testing word_valid */
-Test(word, word_valid0)
+/* testing valid_word */
+Test(word, valid_word0)
 {
     char* c = strdup(";checker");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = word_valid(dict, c);
+    int i = valid_word(dict, c);
 
     cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
-/* testing word_valid */
-Test(word, word_valid1)
+/* testing valid_word */
+Test(word, valid_word1)
 {
     char* c = strdup("p'ac");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = word_valid(dict, c);
+    int i = valid_word(dict, c);
 
     cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
-/* testing word_valid */
-Test(word, word_valid2)
+/* testing valid_word */
+Test(word, valid_word2)
 {
     char* c = strdup("ac");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = word_valid(dict, c);
+    int i = valid_word(dict, c);
 
     cr_assert_eq(i, false, "testing for punctuation, failed");
 }
