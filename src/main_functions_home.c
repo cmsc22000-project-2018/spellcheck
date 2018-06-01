@@ -124,13 +124,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		}
 
 		else if (!strcmp(args[0], "c")) { // color
-			if (*color == true) {
-				*color = false;
-			}
-
-			else if (*color == false) {
-				*color = true;
-			}
+			*color = !(*color);
 		}
 
 		else if (!strcmp(args[0],"q")) { // quit

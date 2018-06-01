@@ -23,15 +23,15 @@ void save_corrections(char *filename, char **lines) {
 }
 
 /* See main_functions_save.h */
-void save_page(char *filename, char **lines, bool *quit) {
+void save_page(char *filename, char **lines, bool *quit, bool* color) {
 	int i = 1;
     char line[20];
     char *args = NULL;
     int verify = 0;
 
 	while (i) {
-        shell_save(false);
-		shell_prompt(false);
+        shell_save(color);
+		shell_prompt(color);
 		
         i = 0;
 
@@ -39,7 +39,7 @@ void save_page(char *filename, char **lines, bool *quit) {
         assert (!(verify < 0)); // ensure valid input
 
         if (strlen(line) > 2) { // ensure that only one character is entered, otherwise cannot proceed
-            shell_error("Please type in one of the indicated commands!", false);
+            shell_error("Please type in one of the indicated commands!", color);
             i = 1;
         }
 
@@ -61,7 +61,7 @@ void save_page(char *filename, char **lines, bool *quit) {
             while ((args == NULL) ^ i) {    // either user returns to main page, or inputs a vaid new destination
                 printf("\n\nEnter a viable file name (*.txt), or enter 'r' to return to the save page.\n\n");
                 
-                shell_prompt(false);
+                shell_prompt(color);
                 
                 verify = scanf("%s", line);
                 assert (!(verify < 0));
@@ -85,7 +85,7 @@ void save_page(char *filename, char **lines, bool *quit) {
 		}
 
         else {
-			shell_error("Please type in one of the indicated commands!", false);   // wrong input
+			shell_error("Please type in one of the indicated commands!", color);   // wrong input
 			i = 1;
 		}
 	}

@@ -32,6 +32,6 @@ void save_corrections(char *filename, char **lines);
  *
  * returns: void
  */
-void save_page(char *filename, char **lines, bool *quit);
+void save_page(char *filename, char **lines, bool *quit, bool* color);
 
 #endif

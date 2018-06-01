@@ -14,7 +14,7 @@
 #include "main_functions_interactive.h"
 
 /* See main_functions_interactive.h */
-char *edit_interactive(char *line, dict_t *dict, int linenumber, int returnflag) {
+char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag, bool* color) {
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; // Should the user decide this?
     int length = strlen(line);
@@ -31,16 +31,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int returnflag)
     parse_string(line, dict, underline, misspelled);
     // Add to underline function
 
-    if (misspelled[0] != NULL) {
-        printf("\nLine: %d\n", linenumber);
-        printf("%s", line_copy);
-        
-        if (returnflag) {
-            printf("\n");
-        }
-
-        printf("%s\n", underline);
-    }
+    shell_interactive_line_print(linenumber, line_copy, underline, returnflag, color);
 
     // Generates an empty array where suggestions will be filled
     char *suggestions[max_no_suggestions];
@@ -52,19 +43,19 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int returnflag)
     while (misspelled[i] != NULL) {
     	int rc = generate_suggestions(misspelled[i], dict, suggestions);
 
-        shell_interactive_replacements(misspelled[i], suggestions, rc, false);
+        shell_interactive_replacements(misspelled[i], suggestions, rc, color);
 
         char choice[10];
         int check = 0;
 
         while (!check) {
-    		shell_prompt(false);
+    		shell_prompt(color);
         	check = scanf("%s", choice);
 
         	if (!(choice[0] == 's') && !(choice[0] == 'd') && !(choice[0] == 'i')
         		&& !(isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions))) {
 
-                shell_error("Please enter a valid input", false);
+                shell_error("Please enter a valid input", color);
                
                 check = 0;
         	}
@@ -115,7 +106,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int returnflag)
 			    insertcheck = scanf("%s", c);
 
 				while (insertcheck < 0) {
-					shell_error("\n\nPlease enter a valid input!\n", false);
+					shell_error("\n\nPlease enter a valid input!\n", color);
 					shell_prompt(false);
 					insertcheck = scanf("%s\n", c);
 				}
@@ -172,23 +163,23 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int returnflag)
 }
 
 /* See main_functions_interactive.h */
-char **interactive_mode(char *filename, dict_t *dict, bool *quit) {
+char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool* color) {
 	char **lines;
 	lines = parse_file(filename);
 
 	// step through phases
 	int i = 0;
-	int flag = 0;
+	int flag = false;
 	int linenumber;
 
 	while (lines[i] != NULL) {
 		linenumber = i+1;
 		
         if (lines[i+1] == NULL) {
-            flag = 1;	// last line
+            flag = true;	// last line
         }
 
-		lines[i] = edit_interactive(lines[i], dict, linenumber, flag);
+		lines[i] = edit_interactive(lines[i], dict, linenumber, flag, color);
 		
         i++;
 	}

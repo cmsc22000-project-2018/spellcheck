@@ -218,12 +218,14 @@ char *shell_modename(int mode);
  *  - lnum: line number
  *	- line: string of the line being edited
  *	- underline: string of underlines, highlighting error words
- *  - returnflag: if the line is the final line, an additional newline character must be printed
- *		to avoid 
+ *	- returnflag: indicates if line being parsed is the last line (true if it is the last line)
+ *			in this case, there is a formatting issue in printing out the line that needs to be resolved,
+ *			because the text file that was read does not have a newline character
+ *			at the end of the file.
  * Returns:
  *  - None.
  */
-void shell_interactive_line_print(int lnum, char *line, char *underline, int returnflag, bool *color);
+void shell_interactive_line_print(int lnum, char *line, char *underline, bool returnflag, bool *color);
 
 /*
  * shell_interactive_replacements

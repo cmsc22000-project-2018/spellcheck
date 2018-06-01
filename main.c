@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
 	char *dict = malloc(401 * sizeof(char *));
 	char *filename = malloc(401 * sizeof(char *));
 	char *save_file = malloc(401 * sizeof(char *));
-    bool *color = malloc(sizeof(bool *));
+    bool *color = malloc(sizeof(bool));
 
     // By default, the color functionality is off
     *color = false;
@@ -91,11 +91,12 @@ int main(int argc, char *argv[]) {
 
 	// If command line contains just the file at argv[1], write it into filename
 	if (fileexists(argv[1])) {
-		filename = strdup(argv[1]);
+		strcpy(filename, argv[1]);
+        optind = 2;
     }
 
     // Parse the initial command line and 
-	while ((c = getopt(argc, argv, "d:i:v:s:q:c")) != -1) {
+	while ((c = getopt(argc, argv, "ivcs:d:")) != -1) {
 		switch (c) {
             case 'd':
                 if (!fileexists(optarg)) {  // this checks if the file actually exists
@@ -112,40 +113,15 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 'i':
-                if (!fileexists(optarg)) {
-				    shell_error("Invalid text file input.", color);
-				    return EXIT_FAILURE;
-                }
-
-                mode = 3;
-
-                strcpy(filename, optarg);
-
-                // if file name is not valid, print error
+                mode = INTERACTIVE_MODE;
                 break;
 
             case 'v':
-                if (!fileexists(optarg)) {
-				    shell_error("Invalid file path.", color);
-				    return EXIT_FAILURE;
-                }
-
-                mode = 2;
-
-                strcpy(filename, optarg);
-
+                mode = VERBOSE_MODE;
                 break;
 
             case 'q':
-                if (!fileexists(optarg)) {
-				    shell_error("Invalid file path.", color);
-				    return EXIT_FAILURE;
-                }
-			
-                mode = 1;
-			
-                strcpy(filename, optarg);
-			
+                mode = QUIET_MODE;
                 break;
 		
             case 's':
@@ -163,7 +139,8 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 'c':
-                *color = true;
+                *color = !(color);
+                printf("color is %d\n", *color);
                 break;
 
             default:
@@ -171,6 +148,9 @@ int main(int argc, char *argv[]) {
                 exit(0);
         }
 	}
+
+    printf("mode is %d, ", mode);
+    printf("color is %d\n", *color);
 
 	bool *quit = malloc(sizeof(bool *));
 	*quit = true;
@@ -216,7 +196,7 @@ int main(int argc, char *argv[]) {
                 result = batch_mode(filename, new_dict, quit, VERBOSE_MODE); // pass in dictionary 
                 break;
             case INTERACTIVE_MODE:
-                result = interactive_mode(filename, new_dict, quit); // pass in dictionary
+                result = interactive_mode(filename, new_dict, quit, color); // pass in dictionary
                 break;
             default:
                 break;
@@ -239,7 +219,7 @@ int main(int argc, char *argv[]) {
             }
 
             else {
-                save_page(filename, result, quit);
+                save_page(filename, result, quit, color);
             }
         }
     }

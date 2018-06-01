@@ -134,10 +134,6 @@ void parse_string(char *string, dict_t *dict, char *underline, char **misspelled
 		tkn = strtok(NULL," \n"); //spaces and \n are the only delimeters
 	}
 
-    int counter = 0;
-    while (misspelled[counter] != NULL) counter ++;
-    misspelled[counter] = NULL;
-
 	underline_misspelled_sentence(misspelled, string_copy, underline);
 }
 
