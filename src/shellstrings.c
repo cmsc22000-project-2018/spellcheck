@@ -25,7 +25,7 @@ void shell_prompt(bool *color) {
 /* See shellstrings.h */
 void shell_main_menu(bool *color) {
     if (*color == true) {
-        printf(BOLDWHITE "------- Welcome to Spellcheck! ------\n\n"
+        printf(BOLDWHITE "------------- Spellcheck ------------\n\n"
 
                          "Please load a file to begin. "
                          "Additionally, select an output mode and/or "
@@ -34,13 +34,13 @@ void shell_main_menu(bool *color) {
         printf(BOLDWHITE "i [/path/file.txt]" RESET "       : Input text file\n");
         printf(BOLDWHITE "d [/path/dictionary.txt]" RESET " : Input custom dictionary file\n");
         printf(BOLDWHITE "m [number]" RESET "               : Mode [1 - Quiet, 2 - Verbose, 3 - Interactive]\n");
-        printf(BOLDWHITE "c" RESET "                        : Enable color\n");
+        printf(BOLDWHITE "c" RESET "                        : Enable/Disable color\n");
         printf(BOLDWHITE "h" RESET "                        : Help\n");
         printf(BOLDWHITE "q" RESET "                        : Quit program\n");
     }
 
     else {
-        printf("------- Welcome to Spellcheck! ------\n\n"
+        printf("------------- Spellcheck ------------\n\n"
 
                "Please load a file to begin. "
                "Additionally, select an output mode and/or "
@@ -49,7 +49,7 @@ void shell_main_menu(bool *color) {
         printf("i [/path/file.txt]       : Input text file\n");
         printf("d [/path/dictionary.txt] : Input custom dictionary file\n");
         printf("m [number]               : Mode [1 - Quiet, 2 - Verbose, 3 - Interactive]\n");
-        printf("c                        : Enable color\n");
+        printf("c                        : Enable/Disable color\n");
         printf("h                        : Help\n");
         printf("q                        : Quit program\n");
     }

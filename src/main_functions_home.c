@@ -50,9 +50,13 @@ int change_mode(char *arg) {
 void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 	char *line;
 	char **args;
+	bool print = true;
 
 	while ((*quit) == true) {
-		shell_main_menu(color);
+		if (print == true) {
+			shell_main_menu(color);
+		}
+
 		shell_prompt(color);
 
 		line = parse_read_line();
@@ -61,12 +65,14 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		if ((args == NULL) || (args[2] != NULL)) { // 3 inputs, or no input: error message
 			shell_error("Please type in one of the indicated commands!", color);
 			
+			print = false;
 			*quit = true;
 		}
 
 		else if (!strcmp(args[0], "h")) { // Print help page, then wait for user input
 			help_page(color);
 			
+			print = true;
 			*quit = true;
 		}
 
@@ -74,14 +80,16 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 			if (!fileexists(args[1])) {	//file path checking
 				shell_error("Please enter a valid file path for a new edit target!", color);
 				
+				print = false;
 				*quit = true;
 			}
 
 			else {
-			strcpy(filename,args[1]);
-			printf("\n\nInput file is now %s\n\n\n",filename);
+				strcpy(filename,args[1]);
+				printf("\n\nInput file is now %s\n\n\n",filename);
 
-			*quit = false;
+				print = false;
+				*quit = false;
 			}
 		}
 
@@ -89,23 +97,18 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 			if (!fileexists(args[1])) {	// Check file path validity for dicitonary
 				shell_error("Please enter a valid file path for a new dictionary!", color);
 				
+				print = false;
 				*quit = true;
 			}
 
 			else {
-			dict = args[1];
-			printf("\n\nDictionary file is now %s\n\n\n",dict);
+				dict = args[1];
+				printf("\n\nDictionary file is now %s\n\n\n",dict);
 			
-			*quit = true;
+				print = false;
+				*quit = true;
 			}
 		} 
-
-		else if (!strcmp(args[0],"q")) { // quit
-			*quit = false;
-			*mode = QUIT;
-			
-			return;
-		}
 
 		else if (!strcmp(args[0], "m")) { // change mode
 			printf("Mode number accepted: %d\n",atoi(args[1]));
@@ -121,21 +124,25 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		}
 
 		else if (!strcmp(args[0], "c")) { // color
-			if (!strcmp(args[1], "enable")) {
-				*color = true;
-			}
-
-			else if (!strcmp(args[1], "disable")) {
+			if (*color == true) {
 				*color = false;
 			}
 
-			else {
-				shell_error(shell_error_input(), color);
+			else if (*color == false) {
+				*color = true;
 			}
 		}
 
+		else if (!strcmp(args[0],"q")) { // quit
+			print = false;
+			*quit = false;
+			*mode = QUIT;
+			
+			return;
+		}
+
 		else { // input bad
-			shell_error("Please type in one of the indicated commands!", color);
+			shell_error(shell_error_input(), color);
 			*quit = true;
 		}
 
