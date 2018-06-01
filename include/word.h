@@ -9,9 +9,8 @@
 /*
  * valid_word: checks that word is in dictionary
  * parameters: word, dictionary
- * returns: int (EXIT_SUCCESS OR FAILURE)
- * EXIT_FAILURE if it is not in array
- * EXIT_SUCCESS if it is in dictionary
+ * returns: bool (true if in dictionary, false if not)
+ * 
  */
 bool valid_word(dict_t *dict, char* word);
 

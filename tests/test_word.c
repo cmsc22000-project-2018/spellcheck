@@ -27,7 +27,7 @@ Test(word, valid_word1)
 
     int i = valid_word(dict, c);
 
-    cr_assert_eq(i, true, "testing for punctuation, failed");
+    cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
 /* testing valid_word */
