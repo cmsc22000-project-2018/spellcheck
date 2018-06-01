@@ -1,4 +1,4 @@
-# test for the interactive mode with file input
+# test for measuring the responsivity of interactive mode when given wrong input
 <
 f tests/test_short.txt
 a
