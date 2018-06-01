@@ -115,7 +115,7 @@ void shell_error(char *error_text, bool *color) {
 }
 
 void shell_usage() {
-    printf("Usage: ./spellcheck [filename.txt] [-flag] [~/path/file.txt] [-saveflag] [~/path/destination.txt]\n");
+    printf("Usage: ./spellcheck [filename.txt] [-mode] [-dictflag] [~/path/file.txt] [-saveflag] [~/path/destination.txt]\n");
 }
 
 /* See shellstrings.h */

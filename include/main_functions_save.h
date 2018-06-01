@@ -29,6 +29,7 @@ void save_corrections(char *filename, char **lines);
  *      - filename: string indicating name of file (saving destination)
  *      - lines: array of strings to be printed in file
  *      - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
+ *      - color: pointer to boolean (TRUE means print in colors, FALSE means print without colors)
  *
  * returns: void
  */

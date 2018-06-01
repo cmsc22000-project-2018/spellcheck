@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <string.h>
+#include <unistd.h>
 #include <assert.h>
 #include <stdbool.h>
 #include "parser.h"
@@ -89,14 +90,13 @@ int main(int argc, char *argv[]) {
 	// Parse Command Line Arguments
 	char c;
 
-	// If command line contains just the file at argv[1], write it into filename
-	if (fileexists(argv[1])) {
-		strcpy(filename, argv[1]);
-        optind = 2;
+    if (fileexists(argv[optind])) {
+        strcpy(filename, argv[optind]);
+        optind++;
     }
 
     // Parse the initial command line and 
-	while ((c = getopt(argc, argv, "ivcs:d:")) != -1) {
+	while ((c = getopt(argc, argv, "ivcqs:d:")) != -1) {
 		switch (c) {
             case 'd':
                 if (!fileexists(optarg)) {  // this checks if the file actually exists
@@ -139,20 +139,22 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 'c':
-                *color = !(color);
+                *color = !(*color);
                 printf("color is %d\n", *color);
                 break;
+
+            case '?':
+                shell_usage();
+                exit(0);
 
             default:
                 shell_error("Invalid format.", color);
                 exit(0);
         }
+
 	}
 
-    printf("mode is %d, ", mode);
-    printf("color is %d\n", *color);
-
-	bool *quit = malloc(sizeof(bool *));
+	bool *quit = malloc(sizeof(bool));
 	*quit = true;
 
     while ((*quit) == true) {
@@ -207,8 +209,8 @@ int main(int argc, char *argv[]) {
                 shell_edit_success(color);
             }
 
-            md = strstr(save_file, ".txt");
-            if (md == NULL && mode == 1) {
+            md = strstr(save_file, ".txt\0");
+            if (md == NULL && mode == QUIET_MODE) {
                 shell_print(result);
                 *quit = false;
             }

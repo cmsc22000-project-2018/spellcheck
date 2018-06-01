@@ -47,8 +47,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
          */
 	    if (rc == EXIT_FAILURE) {
             if (verbosity == VERBOSE_MODE) {
-                shell_error("No suggestions could be provided.", false);
-                // suggestions[0] = "No suggestions generated"; 
+                suggestions[0] = "No suggestions generated"; 
             }
 
             else {
@@ -67,7 +66,6 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
 	    if (verbosity == VERBOSE_MODE) {
 	    	shell_verbose_chart(lnum, misspelled[i], suggestions);
         }
-
 	    i++;
 	}
 
