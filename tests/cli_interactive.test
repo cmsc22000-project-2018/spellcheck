@@ -1,49 +1,3 @@
-
-# test for the batch mode with verbose flag
-<
-h
-q
-q
-q
-q
-q
-q
-$ ./spellcheck
->
-------- Welcome to Spellcheck! ------
-
-Please load a file to begin. Additionally, select an output mode and/or choose dictionary before running the program.
-
-f [/path/file.txt]           : open file
-d [/path/dictionary.txt]     : input custom dictionary file
-m [number]                   : switch output mode - quiet (1) verbose (2) or interactive (3)
-h                            : help
-q                            : quit program
-
-spellcheck > h
-Spellcheck is a tool which searches for misspelled words and suggests alternative spellings given a text file.
-For interactive mode, run:r [/path/file.txt]
-For batch mode, exit the program, and run:$ ./spellcheck [/path/file.txt] [-flag]
-Flags: -q is for quiet, -vis for verbose, and -s is for saving a file to a custom destination.
-Enter any command to return to the previous page.
-
-spellcheck > q
-------- Welcome to Spellcheck! ------
-
-Please load a file to begin. Additionally, select an output mode and/or choose dictionary before running the program.
-
-f [/path/file.txt]           : open file
-d [/path/dictionary.txt]     : input custom dictionary file
-m [number]                   : switch output mode - quiet (1) verbose (2) or interactive (3)
-h                            : help
-q                            : quit program
-
-spellcheck > q
-
->= 0
-
-
-
 # test for the interactive mode with file input
 <
 f tests/test_short.txt
@@ -61,11 +15,11 @@ Please load a file to begin. Additionally, select an output mode and/or choose d
 
 f [/path/file.txt]           : open file
 d [/path/dictionary.txt]     : input custom dictionary file
-m [number]                   : switch output mode - quiet (1) verbose (2) or interactive (3)
+m [number]                   : switch output mode - quiet (1) verbose (2) or interactive (3) 
 h                            : help
 q                            : quit program
 
-spellcheck > f tests/test_short.txt
+spellcheck > 
 
 
 Input file is now tests/test_short.txt
@@ -74,8 +28,9 @@ Input file is now tests/test_short.txt
 Dictionary Successfully Parsed!
 
 
-========================================
-==========Editing Started With==========
+============================================================
+=================== Editing Started With ===================
+============================================================
 
 file: tests/test_short.txt
 dictionary: tests/sample_dict.txt
@@ -83,19 +38,54 @@ mode: interactive mode
 
 Enter any command to start interactive mode
 
-a
-Eye have a splling checker,
 
-           ^^^^^^^         ^
-Possible replacements for word splling are: 1: No replacement 2 : spelling 3 : spilling Enter the number of the replacement: 1
-Possible replacements for word
- are: 1: No replacement 2 : spelling 3 : spilling Enter the number of the replacement: 1
-It cme with my Pea Sea.
 
-   ^^^                 ^
-Possible replacements for word cme are: 1: No replacement 2 : come 3 : came Enter the number of the replacement: 1
-Possible replacements for word
- are: 1: No replacement 2 : come 3 : came Enter the number of the replacement: 1
+
+
+Current line number is 1: 
+Eye have, a splling checker 
+
+           ^^^^^^^           
+
+Possible replacements for word splling are:
+
+0 : Delete Word. 
+1 : No replacement. 
+2 : spelling 
+3 : spilling 
+
+
+
+spellcheck > No changes made to "splling". 
+
+Current line number is 2: 
+It cme with m'y Pea Sea. 
+
+   ^^^      ^^^           
+
+Possible replacements for word cme are:
+
+0 : Delete Word.
+1 : No replacement
+2 : come
+3 : came
+
+
+
+spellcheck > No changes made to "cme". 
+
+Possible replacements for word m'y are:
+
+0 : Delete Word.
+1 : No replacement.
+2 : my
+3 : me
+
+
+
+
+spellcheck > No changes made to "m'y". 
+
 File editing successful!
 
 s               : save to existing file
@@ -104,7 +94,5 @@ r               : return to home screen
 q               : quit program
 
 
-spellcheck > q
-Thank you for using Spellcheck. Bye!
-
+spellcheck > Thank you for using Spellcheck. Bye!
 >= 0
