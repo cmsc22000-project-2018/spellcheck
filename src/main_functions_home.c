@@ -52,14 +52,14 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 	char **args;
 
 	while ((*quit) == true) {
-		shell_main_menu(false);
-		shell_prompt(false);
+		shell_main_menu(color);
+		shell_prompt(color);
 
 		line = parse_read_line();
 		args = parse_split_line(line);	// line is now split into tokens
 
 		if ((args == NULL) || (args[2] != NULL)) { // 3 inputs, or no input: error message
-			shell_error("Please type in one of the indicated commands!", false);
+			shell_error("Please type in one of the indicated commands!", color);
 			
 			*quit = true;
 		}
@@ -72,7 +72,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
 		else if (!strcmp(args[0], "f")) { // Check valid file path, then exit. If not, redo loop
 			if (!fileexists(args[1])) {	//file path checking
-				shell_error("Please enter a valid file path for a new edit target!", false);
+				shell_error("Please enter a valid file path for a new edit target!", color);
 				
 				*quit = true;
 			}
@@ -87,7 +87,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
 		else if (!strcmp(args[0],"d")) {	// dictionary name change 
 			if (!fileexists(args[1])) {	// Check file path validity for dicitonary
-				shell_error("Please enter a valid file path for a new dictionary!", false);
+				shell_error("Please enter a valid file path for a new dictionary!", color);
 				
 				*quit = true;
 			}
@@ -120,8 +120,22 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 			}
 		}
 
+		else if (!strcmp(args[0], "c")) { // color
+			if (!strcmp(args[1], "enable")) {
+				*color = true;
+			}
+
+			else if (!strcmp(args[1], "disable")) {
+				*color = false;
+			}
+
+			else {
+				shell_error(shell_error_input(), color);
+			}
+		}
+
 		else { // input bad
-			shell_error("Please type in one of the indicated commands!", false);
+			shell_error("Please type in one of the indicated commands!", color);
 			*quit = true;
 		}
 

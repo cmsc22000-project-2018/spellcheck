@@ -103,6 +103,17 @@ void shell_input(char *filename, char *status, bool *color);
 void shell_error(char *error_text, bool *color);
 
 /*
+ * shell_error_format - Error prompt regarding an input error for the shell
+ *
+ * Parameters:
+ *  - None.
+ *
+ * Returns:
+ *  - char *: String for the error text.
+ */
+char *shell_error_input();
+
+/*
  * shell_error_format - Error prompt regarding a format error
  * of the command line input for the shell.
  *

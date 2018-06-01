@@ -119,6 +119,14 @@ void shell_error(char *error_text, bool *color) {
 }
 
 /* See shellstrings.h */
+char *shell_error_input() {
+    char *error_input =
+    "Invalid input.";
+
+    return error_input;
+}
+
+/* See shellstrings.h */
 char *shell_error_format() {
     char *error_format =
     "Please use designated format:\n"

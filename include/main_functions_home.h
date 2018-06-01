@@ -53,5 +53,4 @@ int change_mode(char *arg);
  */
 void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color);
 
-
 #endif
