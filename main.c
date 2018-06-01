@@ -47,8 +47,8 @@
  *	> ./spellcheck file.txt -d my_dict.txt -q misspelled.txt -s savefilename.txt -c
  */
 
-char *modename(int mode) {
-	switch (mode) {
+char *modename(int* mode) {
+	switch (*mode) {
 		case QUIET_MODE:
             return "Quiet Batch Mode"; 
 		case VERBOSE_MODE:
@@ -74,8 +74,6 @@ int main(int argc, char *argv[]) {
 	char *save_file = malloc(401 * sizeof(char *));
     bool *color = malloc(sizeof(bool));
 
-    // By default, the color functionality is off
-    *color = false;
 
 	// Default dict name
 	strcpy(dict, "tests/sample_dict.txt");
@@ -85,7 +83,11 @@ int main(int argc, char *argv[]) {
 	 * 2: Verbose Batch Mode
 	 * 3: Interactive Mode
 	 */
-	int mode = INTERACTIVE_MODE;
+	int *mode = malloc(sizeof(int));
+    *mode = INTERACTIVE_MODE;
+
+    // By default, the color functionality is off
+    *color = false;
 
 	// Parse Command Line Arguments
 	char c;
@@ -106,22 +108,22 @@ int main(int argc, char *argv[]) {
 
                 strcpy(dict, optarg);
 
-                if (mode == INTERACTIVE_MODE) {
+                if (*mode == INTERACTIVE_MODE) {
                     shell_input(optarg, "dictionary", color);
                 }
 
                 break;
 
             case 'i':
-                mode = INTERACTIVE_MODE;
+                *mode = INTERACTIVE_MODE;
                 break;
 
             case 'v':
-                mode = VERBOSE_MODE;
+                *mode = VERBOSE_MODE;
                 break;
 
             case 'q':
-                mode = QUIET_MODE;
+                *mode = QUIET_MODE;
                 break;
 		
             case 's':
@@ -132,7 +134,7 @@ int main(int argc, char *argv[]) {
 
                 strcpy(save_file,optarg);
             
-                if (mode == INTERACTIVE_MODE) {
+                if (*mode == INTERACTIVE_MODE) {
                     shell_input(optarg, "file save destination", color);
                 }
 
@@ -166,9 +168,9 @@ int main(int argc, char *argv[]) {
         * Main page: Activated if there is no file to be parsed.
         * can open help page, quit, or load filename / dictname
         */
-        main_page(quit, &mode, filename, dict, color);
+        main_page(quit, mode, filename, dict, color);
 
-        if (mode == QUIT) { // user selected "quit" in main_page
+        if (*mode == QUIT) { // user selected "quit" in main_page
             return 0;
         }
 
@@ -181,16 +183,16 @@ int main(int argc, char *argv[]) {
         }
 
 		// Starting to Parse file! Printing messages accordingly
-        char *md = shell_modename(mode);
+        char *md = shell_modename(*mode);
 
-        if (mode == INTERACTIVE_MODE) {
+        if (*mode == INTERACTIVE_MODE) {
             shell_start_interactive(filename, dict, md, color);
         }
 
         char **result = NULL;
 
         // Execute either interactive or batch mode, and save file at end
-        switch (mode) {
+        switch (*mode) {
             case QUIET_MODE:
                 result = batch_mode(filename, new_dict, quit, QUIET_MODE); // pass in dictionary
                 break;
@@ -204,13 +206,13 @@ int main(int argc, char *argv[]) {
                 break;
         }
 
-        if (mode != VERBOSE_MODE && result != NULL) {	// Save file, a functionality unnecessary for verbose batch mode
-            if (mode == INTERACTIVE_MODE) {
+        if (*mode != VERBOSE_MODE && result != NULL) {	// Save file, a functionality unnecessary for verbose batch mode
+            if (*mode == INTERACTIVE_MODE) {
                 shell_edit_success(color);
             }
 
             md = strstr(save_file, ".txt\0");
-            if (md == NULL && mode == QUIET_MODE) {
+            if (md == NULL && *mode == QUIET_MODE) {
                 shell_print(result);
                 *quit = false;
             }

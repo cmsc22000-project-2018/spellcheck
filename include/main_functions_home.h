@@ -33,11 +33,14 @@ bool fileexists(const char *filename);
 
 /*
  * change_mode: helper for main_page, determine input mode
- * parameter: command line input from main_page
+ * parameter:
+ *		- arg: command line input from main_page
+ *		- color: bool for color of error message (false for no color, true for color)
+ *
  * return: number indicating mode
  * 			1 means quiet, 2 verbose, 3 interactive
  */
-int change_mode(char *arg);
+int change_mode(char *arg, bool *color);
 
 /*
  * main_page: prints out the shellstring main page and waits for user to respond with
