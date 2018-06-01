@@ -130,7 +130,7 @@ void parse_string(char *string, dict_t *dict, char *underline, char **misspelled
 		}
 
 		else {
-			shell_error("Error processing text", false);
+			shell_error("Error processing text.", false);
 			return;
 		}
 
@@ -146,7 +146,7 @@ char *correct_line(char *line, char *old_word, char *new_word) {
 
 	char *insert_point = &buffer[0];
 	char *tmp = line;
-    
+
 	int old_length = strlen(old_word);
 	int new_length = strlen(new_word);
 

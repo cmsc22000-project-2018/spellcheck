@@ -34,7 +34,7 @@ int change_mode(char *arg) {
 	}
 
 	else {
-        shell_error("Input invalid: Returning to interactive mode", false);
+        shell_error("Invalid input.", false);
 
         /*
          * The default is 3, given this function is only called in main_page(),
@@ -63,7 +63,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		args = parse_split_line(line);	// line is now split into tokens
 
 		if ((args == NULL) || (args[2] != NULL)) { // 3 inputs, or no input: error message
-			shell_error("Please type in one of the indicated commands!", color);
+			shell_error("Please type in one of the indicated commands.", color);
 			
 			print = false;
 			*quit = true;
@@ -78,7 +78,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
 		else if (!strcmp(args[0], "f")) { // Check valid file path, then exit. If not, redo loop
 			if (!fileexists(args[1])) {	//file path checking
-				shell_error("Please enter a valid file path for a new edit target!", color);
+				shell_error("Please enter a valid file path for a new edit target.", color);
 				
 				print = false;
 				*quit = true;
@@ -95,7 +95,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
 		else if (!strcmp(args[0],"d")) {	// dictionary name change 
 			if (!fileexists(args[1])) {	// Check file path validity for dicitonary
-				shell_error("Please enter a valid file path for a new dictionary!", color);
+				shell_error("Please enter a valid file path for a new dictionary.", color);
 				
 				print = false;
 				*quit = true;
@@ -142,7 +142,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		}
 
 		else { // input bad
-			shell_error(shell_error_input(), color);
+			shell_error("Invalid file input.", color);
 			*quit = true;
 		}
 

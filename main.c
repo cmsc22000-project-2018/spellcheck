@@ -51,10 +51,14 @@
 
 char *modename(int mode) {
 	switch (mode) {
-		case QUIET_MODE: return "Quiet Batch Mode"; 
-		case VERBOSE_MODE: return "Verbose Batch Mode";
-		case INTERACTIVE_MODE: return "Interactive Mode";
-		default: break;
+		case QUIET_MODE:
+            return "Quiet Batch Mode"; 
+		case VERBOSE_MODE:
+            return "Verbose Batch Mode";
+		case INTERACTIVE_MODE:
+            return "Interactive Mode";
+		default:
+            break;
 	}
 
 	return "Quiet Batch Mode";
@@ -85,7 +89,7 @@ int main(int argc, char *argv[]) {
 
 	// If command line contains just the file at argv[1], write it into filename
 	if (fileexists(argv[1]) || fileexists(argv[3])) {
-        shell_error(shell_error_format(), color);
+        shell_error("Invalid format.", color);
         exit(0);
     }
 
@@ -94,7 +98,7 @@ int main(int argc, char *argv[]) {
 		switch (c) {
             case 'd':
                 if (!fileexists(optarg)) {  // this checks if the file actually exists
-				    shell_error(shell_error_dict(""), color);
+				    shell_error("Invalid dictionary file input.", color);
 				    return EXIT_FAILURE;
                 }
 
@@ -108,7 +112,7 @@ int main(int argc, char *argv[]) {
 
             case 'i':
                 if (!fileexists(optarg)) {
-				    shell_error(shell_error_file(""), color);
+				    shell_error("Invalid text file input.", color);
 				    return EXIT_FAILURE;
                 }
 
@@ -121,7 +125,7 @@ int main(int argc, char *argv[]) {
 
             case 'v':
                 if (!fileexists(optarg)) {
-				    shell_error("Input file path invalid", color);
+				    shell_error("Invalid file path.", color);
 				    return EXIT_FAILURE;
                 }
 
@@ -133,7 +137,7 @@ int main(int argc, char *argv[]) {
 
             case 'q':
                 if (!fileexists(optarg)) {
-				    shell_error("Input file path invalid", color);
+				    shell_error("Invalid file path.", color);
 				    return EXIT_FAILURE;
                 }
 			
@@ -145,7 +149,7 @@ int main(int argc, char *argv[]) {
 		
             case 's':
                 if (strstr(optarg,".txt\0") == NULL) {    // does not save to a *.txt file
-                    shell_error("Input save file path invalid", color);
+                    shell_error("Invalid file path.", color);
                     return EXIT_FAILURE;
                 }
 
@@ -163,7 +167,7 @@ int main(int argc, char *argv[]) {
                 break;
 
             default:
-                shell_error(shell_error_format(), color);
+                shell_error("Invalid format.", color);
                 exit(0);
         }
 	}
@@ -191,7 +195,7 @@ int main(int argc, char *argv[]) {
         int msg = dict_read(new_dict, dict);
 
         if (msg == EXIT_FAILURE) {
-            shell_error(shell_error_dict(dict), color);
+            shell_error("Invalid dictionary file input.", color);
             exit(0);
         }
 

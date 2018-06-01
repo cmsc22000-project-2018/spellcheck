@@ -119,66 +119,6 @@ void shell_error(char *error_text, bool *color) {
 }
 
 /* See shellstrings.h */
-char *shell_error_input() {
-    char *error_input =
-    "Invalid input.";
-
-    return error_input;
-}
-
-/* See shellstrings.h */
-char *shell_error_format() {
-    char *error_format =
-    "Please use designated format:\n"
-    "./spellcheck [-i /path/file.txt] [-d /path/dictionary.txt] [-q or -v]\n"
-    "For help, run without command line arguments and enter help page.";
-
-    return error_format;
-}
-
-/* See shellstrings.h */
-char *shell_error_dict(char *dict) {
-    char *error_dict =
-    "Trouble reading dictionary file ";
-    strcat(error_dict, dict);
-
-    return error_dict;
-}
-
-/* See shellstrings.h */
-char *shell_error_file (char *filename) {
-    char *error_file =
-    "Trouble reading text file ";
-    strcat(error_file, filename);
-
-    return error_file;
-}
-
-/* See shellstrings.h */
-char *shell_error_exit() {
-    char *error_exit =
-    "Encountered an error -  Program exiting automatically.";
-
-    return error_exit;
-}
-
-/* See shellstrings.h */
-char *shell_error_parse() {
-    char *error_parse =
-    "File parsing for failed - Check input file.";
-
-    return error_parse;
-}
-
-/* See shellstrings.h */
-char *shell_error_suggestion() {
-    char *error_suggestion =
-    "No suggestions were generated for this word.";
-
-    return error_suggestion;
-}
-
-/* See shellstrings.h */
 void shell_help(bool *color) {
     if (*color == true) {
         printf(BOLDWHITE "------- Help Page ------\n" RESET
