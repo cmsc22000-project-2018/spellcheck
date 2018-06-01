@@ -10,8 +10,9 @@
 Test(main_functions_home, change_mode)
 {
     char* mode = "1";
+    bool* b = false;
 
-    int i = change_mode(mode);
+    int i = change_mode(mode, b);
 
     cr_assert_eq(i, QUIET_MODE, "return value wrong");
 }
@@ -19,20 +20,13 @@ Test(main_functions_home, change_mode)
 Test(main_functions_home, change_mode0)
 {
     char* mode = "2";
+    bool* b = false;
 
-    int i = change_mode(mode);
+    int i = change_mode(mode, b);
 
     cr_assert_eq(i, VERBOSE_MODE, "return value wrong");
 }
 
-Test(main_functions_home, change_mode1)
-{
-    char* mode = "-1";
-
-    int i = change_mode(mode);
-
-    cr_assert_eq(i, INTERACTIVE_MODE, "return value wrong");
-}
 
 /*
  ***** fileexists tests *****
