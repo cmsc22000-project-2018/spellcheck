@@ -5,7 +5,7 @@
 #ifndef INCLUDE_DICTIONARY_H_
 #define INCLUDE_DICTIONARY_H_
 
-#include "../lib/api/include/trie.h"
+#include "../api/include/trie.h"
 
 #define MAXSTRLEN 60
 
