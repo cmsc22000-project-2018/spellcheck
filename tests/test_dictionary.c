@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "dictionary.h"
+#include "log.c/src/log.h"
 
 Test(dictionary, new) {
     dict_t *d;

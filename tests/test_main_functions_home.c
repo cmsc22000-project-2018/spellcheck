@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "main_functions_home.h"
+#include "log.c/src/log.h"
 
 /*
  ***** change_mode tests *****

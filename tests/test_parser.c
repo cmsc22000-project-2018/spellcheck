@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "parser.h"
+#include "log.c/src/log.h"
 
 FILE *f = NULL;
 char* fileinput = "Eye halve a spelling chequer\n";
