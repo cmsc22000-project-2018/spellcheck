@@ -161,17 +161,17 @@ void check_dict_add(char *file, char *str, int expected) {
 }
 
 /* Test adding a small string for failure (already in dict) */
-Test(dictionary, dict_add_f0) {
+Test(dictionary, dict_add_dup0) {
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "hi";
-    check_dict_add("./tests/dict_test0.txt", s, EXIT_FAILURE);
+    check_dict_add("./tests/dict_test0.txt", s, EXIT_SUCCESS);
 }
 
 /* Test adding a long string for failure (already in dict) */
-Test(dictionary, dict_add_f1) {
+Test(dictionary, dict_add_dup1) {
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "dictionaryverysuperduperlongwordyayitssolongwowcrazy";
-    check_dict_add("./tests/dict_test0.txt", s, EXIT_FAILURE);
+    check_dict_add("./tests/dict_test0.txt", s, EXIT_SUCCESS);
 }
 
 /* Test adding a small string for success (not in dict) */
@@ -324,13 +324,13 @@ Test(dictionary, dict_exists_s1) {
 /* Test a small string for failure */
 Test(dictionary, dict_exists_f0) {
     char *s = (char*)malloc(sizeof(char) * 3);
-    s = "no";
+    s = "nah";
     check_dict_exists("./tests/dict_test0.txt", s, EXIT_FAILURE);
 }
 
 /* Test a long string for failure */
 Test(dictionary, dict_exists_f1) {
     char *s = (char*)malloc(sizeof(char) * 53);
-    s = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
+    s = "notindictionarypleasedontpassifthispassesdictpersists";
     check_dict_exists("./tests/dict_test0.txt", s, EXIT_FAILURE);
 }

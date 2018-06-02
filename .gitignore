@@ -8,4 +8,5 @@ parser_testing.txt
 test_result.txt
 spellcheck.dSYM/
 tests/test-spellcheck.dSYM/
-test_save.txt
+test_save.txt 
+*.rdb
