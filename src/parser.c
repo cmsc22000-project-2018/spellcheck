@@ -126,7 +126,7 @@ char **parse_split_line(char *line)
     position++;
 
     if (position >= bufsize) {
-      log_info("reallocating argument array, given lengthy cmd line input with more than %d spaces", n);
+      log_info("reallocating argument array, given lengthy cmd line input with more than %d spaces", position);
       bufsize += LSH_TOK_BUFFERSIZE;
       tokens_backup = tokens;
       tokens = realloc(tokens, bufsize * sizeof(char*));

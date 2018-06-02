@@ -70,7 +70,7 @@ void save_page(char *filename, char **lines, bool *quit, bool* color) {
                 verify = scanf("%s", line);
                 assert (!(verify < 0));
 
-                log_debug("file entered was %s", line)
+                log_debug("file entered was %s", line);
                 args = strstr(line, ".txt");
                 
                 if (!strcmp(line, "r")) {

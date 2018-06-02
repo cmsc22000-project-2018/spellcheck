@@ -57,7 +57,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
 	while ((*quit) == true) {
 		if (print == true) {
-			log_mode("printing main menu");
+			log_trace("printing main menu");
 			shell_main_menu(color);
 		}
 
