@@ -67,14 +67,17 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
             suggestions[1] = NULL;
         }
 
+        if (verbosity == QUIET_MODE) {
+            log_trace("correcting line");
+            correct_line(line_copy, misspelled[i], suggestions[0]);
+        }
+
         // In verbose mode, edit the file and also print a replacement chart
 	    if (verbosity == VERBOSE_MODE) {
             log_trace("printing chart");
 	    	shell_verbose_chart(lnum, line, misspelled[i], suggestions);
         }
 
-        log_trace("correcting line");
-        correct_line(line_copy, misspelled[i], suggestions[0]);
 	    i++;
 	}
 
