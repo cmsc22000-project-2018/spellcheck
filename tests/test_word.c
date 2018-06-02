@@ -59,7 +59,7 @@ Test(word, valid_word2)
 Test(word, generate_suggestions)
 {
     char* c = strdup("splling");
-    char* suggestions[2];
+    char** suggestions = calloc(2, sizeof(char*));
     if (suggestions == NULL) {
         fprintf(stderr,"malloc failed, generate_suggestions");
         exit(0);

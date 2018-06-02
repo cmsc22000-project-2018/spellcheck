@@ -3,8 +3,6 @@
 #include <stdbool.h>
 #include <string.h>
 #include <assert.h>
-#include "mock_trie.h"
-#include "log.c/src/log.h"
 
 /*
 * See mock_trie.h

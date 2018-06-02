@@ -276,6 +276,7 @@ void shell_verbose_chart(int lnum, char *misspelled, char **suggestions) {
     printf("%d\t\t\t", lnum);
     
     int ntab = 3 - (strlen(misspelled) / 8); // number of tabs
+    if (ntab < 0) ntab = 1;
     
     int j;
     

@@ -58,15 +58,12 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
             suggestions[1] = NULL;
         }
 
-        // In quiet mode, only edit the file
-    	if (verbosity == QUIET_MODE) {
-            correct_line(line_copy, misspelled[i], suggestions[0]);
-        }
-
         // In verbose mode, edit the file and also print a replacement chart
 	    if (verbosity == VERBOSE_MODE) {
-	    	shell_verbose_chart(lnum, misspelled[i], suggestions);
+	    	shell_verbose_chart(lnum, line, misspelled[i], suggestions);
         }
+
+        correct_line(line_copy, misspelled[i], suggestions[0]);
 	    i++;
 	}
 

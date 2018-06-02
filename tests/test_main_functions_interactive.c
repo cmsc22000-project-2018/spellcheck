@@ -179,19 +179,19 @@ void check_remove_prefix_punctuation(char* word, char* expected) {
 }
 
 Test(main_functions_edit, remove_prefix_punctuation) {
-	char buffer[8] = "...words";
+	char buffer[9] = "...words";
     char* expected = "words"; 
     check_remove_prefix_punctuation(buffer, expected);
 }
 
 Test(main_functions_edit, remove_prefix_punctuation2) {
-	char buffer[7] = "..words";
+	char buffer[8] = "..words";
     char* expected = "words"; 
     check_remove_prefix_punctuation(buffer, expected);
 }
 
 Test(main_functions_edit, remove_prefix_punctuation3) {
-	char buffer[9] = "??words?";
+	char buffer[10] = "??words?";
     char* expected = "words?"; 
     check_remove_prefix_punctuation(buffer, expected);
 }
@@ -217,13 +217,13 @@ Test(main_functions_edit, remove_trailing_punctuation1) {
 }
 
 Test(main_functions_edit, remove_trailing_punctuation2) {
-	char buffer[6] = "words.";
+	char buffer[7] = "words.";
     char* expected = "words"; 
     check_remove_trailing_punctuation(buffer, expected);
 }
 
 Test(main_functions_edit, remove_trailing_punctuation3) {
-	char buffer[8] = "??words?";
+	char buffer[9] = "??words?";
     char* expected = "??words"; 
     check_remove_trailing_punctuation(buffer, expected);
 }

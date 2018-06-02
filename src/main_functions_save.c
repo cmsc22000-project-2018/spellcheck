@@ -9,17 +9,20 @@
 
 /* See main_functions_save.h */
 void save_corrections(char *filename, char **lines) {
+    log_trace("opening save file destination %s", filename);
 	FILE *f = fopen(filename, "w");
     assert(f != NULL);
 
 	int i = 0;
 
 	while (lines[i] != NULL) {
+        log_trace("writing line into file: %s", lines[i]);
 		fprintf(f, "%s", lines[i]); // write lines into file
 		
         i++;
 	}
 
+    log_trace("closing save file destination %s", filename);
 	fclose(f);
 }
 

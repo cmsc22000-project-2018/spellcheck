@@ -245,13 +245,14 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
  *
  * Parameters:
  *	- lnum: line number
+ *	- line: line, to calculate character position of misspelled word
  *	- misspelled: misspelled word
  *	- suggestions: char** array of generated suggestions
  *
  * Returns:
  *  - None.
  */
-void shell_verbose_chart(int lnum, char *misspelled, char **suggestions);
+void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggestions);
 
 /*
  * shell_save_message - save message

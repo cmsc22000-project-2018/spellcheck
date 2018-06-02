@@ -21,6 +21,7 @@ bool valid_word(dict_t* dict, char* shaved_word) {
             log_trace("returning true from valid_word");
             return true;
         } else {
+            log_trace("returning false from valid_word");
             return false;
         }
     }
@@ -30,6 +31,7 @@ bool valid_word(dict_t* dict, char* shaved_word) {
 /* See word.h */
 int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
 	if (dict == NULL) { // hard_coded; to change with suggestion.c
+        log_warn("no dictionary");
         suggestions[0] = "no suggestions";
         suggestions[1] = NULL;
         return EXIT_FAILURE;
