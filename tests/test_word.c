@@ -5,148 +5,251 @@
 #include "word.h"
 #include "dictionary.h"
 
-/* testing valid_word */
-Test(word, valid_word)
+/* testing word_valid */
+Test(word, word_valid)
 {
     char* c = strdup("have");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = valid_word(dict, c);
+    int i = word_valid(dict, c);
 
     cr_assert_eq(i, true, "testing for punctuation, failed");
 }
 
-
-/* testing valid_word */
-Test(word, valid_word1)
+/* testing word_valid */
+Test(word, word_valid0)
 {
     char* c = strdup(";checker");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = valid_word(dict, c);
+    int i = word_valid(dict, c);
 
     cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
-/* testing valid_word */
-Test(word, valid_word2)
+/* testing word_valid */
+Test(word, word_valid1)
 {
     char* c = strdup("p'ac");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = valid_word(dict, c);
+    int i = word_valid(dict, c);
 
     cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
-/* testing valid_word */
-Test(word, valid_word3)
+/* testing word_valid */
+Test(word, word_valid2)
 {
     char* c = strdup("ac");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = valid_word(dict, c);
+    int i = word_valid(dict, c);
 
     cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
-/* testing generate_suggestions
- * testing currently for hard coded values. change upon dictionary implementation */
-Test(word, generate_suggestions)
+/* testing word_check_cap */
+Test(word, word_check_cap)
 {
-    char* c = strdup("splling");
-    char** suggestions = calloc(2, sizeof(char*));
-    if (suggestions == NULL) {
-        fprintf(stderr,"malloc failed, generate_suggestions");
-        exit(0);
-    }
-    dict_t* dict = dict_new();
-    dict_read(dict, "tests/sample_dict.txt");
+    char* c = "word";
 
-    int i = generate_suggestions(c, dict, suggestions);
+    int i = word_check_cap(c);
 
-    cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");
-
-    i = strncmp("spelling", suggestions[0], 8);
-    cr_assert_eq(i, 0, "suggestion output incorrect");
+    cr_assert_eq(i, 0, "no letter is capitalized, should return 0");
 }
 
-/* testing generate_suggestions */
-Test(word, generate_suggestions1)
+/* testing word_check_cap */
+Test(word, word_check_cap1)
 {
-    char* c = strdup("life");
-    char** suggestions = calloc(2, sizeof(char*));
-    if (suggestions == NULL) {
-        fprintf(stderr,"malloc failed, generate_suggestions1");
-        exit(0);
-    }
-    dict_t* dict = dict_new();
-    dict_read(dict, "tests/sample_dict.txt");
+    char* c = "Word";
 
-    int i = generate_suggestions(c, dict, suggestions);
+    int i = word_check_cap(c);
 
-    cr_assert_eq(i, EXIT_FAILURE, "int return value incorrect");
+    cr_assert_eq(i, 1, "First letter is capitalized, should return 1");
 }
 
-/* testing generate_suggestions */
-Test(word, generate_suggestions2)
+/* testing word_check_cap */
+Test(word, word_check_cap2)
 {
-    char* c = strdup("chequer");
-    char** suggestions = calloc(2, sizeof(char*));
-    if (suggestions == NULL) {
-        fprintf(stderr,"malloc failed, generate_suggestions2");
-        exit(0);
-    }
-    dict_t* dict = dict_new();
-    dict_read(dict, "tests/sample_dict.txt");
+    char* c = "\"!?";
 
-    int i = generate_suggestions(c, dict, suggestions);
+    int i = word_check_cap(c);
 
-    cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");
-
-    i = strncmp("cheque", suggestions[1], 7);
-    cr_assert_eq(i, 0, "suggestion output incorrect");
+    cr_assert_eq(i, -1, "capitalization not properly identified; should return -1");
 }
 
-/* testing generate_suggestions */
-Test(word, generate_suggestions3)
+/* testing word_check_cap */
+Test(word, word_check_cap3)
 {
-    char* c = strdup("cme");
-    char** suggestions = calloc(2, sizeof(char*));
-    if (suggestions == NULL) {
-        fprintf(stderr,"malloc failed, generate_suggestions3");
-        exit(0);
-    }
-    dict_t* dict = dict_new();
-    dict_read(dict, "tests/sample_dict.txt");
+    char* c = "'Twas";
 
-    int i = generate_suggestions(c, dict, suggestions);
+    int i = word_check_cap(c);
 
-    cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");
-
-    i = strncmp("come", suggestions[0], 5);
-    cr_assert_eq(i, 0, "suggestion output incorrect");
+    cr_assert_eq(i, 1, "First letter is capitalized, should return 1");
 }
 
-/* testing generate_suggestions */
-Test(word, generate_suggestions4)
+/* testing word_check_cap */
+Test(word, word_check_cap4)
 {
-    char* c = strdup("cme");
-    char** suggestions = calloc(2, sizeof(char*));
-    if (suggestions == NULL) {
-        fprintf(stderr,"malloc failed, generate_suggestions3");
-        exit(0);
-    }
-    dict_t* dict = NULL;
+    char* c = "it's";
 
-    int i = generate_suggestions(c, dict, suggestions);
+    int i = word_check_cap(c);
 
-    cr_assert_eq(i, EXIT_FAILURE, "int return value incorrect");
-
-    i = strncmp("no suggestions", suggestions[0], 14);
-    cr_assert_eq(i, 0, "suggestion output incorrect");
+    cr_assert_eq(i, 0, "capitalization not properly identified; should return 0");
 }
+
+/* testing word_check_cap */
+Test(word, word_check_cap5)
+{
+    char* c = "'TWAS";
+
+    int i = word_check_cap(c);
+
+    cr_assert_eq(i, 2, "capitalization not properly identified; should return 2");
+}
+
+/* testing word_check_cap */
+Test(word, word_check_cap6)
+{
+    char* c = "WORDIT";
+
+    int i = word_check_cap(c);
+
+    cr_assert_eq(i, 2, "capitalization not properly identified; should return 2");
+}
+
+/* testing word_check_cap */
+Test(word, word_check_cap7)
+{
+    char* c = "VERD'IT";
+
+    int i = word_check_cap(c);
+
+    cr_assert_eq(i, 2, "capitalization not properly identified; should return 2");
+}
+
+/* testing word_check_cap */
+Test(word, word_check_cap8)
+{
+    char* c = "tEStINg";
+
+    int i = word_check_cap(c);
+
+    cr_assert_eq(i, 3, "capitalization not properly identified; should return 3");
+}
+
+/* testing word_check_cap */
+Test(word, word_check_cap9)
+{
+    char* c = "PoSeiDon";
+
+    int i = word_check_cap(c);
+
+    cr_assert_eq(i, 3, "capitalization not properly identified; should return 3");
+}
+
+/* testing word_lowercase */
+Test(word, word_lowercase)
+{
+    char* c = "Length";
+
+    int i = strcmp(word_lowercase(c), "length");
+
+    cr_assert_eq(i, 0, "decapitalization failed");
+}
+
+/* testing word_lowercase */
+Test(word, word_lowercase3)
+{
+    char* c = "DYNAMITE";
+
+    int i = strcmp(word_lowercase(c), "dynamite");
+
+    cr_assert_eq(i, 0, "decapitalization failed");
+}
+
+/* testing word_lowercase */
+Test(word, word_lowercase4)
+{
+    char* c = "Plymouth";
+
+    int i = strcmp(word_lowercase(c), "plymouth");
+
+    cr_assert_eq(i, 0, "decapitalization incorrect");
+}
+
+/* testing words_uppercase */
+Test(word, words_uppercase)
+{
+    char** c = calloc(3, sizeof(char*));
+    c[0] = strdup("onepiece");
+    c[1] = strdup("twopiece");
+
+    words_uppercase(c, 1);
+
+    int i = strcmp(c[0], "Onepiece");
+
+    cr_assert_eq(i, 0, "recapitalization failed");
+}
+
+/* testing words_uppercase */
+Test(word, words_uppercase1)
+{
+    char** c = calloc(3, sizeof(char*));
+    c[0] = strdup("onepiece");
+    c[1] = strdup("twopiece");
+
+    words_uppercase(c, 2);
+    int i = strcmp(c[1], "TWOPIECE");
+
+    cr_assert_eq(i, 0, "recapitalization failed");
+}
+
+/* testing words_uppercase */
+Test(word, words_uppercase2)
+{
+    char** c = calloc(3, sizeof(char*));
+    c[0] = strdup("onepiece");
+    c[1] = strdup("twopiece");
+
+    words_uppercase(c, 3);
+
+    int i = strcmp(c[0], "onepiece");
+
+    cr_assert_eq(i, 0, "recapitalization failed");
+}
+
+/* testing words_uppercase */
+Test(word, words_uppercase3)
+{
+    char** c = calloc(3, sizeof(char*));
+    c[0] = strdup("one'piece");
+    c[1] = strdup("two'piece");
+
+    words_uppercase(c, 1);
+
+    int i = strcmp(c[0], "One'piece");
+
+    cr_assert_eq(i, 0, "recapitalization failed");
+}
+
+/* testing words_uppercase */
+Test(word, words_uppercase4)
+{
+    char** c = calloc(3, sizeof(char*));
+    c[0] = strdup("one''piece'");
+    c[1] = strdup("two''piece'");
+
+    words_uppercase(c, 2);
+
+    int i = strcmp(c[0], "ONE''PIECE'");
+
+    cr_assert_eq(i, 0, "recapitalization failed");
+}
+
+

@@ -20,6 +20,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
 {
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; //should the user decide this?
+    int max_edits = 2;
     int length = strlen(line);
     char **misspelled; //generates an empty array where the misspelled words in a line will be stored
     misspelled = calloc(length, sizeof(char*));
@@ -48,7 +49,7 @@ char* edit_interactive(char* line, dict_t* dict, int linenumber, int returnflag)
 
     //replacing words according to user suggestions
     while (misspelled[i] != NULL) {
-    	int rc = generate_suggestions(misspelled[i], dict, suggestions);
+    	int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
 
     	if (rc == EXIT_FAILURE) {
 			suggestions[0] = misspelled[i];	// to avoid error

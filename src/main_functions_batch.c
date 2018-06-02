@@ -19,6 +19,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
 {
 	char *line_copy = strdup(line);
     int max_no_suggestions = 2; //should the user decide this?
+    int max_edits = 2;
     int length = strlen(line);
     char **misspelled; //generates an empty array where the misspelled words in a line will be stored
 
@@ -38,7 +39,7 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum)
     int i = 0;
     //replacing words, printing out if batch mode
     while (misspelled[i] != NULL) {
-        int rc = generate_suggestions(misspelled[i], dict, suggestions);
+        int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
 
         /* if no suggestions are generated,
          * in verbose - print "no suggestions"
