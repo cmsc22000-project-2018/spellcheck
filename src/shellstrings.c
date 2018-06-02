@@ -9,8 +9,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "log.h"
 #include "shellstrings.h"
+#include "log.c/src/log.h"
 
 /* See shellstrings.h */
 void shell_prompt(bool *color) {
@@ -176,6 +176,10 @@ void shell_start_interactive(char *filename, char *dict, char *md, bool *color) 
         printf("\n\n=============================================================\n"
                "====================== Editing Started ======================\n"
                "=============================================================\n\n");
+
+        log_trace("File: %s", filename);
+        log_trace("Dictionary: %s", dict);
+        log_trace("Mode: %s", md);
     }
 }
 

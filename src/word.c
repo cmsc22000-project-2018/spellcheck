@@ -8,16 +8,18 @@
 #include <assert.h>
 #include <stdlib.h>	
 #include <ctype.h>
+#include <stdbool.h>
 #include "word.h"
 #include "dictionary.h"
-#include <stdbool.h>
+#include "log.c/src/log.h"
 
 
 /* See word.h */
 bool valid_word(dict_t* dict, char* shaved_word) {
     if (dict_chars_exists(dict, *shaved_word) == EXIT_SUCCESS && *shaved_word != '\n') {
         if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
-           return true;
+            log_trace("returning true from valid_word");
+            return true;
         } else {
             return false;
         }

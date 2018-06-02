@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "dictionary.h"
+#include "log.c/src/log.h"
 
 /* See dictionary.h */
 dict_t* dict_new() {

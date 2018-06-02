@@ -3,6 +3,7 @@
 #include <string.h>
 #include <assert.h>
 #include "parser.h"
+#include "log.c/src/log.h"
 
 #define MAXCHAR 1025
 #define INITLINE 100

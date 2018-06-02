@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <stdbool.h>
-#include "log.h"
+#include "log.c/src/log.h"
 #include "parser.h"
 #include "shellstrings.h"
 #include "dictionary.h"
@@ -41,6 +41,8 @@
  *
  *	> -c : colored strings
  *
+ *  > -l : logging
+ *
  *  ...
  *  and so on, with different combinations.
  *
@@ -63,6 +65,28 @@ char *modename(int *mode) {
 	return "Interactive Mode";
 }
 
+void change_log_level(int v)
+{
+    /* Set log level */
+    switch (v)
+    {
+        case 0: // Only fatal
+            log_set_level(LOG_FATAL);
+            break;
+        case 1: // Warn, Error
+            log_set_level(LOG_ERROR);
+            break;
+        case 2: // Debug, Info
+            log_set_level(LOG_INFO);
+            break;
+        case 3: // Trace
+            log_set_level(LOG_TRACE);
+            break;
+        default:
+            log_set_level(LOG_FATAL);
+    }
+}
+
 int main(int argc, char *argv[]) {
 
 	if (argc > 9) {
@@ -75,7 +99,7 @@ int main(int argc, char *argv[]) {
 	char *filename = malloc(401 * sizeof(char *));
 	char *save_file = malloc(401 * sizeof(char *));
     bool *color = malloc(sizeof(bool));
-    int verbosity = 0;
+    int logmode = 0;
 
 	// Default dict name
 	strcpy(dict, "tests/sample_dict.txt");
@@ -122,7 +146,6 @@ int main(int argc, char *argv[]) {
 
             case 'v':
                 *mode = VERBOSE_MODE;
-                verbosity++;
                 break;
 
             case 'q':
@@ -144,8 +167,11 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 'c':
-                *color = !(*color);
-                printf("Color mode: %d\n", *color);
+                *color = true;
+                break;
+
+            case 'l':
+                logmode++;
                 break;
 
             case '?':
@@ -159,18 +185,7 @@ int main(int argc, char *argv[]) {
         }
 
 	}
-
-    if (verbosity == 0) {
-        log_set_level(LOG_FATAL);
-    }
-
-    if (verbosity == 1) {
-        log_set_level(LOG_INFO);
-    }
-
-    if (verbosity >= 2){
-        log_set_level(LOG_TRACE);
-    }
+    change_log_level(logmode);
 
 	bool *quit = malloc(sizeof(bool));
 	*quit = true;
@@ -178,15 +193,18 @@ int main(int argc, char *argv[]) {
     while ((*quit) == true) {
         if (fileexists(filename)) {	// if file exists, then bypass main page
             *quit = false;
+            log_trace("no filename in command line input");
         }
 
 	   /*
         * Main page: Activated if there is no file to be parsed.
         * can open help page, quit, or load filename / dictname
         */
+        log_trace("opening main page");
         main_page(quit, mode, filename, dict, color);
 
         if (*mode == QUIT) { // user selected "quit" in main_page
+            log_trace("quitting spellcheck");
             return 0;
         }
 
@@ -200,6 +218,7 @@ int main(int argc, char *argv[]) {
 
 		// Starting to Parse file! Printing messages accordingly
         char *md = shell_modename(*mode);
+        log_trace("Mode set to: %s", md);
 
         if (*mode == INTERACTIVE_MODE) {
             shell_start_interactive(filename, dict, md, color);
@@ -210,12 +229,15 @@ int main(int argc, char *argv[]) {
         // Execute either interactive or batch mode, and save file at end
         switch (*mode) {
             case QUIET_MODE:
+                log_trace("entering quiet mode");
                 result = batch_mode(filename, new_dict, quit, QUIET_MODE); // pass in dictionary
                 break;
             case VERBOSE_MODE:
+                log_trace("entering quiet mode");
                 result = batch_mode(filename, new_dict, quit, VERBOSE_MODE); // pass in dictionary 
                 break;
             case INTERACTIVE_MODE:
+                log_trace("entering quiet mode");
                 result = interactive_mode(filename, new_dict, quit, color); // pass in dictionary
                 break;
             default:
@@ -229,16 +251,19 @@ int main(int argc, char *argv[]) {
 
             md = strstr(save_file, ".txt\0");
             if ((md == NULL && *mode) == (QUIET_MODE)) {
+                log_trace("printing result of edit");
                 shell_print(result);
                 *quit = false;
             }
 
             else if (md != NULL) {
+                log_trace("saving correction to designated file destination: %s", save_file);
                 save_corrections(save_file, result);
                 *quit = false;
             }
 
             else {
+                log_trace("opening save_page");
                 save_page(filename, result, quit, color);
             }
         }

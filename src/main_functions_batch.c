@@ -6,7 +6,6 @@
 #include <sys/types.h>
 #include <string.h>
 #include <assert.h>
-#include "log.h"
 #include "shellstrings.h"
 #include "parser.h"
 #include "dictionary.h"
@@ -14,6 +13,7 @@
 #include "main_functions_batch.h"
 #include "main_functions_edit.h"
 #include "main_functions_home.h"
+#include "log.c/src/log.h"
 
 /* See main_functions_batch.h */
 char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {

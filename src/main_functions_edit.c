@@ -7,12 +7,12 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <assert.h>
-#include "log.h"
 #include "shellstrings.h"
 #include "parser.h"
 #include "dictionary.h"
 #include "word.h"
 #include "main_functions_edit.h"
+#include "log.c/src/log.h"
 
 // Given an array of misspelled words, generates an underline
 // for an occurence in sentence
