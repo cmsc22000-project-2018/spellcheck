@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "dictionary.h"
+#include "log.c/src/log.h"
 
 Test(dictionary, new) {
+    log_set_quiet(1);
+
     dict_t *d;
 
     d = dict_new();
@@ -12,6 +15,8 @@ Test(dictionary, new) {
 }
 
 Test(dictionary, init) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -23,6 +28,8 @@ Test(dictionary, init) {
 }
 
 Test(dictionary, free) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -40,6 +47,8 @@ Test(dictionary, free) {
 */
 
 Test(dictionary, dict_chars_list_f0) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -51,6 +60,8 @@ Test(dictionary, dict_chars_list_f0) {
 }
 
 Test(dictionary, dict_chars_list_f1) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -64,6 +75,8 @@ Test(dictionary, dict_chars_list_f1) {
 }
 
 Test(dictionary, dict_chars_list_s0) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -77,6 +90,8 @@ Test(dictionary, dict_chars_list_s0) {
 }
 
 Test(dictionary, dict_chars_list_s1) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -90,6 +105,8 @@ Test(dictionary, dict_chars_list_s1) {
 }
 
 Test(dictionary, dict_chars_list_null) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -108,6 +125,8 @@ Test(dictionary, dict_chars_list_null) {
 
 /* Test arg 1 for null input for dict_add */
 Test(dictionary, dict_add_null0) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -121,6 +140,8 @@ Test(dictionary, dict_add_null0) {
 
 /* Test arg 2 for null input for dict_add */
 Test(dictionary, dict_add_null1) {
+    log_set_quiet(1);
+
     int rc;
 
     rc = dict_add(NULL, "hi");
@@ -131,6 +152,8 @@ Test(dictionary, dict_add_null1) {
 
 /* Test empty string input for dict_add */
 Test(dictionary, dict_add_empty) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -144,6 +167,8 @@ Test(dictionary, dict_add_empty) {
 
 /* Helper function for testing regular input for dict_add */
 void check_dict_add(char *file, char *str, int expected) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -162,6 +187,8 @@ void check_dict_add(char *file, char *str, int expected) {
 
 /* Test adding a small string for failure (already in dict) */
 Test(dictionary, dict_add_dup0) {
+    log_set_quiet(1);
+
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "hi";
     check_dict_add("./tests/dict_test0.txt", s, EXIT_SUCCESS);
@@ -169,6 +196,8 @@ Test(dictionary, dict_add_dup0) {
 
 /* Test adding a long string for failure (already in dict) */
 Test(dictionary, dict_add_dup1) {
+    log_set_quiet(1);
+
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "dictionaryverysuperduperlongwordyayitssolongwowcrazy";
     check_dict_add("./tests/dict_test0.txt", s, EXIT_SUCCESS);
@@ -176,6 +205,8 @@ Test(dictionary, dict_add_dup1) {
 
 /* Test adding a small string for success (not in dict) */
 Test(dictionary, dict_add_s0) {
+    log_set_quiet(1);
+
     char *s = (char*)malloc(sizeof(char) * 3);
     s = "no";
     check_dict_add(NULL, s, EXIT_SUCCESS);
@@ -183,6 +214,8 @@ Test(dictionary, dict_add_s0) {
 
 /* Test adding a long string for success (not in dict) */
 Test(dictionary, dict_add_s1) {
+    log_set_quiet(1);
+
     char *s = (char*)malloc(sizeof(char) * 53);
     s = "nojfkdsjfksdjfdsjfkdsjfjfkdsjfkdsjfkdsjkfiejkdjskfsd";
     check_dict_add(NULL, s, EXIT_SUCCESS);
@@ -194,6 +227,8 @@ Test(dictionary, dict_add_s1) {
 
 /* Test arg 1 for null input in dict_read */
 Test(dictionary, dict_read_null0) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -207,6 +242,8 @@ Test(dictionary, dict_read_null0) {
 
 /* Test arg 2 for null input in dict_read */
 Test(dictionary, dict_read_null1) {
+    log_set_quiet(1);
+
     int rc;
 
     rc = dict_read(NULL, "./tests/dict_test0.txt");
@@ -217,6 +254,8 @@ Test(dictionary, dict_read_null1) {
 
 /* Test bad filename input in dict_read */
 Test(dictionary, dict_read_noname) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -229,6 +268,8 @@ Test(dictionary, dict_read_noname) {
 }
 
 void check_dict_read(char *file, int expected) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -242,6 +283,8 @@ void check_dict_read(char *file, int expected) {
 
 /* Test for regular input in dict_read 1 */
 Test(dictionary, dict_read0) {
+    log_set_quiet(1);
+
     check_dict_read("./tests/dict_test0.txt", EXIT_SUCCESS);
 }
 
@@ -253,6 +296,8 @@ Test(dictionary, dict_read0) {
 
 /* Test arg 1 for null input for dict_exists */
 Test(dictionary, dict_exists_null0) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -266,6 +311,8 @@ Test(dictionary, dict_exists_null0) {
 
 /* Test arg 2 for null input for dict_exists */
 Test(dictionary, dict_exists_null1) {
+    log_set_quiet(1);
+
     int rc;
 
     rc = dict_exists(NULL, "hi");
@@ -276,6 +323,8 @@ Test(dictionary, dict_exists_null1) {
 
 /* Test empty string input for dict_exists */
 Test(dictionary, dict_exists_empty) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 
@@ -291,6 +340,8 @@ Test(dictionary, dict_exists_empty) {
 
 /* Helper function for testing regular input for dict_exists */
 void check_dict_exists(char *file, char *str, int expected) {
+    log_set_quiet(1);
+
     dict_t *d;
     int rc;
 

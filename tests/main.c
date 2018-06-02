@@ -6,6 +6,8 @@
 #include "log.c/src/log.h"
 
 int main(int argc, char *argv[]) {
+	log_set_quiet(1);
+
     struct criterion_test_set *tests = criterion_initialize();
 
     criterion_options.jobs = 1;
