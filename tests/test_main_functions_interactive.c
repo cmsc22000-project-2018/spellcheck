@@ -1,8 +1,8 @@
 #include <criterion/criterion.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "main_functions_edit.h"
 #include <string.h>
+#include "main_functions_edit.h"
 
 /* Note on testing for main_functions_*.c files:
  * Note that there are five parts to main_functions.c: saving, editing, interactive, batch, main.

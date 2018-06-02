@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
     }
 
     // Parse the initial command line and 
-	while ((c = getopt(argc, argv, "ivcqs:d:v")) != -1) {
+	while ((c = getopt(argc, argv, "ilvcqs:d:v")) != -1) {
 		switch (c) {
             case 'd':
                 if (!fileexists(optarg)) {  // this checks if the file actually exists

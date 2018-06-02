@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "mock_trie.h"
 #include <string.h>
+#include "mock_trie.h"
+
 /* Checks whether a new trie is properly created */
 Test(trie, new)
 {

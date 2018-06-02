@@ -26,7 +26,7 @@ void shell_prompt(bool *color) {
 /* See shellstrings.h */
 void shell_main_menu(bool *color) {
     if (*color == true) {
-        printf(BOLDWHITE "Please load a file to begin. "
+        printf(BOLDWHITE "\nPlease load a file to begin. "
                          "Additionally, select an output mode and/or "
                          "choose dictionary before running the program.\n\n" RESET);
 
@@ -39,7 +39,7 @@ void shell_main_menu(bool *color) {
     }
 
     else {
-        printf("Please load a file to begin. "
+        printf("\nPlease load a file to begin. "
                "Additionally, select an output mode and/or "
                "choose dictionary before running the program.\n\n");
 
@@ -226,7 +226,7 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
     if (*color == true) {
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
-            printf("No suggestions have been generated for " BOLDWHITE "%s" RESET ".\n", word);
+            printf("\nNo suggestions have been generated for " BOLDWHITE "%s" RESET ".\n", word);
             printf("\n" BOLDWHITE "d" RESET " : Delete existing word.\n");
             printf(BOLDWHITE "i" RESET " : Input new word.\n");
             printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
@@ -249,7 +249,7 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
     else {
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
-            printf("No suggestions have been generated for %s.\n", word);
+            printf("\nNo suggestions have been generated for %s.\n", word);
             printf("\nd : Delete existing word.\n");
             printf("i : Input new word.\n");
             printf("s : Skip word replacement.\n");

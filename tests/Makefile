@@ -1,7 +1,7 @@
 # Makefile based on libgeometry test Makefile
 
 CC = gcc
-CFLAGS = -fPIC -Wall -Wextra -O2 -g -I../include/ -I../lib/log.c/src/
+CFLAGS = -fPIC -Wall -Wextra -O2 -g -I../include/ -I../lib/
 RM = rm -f
 BIN = test-spellcheck
 LDLIBS = -lcriterion

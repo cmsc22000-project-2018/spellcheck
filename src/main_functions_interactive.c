@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <assert.h>
-#include "log.h"
+#include "log.c/src/log.h"
 #include "shellstrings.h"
 #include "parser.h"
 #include "dictionary.h"
