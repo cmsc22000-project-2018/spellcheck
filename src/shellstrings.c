@@ -240,7 +240,9 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
             printf(BOLDWHITE "i" RESET " : Input new word.\n");
             printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
         }
-    } else {
+    }
+
+    else {
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
             printf("No suggestions have been generated for %s.\n", word);
@@ -254,6 +256,7 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
 
             while (sug[j] != NULL) {
                 printf("%d : %s \n", j + 1, sug[j]);
+                
                 j++;
             }
 

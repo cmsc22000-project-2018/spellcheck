@@ -82,7 +82,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
 			else {
 				strcpy(filename,args[1]);
-				printf("\n\nInput file is now %s\n",filename);
+				printf("\nInput file is now %s\n",filename);
 
 				print = false;
 				*quit = false;
