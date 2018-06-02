@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <assert.h>
+#include "mock_trie.h"
 
 /*
 * See mock_trie.h
