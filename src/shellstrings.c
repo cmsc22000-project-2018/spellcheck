@@ -271,8 +271,9 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
     }
 }
 
-void shell_verbose_chart(int lnum, char *misspelled, char **suggestions) {
-    // Prints the location
+void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggestions) {
+    // Prints the location and character
+
     printf("%d\t\t\t", lnum);
     
     int ntab = 3 - (strlen(misspelled) / 8); // number of tabs
