@@ -29,3 +29,31 @@ q : quit program
 spellcheck > 
 >2
 >= 0
+
+# test for the batch mode with quiet flag
+<
+p
+q
+$ ./spellcheck -q tests/test_short.txt
+p : print all changes
+s : save to existing file
+c : save to custom file
+r : re-edit file
+q : quit program
+
+
+spellcheck > 
+
+Eye have, a spelling checker
+It come with thy my PC.
+
+p : print all changes
+s : save to existing file
+c : save to custom file
+r : re-edit file
+q : quit program
+
+
+spellcheck > 
+>2
+>= 0
