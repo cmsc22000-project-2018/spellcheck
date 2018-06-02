@@ -136,10 +136,10 @@ int generate_suggestions(dict_t *dict, char *word, char **suggestions, int max_e
     }
 
     // Lowercase the inputted word
-    //char *lower_word = word_lowercase(word);
+    char *lower_word = word_lowercase(word);
 
     // Generate a suggestion list for the lowercased word
-    //char **sug_list = suggestion_list(dict, lower_word, max_edits, amount);
+    char **sug_list = suggestion_list(dict, lower_word, max_edits, amount);
 
     // Capitalize suggestions if necessary
     int flag = word_check_cap(word);
