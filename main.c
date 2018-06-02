@@ -65,11 +65,9 @@ char *modename(int *mode) {
 	return "Interactive Mode";
 }
 
-void change_log_level(int v)
-{
-    /* Set log level */
-    switch (v)
-    {
+void change_log_level(int v) {
+    // Set log level
+    switch (v) {
         case 0: // Only fatal
             log_set_level(LOG_FATAL);
             break;
@@ -88,35 +86,34 @@ void change_log_level(int v)
 }
 
 int main(int argc, char *argv[]) {
-
-	if (argc > 9) {
-		shell_usage();
-		exit(1);
-	}
+    if (argc > 9) {
+        shell_usage();
+        exit(1);
+    }
 
 	// filenames up to 400 char
-	char *dict = malloc(401 * sizeof(char *));
-	char *filename = malloc(401 * sizeof(char *));
-	char *save_file = malloc(401 * sizeof(char *));
+    char *dict = malloc(401 * sizeof(char *));
+    char *filename = malloc(401 * sizeof(char *));
+    char *save_file = malloc(401 * sizeof(char *));
     bool *color = malloc(sizeof(bool));
     int logmode = 0;
 
 	// Default dict name
-	strcpy(dict, "tests/sample_dict.txt");
+    strcpy(dict, "tests/sample_dict.txt");
 
 	/*
 	 * 1: Quiet Batch Mode
 	 * 2: Verbose Batch Mode
 	 * 3: Interactive Mode
 	 */
-	int *mode = malloc(sizeof(int));
+    int *mode = malloc(sizeof(int));
     *mode = INTERACTIVE_MODE;
 
     // By default, the color functionality is off
     *color = false;
 
 	// Parse Command Line Arguments
-	char c;
+    char c;
 
     if (fileexists(argv[optind])) {
         strcpy(filename, argv[optind]);
@@ -128,8 +125,8 @@ int main(int argc, char *argv[]) {
 		switch (c) {
             case 'd':
                 if (!fileexists(optarg)) {  // this checks if the file actually exists
-				    shell_error("Invalid dictionary file input.", color);
-				    return EXIT_FAILURE;
+                    shell_error("Invalid dictionary file input.", color);
+                    return EXIT_FAILURE;
                 }
 
                 strcpy(dict, optarg);

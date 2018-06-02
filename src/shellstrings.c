@@ -107,11 +107,12 @@ void shell_input(char *filename, char *status, bool *color) {
 /* See shellstrings.h */
 void shell_error(char *error_text, bool *color) {
     if (*color == true) {
-	   printf(RED "ERROR:" RESET " %s\n", error_text);
+	   // printf(RED "ERROR:" RESET " %s\n", error_text);
+        log_fatal(RED "ERROR:" RESET " %s", error_text);
     }
 
     else {
-        printf("ERROR: %s\n", error_text);
+        log_fatal("ERROR: %s", error_text);
     }
 }
 
