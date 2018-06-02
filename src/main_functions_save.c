@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <shellstrings.h>
 #include <string.h>
+#include "log.h"
 #include "main_functions_save.h"
 
 /* See main_functions_save.h */

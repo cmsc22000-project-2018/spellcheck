@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <stdbool.h>
+#include "log.h"
 #include "parser.h"
 #include "shellstrings.h"
 #include "dictionary.h"
@@ -47,7 +48,7 @@
  *	> ./spellcheck file.txt -d my_dict.txt -q misspelled.txt -s savefilename.txt -c
  */
 
-char *modename(int* mode) {
+char *modename(int *mode) {
 	switch (*mode) {
 		case QUIET_MODE:
             return "Quiet Batch Mode"; 
@@ -58,6 +59,7 @@ char *modename(int* mode) {
 		default:
             break;
 	}
+
 	return "Interactive Mode";
 }
 
@@ -73,7 +75,7 @@ int main(int argc, char *argv[]) {
 	char *filename = malloc(401 * sizeof(char *));
 	char *save_file = malloc(401 * sizeof(char *));
     bool *color = malloc(sizeof(bool));
-
+    int verbosity = 0;
 
 	// Default dict name
 	strcpy(dict, "tests/sample_dict.txt");
@@ -98,7 +100,7 @@ int main(int argc, char *argv[]) {
     }
 
     // Parse the initial command line and 
-	while ((c = getopt(argc, argv, "ivcqs:d:")) != -1) {
+	while ((c = getopt(argc, argv, "ivcqs:d:v")) != -1) {
 		switch (c) {
             case 'd':
                 if (!fileexists(optarg)) {  // this checks if the file actually exists
@@ -120,6 +122,7 @@ int main(int argc, char *argv[]) {
 
             case 'v':
                 *mode = VERBOSE_MODE;
+                verbosity++;
                 break;
 
             case 'q':
@@ -127,7 +130,7 @@ int main(int argc, char *argv[]) {
                 break;
 		
             case 's':
-                if (strstr(optarg,".txt\0") == NULL) {    // does not save to a *.txt file
+                if (strstr(optarg, ".txt\0") == NULL) {    // does not save to a *.txt file
                     shell_error("Invalid file path.", color);
                     return EXIT_FAILURE;
                 }
@@ -142,12 +145,13 @@ int main(int argc, char *argv[]) {
 
             case 'c':
                 *color = !(*color);
-                printf("color is %d\n", *color);
+                printf("Color mode: %d\n", *color);
                 break;
 
             case '?':
                 shell_usage();
                 exit(0);
+                break;
 
             default:
                 shell_error("Invalid format.", color);
@@ -155,6 +159,18 @@ int main(int argc, char *argv[]) {
         }
 
 	}
+
+    if (verbosity == 0) {
+        log_set_level(LOG_FATAL);
+    }
+
+    if (verbosity == 1) {
+        log_set_level(LOG_INFO);
+    }
+
+    if (verbosity >= 2){
+        log_set_level(LOG_TRACE);
+    }
 
 	bool *quit = malloc(sizeof(bool));
 	*quit = true;
@@ -206,7 +222,7 @@ int main(int argc, char *argv[]) {
                 break;
         }
 
-        if (*mode != VERBOSE_MODE && result != NULL) {	// Save file, a functionality unnecessary for verbose batch mode
+        if ((*mode != VERBOSE_MODE) && (result != NULL)) {	// Save file, a functionality unnecessary for verbose batch mode
             if (*mode == INTERACTIVE_MODE) {
                 shell_edit_success(color);
             }

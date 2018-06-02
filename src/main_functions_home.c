@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <assert.h>
+#include "log.h"
 #include "shellstrings.h"
 #include "parser.h"
 #include "main_functions_home.h"

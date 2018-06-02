@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include "log.h"
 #include "shellstrings.h"
 
 /* See shellstrings.h */
