@@ -64,12 +64,13 @@ void save_page(char *filename, char **lines, bool *quit, bool* color) {
         else if (!strcmp(line, "c")) {
             while ((args == NULL) ^ i) {    // either user returns to main page, or inputs a vaid new destination
                 printf("\n\nEnter a viable file name (*.txt), or enter 'r' to return to the save page.\n\n");
-                
+
                 shell_prompt(color);
                 
                 verify = scanf("%s", line);
                 assert (!(verify < 0));
 
+                log_debug("file entered was %s", line)
                 args = strstr(line, ".txt");
                 
                 if (!strcmp(line, "r")) {
@@ -80,11 +81,13 @@ void save_page(char *filename, char **lines, bool *quit, bool* color) {
             *quit = false;
 
             if (i == 0) {
+                log_info("entering save_corrections");
                 save_corrections(line, lines);  // save to different file destination
             }
 		}
 
         else if (!strcmp(line, "q")) {
+            log_trace("user selected quit");
 			*quit = false;
 		}
 

@@ -16,6 +16,8 @@
 
 /* See main_functions_interactive.h */
 char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag, bool* color) {
+    log_trace("returnflag value: %s", returnflag);
+
     char *line_copy = strdup(line);
     int max_no_suggestions = 2; // Should the user decide this?
     int length = strlen(line);
@@ -30,9 +32,11 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
 
     // Identifides misspelled words and add to misspelled
     parse_string(line, dict, underline, misspelled);
+    log_trace("line parsed");
     // Add to underline function
 
     shell_interactive_line_print(linenumber, line_copy, underline, returnflag, color);
+    log_trace("line printed");
 
     // Generates an empty array where suggestions will be filled
     char *suggestions[max_no_suggestions];
@@ -43,6 +47,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
     // Replaces words according to user suggestions
     while (misspelled[i] != NULL) {
     	int rc = generate_suggestions(misspelled[i], dict, suggestions);
+        log_trace("generate_suggestions returned %d", rc);
 
         shell_interactive_replacements(misspelled[i], suggestions, rc, color);
 
@@ -52,6 +57,8 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
         while (!check) {
     		shell_prompt(color);
         	check = scanf("%s", choice);
+
+            log_trace("scanned value is %s", choice);
 
         	if (!(choice[0] == 's') && !(choice[0] == 'd') && !(choice[0] == 'i')
         		&& !(isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions))) {
@@ -107,6 +114,8 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
 			    insertcheck = scanf("%s", c);
 
 				while (insertcheck < 0) {
+                    log_trace("entered value: %s", c);
+
 					shell_error("\n\nPlease enter a valid input!\n", color);
 					shell_prompt(false);
 					insertcheck = scanf("%s\n", c);
@@ -114,6 +123,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
 
 				printf("Are you sure you wish to replace \"%s\" with \"%s\"? [y, n] : ", misspelled[i], c);
 				userconsent = scanf("%s", sig);
+                log_trace("entered value: %s", sig);
 
 				if (sig[0] == 'y') {
 					userconsent = 1;
@@ -167,6 +177,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
 char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool* color) {
 	char **lines;
 	lines = parse_file(filename);
+    log_trace("file parsed");
 
 	// step through phases
 	int i = 0;
@@ -174,6 +185,7 @@ char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool* color) {
 	int linenumber;
 
 	while (lines[i] != NULL) {
+        log_debug("starting to edit line %d", i + 1);
 		linenumber = i+1;
 		
         if (lines[i+1] == NULL) {
@@ -185,6 +197,7 @@ char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool* color) {
         i++;
 	}
 
+    log_trace("editing finished, exiting interactive_mode");
     *quit = true;
 	return lines;
 }

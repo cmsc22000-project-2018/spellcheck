@@ -17,17 +17,24 @@ void help_page(bool *color) {
 
 	// Accept any input in the command line
 	parse_read_line();
+	log_trace("exiting help_page");
 }
 
 /* See main_functions_home.h */
 bool fileexists(const char *filename) {
 	struct stat buffer;
 
-	return (bool) (stat(filename, &buffer) == 0);
+	log_trace("filename: %s", filename);
+
+	if (stat(filename, &buffer) == 0) {
+		return true;
+	}
+	return false;
 }
 
 /* See main_functions_home.h */
 int change_mode(char *arg, bool* color) {
+	log_trace("arg entered for mode: %s", arg);
 	int a = atoi(arg);
 
     if ((a == QUIET_MODE) || (a == VERBOSE_MODE) || (a == INTERACTIVE_MODE)) {
@@ -50,6 +57,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
 	while ((*quit) == true) {
 		if (print == true) {
+			log_mode("printing main menu");
 			shell_main_menu(color);
 		}
 
@@ -59,6 +67,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		args = parse_split_line(line);	// line is now split into tokens
 
 		if ((args == NULL) || (args[2] != NULL)) { // 3 inputs, or no input: error message
+			log_warn("no arguments, or too many");
 			shell_error("Please type in one of the indicated commands.", color);
 			
 			print = false;
@@ -74,6 +83,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
 		else if (!strcmp(args[0], "f")) { // Check valid file path, then exit. If not, redo loop
 			if (!fileexists(args[1])) {	//file path checking
+				log_warn("file does not exist");
 				shell_error("Please enter a valid file path for a new edit target.", color);
 				
 				print = false;
@@ -81,6 +91,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 			}
 
 			else {
+				log_debug("filename entered is %s", args[1]);
 				strcpy(filename,args[1]);
 				printf("\nInput file is now %s\n",filename);
 
@@ -91,6 +102,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
 		else if (!strcmp(args[0],"d")) {	// dictionary name change 
 			if (!fileexists(args[1])) {	// Check file path validity for dicitonary
+				log_warn("dictionary does not exist");
 				shell_error("Please enter a valid file path for a new dictionary.", color);
 				
 				print = false;
@@ -115,12 +127,14 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		}
 
 		else if (!strcmp(args[0], "c")) { // color
+			log_trace("reversing mode colors");
 			*color = !(*color);
 		}
 
 		else if (!strcmp(args[0],"q")) { // quit
 			print = false;
 			*quit = false;
+			log_info("user chose to quit");
 			*mode = QUIT;
 			
 			return;

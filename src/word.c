@@ -57,5 +57,6 @@ int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
         return EXIT_SUCCESS;
     }
 
+    log_trace("returning EXIT_FAILURE from generate_suggestions");
     return EXIT_FAILURE;
 }
