@@ -2,7 +2,7 @@
 
 CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -O2 -g -I../include/ -I../lib/
-LDFLAGS = -L../api -Wl,-rpath,./api
+LDFLAGS = -L../lib/api -Wl,-rpath,./lib/api
 RM = rm -f
 BIN = test-spellcheck
 LDLIBS = -lcriterion -lredisApi

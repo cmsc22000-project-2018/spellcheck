@@ -2,7 +2,7 @@
 
 CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -O2 -g -I./include/ -I./lib/
-LDFLAGS = -L./api -Wl,-rpath,./api
+LDFLAGS = -L./api -Wl,-rpath,./lib/api
 LDLIBS = -lredisApi
 RM = rm -rf
 BIN = spellcheck
@@ -19,11 +19,11 @@ $(BIN): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(BIN) $(LDFLAGS) $(LDLIBS)
 
 tests:
-	make -C api
+	make -C ./lib/api
 	make -C ./tests
 
 clean:
 	-$(RM) $(OBJS) $(BIN) spellcheck.dSYM *.rdb
 	make -C ./tests clean
-	make -C api clean
+	make -C ./lib/api clean
 	
