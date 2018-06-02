@@ -12,9 +12,7 @@
 
 /* See shellstrings.h */
 void shell_intro() {
-    printf("------- Welcome to Spellcheck! ------\n\n");
-
-    printf("Please load a file to begin. Additionally, select an output mode and/or choose dictionary before running the program.\n\n");
+    printf("\nPlease load a file to begin. Additionally, select an output mode and/or choose a dictionary before running the program.\n");
 
     printf("f [/path/file.txt]           : open file\n");
     printf("d [/path/dictionary.txt]     : input custom dictionary file\n");
@@ -52,11 +50,7 @@ void shell_error(char* error_text) {
 
 /* See shellstrings.h */
 void shell_usage() {
-    char *u =
-    "Please use designated format:\n\n"
-    "./spellcheck [-flag] [~/path/file.txt] [-saveflag] [~/path/destination.txt] \n\n"
-    "For help, run without command line arguments and enter help page\n";
-    printf("%s", u);
+    printf("Usage: ./spellcheck [-flag] [~/path/file.txt] [-saveflag] [~/path/destination.txt]\n");
 }
 
 /* See shellstrings.h */

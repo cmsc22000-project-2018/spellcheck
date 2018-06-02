@@ -11,11 +11,11 @@
  */
 
 /*
- * is_in_punct_array: determines if charater is a punctuation
+ * is_in_punct_array: determines if character is presented in hard coded punctuation array
  *
  * parameter: character
  *
- * return: returns true if a character is a punctuation char
+ * return: returns true if a character is a punctuation char, false otherwise
  */
 
 bool is_in_punct_array(char letter);
@@ -51,7 +51,8 @@ void remove_trailing_punctuation(char *word);
 char* remove_punctuation(char *word);
 
 /*
- * underline_misspelled_sentence: given a list of misspelled words in order, underline them in sentence
+ * underline_misspelled_sentence: given a list of misspelled words in order,
+  underline them in sentence (will underline in line once per occurence in array)
  *
  * paramters:
  *      - array of misspelled words
@@ -88,7 +89,7 @@ int add_to_misspelled(char *word, char** misspelled);
 void parse_string(char* string, dict_t *dict, char *underline, char** misspelled);
 
 /*
- * correct_line: replace word in array
+ * correct_line: replace word in array with word suggestion chosen by user
  * parameters:
  *      - line to be edited
  *      - old word (misspelled)

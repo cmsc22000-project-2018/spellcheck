@@ -14,7 +14,7 @@ Test(word, valid_word)
 
     int i = valid_word(dict, c);
 
-    cr_assert_eq(i, EXIT_SUCCESS, "testing for punctuation, failed");
+    cr_assert_eq(i, true, "testing for punctuation, failed");
 }
 
 
@@ -27,7 +27,7 @@ Test(word, valid_word1)
 
     int i = valid_word(dict, c);
 
-    cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
+    cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
 /* testing valid_word */
@@ -39,7 +39,7 @@ Test(word, valid_word2)
 
     int i = valid_word(dict, c);
 
-    cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
+    cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
 /* testing valid_word */
@@ -51,7 +51,7 @@ Test(word, valid_word3)
 
     int i = valid_word(dict, c);
 
-    cr_assert_eq(i, EXIT_FAILURE, "testing for punctuation, failed");
+    cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
 /* testing generate_suggestions
