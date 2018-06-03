@@ -86,10 +86,8 @@ void change_log_level(int v) {
 }
 
 int main(int argc, char *argv[]) {
-    log_info("Program started successfully.");
-
     if (argc > 9) {
-        log_warn("Too many command line arguments was input.");
+        log_error("Too many command line arguments was input.");
         shell_usage(false);
         log_info("Usage help page provided.");
         exit(1);
@@ -202,7 +200,7 @@ int main(int argc, char *argv[]) {
 
     while ((*quit) == true) {
         if (fileexists(filename)) {	// if file exists, then bypass main page
-            log_fatal("No filename specificed in the command line input.");
+            log_info("No filename specificed in the command line input.");
             *quit = false;
         }
 

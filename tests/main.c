@@ -7,10 +7,6 @@
 #include "log.c/src/log.h"
 
 int main(int argc, char *argv[]) {
-	FILE *f = fopen("criterionoutput.txt", "w");
-    assert(f != NULL);
-	log_set_fp(f);
-
     struct criterion_test_set *tests = criterion_initialize();
 
     criterion_options.jobs = 1;
@@ -21,7 +17,5 @@ int main(int argc, char *argv[]) {
 
     criterion_finalize(tests);
 
-    fclose(f);
-    remove("criterionoutput.txt");
     return result;
 }
