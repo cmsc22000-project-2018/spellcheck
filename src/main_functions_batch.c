@@ -20,8 +20,6 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
 	char *line_copy = strdup(line);
     int max_no_suggestions = 2;
     int max_edits = 2;
-    int length = strlen(line);
-    char **misspelled; //generates an empty array where the misspelled words in a line will be stored
 
     // Generates an empty array where the misspelled words in a line will be stored
     char **misspelled = calloc(strlen(line), sizeof(char *));

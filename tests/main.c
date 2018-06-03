@@ -7,9 +7,7 @@
 #include "log.c/src/log.h"
 
 int main(int argc, char *argv[]) {
-	FILE *f = fopen("criterionoutput.txt", "w");
-    assert(f != NULL);
-	log_set_fp(f);
+    log_set_level(LOG_FATAL);
 
     struct criterion_test_set *tests = criterion_initialize();
 
@@ -21,7 +19,5 @@ int main(int argc, char *argv[]) {
 
     criterion_finalize(tests);
 
-    fclose(f);
-    remove("criterionoutput.txt");
     return result;
 }

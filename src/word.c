@@ -12,7 +12,7 @@
 #include "word.h"
 #include "dictionary.h"
 #include "log.c/src/log.h"
-//#include "suggestion.h"
+#include "dictionary.h"
 
 /* See word.h */
 bool word_valid(dict_t *dict, char *word) {
@@ -138,10 +138,12 @@ int generate_suggestions(dict_t *dict, char *word, char **suggestions, int max_e
     }
 
     // Lowercase the inputted word
-    char *lower_word = word_lowercase(word);
+    //char *lower_word = word_lowercase(word);
 
     // Generate a suggestion list for the lowercased word
-    char **sug_list = suggestion_list(dict, lower_word, max_edits, amount);
+    //char **sug_list = dict_suggestions(dict, lower_word, max_edits, amount);
+
+    char* sug_list[5] = {"a", "b", "c", "d", "e"};
 
     // Capitalize suggestions if necessary
     int flag = word_check_cap(word);

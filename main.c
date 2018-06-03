@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     int logmode = 0;
 
 	// Default dict name
-    strcpy(dict, "tests/sample_dict.txt");
+    strcpy(dict, "dictionary1.txt");
 
 	/*
 	 * 1: Quiet Batch Mode
@@ -182,6 +182,8 @@ int main(int argc, char *argv[]) {
         }
 
 	}
+
+    logmode = LOG_TRACE;
     change_log_level(logmode);
 
 	bool *quit = malloc(sizeof(bool));
