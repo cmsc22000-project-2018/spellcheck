@@ -76,7 +76,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
         // In verbose mode, edit the file and also print a replacement chart
 	    if (verbosity == VERBOSE_MODE) {
             log_trace("Printing batch mode correction chart.");
-	    	shell_verbose_chart(lnum, line, misspelled[i], suggestions);
+	    	shell_verbose_chart(lnum, line_copy, misspelled[i], suggestions);
         }
 
 	    i++;

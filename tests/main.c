@@ -16,6 +16,5 @@ int main(int argc, char *argv[]) {
         result = !criterion_run_all_tests(tests);
 
     criterion_finalize(tests);
-
     return result;
 }

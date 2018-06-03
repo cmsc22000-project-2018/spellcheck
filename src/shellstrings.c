@@ -240,47 +240,47 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
     if (*color == true) {
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
-            printf("\nNo suggestions have been generated for " BOLDWHITE "%s" RESET ".\n", word);
-            printf("\n" BOLDWHITE "d" RESET " : Delete existing word.\n");
-            printf(BOLDWHITE "i" RESET " : Input new word.\n");
-            printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
+            printf("\nNo suggestions have been generated for " BOLDWHITE "%s" RESET ".\n\n", word);
+            printf(BOLDWHITE "[d]" RESET " : Delete\n");
+            printf(BOLDWHITE "[i]" RESET " : Input\n");
+            printf(BOLDWHITE "[s]" RESET " : Skip\n\n");
         }
 
         else {
-            printf("\nPossible replacements for word %s are:\n", word);
+            printf("\nPossible replacements for word %s are:\n\n", word);
 
             while (sug[j] != NULL) {
-                printf("%d : %s \n", j + 1, sug[j]);
+                printf("[%d] : %s\n", j + 1, sug[j]);
                 j++;
             }
 
-            printf("\n" BOLDWHITE "d" RESET " : Delete existing word.\n");
-            printf(BOLDWHITE "i" RESET " : Input new word.\n");
-            printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
+            printf(BOLDWHITE "[d]" RESET " : Delete\n");
+            printf(BOLDWHITE "[i]" RESET " : Input\n");
+            printf(BOLDWHITE "[s]" RESET " : Skip\n\n");
         }
     }
 
     else {
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
-            printf("\nNo suggestions have been generated for %s.\n", word);
-            printf("\nd : Delete existing word.\n");
-            printf("i : Input new word.\n");
-            printf("s : Skip word replacement.\n");
+            printf("\nNo suggestions have been generated for %s.\n\n", word);
+            printf("[d] : Delete\n");
+            printf("[i] : Input\n");
+            printf("[s] : Skip\n\n");
         }
 
         else {
-            printf("\nPossible replacements for word %s are:\n", word);
+            printf("\nPossible replacements for word %s are:\n\n", word);
 
             while (sug[j] != NULL) {
-                printf("%d : %s \n", j + 1, sug[j]);
+                printf("[%d] : %s\n", j + 1, sug[j]);
                 
                 j++;
             }
 
-            printf( "\nd : Delete existing word.\n");
-            printf( "i : Input new word.\n");
-            printf( "s : Skip word replacement.\n");
+            printf( "[d] : Delete\n");
+            printf( "[i] : Input\n");
+            printf( "[s] : Skip\n\n");
         }
     }
 }
@@ -289,10 +289,7 @@ void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggesti
     // Prints the location and character
     char* ptr = strstr(line, misspelled);
     int charpos = 0;
-
-    if (ptr != NULL) {
-        charpos = (int) (ptr - line);
-    }
+    charpos = (int) ptr - (int) line;
 
     log_trace("Character position in line is %d", charpos);
     
