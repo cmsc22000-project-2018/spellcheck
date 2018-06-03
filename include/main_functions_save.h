@@ -5,33 +5,26 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-/*
- * Save Page Functions: after the editing process is over, the result of the edit must be written
- * into a given file, or printed out into the terminal.
+/**
+ * \file main_functions_save.h
+ * Save page functions for the interactive mode of the shell.
  */
 
-/*
- * save_corrections: writes lines (lines) to a file with name (filename)
+/**
+ * \brief Writes lines to a file.
  *
- * parameters:
- *		- filename: string indicating name of file (saving destination)
- *		- lines: array of strings to be printed in file
- *
- * returns: void
+ * \param filename: File being input (Save destination).
+ * \param lines: Array of strings to be written to the file.
  */
 void save_corrections(char *filename, char **lines);
 
-/*
- * save_page: prints save_page, accepting command line inputs until user prints file, 
- * user indicates file saving destination, user chooses to return to editing, or user decides to exit
+/**
+ * \brief Prints the save page, accepting command line inputs until the user saves modifications (The user can choose between saving to a file, returning to editing, or exiting the program).
  *
- * parameters:
- *      - filename: string indicating name of file (saving destination)
- *      - lines: array of strings to be printed in file
- *      - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
- *      - color: pointer to boolean (TRUE means print in colors, FALSE means print without colors)
- *
- * returns: void
+ * \param filename: File being input.
+ * \param lines: Array of strings to be written to the file.
+ * \param quit: Pointer to boolean determining if the function should quit or not (true: continue in main.c loop, false: exit program).
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void save_page(char *filename, char **lines, bool *quit, bool* color);
 

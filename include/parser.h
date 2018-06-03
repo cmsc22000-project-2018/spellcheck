@@ -4,42 +4,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Parsing Functions:
- * 		Parsing functions receive input from either the command line or a file. In the case of command line input,
- *		parse_read_line and parse_split_line accept the input from the user and split it into tokens.
- * 		In the case of file input, parse_file accepts a filename, opens the file associated with the name and
- *		generates a char** array of lines to correct.
+#define MAXCHAR 1025 ///< Maximum number of characters
+#define INITLINE 100 ///< Maximum number of lines
+#define READ_BUFFERSIZE 256 ///< Buffer size
+#define LSH_TOK_BUFFERSIZE 64 ///< Token buffer size
+#define LSH_TOK_DELIM " \t\r\n\a" ///< Token deliminator
+
+/**
+ * \file parser.h
+ * File parsing functions for the program.
  */
 
-/*
- * parse_file
+/**
+ * \brief Parses a given file.
  *
- * parameter: filename
- *
- * return: pointer to array of strings, each of which represents a line from the given file
- * return NULL if file could not be opened
+ * \param filename: File being input.
+ * \return Array of strings, each of which represents a line from the file input (returns NULL if file input could not be opened).
  */
-char** parse_file(char* filename);
+char **parse_file(char *filename);
 
 
-/* 
- * parse_read_line: read a command line and return a string
+/**
+ * \brief Reads the command line and returns a string.
  *
- * parameters: none (fgets accepts command line input)
- *
- * return: string representing command line input
+ * \return String representing the command line input.
  */
-char* parse_read_line();
+char *parse_read_line();
 
-/*
- * parse_split_line: read a command line and return a char** array
- * note that this returns an array, each representing a command separated by a
- * whitespace in the command
+/**
+ * \brief Reads the command line and return an array of strings.
  *
- * parameters: string from parse_read_line, which was command line input
- *
- * return: tokens (string), each representing a command separated by a whitespace
- * in the command
+ * \param line: String from parse_read_line().
+ * \return Tokens, each representing a command separated by whitespace.
  */
 char **parse_split_line(char *line);
 

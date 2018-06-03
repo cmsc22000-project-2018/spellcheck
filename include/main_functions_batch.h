@@ -6,37 +6,30 @@
 #include <stdbool.h>
 #include "dictionary.h"
 
-/* 
- * Batch Mode Functions
- * In this mode, the program either:
- *		- generates a list of suggestions, printing the list out into the command line or
- *		- generates a linked list of corrected lines of a file, ready to be printed to
- *		  the command line or saved to a specific destination.
+/**
+ * \file main_functions_batch.h
+ * Batch mode functions.
+ * In this mode, the program either generates a list of suggestions, printing out the list into the command line, or it generates a linked list of corrected lines, ready to be printed out to the command line or to be saved to a specific destination.
  */
 
-/*
- * edit_batch: returns a line which has been corrected with automatic suggestions
- * parameters:
- *      - line: string of line to be edited
- *      - dict: dictionary
- *      - verbosity: flag indicating whether or not to print output
- *			Per definitions in main_functions_home.h, 1 = QUIET_MODE, 2 = VERBOSE_MODE
- *      verbosity determines whether or not shell output exists 
- * return: edited string of line
+/**
+ * \brief Returns a line that has been corrected with automatic suggestions.
+ *
+ * \param line: String of line to be modified.
+ * \param dict: Dictionary file being input.
+ * \param verbosity: Flag indicating whether to print output or not (1: Quiet Batch Mode, 2: Verbose Batch Mode).
+ * \return Modified string of line.
  */
 char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum);
 
-/* 
- * batch_mode: operates batch mode
+/**
+ * \brief Batch Mode function.
  *
- * parameters: 
- *      - mode: name of file to be parsed and corrected
- *      - dict: dictionary
- *      - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
- *      - verbosity: flag indicating whether or not to print output
- *			Per definitions in main_functions_home.h, 1 = QUIET_MODE, 2 = VERBOSE_MODE
- *
- * return: char** array of lines, to be printed if quiet mode
+ * \param filename: File being input.
+ * \param dict: Dictionary file being input.
+ * \param quit: Pointer to boolean determining if the function should quit or not (true: continue in main.c loop, false: exit program).
+ * \param verbosity: Flag indicating whether to print output or not (1: Quiet Batch Mode, 2: Verbose Batch Mode).
+ * \return Array of pointers to strings (lines to be printed if Verbose Batch Mode).
  */
 char **batch_mode(char *filename, dict_t *dict, bool *quit, int verbosity);
 

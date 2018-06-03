@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['config',['config',['../structconfig.html',1,'']]]
+  ['dict_5ft',['dict_t',['../structdict__t.html',1,'']]]
 ];

@@ -123,7 +123,7 @@ void shell_interactive_line_print(int lnum, char *line, char *underline, bool re
  * \brief Interactive word replacement for the shell/
  *
  * \param word: String (Word) being modified/replaced.
- * \param sug: Array of string pointers (List of suggestions).
+ * \param sug: Array of strings (list of suggestions).
  * \param flag: Flag indicating whether suggestion generation succeeded or not.
  * \param color: Boolean to enable/disable the color functionality.
  */
@@ -135,7 +135,7 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
  * \param lnum: Number of lines.
  * \param line: A line to calculate character position of misspelled word(s).
  * \param misspelled: A misspelled word.
- * \param suggestions: Array of string pointers (generated suggestions).
+ * \param suggestions: Array of strings (list of generated suggestions).
  */
 void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggestions);
 

@@ -62,22 +62,324 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structdict__t-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">dict_t Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>A dictionary and a instant lookup table of the characters contained in it.  
+ <a href="structdict__t.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="dictionary_8h_source.html">dictionary.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a0074913fdba65680670bf93153225e2f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdict__t.html">dict_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdict__t.html#a0074913fdba65680670bf93153225e2f">dict_new</a> ()</td></tr>
+<tr class="memdesc:a0074913fdba65680670bf93153225e2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new dictionary.  <a href="#a0074913fdba65680670bf93153225e2f">More...</a><br /></td></tr>
+<tr class="separator:a0074913fdba65680670bf93153225e2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81c807e5c6b67b7b482dcac658c0fc57"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdict__t.html#a81c807e5c6b67b7b482dcac658c0fc57">dict_init</a> (<a class="el" href="structdict__t.html">dict_t</a> *d)</td></tr>
+<tr class="memdesc:a81c807e5c6b67b7b482dcac658c0fc57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a dictionary.  <a href="#a81c807e5c6b67b7b482dcac658c0fc57">More...</a><br /></td></tr>
+<tr class="separator:a81c807e5c6b67b7b482dcac658c0fc57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51ee6c067decce8dbc182f95f7b33e91"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdict__t.html#a51ee6c067decce8dbc182f95f7b33e91">dict_free</a> (<a class="el" href="structdict__t.html">dict_t</a> *d)</td></tr>
+<tr class="memdesc:a51ee6c067decce8dbc182f95f7b33e91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees the resources associated with a dictionary.  <a href="#a51ee6c067decce8dbc182f95f7b33e91">More...</a><br /></td></tr>
+<tr class="separator:a51ee6c067decce8dbc182f95f7b33e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc7f38511d6fbf572b62e2aeac7ffddc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdict__t.html#acc7f38511d6fbf572b62e2aeac7ffddc">dict_chars_exists</a> (<a class="el" href="structdict__t.html">dict_t</a> *d, char c)</td></tr>
+<tr class="memdesc:acc7f38511d6fbf572b62e2aeac7ffddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether a character is in the character list.  <a href="#acc7f38511d6fbf572b62e2aeac7ffddc">More...</a><br /></td></tr>
+<tr class="separator:acc7f38511d6fbf572b62e2aeac7ffddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb48275334e47ae9cab20e1837f0bbcf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdict__t.html#afb48275334e47ae9cab20e1837f0bbcf">dict_chars_update</a> (<a class="el" href="structdict__t.html">dict_t</a> *d, char *str)</td></tr>
+<tr class="memdesc:afb48275334e47ae9cab20e1837f0bbcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the character list with potential new characters from a string.  <a href="#afb48275334e47ae9cab20e1837f0bbcf">More...</a><br /></td></tr>
+<tr class="separator:afb48275334e47ae9cab20e1837f0bbcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada2e9cd98e98ccefe871124833a4cd77"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdict__t.html#ada2e9cd98e98ccefe871124833a4cd77">dict_exists</a> (<a class="el" href="structdict__t.html">dict_t</a> *d, char *str)</td></tr>
+<tr class="memdesc:ada2e9cd98e98ccefe871124833a4cd77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a string is contained in a dictionary.  <a href="#ada2e9cd98e98ccefe871124833a4cd77">More...</a><br /></td></tr>
+<tr class="separator:ada2e9cd98e98ccefe871124833a4cd77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4825a90819a79433cd1f4f6034b4fc1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdict__t.html#ab4825a90819a79433cd1f4f6034b4fc1">dict_add</a> (<a class="el" href="structdict__t.html">dict_t</a> *d, char *str)</td></tr>
+<tr class="memdesc:ab4825a90819a79433cd1f4f6034b4fc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a word to a dictionary.  <a href="#ab4825a90819a79433cd1f4f6034b4fc1">More...</a><br /></td></tr>
+<tr class="separator:ab4825a90819a79433cd1f4f6034b4fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a2d3fd1ef3eba7b6e70d87129ad347f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdict__t.html#a4a2d3fd1ef3eba7b6e70d87129ad347f">dict_read</a> (<a class="el" href="structdict__t.html">dict_t</a> *d, char *file)</td></tr>
+<tr class="memdesc:a4a2d3fd1ef3eba7b6e70d87129ad347f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a file and adds all words to the dictionary.  <a href="#a4a2d3fd1ef3eba7b6e70d87129ad347f">More...</a><br /></td></tr>
+<tr class="separator:a4a2d3fd1ef3eba7b6e70d87129ad347f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a4743f4cde2360543d7976d68e0bfacee"><td class="memItemLeft" align="right" valign="top"><a id="a4743f4cde2360543d7976d68e0bfacee"></a>
-<a class="el" href="structtrie__t.html">trie_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>dict</b></td></tr>
+trie_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdict__t.html#a4743f4cde2360543d7976d68e0bfacee">dict</a></td></tr>
+<tr class="memdesc:a4743f4cde2360543d7976d68e0bfacee"><td class="mdescLeft">&#160;</td><td class="mdescRight">A dictionary file. <br /></td></tr>
 <tr class="separator:a4743f4cde2360543d7976d68e0bfacee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7bceea2e14139c9899276927ea4736c6"><td class="memItemLeft" align="right" valign="top"><a id="a7bceea2e14139c9899276927ea4736c6"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>char_list</b></td></tr>
+char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdict__t.html#a7bceea2e14139c9899276927ea4736c6">char_list</a></td></tr>
+<tr class="memdesc:a7bceea2e14139c9899276927ea4736c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">A list of characters. <br /></td></tr>
 <tr class="separator:a7bceea2e14139c9899276927ea4736c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p class="">A dictionary and a instant lookup table of the characters contained in it. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab4825a90819a79433cd1f4f6034b4fc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4825a90819a79433cd1f4f6034b4fc1">&#9670;&nbsp;</a></span>dict_add()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int dict_add </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdict__t.html">dict_t</a> *&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a word to a dictionary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>A dictionary. Must point to a dictionary allocated with <a class="el" href="structdict__t.html#a0074913fdba65680670bf93153225e2f" title="Allocates a new dictionary. ">dict_new()</a>. </td></tr>
+    <tr><td class="paramname">str</td><td>A string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS upon success, EXIT_FAILURE if word is already in dictionary or if an error occured. </dd></dl>
+
+</div>
+</div>
+<a id="acc7f38511d6fbf572b62e2aeac7ffddc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc7f38511d6fbf572b62e2aeac7ffddc">&#9670;&nbsp;</a></span>dict_chars_exists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int dict_chars_exists </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdict__t.html">dict_t</a> *&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns whether a character is in the character list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>A dictionary. Must point to a dictionary allocated with <a class="el" href="structdict__t.html#a0074913fdba65680670bf93153225e2f" title="Allocates a new dictionary. ">dict_new()</a>. </td></tr>
+    <tr><td class="paramname">c</td><td>A character. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS if the character is contained in the dictionary, EXIT_FAILURE if it isn't. </dd></dl>
+
+</div>
+</div>
+<a id="afb48275334e47ae9cab20e1837f0bbcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb48275334e47ae9cab20e1837f0bbcf">&#9670;&nbsp;</a></span>dict_chars_update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int dict_chars_update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdict__t.html">dict_t</a> *&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates the character list with potential new characters from a string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>A dictionary. Must point to a dictionary allocated with <a class="el" href="structdict__t.html#a0074913fdba65680670bf93153225e2f" title="Allocates a new dictionary. ">dict_new()</a>. </td></tr>
+    <tr><td class="paramname">str</td><td>A string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS on success, EXIT_FAILURE if an error occurs. </dd></dl>
+
+</div>
+</div>
+<a id="ada2e9cd98e98ccefe871124833a4cd77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada2e9cd98e98ccefe871124833a4cd77">&#9670;&nbsp;</a></span>dict_exists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int dict_exists </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdict__t.html">dict_t</a> *&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if a string is contained in a dictionary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>A dictionary. Must point to a dictionary allocated with <a class="el" href="structdict__t.html#a0074913fdba65680670bf93153225e2f" title="Allocates a new dictionary. ">dict_new()</a>. </td></tr>
+    <tr><td class="paramname">str</td><td>A string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS if the word is in the dictionary, EXIT_FAILURE if the word is not in the dictionary or if an error occured. </dd></dl>
+
+</div>
+</div>
+<a id="a51ee6c067decce8dbc182f95f7b33e91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51ee6c067decce8dbc182f95f7b33e91">&#9670;&nbsp;</a></span>dict_free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int dict_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdict__t.html">dict_t</a> *&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Frees the resources associated with a dictionary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>A dictionary. Must point to a dictionary allocated with <a class="el" href="structdict__t.html#a0074913fdba65680670bf93153225e2f" title="Allocates a new dictionary. ">dict_new()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Always returns EXIT_SUCCESS. </dd></dl>
+
+</div>
+</div>
+<a id="a81c807e5c6b67b7b482dcac658c0fc57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81c807e5c6b67b7b482dcac658c0fc57">&#9670;&nbsp;</a></span>dict_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int dict_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdict__t.html">dict_t</a> *&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes a dictionary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>A dictionary. Must point to a dictionary allocated with <a class="el" href="structdict__t.html#a0074913fdba65680670bf93153225e2f" title="Allocates a new dictionary. ">dict_new()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS on success, EXIT_FAILURE if an error occurs. </dd></dl>
+
+</div>
+</div>
+<a id="a0074913fdba65680670bf93153225e2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0074913fdba65680670bf93153225e2f">&#9670;&nbsp;</a></span>dict_new()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structdict__t.html">dict_t</a> * dict_new </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Allocates a new dictionary. </p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the dictionary, or NULL if a dictionary cannot be allocated. </dd></dl>
+
+</div>
+</div>
+<a id="a4a2d3fd1ef3eba7b6e70d87129ad347f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a2d3fd1ef3eba7b6e70d87129ad347f">&#9670;&nbsp;</a></span>dict_read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int dict_read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdict__t.html">dict_t</a> *&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>file</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parses a file and adds all words to the dictionary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>A dictionary. Must point to a dictionary allocated with <a class="el" href="structdict__t.html#a0074913fdba65680670bf93153225e2f" title="Allocates a new dictionary. ">dict_new()</a>. </td></tr>
+    <tr><td class="paramname">file</td><td>File being input. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS on success, EXIT_FAILURE if an error occurs. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>/Users/firatciftci/spellcheck/include/<a class="el" href="dictionary_8h_source.html">dictionary.h</a></li>
 </ul>

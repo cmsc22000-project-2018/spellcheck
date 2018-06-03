@@ -5,54 +5,47 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-/*
- *	Main Page Functions:
- *		In the event that Spellcheck is not given a file to parse and edit, the main page will be printed out 
- *		such that the user can seek help, quit spellcheck, enter a filename, or enter a dictionary filename.
- *		These functions operate the main page.
+/**
+ * \file main_functions_home.h
+ * Home page functions for the shell.
  */
 
-#define INTERACTIVE_MODE 3
-#define VERBOSE_MODE 2
-#define QUIET_MODE 1
-#define QUIT -1
+#define INTERACTIVE_MODE 3 ///< Interactive Mode
+#define VERBOSE_MODE 2 ///< Verbose Batch Mode
+#define QUIET_MODE 1 ///< Verbose Quiet Mode
+#define QUIT -1 ///< Quit Program
 
-/*
- * help_page: Prints help page at request of user from main. Returns to main page via loop in main function
- * parameter: none 
- * return_values: none
+/**
+ * \brief Prints the help page from the main page.
+ *
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void help_page(bool *color);
 
-/* 
- * fileexists: check if file with name, given by string, exists
- * parameter: string of file name, potential target for editing
- * return: bool, TRUE means exists, FALSE means not
+/**
+ * \brief Checks whether the file input exists.
+ *
+ * \param filename: File being input.
+ * \return Boolean (true if file exists, false if it does not).
  */
 bool fileexists(const char *filename);
 
-/*
- * change_mode: helper for main_page, determine input mode
- * parameter:
- *		- arg: command line input from main_page
- *		- color: bool for color of error message (false for no color, true for color)
+/**
+ * \brief Helper function for main_page(), determines the input mode.
  *
- * return: number indicating mode
- * 			1 means quiet, 2 verbose, 3 interactive
+ * \param arg: Command line input from main_page().
+ * \param color: Boolean to enable/disable the color functionality.
+ * \return Mode (1: Quiet Batch Mode, 2: Verbose Batch Mode, 3: Interactive Mode).
  */
 int change_mode(char *arg, bool *color);
 
-/*
- * main_page: prints out the shellstring main page and waits for user to respond with
- *			  commands to enter a file name, dictionary name, help page request, or quit.
- *			  Editing process begins when filename is entered.
- * parameters:
- *      - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
- *		- flag indicating mode
- *			1 = QUIET_MODE, 2 = VERBOSE_MODE, 3 = INTERACTIVE_MODE
- *		- file_name: string indicating name of file to be parsed
- *		- dict_name: string indicating dictionary file name
- * return: void
+/**
+ * \brief Prints out the main page and waits for the user to input commands. Editing process begins after a file is input.
+ *
+ * \param quit: Pointer to boolean determining if the function should quit or not (true: continue in main.c loop, false: exit program).
+ * \param mode: Mode (Quiet Batch, Verbose Batch, or Interactive).
+ * \param filename: File being input.
+ * \param dict: Dictionary file being input.
  */
 void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color);
 

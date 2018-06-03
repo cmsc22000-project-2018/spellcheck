@@ -8,27 +8,27 @@
 #include "dictionary.h"
 #include <stdbool.h>
 
+/**
+ * \file word.h
+ * A module to handle each word and provide suggestions.
+ */
 
-/*
- * valid_word: checks that word is in dictionary
- * parameters: word, dictionary
- * returns: bool (true if in dictionary, false if not)
- * 
+/**
+ * \brief Checks that a word is in a dictionary.
+ *
+ * \param dict: A dictionary pointer. Must point to already allocated memory with dict_new().
+ * \param word: A string (word).
+ * \return Boolean (true if in dictionary, false if not).
  */
 bool valid_word(dict_t *dict, char* word);
 
-/*
- * generate_suggestions - Returns a list of possible suggestions
+/**
+ * \brief Returns a list of possible suggestions.
  *
- * Parameters:
- *  - dict: A dictionary pointer. Must point to already allocated memory.
- *  - word: A string (word).
- *  - suggestions: An array of strings (words).
- *  - max_edits: Number of maximum edits.
- *  - amount: Amount of suggestions.
- *
- * Returns:
- *  - int: EXIT_SUCCESS or EXIT_FAILURE (EXIT_FAILURE if no suggestions generated.)
+ * \param word: A string (word).
+ * \param dict: A dictionary pointer. Must point to already allocated memory with dict_new().
+ * \param suggestions: Array of strings (list of suggestions).
+ * \return EXIT_SUCCESS or EXIT_FAILURE (EXIT_FAILURE if no suggestions generated).
  */
 int generate_suggestions(char* word, dict_t* dict, char **suggestions);
 
