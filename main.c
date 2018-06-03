@@ -89,7 +89,7 @@ void change_log_level(int v) {
 
 int main(int argc, char *argv[]) {
     if (argc > 9) {
-        log_warn("Too many command line arguments were input.");
+        log_error("Too many command line arguments was input.");
         shell_usage(false);
         log_info("Usage help page provided.");
         exit(1);
@@ -144,23 +144,20 @@ int main(int argc, char *argv[]) {
 
             case 'i':
                 *mode = INTERACTIVE_MODE;
-                log_info("Interactive mode selected.");
                 break;
 
             case 'l':
                 *mode = VERBOSE_MODE;
-                log_info("Verbose mode selected.");
                 break;
 
             case 'q':
                 *mode = QUIET_MODE;
-                log_info("Quiet mode selected.");
                 break;
 		
             case 's':
                 if (strstr(optarg, ".txt\0") == NULL) {    // does not save to a *.txt file
                     shell_error("Invalid file path.", color);
-                    log_fatal("Text file could not be found.");
+                    log_fatal("file path could not be found.");
                     return EXIT_FAILURE;
                 }
 
@@ -174,7 +171,6 @@ int main(int argc, char *argv[]) {
 
             case 'c':
                 *color = true;
-                log_info("Color mode enabled.");
                 break;
 
             case 'v':
@@ -183,7 +179,6 @@ int main(int argc, char *argv[]) {
 
             case '?':
                 shell_usage(color);
-                log_info("Usage help page provided.");
                 exit(0);
                 break;
 
@@ -202,7 +197,6 @@ int main(int argc, char *argv[]) {
 
     while ((*quit) == true) {
         if (fileexists(filename)) {	// if file exists, then bypass main page
-            log_fatal("No filename specificed in the command line input.");
             *quit = false;
         }
 

@@ -7,8 +7,6 @@
 #include "log.c/src/log.h"
 
 int main(int argc, char *argv[]) {
-    log_set_level(LOG_TRACE);
-
     struct criterion_test_set *tests = criterion_initialize();
 
     criterion_options.jobs = 1;
