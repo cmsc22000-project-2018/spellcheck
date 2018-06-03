@@ -12,6 +12,11 @@ For our purposes, the information that I outlined below should be enough. You ca
 
 stack install shelltestrunner-1.9
 
+
+## How to generate a test file
+The test fails need to have .test extendion. You can generate a test file with the command "vim [testname].test"
+
+
 ## How to run the tests
 Command for running the batch tests:
 shelltest tests/cli_batch.test
