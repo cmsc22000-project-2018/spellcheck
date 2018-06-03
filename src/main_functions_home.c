@@ -17,14 +17,12 @@ void help_page(bool *color) {
 
 	// Accept any input in the command line
 	parse_read_line();
-	log_trace("xiting the help page.");
+	log_trace("exiting the help page.");
 }
 
 /* See main_functions_home.h */
 bool fileexists(const char *filename) {
 	struct stat buffer;
-
-	log_trace("Fileexists: filename %s", filename);
 
 	if (stat(filename, &buffer) == 0) {
 		return true;

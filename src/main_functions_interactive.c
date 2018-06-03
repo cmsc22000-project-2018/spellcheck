@@ -77,7 +77,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
         if (choice[0] == 'd') {	// delete
         	correct_line(line_copy, misspelled[i], "");
 
-         	printf("%s", line_copy);
+         	printf("\n%s", line_copy);
         	
             /* 
              * If the line is the last line being edited,
@@ -95,7 +95,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
 
         else if (choice[0] == 's') { // skip
         	// print the edited line
-        	printf("%s", line_copy);
+        	printf("\n%s", line_copy);
         	/* if the line is the last line being edited, the last character is
         	 * EOF, not \n. */
         	if (returnflag) {

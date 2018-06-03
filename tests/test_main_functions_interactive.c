@@ -118,7 +118,7 @@ Test(main_functions_edit, underline_misspelled_sentence) {
 	badwords[1] = "splling";
 	badwords[2] = NULL;
 	
-	char *expected = "^^ ^^^^^^^";
+	char *expected = "^^";
     check_underline_misspelled_sentence(badwords[0], line,underline, expected);
 }
 

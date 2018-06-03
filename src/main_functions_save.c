@@ -74,7 +74,8 @@ void save_page(char *filename, char **lines, bool *quit, bool* color) {
 
             // If a file was entered for saving, then store that file
             if (args != NULL) {
-                char* testinput = strdup(testinput);
+                char* testinput = NULL;
+                testinput = strdup(args);
                 testinput = strstr(testinput, ".txt\0");
                 if (testinput == NULL) {
                     args = NULL;
