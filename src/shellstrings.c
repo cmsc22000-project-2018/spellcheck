@@ -87,7 +87,7 @@ void shell_print(char **lines) {
     int i = 0;
 
     while (lines[i] != NULL) {
-        printf("%s\n", lines[i]);
+        printf("%s", lines[i]);
         
         i++;
     }
