@@ -240,47 +240,47 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
     if (*color == true) {
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
-            printf("\nNo suggestions have been generated for " BOLDWHITE "%s" RESET ".\n", word);
-            printf("\n" BOLDWHITE "d" RESET " : Delete existing word.\n");
-            printf(BOLDWHITE "i" RESET " : Input new word.\n");
-            printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
+            printf("\nNo suggestions have been generated for " BOLDWHITE "%s" RESET ".\n\n", word);
+            printf("\n" BOLDWHITE "[d]" RESET " : Delete  ");
+            printf(BOLDWHITE "[i]" RESET " : Input  ");
+            printf(BOLDWHITE "[s]" RESET " : Skip\n");
         }
 
         else {
-            printf("\nPossible replacements for word %s are:\n", word);
+            printf("\nPossible replacements for word %s are:\n\n", word);
 
             while (sug[j] != NULL) {
-                printf("%d : %s \n", j + 1, sug[j]);
+                printf("[%d] : %s  ", j + 1, sug[j]);
                 j++;
             }
 
-            printf("\n" BOLDWHITE "d" RESET " : Delete existing word.\n");
-            printf(BOLDWHITE "i" RESET " : Input new word.\n");
-            printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
+            printf("\n" BOLDWHITE "[d]" RESET " : Delete  ");
+            printf(BOLDWHITE "[i]" RESET " : Input  ");
+            printf(BOLDWHITE "[s]" RESET " : Skip\n");
         }
     }
 
     else {
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
-            printf("\nNo suggestions have been generated for %s.\n", word);
-            printf("\nd : Delete existing word.\n");
-            printf("i : Input new word.\n");
-            printf("s : Skip word replacement.\n");
+            printf("\nNo suggestions have been generated for %s.\n\n", word);
+            printf("[d] : Delete  ");
+            printf("[i] : Input  ");
+            printf("[s] : Skip\n");
         }
 
         else {
-            printf("\nPossible replacements for word %s are:\n", word);
+            printf("\nPossible replacements for word %s are:\n\n", word);
 
             while (sug[j] != NULL) {
-                printf("%d : %s \n", j + 1, sug[j]);
+                printf("[%d] : %s  ", j + 1, sug[j]);
                 
                 j++;
             }
 
-            printf( "\nd : Delete existing word.\n");
-            printf( "i : Input new word.\n");
-            printf( "s : Skip word replacement.\n");
+            printf( "[d] : Delete  ");
+            printf( "[i] : Input  ");
+            printf( "[s] : Skip\n");
         }
     }
 }
