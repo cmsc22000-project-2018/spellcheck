@@ -291,7 +291,7 @@ void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggesti
     int charpos = 0;
     charpos = (int) ptr - (int) line;
 
-    log_trace("Character position in line is %d", charpos);
+    log_trace("shell_verbose_chart character position in line is %d", charpos);
     
     printf("%d:%d\t\t\t", lnum, charpos);
     

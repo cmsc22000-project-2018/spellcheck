@@ -35,13 +35,15 @@
  *	Other flags:
  *	> -d [dictname.txt]: changes dictionary
  *
- *	> -i/-q/-v : interactive, quiet, verbose mode
+ *	> -i/-q : interactive, quiet mode
+ *
+ *  > --show-suggestions: verbose mode
  *
  *	> -s [filename.txt]: file saving destination 
  *
  *	> -c : colored strings
  *
- *  > -l : logging
+ *  > -v : logging
  *
  *  ...
  *  and so on, with different combinations.
@@ -55,7 +57,7 @@ char *modename(int *mode) {
 		case QUIET_MODE:
             return "Quiet Batch Mode"; 
 		case VERBOSE_MODE:
-            return "Verbose Batch Mode";
+            return "List Batch Mode";
 		case INTERACTIVE_MODE:
             return "Interactive Mode";
 		default:
@@ -86,8 +88,6 @@ void change_log_level(int v) {
 }
 
 int main(int argc, char *argv[]) {
-    log_trace("Program started successfully.");
-
     if (argc > 9) {
         log_warn("Too many command line arguments were input.");
         shell_usage(false);
@@ -147,7 +147,7 @@ int main(int argc, char *argv[]) {
                 log_info("Interactive mode selected.");
                 break;
 
-            case 'v':
+            case 'l':
                 *mode = VERBOSE_MODE;
                 log_info("Verbose mode selected.");
                 break;
@@ -177,7 +177,7 @@ int main(int argc, char *argv[]) {
                 log_info("Color mode enabled.");
                 break;
 
-            case 'l':
+            case 'v':
                 logmode++;
                 break;
 

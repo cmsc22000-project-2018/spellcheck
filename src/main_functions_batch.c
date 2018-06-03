@@ -17,7 +17,7 @@
 
 /* See main_functions_batch.h */
 char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
-    log_info("Batch mode started successfully.");
+    log_info("edit_batch batch mode started successfully.");
 
 	char *line_copy = strdup(line);
     int max_no_suggestions = 2; //Should the user decide this?
@@ -39,7 +39,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
 
     // Identifies misspelled words and add to misspelled
     parse_string(line, dict, underline, misspelled);
-    log_info("File parsing completed.");
+    log_info("edit_batch file parsing completed.");
 
     // Generates an empty array where suggestions will be filled
     char *suggestions[max_no_suggestions];
@@ -69,13 +69,13 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
         }
 
         if (verbosity == QUIET_MODE) {
-            log_trace("Correcting misspelled line.");
+            log_trace("edit_batch correcting misspelled line.");
             correct_line(line_copy, misspelled[i], suggestions[0]);
         }
 
         // In verbose mode, edit the file and also print a replacement chart
 	    if (verbosity == VERBOSE_MODE) {
-            log_trace("Printing batch mode correction chart.");
+            log_trace("edit_batch printing batch mode correction chart.");
 	    	shell_verbose_chart(lnum, line_copy, misspelled[i], suggestions);
         }
 
@@ -87,17 +87,13 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
 
 /* See main_functions_batch.h */
 char **batch_mode(char *filename, dict_t *dict, bool *quit, int verbosity) {
-	if (verbosity == VERBOSE_MODE) {
-        printf("\n");
-    }
-
 	char **lines = parse_file(filename);
-    log_debug("File parsed into a char array.");
+    log_debug("batch_mode file parsed into a char array.");
 
 	// If lineparse_file returns NULL
 	if (lines == NULL) {
 		shell_error("Failed to parse file.", false);
-		log_fatal("File parse failed.");
+		log_error("batch_mode file parse failed.");
         *quit = false;
 
 		return NULL;
