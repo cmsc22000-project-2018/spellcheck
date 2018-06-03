@@ -1,0 +1,52 @@
+\hypertarget{structredis_context}{}\section{redis\+Context Struct Reference}
+\label{structredis_context}\index{redis\+Context@{redis\+Context}}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structredis_context_a481fce8ff0dcee335303d1422ec95444}\label{structredis_context_a481fce8ff0dcee335303d1422ec95444}} 
+int {\bfseries err}
+\item 
+\mbox{\Hypertarget{structredis_context_ace3136a9fe419c796e14fab570eac9c4}\label{structredis_context_ace3136a9fe419c796e14fab570eac9c4}} 
+char {\bfseries errstr} \mbox{[}128\mbox{]}
+\item 
+\mbox{\Hypertarget{structredis_context_af9a3bb9074cc05736a673fcf2961c2aa}\label{structredis_context_af9a3bb9074cc05736a673fcf2961c2aa}} 
+int {\bfseries fd}
+\item 
+\mbox{\Hypertarget{structredis_context_aafd5c9d13dadbd055a8b9607cfd2ee81}\label{structredis_context_aafd5c9d13dadbd055a8b9607cfd2ee81}} 
+int {\bfseries flags}
+\item 
+\mbox{\Hypertarget{structredis_context_a8cab702896e62569c6e44add76157579}\label{structredis_context_a8cab702896e62569c6e44add76157579}} 
+char $\ast$ {\bfseries obuf}
+\item 
+\mbox{\Hypertarget{structredis_context_aae7381e81e013938a73d661eab41f699}\label{structredis_context_aae7381e81e013938a73d661eab41f699}} 
+\mbox{\hyperlink{structredis_reader}{redis\+Reader}} $\ast$ {\bfseries reader}
+\item 
+\mbox{\Hypertarget{structredis_context_ae7324da0f5ca2e9f5d64db2cffd607dc}\label{structredis_context_ae7324da0f5ca2e9f5d64db2cffd607dc}} 
+enum redis\+Connection\+Type {\bfseries connection\+\_\+type}
+\item 
+\mbox{\Hypertarget{structredis_context_a9269266b4f459b0e0dc7603a4bd946fb}\label{structredis_context_a9269266b4f459b0e0dc7603a4bd946fb}} 
+struct timeval $\ast$ {\bfseries timeout}
+\item 
+\mbox{\Hypertarget{structredis_context_a2cd43e1943e302bb818908c9bd6bd633}\label{structredis_context_a2cd43e1943e302bb818908c9bd6bd633}} 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>char $\ast$ {\bfseries host}\\
+\>char $\ast$ {\bfseries source\_addr}\\
+\>int {\bfseries port}\\
+\} {\bfseries tcp}\\
+
+\end{tabbing}\item 
+\mbox{\Hypertarget{structredis_context_aff2d9fc1e4dc37ac4d5aa0d743a05843}\label{structredis_context_aff2d9fc1e4dc37ac4d5aa0d743a05843}} 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>char $\ast$ {\bfseries path}\\
+\} {\bfseries unix\_sock}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/firatciftci/spellcheck/api/lib/hiredis-\/0.\+13.\+3/hiredis.\+h\end{DoxyCompactItemize}

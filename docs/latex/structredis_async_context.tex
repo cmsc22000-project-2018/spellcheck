@@ -1,0 +1,54 @@
+\hypertarget{structredis_async_context}{}\section{redis\+Async\+Context Struct Reference}
+\label{structredis_async_context}\index{redis\+Async\+Context@{redis\+Async\+Context}}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structredis_async_context_a3c1096341a3041b295c612269394f01b}\label{structredis_async_context_a3c1096341a3041b295c612269394f01b}} 
+\mbox{\hyperlink{structredis_context}{redis\+Context}} {\bfseries c}
+\item 
+\mbox{\Hypertarget{structredis_async_context_a0031ee5988e9a7e827dd1f15baad1d60}\label{structredis_async_context_a0031ee5988e9a7e827dd1f15baad1d60}} 
+int {\bfseries err}
+\item 
+\mbox{\Hypertarget{structredis_async_context_ac8b7a551b88583b36e943a717d4244fc}\label{structredis_async_context_ac8b7a551b88583b36e943a717d4244fc}} 
+char $\ast$ {\bfseries errstr}
+\item 
+\mbox{\Hypertarget{structredis_async_context_a11524847be44957259ec5f8a6c73e832}\label{structredis_async_context_a11524847be44957259ec5f8a6c73e832}} 
+void $\ast$ {\bfseries data}
+\item 
+\mbox{\Hypertarget{structredis_async_context_af44bb2fe80c05bad638d1030ae7c3974}\label{structredis_async_context_af44bb2fe80c05bad638d1030ae7c3974}} 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>void $\ast$ {\bfseries data}\\
+\>void($\ast$ {\bfseries addRead} )(void $\ast$privdata)\\
+\>void($\ast$ {\bfseries delRead} )(void $\ast$privdata)\\
+\>void($\ast$ {\bfseries addWrite} )(void $\ast$privdata)\\
+\>void($\ast$ {\bfseries delWrite} )(void $\ast$privdata)\\
+\>void($\ast$ {\bfseries cleanup} )(void $\ast$privdata)\\
+\} {\bfseries ev}\\
+
+\end{tabbing}\item 
+\mbox{\Hypertarget{structredis_async_context_a3abb6dd544cd420a5fbe8ade6804a2f9}\label{structredis_async_context_a3abb6dd544cd420a5fbe8ade6804a2f9}} 
+redis\+Disconnect\+Callback $\ast$ {\bfseries on\+Disconnect}
+\item 
+\mbox{\Hypertarget{structredis_async_context_a3dc5b4a36a035586e27fd22e5b831da0}\label{structredis_async_context_a3dc5b4a36a035586e27fd22e5b831da0}} 
+redis\+Connect\+Callback $\ast$ {\bfseries on\+Connect}
+\item 
+\mbox{\Hypertarget{structredis_async_context_afa8e9602732ae9746b749db0c0eb366f}\label{structredis_async_context_afa8e9602732ae9746b749db0c0eb366f}} 
+\mbox{\hyperlink{structredis_callback_list}{redis\+Callback\+List}} {\bfseries replies}
+\item 
+\mbox{\Hypertarget{structredis_async_context_aa9151c064088d88cc69410a9e33f93f4}\label{structredis_async_context_aa9151c064088d88cc69410a9e33f93f4}} 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>\mbox{\hyperlink{structredis_callback_list}{redisCallbackList}} {\bfseries invalid}\\
+\>struct \mbox{\hyperlink{structdict}{dict}} $\ast$ {\bfseries channels}\\
+\>struct \mbox{\hyperlink{structdict}{dict}} $\ast$ {\bfseries patterns}\\
+\} {\bfseries sub}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/firatciftci/spellcheck/api/lib/hiredis-\/0.\+13.\+3/async.\+h\end{DoxyCompactItemize}
