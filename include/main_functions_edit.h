@@ -55,12 +55,13 @@ char *remove_punctuation(char *word);
   underline them in sentence (will underline in line once per occurence in array)
  *
  * paramters:
- *      - array of misspelled words
+ *		- misspelled word
  *      - sentence to be edited
+ *		- allocated string to populate with underline
  *
  * returns: underline for line
  */
-char *underline_misspelled_sentence(char **misspelled, char *sentence, char *underline);
+char *underline_misspelled_sentence(char *misspelled, char *sentence, char *underline);
 
 /*
  * add_to_misspelled: add an incorrect word to list of misspelled words

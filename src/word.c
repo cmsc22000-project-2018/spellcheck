@@ -15,12 +15,10 @@
 #include "dictionary.h"
 
 /* See word.h */
-bool word_valid(dict_t *dict, char *word) {
-    assert(dict != NULL);
-
-    if (dict_chars_exists(dict, *word) == 0 && *word != '\n') {
-	    if (!dict_exists(dict, word)) {
-            log_trace("returning true from valid_word");
+bool valid_word(dict_t* dict, char* shaved_word) {
+    if (dict_chars_exists(dict, *shaved_word) == EXIT_SUCCESS && *shaved_word != '\n') {
+        if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
+            log_trace("valid_word returning true from valid_word");
             return true;
         }
     }
@@ -29,6 +27,7 @@ bool word_valid(dict_t *dict, char *word) {
 }
 
 /* See word.h */
+<<<<<<< HEAD
 int word_check_cap(char *word) {
 
     int word_length = strlen(word);
@@ -134,6 +133,13 @@ int generate_suggestions(dict_t *dict, char *word, char **suggestions, int max_e
         // No change if no dictionary
         suggestions[0] = word;
         
+=======
+int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
+	if (dict == NULL) { // hard_coded; to change with suggestion.c
+        log_warn("generate_suggestions no dictionary");
+        suggestions[0] = "no suggestions";
+        suggestions[1] = NULL;
+>>>>>>> origin/dev
         return EXIT_FAILURE;
     }
 

@@ -23,13 +23,13 @@ dict_t* dict_new() {
     d = malloc(sizeof(dict_t));
 
     if (d == NULL) {
-        log_fatal("dictionary malloc failed");
+        log_fatal("dict_new dictionary malloc failed");
         return NULL;
     }
 
     rc = dict_init(d);
     if (rc != EXIT_SUCCESS) {
-        log_fatal("dictionary init failed");
+        log_fatal("dict_new dictionary init failed");
         return NULL;
     }
 
@@ -42,19 +42,19 @@ int dict_init(dict_t *d) {
 
     trie_t *t = trie_new("dict");
     if (t == NULL) {
-        log_fatal("trie_new failed");
+        log_fatal("dict_init trie_new failed");
         return EXIT_FAILURE;
     }
     d->dict = t;
 
     char *char_list = (char*)calloc(sizeof(char), 256);
     if (char_list == NULL) {
-        log_fatal("char_list calloc failed");
+        log_fatal("dict_init char_list calloc failed");
         return EXIT_FAILURE;
     }
     d->char_list = char_list;
 
-    log_debug("char_list set");
+    log_debug("dict_init char_list set");
     return EXIT_SUCCESS;
 }
 
@@ -68,7 +68,7 @@ int dict_free(dict_t *d) {
     trie_free(d->dict);
     free(d);
 
-    log_debug("freeing success");
+    log_debug("dict_free success");
     return EXIT_SUCCESS;
 }   
 
@@ -80,11 +80,11 @@ int dict_chars_exists(dict_t *d, char c) {
     int index = (int)c;
 
     if (d->char_list[index] == '\0') {
-        log_debug("returning EXIT_FAILURE");
+        log_debug("dict_chars_exists returning EXIT_FAILURE");
         return EXIT_FAILURE;
     }
 
-    log_debug("returning EXIT_SUCCESS");
+    log_debug("dict_chars_exists returning EXIT_SUCCESS");
     return EXIT_SUCCESS;
 }
 
@@ -99,7 +99,7 @@ int dict_chars_update(dict_t *d, char *str) {
     int len = strnlen(str, MAXSTRLEN);
 
     if (str[len] != '\0') {
-        log_trace("returning EXIT_FAILURE");
+        log_trace("dict_chars_update returning EXIT_FAILURE");
         return EXIT_FAILURE;
     }
 
@@ -111,55 +111,55 @@ int dict_chars_update(dict_t *d, char *str) {
         d->char_list[index] = str[i];
     }
 
-    log_trace("returning EXIT_SUCCESS");
+    log_trace("dict_chars_update returning EXIT_SUCCESS");
     return EXIT_SUCCESS;
 }
 
 /* See dictionary.h */
 int dict_exists(dict_t *d, char *str) {
     if (d == NULL || d->dict == NULL || str == NULL || str[0] == '\0') {
-        log_trace("returning EXIT_FAILURE");
+        log_trace("dict_exists returning EXIT_FAILURE");
         return EXIT_FAILURE;
     }
 
-    log_debug("entering trie_contains");
+    log_debug("dict_exists entering trie_contains");
     int rc = trie_contains(d->dict, str);
 
     if (rc == 0) {
-        log_trace("returning EXIT_SUCCESS");
+        log_trace("dict_exists returning EXIT_SUCCESS");
         return EXIT_SUCCESS;
     }
 
-    log_trace("returning EXIT_FAILURE");
+    log_trace("dict_exists returning EXIT_FAILURE");
     return EXIT_FAILURE;
 }
 
 /* See dictionary.h */
 int dict_add(dict_t *d, char *str) {
     if (d == NULL || d->dict == NULL || str == NULL) {
-        log_trace("returning EXIT_FAILURE");
+        log_trace("dict_exists returning EXIT_FAILURE");
         return EXIT_FAILURE;
     }
 
     if (strnlen(str, MAXSTRLEN+1) == MAXSTRLEN+1) {
-        log_trace("returning EXIT_FAILURE");
+        log_trace("dict_exists returning EXIT_FAILURE");
         return EXIT_FAILURE;
     }
 
     // Attempt to add new characters to the dictionary character list
     if (dict_chars_update(d, str) == EXIT_FAILURE) {
-        log_trace("returning EXIT_FAILURE");
+        log_trace("dict_exists returning EXIT_FAILURE");
         return EXIT_FAILURE;
     }
 
     int rc = trie_insert(d->dict, str);
 
     if (rc == 0) {
-        log_trace("returning EXIT_FAILURE");
+        log_trace("dict_exists returning EXIT_FAILURE");
         return EXIT_SUCCESS;
     }
 
-    log_trace("returning EXIT_FAILURE");
+    log_trace("dict_exists returning EXIT_FAILURE");
     return EXIT_FAILURE;
 }
 
@@ -172,19 +172,19 @@ int dict_read(dict_t *d, char *file) {
     log_debug("opened file %s", file);
 
     if (f == NULL) {
-        log_trace("returning EXIT_FAILURE");
+        log_trace("dict_exists returning EXIT_FAILURE");
         return EXIT_FAILURE;
     }
 
     while (fscanf(f, "%100s", buffer) == 1) {
         if (dict_add(d, buffer) != EXIT_SUCCESS) {
-            log_trace("returning EXIT_FAILURE");
+            log_trace("dict_exists returning EXIT_FAILURE");
             return EXIT_FAILURE;
         }
     }
 
     fclose(f);
 
-    log_trace("returning EXIT_SUCCESS");
+    log_trace("dict_exists returning EXIT_SUCCESS");
     return EXIT_SUCCESS;
 }

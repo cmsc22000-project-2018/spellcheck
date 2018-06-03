@@ -17,6 +17,8 @@
 
 /* See main_functions_batch.h */
 char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
+    log_info("edit_batch batch mode started successfully.");
+
 	char *line_copy = strdup(line);
     int max_no_suggestions = 2;
     int max_edits = 2;
@@ -24,21 +26,21 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
     // Generates an empty array where the misspelled words in a line will be stored
     char **misspelled = calloc(strlen(line), sizeof(char *));
     if (misspelled == NULL) {
-        fprintf(stderr,"edit_batch: calloc failed");
+        log_fatal("ERROR (edit_batch): calloc() failed");
         exit(0);
     }
 
     // Generates an empty array where the underline will go
     char *underline = (char *)malloc(sizeof(char) * (strlen(line) + 1));
     if (underline == NULL) {
-        fprintf(stderr,"edit_batch: calloc failed");
+        log_fatal("ERROR (edit_batch): calloc() failed");
         exit(0);
     }
     underline[0] = '\0';
 
     // Identifies misspelled words and add to misspelled
     parse_string(line, dict, underline, misspelled);
-    log_debug("parse_string completed");
+    log_info("edit_batch file parsing completed.");
 
     // Generates an empty array where suggestions will be filled
     char *suggestions[max_no_suggestions];
@@ -68,14 +70,14 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
         }
 
         if (verbosity == QUIET_MODE) {
-            log_trace("correcting line");
+            log_trace("edit_batch correcting misspelled line.");
             correct_line(line_copy, misspelled[i], suggestions[0]);
         }
 
         // In verbose mode, edit the file and also print a replacement chart
 	    if (verbosity == VERBOSE_MODE) {
-            log_trace("printing chart");
-	    	shell_verbose_chart(lnum, line, misspelled[i], suggestions);
+            log_trace("edit_batch printing batch mode correction chart.");
+	    	shell_verbose_chart(lnum, line_copy, misspelled[i], suggestions);
         }
 
 	    i++;
@@ -86,20 +88,15 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
 
 /* See main_functions_batch.h */
 char **batch_mode(char *filename, dict_t *dict, bool *quit, int verbosity) {
-	if (verbosity == VERBOSE_MODE) {
-        printf("\n");
-    }
-
 	char **lines = parse_file(filename);
-    log_debug("file parsed into char array");
+    log_debug("batch_mode file parsed into a char array.");
 
 	// If lineparse_file returns NULL
 	if (lines == NULL) {
 		shell_error("Failed to parse file.", false);
-		
+		log_error("batch_mode file parse failed.");
         *quit = false;
 
-        log_error("file parse failure");
 		return NULL;
 	}
 
@@ -110,9 +107,10 @@ char **batch_mode(char *filename, dict_t *dict, bool *quit, int verbosity) {
 	int i = 0;
 
 	while (lines[i] != NULL) {
-        log_trace("starting loop for line %s", i + 1);
+        log_trace("Starting loop for line %s.", i + 1);
 		lines[i] = edit_batch(lines[i], dict, verbosity, i + 1);
-		i++;
+		
+        i++;
 	}
 
     *quit = false;

@@ -74,11 +74,11 @@ void shell_save(bool *color) {
 /* See shellstrings.h */
 void shell_edit_success(bool *color) {
     if (*color == true) {
-        printf(GREEN "\nSpellcheck complete!\n" RESET);
+        printf(GREEN "\nSpellcheck complete.\n" RESET);
     }
 
     else {
-        printf("\nSpellcheck complete!\n");
+        printf("\nSpellcheck complete.\n");
     }
 }
 
@@ -87,7 +87,7 @@ void shell_print(char **lines) {
     int i = 0;
 
     while (lines[i] != NULL) {
-        printf("%s\n", lines[i]);
+        printf("%s", lines[i]);
         
         i++;
     }
@@ -107,17 +107,23 @@ void shell_input(char *filename, char *status, bool *color) {
 /* See shellstrings.h */
 void shell_error(char *error_text, bool *color) {
     if (*color == true) {
-	   // printf(RED "ERROR:" RESET " %s\n", error_text);
-        log_fatal(RED "ERROR:" RESET " %s", error_text);
+        printf(RED "ERROR:" RESET " %s", error_text);
     }
 
     else {
-        log_fatal("ERROR: %s", error_text);
+        printf("ERROR: %s", error_text);
     }
 }
 
-void shell_usage() {
-    printf("Usage: ./spellcheck [filename.txt] [-mode] [-dictflag] [~/path/file.txt] [-saveflag] [~/path/destination.txt]\n");
+/* See shellstrings.h */
+void shell_usage(bool *color) {
+    if (*color == true) {
+        printf(RED "Usage:" RESET " ./spellcheck [filename.txt] [-mode] [-dictflag] [~/path/file.txt] [-saveflag] [~/path/destination.txt]\n");
+    }
+
+    else {
+        printf("Usage: ./spellcheck [filename.txt] [-mode] [-dictflag] [~/path/file.txt] [-saveflag] [~/path/destination.txt]\n");
+    }
 }
 
 /* See shellstrings.h */
@@ -170,17 +176,23 @@ void shell_help(bool *color) {
 
 void shell_start_interactive(char *filename, char *dict, char *md, bool *color) {
     if (*color == true) {   // only printing this out in verbose
-        printf(BOLDWHITE "File         :" RESET " %s\n"
-               BOLDWHITE "Dictionary   :" RESET " %s\n"
-               BOLDWHITE "Mode         :" RESET " %s\n", filename, dict, md);
-    } else {
-        printf("\n\n=============================================================\n"
-               "====================== Editing Started ======================\n"
-               "=============================================================\n\n");
+        log_info(BOLDWHITE "\n\n=============================================================\n"
+                               "====================== Editing Started ======================\n"
+                               "=============================================================\n\n" RESET);
 
-        log_trace("File: %s", filename);
-        log_trace("Dictionary: %s", dict);
-        log_trace("Mode: %s", md);
+        log_info(BOLDWHITE "File         :" RESET " %s\n"
+                 BOLDWHITE "Dictionary   :" RESET " %s\n"
+                 BOLDWHITE "Mode         :" RESET " %s\n", filename, dict, md);
+    }
+
+    else {
+        log_info("\n\n=============================================================\n"
+                     "====================== Editing Started ======================\n"
+                     "=============================================================\n\n");
+
+        log_info("File         : %s\n"
+                 "Dictionary   : %s\n"
+                 "Mode         : %s\n", filename, dict, md);
     }
 }
 
@@ -195,12 +207,13 @@ char *shell_modename(int mode) {
         default:
             break;
     }
+
     return "Interactive Mode";
 }
 
 void shell_interactive_line_print(int lnum, char *line, char *underline, bool returnflag, bool *color) {
     if (*color == true) {
-        printf(BOLDWHITE "Line:" RESET " %d:\n%s" , lnum, line);
+        printf(BOLDWHITE "\nLine:" RESET " %d:\n%s" , lnum, line);
 
         if (returnflag) {
              printf("\n");
@@ -210,7 +223,7 @@ void shell_interactive_line_print(int lnum, char *line, char *underline, bool re
     }
 
     else {
-        printf("Line: %d:\n%s", lnum, line);
+        printf("\nLine: %d:\n%s", lnum, line);
 
         if (returnflag) {
              printf("\n");
@@ -227,47 +240,47 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
     if (*color == true) {
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
-            printf("\nNo suggestions have been generated for " BOLDWHITE "%s" RESET ".\n", word);
-            printf("\n" BOLDWHITE "d" RESET " : Delete existing word.\n");
-            printf(BOLDWHITE "i" RESET " : Input new word.\n");
-            printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
+            printf("\nNo suggestions have been generated for " BOLDWHITE "%s" RESET ".\n\n", word);
+            printf(BOLDWHITE "[d]" RESET " : Delete\n");
+            printf(BOLDWHITE "[i]" RESET " : Input\n");
+            printf(BOLDWHITE "[s]" RESET " : Skip\n\n");
         }
 
         else {
-            printf("\nPossible replacements for word %s are:\n", word);
+            printf("\nPossible replacements for word %s are:\n\n", word);
 
             while (sug[j] != NULL) {
-                printf("%d : %s \n", j + 1, sug[j]);
+                printf("[%d] : %s\n", j + 1, sug[j]);
                 j++;
             }
 
-            printf("\n" BOLDWHITE "d" RESET " : Delete existing word.\n");
-            printf(BOLDWHITE "i" RESET " : Input new word.\n");
-            printf(BOLDWHITE "s" RESET " : Skip word replacement.\n");
+            printf(BOLDWHITE "[d]" RESET " : Delete\n");
+            printf(BOLDWHITE "[i]" RESET " : Input\n");
+            printf(BOLDWHITE "[s]" RESET " : Skip\n\n");
         }
     }
 
     else {
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
-            printf("\nNo suggestions have been generated for %s.\n", word);
-            printf("\nd : Delete existing word.\n");
-            printf("i : Input new word.\n");
-            printf("s : Skip word replacement.\n");
+            printf("\nNo suggestions have been generated for %s.\n\n", word);
+            printf("[d] : Delete\n");
+            printf("[i] : Input\n");
+            printf("[s] : Skip\n\n");
         }
 
         else {
-            printf("\nPossible replacements for word %s are:\n", word);
+            printf("\nPossible replacements for word %s are:\n\n", word);
 
             while (sug[j] != NULL) {
-                printf("%d : %s \n", j + 1, sug[j]);
+                printf("[%d] : %s\n", j + 1, sug[j]);
                 
                 j++;
             }
 
-            printf( "\nd : Delete existing word.\n");
-            printf( "i : Input new word.\n");
-            printf( "s : Skip word replacement.\n");
+            printf( "[d] : Delete\n");
+            printf( "[i] : Input\n");
+            printf( "[s] : Skip\n\n");
         }
     }
 }
@@ -276,15 +289,17 @@ void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggesti
     // Prints the location and character
     char* ptr = strstr(line, misspelled);
     int charpos = 0;
-    if (ptr != NULL) {
-        charpos = (int) (ptr - line);
-    }
-    log_trace("character position in line is %d", charpos);
+    charpos = ptr - line;
+
+    log_trace("shell_verbose_chart character position in line is %d", charpos);
     
     printf("%d:%d\t\t\t", lnum, charpos);
     
     int ntab = 3 - (strlen(misspelled) / 8); // number of tabs
-    if (ntab < 0) ntab = 1;
+    
+    if (ntab < 0) {
+        ntab = 1;
+    }
     
     int j;
     

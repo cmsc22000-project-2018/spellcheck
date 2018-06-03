@@ -35,13 +35,15 @@
  *	Other flags:
  *	> -d [dictname.txt]: changes dictionary
  *
- *	> -i/-q/-v : interactive, quiet, verbose mode
+ *	> -i/-q : interactive, quiet mode
+ *
+ *  > --show-suggestions: verbose mode
  *
  *	> -s [filename.txt]: file saving destination 
  *
  *	> -c : colored strings
  *
- *  > -l : logging
+ *  > -v : logging
  *
  *  ...
  *  and so on, with different combinations.
@@ -55,7 +57,7 @@ char *modename(int *mode) {
 		case QUIET_MODE:
             return "Quiet Batch Mode"; 
 		case VERBOSE_MODE:
-            return "Verbose Batch Mode";
+            return "List Batch Mode";
 		case INTERACTIVE_MODE:
             return "Interactive Mode";
 		default:
@@ -87,7 +89,9 @@ void change_log_level(int v) {
 
 int main(int argc, char *argv[]) {
     if (argc > 9) {
-        shell_usage();
+        log_error("Too many command line arguments was input.");
+        shell_usage(false);
+        log_info("Usage help page provided.");
         exit(1);
     }
 
@@ -126,6 +130,7 @@ int main(int argc, char *argv[]) {
             case 'd':
                 if (!fileexists(optarg)) {  // this checks if the file actually exists
                     shell_error("Invalid dictionary file input.", color);
+                    log_fatal("Dictionary file could not be found.");
                     return EXIT_FAILURE;
                 }
 
@@ -141,7 +146,7 @@ int main(int argc, char *argv[]) {
                 *mode = INTERACTIVE_MODE;
                 break;
 
-            case 'v':
+            case 'l':
                 *mode = VERBOSE_MODE;
                 break;
 
@@ -152,6 +157,7 @@ int main(int argc, char *argv[]) {
             case 's':
                 if (strstr(optarg, ".txt\0") == NULL) {    // does not save to a *.txt file
                     shell_error("Invalid file path.", color);
+                    log_fatal("file path could not be found.");
                     return EXIT_FAILURE;
                 }
 
@@ -167,23 +173,23 @@ int main(int argc, char *argv[]) {
                 *color = true;
                 break;
 
-            case 'l':
+            case 'v':
                 logmode++;
                 break;
 
             case '?':
-                shell_usage();
+                shell_usage(color);
                 exit(0);
                 break;
 
             default:
                 shell_error("Invalid format.", color);
+                log_fatal("Invalid shell line input.");
                 exit(0);
         }
 
 	}
 
-    logmode = LOG_TRACE;
     change_log_level(logmode);
 
 	bool *quit = malloc(sizeof(bool));
@@ -192,26 +198,28 @@ int main(int argc, char *argv[]) {
     while ((*quit) == true) {
         if (fileexists(filename)) {	// if file exists, then bypass main page
             *quit = false;
-            log_trace("no filename in command line input");
         }
 
 	   /*
         * Main page: Activated if there is no file to be parsed.
         * can open help page, quit, or load filename / dictname
         */
-        log_trace("opening main page");
+        log_trace("Printing the main page.");
         main_page(quit, mode, filename, dict, color);
 
         if (*mode == QUIT) { // user selected "quit" in main_page
-            log_trace("quitting spellcheck");
+            log_trace("Quitting the program.");
             return 0;
         }
 
 		 // Initialize dictionary, declare names of files to be used
         dict_t *new_dict = dict_new();
+
         int msg = dict_read(new_dict, dict);
+
         if (msg == EXIT_FAILURE) {
             shell_error("Invalid dictionary file input.", color);
+            log_fatal("Invalid dictionary file input.");
             exit(0);
         }
 
@@ -228,15 +236,15 @@ int main(int argc, char *argv[]) {
         // Execute either interactive or batch mode, and save file at end
         switch (*mode) {
             case QUIET_MODE:
-                log_trace("entering quiet mode");
+                log_info("Entering quiet mode.");
                 result = batch_mode(filename, new_dict, quit, QUIET_MODE); // pass in dictionary
                 break;
             case VERBOSE_MODE:
-                log_trace("entering quiet mode");
+                log_info("Entering verbose mode.");
                 result = batch_mode(filename, new_dict, quit, VERBOSE_MODE); // pass in dictionary 
                 break;
             case INTERACTIVE_MODE:
-                log_trace("entering quiet mode");
+                log_info("Entering interactive mode.");
                 result = interactive_mode(filename, new_dict, quit, color); // pass in dictionary
                 break;
             default:
@@ -245,28 +253,31 @@ int main(int argc, char *argv[]) {
 
         if ((*mode != VERBOSE_MODE) && (result != NULL)) {	// Save file, a functionality unnecessary for verbose batch mode
             if (*mode == INTERACTIVE_MODE) {
+                log_trace("Printing success message.");
                 shell_edit_success(color);
             }
 
             md = strstr(save_file, ".txt\0");
+
             if ((md == NULL && *mode) == (QUIET_MODE)) {
-                log_trace("printing result of edit");
+                log_trace("Printing result of the file edit.");
                 shell_print(result);
                 *quit = false;
             }
 
             else if (md != NULL) {
-                log_trace("saving correction to designated file destination: %s", save_file);
+                log_trace("Saving corrections to the designated file destination: %s", save_file);
                 save_corrections(save_file, result);
                 *quit = false;
             }
 
             else {
-                log_trace("opening save_page");
+                log_trace("Printing the save page.");
                 save_page(filename, result, quit, color);
             }
         }
     }
 
+    log_info("Program ran successfully.");
     return 0;
 }

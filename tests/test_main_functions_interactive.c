@@ -101,7 +101,7 @@ Test(main_functions_edit, correct_line3) {
 /*
  ***** underline_misspelled_sentence tests *****
  */
-void check_underline_misspelled_sentence(char** badwords, char* sentence, char* underline, char* expected) {
+void check_underline_misspelled_sentence(char* badwords, char* sentence, char* underline, char* expected) {
 	char *underlined = underline_misspelled_sentence(badwords, sentence, underline);
 
 	int result = strcmp(underlined, expected);
@@ -117,8 +117,8 @@ Test(main_functions_edit, underline_misspelled_sentence) {
 	badwords[1] = "splling";
 	badwords[2] = NULL;
 	
-	char *expected = "^^ ^^^^^^^";
-    check_underline_misspelled_sentence(badwords, line,underline, expected);
+	char *expected = "^^";
+    check_underline_misspelled_sentence(badwords[0], line,underline, expected);
 }
 
 
@@ -132,8 +132,8 @@ Test(main_functions_edit, underline_misspelled_sentence2) {
 	badwords[3] = NULL;
 	
 
-	char *expected = "^^ ^^^^^^^    ^^";
-    check_underline_misspelled_sentence(badwords, line, underline, expected);
+	char *expected = "   ^^^^^^^";
+    check_underline_misspelled_sentence(badwords[1], line, underline, expected);
 }
 
 
