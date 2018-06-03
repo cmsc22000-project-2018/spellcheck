@@ -91,7 +91,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 			else {
 				log_debug("main_page file input: %s", args[1]);
 				strcpy(filename, args[1]);
-				printf("\nFile input is now %s\n", filename);
+				printf("\nFile input is now %s", filename);
 
 				print = false;
 				*quit = false;
