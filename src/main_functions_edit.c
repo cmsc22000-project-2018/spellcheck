@@ -14,8 +14,60 @@
 #include "main_functions_edit.h"
 #include "log.c/src/log.h"
 
-// Given an array of misspelled words, generates an underline
-// for an occurence in sentence
+/* See main_functions_edit.h */
+bool is_in_punct_array(char letter) {
+    char punctuation_array[] = "+, .-\'&!?:;#~=/$^\n_<>\"";
+    int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
+    int i;
+
+    for (i = 0; i < num_punctuation ; i++) {
+        if ((punctuation_array[i] - letter) == 0) { 
+            log_trace("Character is a punctuation."); 
+            return true;
+        }
+    }
+
+    log_trace("Character is not a punctuation."); 
+    return false;
+}
+
+/* See main_functions_edit.h */
+void remove_prefix_punctuation(char *word) {
+    char prefix_char;
+    prefix_char = word[0];
+    log_trace("Before removing any prefixed punctuation, the word is '%s'.", word);
+
+    while (is_in_punct_array(prefix_char) == true) {
+        memmove(word, word + 1, strlen(word)); 
+        log_trace("word is now %s", word);
+        prefix_char = word[0];
+    }
+}
+
+/* See main_functions_edit.h */
+void remove_trailing_punctuation(char *word) {
+    char trailing_char;
+    log_trace("Before removing trailing punctuation, the word is '%s'.", word);
+    trailing_char = word[(strlen(word) - 1)];
+
+    while (is_in_punct_array(trailing_char) == true) {
+        word[strlen(word) - 1] = '\0';
+        trailing_char = word[strlen(word) - 1]; //check next trailing character
+        log_trace("Word is now set to '%s'.", word);
+    }
+}
+
+/* See main_functions_edit.h */
+char *remove_punctuation(char *word) { //removes trailing and prefix punctuation without modifying original word
+    char *shaved_word = (char *)malloc(strlen(word));
+    
+    strcpy(shaved_word, word);
+    remove_prefix_punctuation(shaved_word);
+    remove_trailing_punctuation(shaved_word);
+
+    log_debug("Word is now set to '%s'.", shaved_word);
+    return shaved_word;
+}
 
 /* See main_functions_edit.h */
 char *underline_misspelled_sentence(char **misspelled, char *sentence, char *underline) {
@@ -67,61 +119,6 @@ int add_to_misspelled(char *word, char** misspelled) {
 	misspelled[i] = word;
 
 	return EXIT_SUCCESS;
-}
-
-/* See main_functions_edit.h */
-bool is_in_punct_array(char letter) {
-	char punctuation_array[] = "+, .-\'&!?:;#~=/$^\n_<>\"";
-	int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
-	int i;
-
-    for (i = 0; i < num_punctuation ; i++) {
-        if ((punctuation_array[i] - letter) == 0) { 
-        	log_trace("Character is a punctuation."); 
-            return true;
-        }
-    }
-
-    log_trace("Character is not a punctuation."); 
-    return false;
-}
-
-/* See main_functions_edit.h */
-void remove_prefix_punctuation(char *word) {
-    char prefix_char;
-    prefix_char = word[0];
-    log_trace("Before removing any prefixed punctuation, the word is '%s'.", word);
-
-    while (is_in_punct_array(prefix_char) == true) {
-        memmove(word, word + 1, strlen(word)); 
-        log_trace("word is now %s", word);
-        prefix_char = word[0];
-    }
-}
-
-/* See main_functions_edit.h */
-void remove_trailing_punctuation(char *word) {
-    char trailing_char;
-    log_trace("Before removing trailing punctuation, the word is '%s'.", word);
-    trailing_char = word[(strlen(word) - 1)];
-
-    while (is_in_punct_array(trailing_char) == true) {
-        word[strlen(word) - 1] = '\0';
-        trailing_char = word[strlen(word) - 1]; //check next trailing character
-        log_trace("Word is now set to '%s'.", word);
-    }
-}
-
-/* See main_functions_edit.h */
-char *remove_punctuation(char *word) { //removes trailing and prefix punctuation without modifying original word
-    char *shaved_word = (char *)malloc(strlen(word));
-    
-    strcpy(shaved_word, word);
-    remove_prefix_punctuation(shaved_word);
-    remove_trailing_punctuation(shaved_word);
-
-    log_debug("Word is now set to '%s'.", shaved_word);
-    return shaved_word;
 }
 
 /* See main_functions_edit.h */

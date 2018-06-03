@@ -15,7 +15,7 @@
 #include "main_functions_interactive.h"
 
 /* See main_functions_interactive.h */
-char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag, bool* color) {
+char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag, bool *color) {
     log_debug("'returnflag' value set to %s.", returnflag);
 
     char *line_copy = strdup(line);
