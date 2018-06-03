@@ -188,7 +188,7 @@ char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool *color) {
 
 	// step through phases
 	int i = 0;
-	int flag = false;
+	bool flag = false;
 	int linenumber;
 
 	while (lines[i] != NULL) {
