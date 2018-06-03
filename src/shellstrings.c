@@ -241,22 +241,22 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
             printf("\nNo suggestions have been generated for " BOLDWHITE "%s" RESET ".\n\n", word);
-            printf("\n" BOLDWHITE "[d]" RESET " : Delete  ");
-            printf(BOLDWHITE "[i]" RESET " : Input  ");
-            printf(BOLDWHITE "[s]" RESET " : Skip\n");
+            printf(BOLDWHITE "[d]" RESET " : Delete\n");
+            printf(BOLDWHITE "[i]" RESET " : Input\n");
+            printf(BOLDWHITE "[s]" RESET " : Skip\n\n");
         }
 
         else {
             printf("\nPossible replacements for word %s are:\n\n", word);
 
             while (sug[j] != NULL) {
-                printf("[%d] : %s  ", j + 1, sug[j]);
+                printf("[%d] : %s\n", j + 1, sug[j]);
                 j++;
             }
 
-            printf("\n" BOLDWHITE "[d]" RESET " : Delete  ");
-            printf(BOLDWHITE "[i]" RESET " : Input  ");
-            printf(BOLDWHITE "[s]" RESET " : Skip\n");
+            printf(BOLDWHITE "[d]" RESET " : Delete\n");
+            printf(BOLDWHITE "[i]" RESET " : Input\n");
+            printf(BOLDWHITE "[s]" RESET " : Skip\n\n");
         }
     }
 
@@ -264,23 +264,23 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool *colo
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
             printf("\nNo suggestions have been generated for %s.\n\n", word);
-            printf("[d] : Delete  ");
-            printf("[i] : Input  ");
-            printf("[s] : Skip\n");
+            printf("[d] : Delete\n");
+            printf("[i] : Input\n");
+            printf("[s] : Skip\n\n");
         }
 
         else {
             printf("\nPossible replacements for word %s are:\n\n", word);
 
             while (sug[j] != NULL) {
-                printf("[%d] : %s  ", j + 1, sug[j]);
+                printf("[%d] : %s\n", j + 1, sug[j]);
                 
                 j++;
             }
 
-            printf( "[d] : Delete  ");
-            printf( "[i] : Input  ");
-            printf( "[s] : Skip\n");
+            printf( "[d] : Delete\n");
+            printf( "[i] : Input\n");
+            printf( "[s] : Skip\n\n");
         }
     }
 }
