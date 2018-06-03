@@ -44,7 +44,7 @@ char *underline_misspelled_sentence(char **misspelled, char *sentence, char *und
 
 		element++;
 	}
-	log_debug("number of elements: %d", element);
+	log_debug("Number of elements: %d.", element);
 
 	return underline;
 }
@@ -52,7 +52,7 @@ char *underline_misspelled_sentence(char **misspelled, char *sentence, char *und
 /* See main_functions_edit.h */
 int add_to_misspelled(char *word, char** misspelled) {
 	if (word == NULL || misspelled == NULL) {
-		log_error("misspelled word, or array, is NULL");
+		log_error("Misspelled word, or array, is NULL.");
 		return EXIT_FAILURE;
 	}
 
@@ -62,7 +62,7 @@ int add_to_misspelled(char *word, char** misspelled) {
 		i++;
 	}
 
-	log_info("word position is %d", i);
+	log_info("Word position is %d.", i);
 
 	misspelled[i] = word;
 
@@ -77,12 +77,12 @@ bool is_in_punct_array(char letter) {
 
     for (i = 0; i < num_punctuation ; i++) {
         if ((punctuation_array[i] - letter) == 0) { 
-        	log_trace("letter is a punctuation"); 
+        	log_trace("Character is a punctuation."); 
             return true;
         }
     }
 
-    log_trace("letter is not a punctuation"); 
+    log_trace("Character is not a punctuation."); 
     return false;
 }
 
@@ -90,7 +90,7 @@ bool is_in_punct_array(char letter) {
 void remove_prefix_punctuation(char *word) {
     char prefix_char;
     prefix_char = word[0];
-    log_trace("before removing prefix punctuation, word is %s", word);
+    log_trace("Before removing any prefixed punctuation, the word is '%s'.", word);
 
     while (is_in_punct_array(prefix_char) == true) {
         memmove(word, word + 1, strlen(word)); 
@@ -102,13 +102,13 @@ void remove_prefix_punctuation(char *word) {
 /* See main_functions_edit.h */
 void remove_trailing_punctuation(char *word) {
     char trailing_char;
-    log_trace("before removing trailing punctuation, word is %s", word);
+    log_trace("Before removing trailing punctuation, the word is '%s'.", word);
     trailing_char = word[(strlen(word) - 1)];
 
     while (is_in_punct_array(trailing_char) == true) {
         word[strlen(word) - 1] = '\0';
         trailing_char = word[strlen(word) - 1]; //check next trailing character
-        log_trace("word is now %s", word);
+        log_trace("Word is now set to '%s'.", word);
     }
 }
 
@@ -120,7 +120,7 @@ char *remove_punctuation(char *word) { //removes trailing and prefix punctuation
     remove_prefix_punctuation(shaved_word);
     remove_trailing_punctuation(shaved_word);
 
-    log_debug("shaved_word: %s", shaved_word);
+    log_debug("Word is now set to '%s'.", shaved_word);
     return shaved_word;
 }
 
@@ -130,32 +130,32 @@ void parse_string(char *string, dict_t *dict, char *underline, char **misspelled
 	char *tkn = strtok(string," \n"); //words only separated by spaces and newline
 	
     while (tkn != NULL) {
-		log_trace("token: %s", tkn);
+		log_trace("Token: %s", tkn);
 		char *shaved_word = remove_punctuation(tkn);
 
 		if (valid_word(dict, shaved_word) == false){
-			log_trace("word is misspelled");
+			log_trace("The word is misspelled.");
 			add_to_misspelled(shaved_word, misspelled);
 		}
 		else if (valid_word(dict, shaved_word) == true) {
-			log_trace("word is spelled correctly");
+			log_trace("The word is spelled correctly.");
 		}
 		else {
-			log_error("text processing problematic");
+			log_error("Text processing failed.");
 			shell_error("Error processing text.", false);
 		}
 
 		tkn = strtok(NULL," \n"); //spaces and \n are the only delimeters
 	}
 
-	log_debug("string parsed");
+	log_debug("String was parsed successfully.");
 	underline_misspelled_sentence(misspelled, string_copy, underline);
 }
 
 /* See main_functions_edit.h */
 char *correct_line(char *line, char *old_word, char *new_word) {
 	char buffer[2000] = {0}; // Might need to modify the size estimate
-	log_debug("line before correction: %s", line);
+	log_debug("Line before correction: %s", line);
 
 	char *insert_point = &buffer[0];
 	char *tmp = line;
@@ -182,6 +182,6 @@ char *correct_line(char *line, char *old_word, char *new_word) {
 
 	strcpy(line, buffer);
 
-	log_debug("line after correction: %s", line);
+	log_debug("Line after corrections: %s", line);
 	return line;
 }
