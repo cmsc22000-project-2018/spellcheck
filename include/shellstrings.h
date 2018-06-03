@@ -1,7 +1,3 @@
-/* 
- * String output functions to be used in the shell
-*/
-
 #ifndef INCLUDE_SHELLSTRINGS_H_
 #define INCLUDE_SHELLSTRINGS_H_
 
@@ -22,179 +18,145 @@
 #define BOLDBLUE    "\033[1m\033[34m"       // Bold Blue
 #define BOLDWHITE   "\033[1m\033[37m"       // Bold White
 
-/*
- * shell_prompt - Default text input prompt string for the shell.
+/**
+ * \brief String printing library for the shell
+ */
+
+/**
+ * \memberof shellstrings
+ * \brief Default text input prompt string for the shell.
  *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_prompt(bool *color);
 
-/*
- * shell_intro - Introduction text for the shell.
+/**
+ * \memberof shellstrings
+ * \brief Main menu text for the shell.
  *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_main_menu(bool *color);
 
-/*
- * shell_save - Modification saving text for the shell.
+/**
+ * \memberof shellstrings
+ * \brief Modification save text for the shell.
  *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_save(bool *color);
 
-/*
- * shell_edit_success - file editing success message
+/**
+ * \memberof shellstrings
+ * \brief File editing success message for the shell.
  *
- * Parameters:
- *  - None
- *
- * Returns:
- *  - None.
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_edit_success(bool *color);
 
-/*
- * shell_print - Print edited text for viewing
+/**
+ * \memberof shellstrings
+ * \brief Modified text priting for the shell.
  *
- * Parameters:
- * 	- lines: string array, each representing edited line of file.
- *
- * Returns:
- * 	- None.
+ * \param lines: Array of strings, each representing a modified line.
  */
  void shell_print(char **lines);
 
-/*
- * shell_input - Input file confirmation prompt for the shell.
+/**
+ * \memberof shellstrings
+ * \brief File input confirmation prompt for the shell.
  *
- * Parameters:
- *  - input_file: String of the file input by the user.
- *  - status: String for the file type - dictionary or 
- *              this is a string because shell_input is used
- *              to print a confirmation message on the screen
- *
- * Returns:
- *  - None.
+ * \param filename: File being input.
+ * \param status: Type of file being input (text file, dictionary, etc).
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_input(char *filename, char *status, bool *color);
 
-/*
- * shell_error - Default error prompt string for the shell
+/**
+ * \memberof shellstrings
+ * \brief Default error prompt for the shell.
  *
- * Parameters:
- *  - error_text: String for the specific error text.
- *
- * Returns:
- *  - None.
+ * \param error_text: String for the specific error text.
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_error(char *error_text, bool *color);
 
-/*
- * shell_usage - command line usage instructions
+/**
+ * \memberof shellstrings
+ * \brief Command line usage instructions screen for the shell.
  *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_usage(bool *color);
 
-/*
- * shell_help - Default text input prompt string for the shell.
+/**
+ * \memberof shellstrings
+ * \brief Help page screen for the shell.
  *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_help(bool *color);
 
-/*
- * shell_start_interactive - prints out interactive starting message
+/**
+ * \memberof shellstrings
+ * \brief Interactive starting message for the shell.
  *
- * Parameters:
- *  - file, dictionary, mode names
- *
- * Returns:
- *  - None.
+ * \param filename: File being input.
+ * \param dict: Dictionary file being input.
+ * \param md: Mode (Quiet Batch, Verbose Batch, or Interactive).
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_start_interactive(char *filename, char *dict, char *md, bool *color);
 
 
-/*
- * shell_modename - prints out mode name (verbose, quiet or interactive)
+/**
+ * \memberof shellstrings
+ * \brief Mode name printing (Verbose Batch, Quiet Batch, or Interactive).
  * 
- * Accepts flag int
- *      note 1 is quiet, 2 is batch, 3 is interactive
+ * \param mode: Flag for mode (1: Quiet Batch, 2: Verbose Batch, 3: Interactive).
+ * \return String of the mode name.
  */
 char *shell_modename(int mode);
 
-/*
- * shell_interactive_line_print: prints line, underlining errors
+/**
+ * \memberof shellstrings
+ * \brief Line printing and misspelling underlining for the shell.
  *
- * Parameters:
- *  - lnum: line number
- *	- line: string of the line being edited
- *	- underline: string of underlines, highlighting error words
- *	- returnflag: indicates if line being parsed is the last line (true if it is the last line)
- *			in this case, there is a formatting issue in printing out the line that needs to be resolved,
- *			because the text file that was read does not have a newline character
- *			at the end of the file.
- * Returns:
- *  - None.
+ * \param lnum: Number of lines.
+ * \param line: String of the line being modified.
+ * \param underline: String of underlines, highlighting misspelled words.
+ * \param returnflag: Flag to indicate if line being parsed is the last line.
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_interactive_line_print(int lnum, char *line, char *underline, bool returnflag, bool *color);
 
-/*
- * shell_interactive_replacements
+/**
+ * \memberof shellstrings
+ * \brief Interactive word replacement for the shell/
  *
- * Parameters:
- *  - word being replaced
- *  - list of suggestions
- *  - flag indicating whether suggestion generation succeeded or not
- *
- * Returns:
- *  - None.
+ * \param word: String (Word) being modified/replaced.
+ * \param sug: Array of string pointers (List of suggestions).
+ * \param flag: Flag indicating whether suggestion generation succeeded or not.
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_interactive_replacements(char *word, char **sug, int flag, bool *color);
 
-/*
- * shell_verbose_chart - verbose chart print 
+/**
+ * \memberof shellstrings
+ * \brief Modification chart printing for the Verbose Batch Mode.
  *
- * Parameters:
- *	- lnum: line number
- *	- line: line, to calculate character position of misspelled word
- *	- misspelled: misspelled word
- *	- suggestions: char** array of generated suggestions
- *
- * Returns:
- *  - None.
+ * \param lnum: Number of lines.
+ * \param line: A line to calculate character position of misspelled word(s).
+ * \param misspelled: A misspelled word.
+ * \param suggestions: Array of string pointers (generated suggestions).
  */
 void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggestions);
 
-/*
- * shell_save_message - save message
+/**
+ * \memberof shellstrings
+ * \brief Save message screen for the shell.
  *
- * Parameters:
- *  - None
- *
- * Returns:
- *  - None.
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void shell_save_message(bool *color);
 

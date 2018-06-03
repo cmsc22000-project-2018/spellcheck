@@ -1,6 +1,6 @@
 
 /* 
- * String output functions to be used in the shell
+ * String priting library for the shell
  *
  * See shellstrings.h for function documentation.
 */
