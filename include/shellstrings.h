@@ -92,7 +92,7 @@ void shell_edit_success(bool *color);
 void shell_input(char *filename, char *status, bool *color);
 
 /*
- * shell_error - Default error prompt string for the shell.
+ * shell_error - Default error prompt string for the shell
  *
  * Parameters:
  *  - error_text: String for the specific error text.
@@ -103,82 +103,15 @@ void shell_input(char *filename, char *status, bool *color);
 void shell_error(char *error_text, bool *color);
 
 /*
- * shell_error_format - Error prompt regarding an input error for the shell
+ * shell_usage - command line usage instructions
  *
  * Parameters:
  *  - None.
  *
  * Returns:
- *  - char *: String for the error text.
- */
-char *shell_error_input();
-
-/*
- * shell_error_format - Error prompt regarding a format error
- * of the command line input for the shell.
- *
- * Parameters:
  *  - None.
- *
- * Returns:
- *  - char *: String for the error text.
  */
-char *shell_error_format();
-
-/*
- * shell_erorr_dict - Error prompt regarding invalid dictionary file input for the shell.
- *
- * Parameters:
- *  - dict: String for the name of the inputted dictionary file.
- *
- * Returns:
- *  - char *: String for the error text.
- */
-char *shell_error_dict(char *dict);
-
-/*
- * shell_erorr_filename - Error prompt regarding invalid text file input for the shell.
- *
- * Parameters:
- *  - filename: String for the name of the inputted dictionary file.
- *
- * Returns:
- *  - char *: String for the error text.
- */
-char *shell_error_file(char *filename);
-
-/*
- * shell_error_exit - Error prompt regarding the shell exiting
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - char *: String for the error text.
- */
-char *shell_error_exit();
-
-/*
- * shell_error_parse - Error prompt regarding the parse operation for he shell
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - char *: String for the error text.
- */
-char *shell_error_parse();
-
-/*
- * shell_error_suggestion - Error prompt regarding the suggestion operation for he shell
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - char *: String for the error text.
- */
-char *shell_error_suggestion();
+void shell_usage(bool *color);
 
 /*
  * shell_help - Default text input prompt string for the shell.
@@ -264,17 +197,5 @@ void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggesti
  *  - None.
  */
 void shell_save_message(bool *color);
-
-/*
- * shell_usage - command line usage instructions
- *
- * Parameters:
- *  - None.
- *
- * Returns:
- *  - None.
- */
-void shell_usage();
-
 
 #endif
