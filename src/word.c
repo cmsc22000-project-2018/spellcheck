@@ -27,7 +27,6 @@ bool valid_word(dict_t* dict, char* shaved_word) {
 }
 
 /* See word.h */
-<<<<<<< HEAD
 int word_check_cap(char *word) {
 
     int word_length = strlen(word);
@@ -133,13 +132,6 @@ int generate_suggestions(dict_t *dict, char *word, char **suggestions, int max_e
         // No change if no dictionary
         suggestions[0] = word;
         
-=======
-int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
-	if (dict == NULL) { // hard_coded; to change with suggestion.c
-        log_warn("generate_suggestions no dictionary");
-        suggestions[0] = "no suggestions";
-        suggestions[1] = NULL;
->>>>>>> origin/dev
         return EXIT_FAILURE;
     }
 
