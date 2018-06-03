@@ -10,3 +10,5 @@ spellcheck.dSYM/
 tests/test-spellcheck.dSYM/
 test_save.txt 
 *.rdb
+api
+lib/log.c
