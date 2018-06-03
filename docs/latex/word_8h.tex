@@ -1,0 +1,59 @@
+\hypertarget{word_8h}{}\section{/\+Users/firatciftci/spellcheck/include/word.h File Reference}
+\label{word_8h}\index{/\+Users/firatciftci/spellcheck/include/word.\+h@{/\+Users/firatciftci/spellcheck/include/word.\+h}}
+{\ttfamily \#include \char`\"{}dictionary.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{word_8h_a1a406333afb79365a56cb2b26b420ac0}{valid\+\_\+word}} (\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$dict, char $\ast$word)
+\begin{DoxyCompactList}\small\item\em Checks that a word is in a dictionary. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{word_8h_a0cc8c482b2f0a0e1fb287ceb1a088e47}{generate\+\_\+suggestions}} (char $\ast$word, \mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$dict, char $\ast$$\ast$suggestions)
+\begin{DoxyCompactList}\small\item\em Returns a list of possible suggestions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A module to handle each word and provide suggestions. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{word_8h_a0cc8c482b2f0a0e1fb287ceb1a088e47}\label{word_8h_a0cc8c482b2f0a0e1fb287ceb1a088e47}} 
+\index{word.\+h@{word.\+h}!generate\+\_\+suggestions@{generate\+\_\+suggestions}}
+\index{generate\+\_\+suggestions@{generate\+\_\+suggestions}!word.\+h@{word.\+h}}
+\subsubsection{\texorpdfstring{generate\+\_\+suggestions()}{generate\_suggestions()}}
+{\footnotesize\ttfamily int generate\+\_\+suggestions (\begin{DoxyParamCaption}\item[{char $\ast$}]{word,  }\item[{\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$}]{dict,  }\item[{char $\ast$$\ast$}]{suggestions }\end{DoxyParamCaption})}
+
+
+
+Returns a list of possible suggestions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em word} & A string (word). \\
+\hline
+{\em dict} & A dictionary pointer. Must point to already allocated memory with \mbox{\hyperlink{structdict__t_a0074913fdba65680670bf93153225e2f}{dict\+\_\+new()}}. \\
+\hline
+{\em suggestions} & Array of strings (list of suggestions). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+E\+X\+I\+T\+\_\+\+S\+U\+C\+C\+E\+SS or E\+X\+I\+T\+\_\+\+F\+A\+I\+L\+U\+RE (E\+X\+I\+T\+\_\+\+F\+A\+I\+L\+U\+RE if no suggestions generated). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{word_8h_a1a406333afb79365a56cb2b26b420ac0}\label{word_8h_a1a406333afb79365a56cb2b26b420ac0}} 
+\index{word.\+h@{word.\+h}!valid\+\_\+word@{valid\+\_\+word}}
+\index{valid\+\_\+word@{valid\+\_\+word}!word.\+h@{word.\+h}}
+\subsubsection{\texorpdfstring{valid\+\_\+word()}{valid\_word()}}
+{\footnotesize\ttfamily bool valid\+\_\+word (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$}]{dict,  }\item[{char $\ast$}]{word }\end{DoxyParamCaption})}
+
+
+
+Checks that a word is in a dictionary. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dict} & A dictionary pointer. Must point to already allocated memory with \mbox{\hyperlink{structdict__t_a0074913fdba65680670bf93153225e2f}{dict\+\_\+new()}}. \\
+\hline
+{\em word} & A string (word). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Boolean (true if in dictionary, false if not). 
+\end{DoxyReturn}

@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['save_5fcorrections',['save_corrections',['../main__functions__save_8h.html#a42f5804c9d332b0afddf2ae651d7adeb',1,'main_functions_save.h']]],
+  ['save_5fpage',['save_page',['../main__functions__save_8h.html#aaa8fbb508e474a3c58df4319a645c59e',1,'main_functions_save.h']]],
+  ['shell_5fedit_5fsuccess',['shell_edit_success',['../shellstrings_8h.html#a77dcdc306c4de825ef007d7aecd5be61',1,'shellstrings.h']]],
+  ['shell_5ferror',['shell_error',['../shellstrings_8h.html#a58c9246357cb2862328ce32f0ae9b1ec',1,'shellstrings.h']]],
+  ['shell_5fhelp',['shell_help',['../shellstrings_8h.html#a02e2a03e2fbfe145af3e932eef81b882',1,'shellstrings.h']]],
+  ['shell_5finput',['shell_input',['../shellstrings_8h.html#a512b8b6fada4cc400cb2f07689a49147',1,'shellstrings.h']]],
+  ['shell_5finteractive_5fline_5fprint',['shell_interactive_line_print',['../shellstrings_8h.html#a2c71fbdd039c37f72637ebbc95a6b2a8',1,'shellstrings.h']]],
+  ['shell_5finteractive_5freplacements',['shell_interactive_replacements',['../shellstrings_8h.html#a496bc76f95299732133edbf8581e4ca7',1,'shellstrings.h']]],
+  ['shell_5fmain_5fmenu',['shell_main_menu',['../shellstrings_8h.html#ab90c9479ddbe9e4a463a38b408210b71',1,'shellstrings.h']]],
+  ['shell_5fmodename',['shell_modename',['../shellstrings_8h.html#a49a4e2b01fe4663daa222f19ccf8e976',1,'shellstrings.h']]],
+  ['shell_5fprint',['shell_print',['../shellstrings_8h.html#a6389ab45ffb7febcbba0ce6ba07893bd',1,'shellstrings.h']]],
+  ['shell_5fprompt',['shell_prompt',['../shellstrings_8h.html#a22c403b5d0b6bb69790a2b24a66a3d59',1,'shellstrings.h']]],
+  ['shell_5fsave',['shell_save',['../shellstrings_8h.html#a1d470cf3701e349f825ed18d42d11b68',1,'shellstrings.h']]],
+  ['shell_5fsave_5fmessage',['shell_save_message',['../shellstrings_8h.html#a71d02200b3ae45fb723bf0ca834138bb',1,'shellstrings.h']]],
+  ['shell_5fstart_5finteractive',['shell_start_interactive',['../shellstrings_8h.html#a905667e2770153cddfbff76d35341056',1,'shellstrings.h']]],
+  ['shell_5fusage',['shell_usage',['../shellstrings_8h.html#a91c5dec0a9b6fdc83935367fb1993f5c',1,'shellstrings.h']]],
+  ['shell_5fverbose_5fchart',['shell_verbose_chart',['../shellstrings_8h.html#a58832208722ce2d70ff838496dd1ca9f',1,'shellstrings.h']]],
+  ['shellstrings_2eh',['shellstrings.h',['../shellstrings_8h.html',1,'']]]
+];

@@ -1,0 +1,182 @@
+\hypertarget{main__functions__edit_8h}{}\section{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+edit.h File Reference}
+\label{main__functions__edit_8h}\index{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+edit.\+h@{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+edit.\+h}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}dictionary.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{main__functions__edit_8h_aa822af3786906dfae01ff09e7f1da0fe}{is\+\_\+in\+\_\+punct\+\_\+array}} (char letter)
+\begin{DoxyCompactList}\small\item\em Determines whether a character is a punctuation character or not. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main__functions__edit_8h_a2d17e60f8fdb56d8239558ff12fd8315}{remove\+\_\+prefix\+\_\+punctuation}} (char $\ast$word)
+\begin{DoxyCompactList}\small\item\em Removes any punctuation characters at the beginning of a string (word). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main__functions__edit_8h_a7b256b07c4d2ad5ed5af231dc69d4682}{remove\+\_\+trailing\+\_\+punctuation}} (char $\ast$word)
+\begin{DoxyCompactList}\small\item\em Removes any punctuation characters at the end of a string (word). \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{main__functions__edit_8h_a6d127f96df84f3c099b1a1f6b6348965}{remove\+\_\+punctuation}} (char $\ast$word)
+\begin{DoxyCompactList}\small\item\em Combines \mbox{\hyperlink{main__functions__edit_8h_a7b256b07c4d2ad5ed5af231dc69d4682}{remove\+\_\+trailing\+\_\+punctuation()}} and \mbox{\hyperlink{main__functions__edit_8h_a2d17e60f8fdb56d8239558ff12fd8315}{remove\+\_\+prefix\+\_\+punctuation()}} to remove trailing and prefix punctuation characters without modifying the original word. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{main__functions__edit_8h_a21a06bb106eda6d8b14dbf409122fa75}{underline\+\_\+misspelled\+\_\+sentence}} (char $\ast$$\ast$misspelled, char $\ast$sentence, char $\ast$underline)
+\begin{DoxyCompactList}\small\item\em Underlines a list misspelled words in a given sentence. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main__functions__edit_8h_aa393e6cc3a8b8027955d4ac37633a6b1}{add\+\_\+to\+\_\+misspelled}} (char $\ast$word, char $\ast$$\ast$misspelled)
+\begin{DoxyCompactList}\small\item\em Adds a misspelled word to a list of misspelled words. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main__functions__edit_8h_a556d7f2b59db4e59a20dc5761f99726d}{parse\+\_\+string}} (char $\ast$string, \mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$dict, char $\ast$underline, char $\ast$$\ast$misspelled)
+\begin{DoxyCompactList}\small\item\em Given a line, generates a list of misspelled words and underlines them. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{main__functions__edit_8h_ae9f446537b2f578ac35ea7866f305146}{correct\+\_\+line}} (char $\ast$line, char $\ast$old\+\_\+word, char $\ast$new\+\_\+word)
+\begin{DoxyCompactList}\small\item\em Replaces a word in a line with the word suggestion chosen by the user. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+String editing functions for the shell. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{main__functions__edit_8h_aa393e6cc3a8b8027955d4ac37633a6b1}\label{main__functions__edit_8h_aa393e6cc3a8b8027955d4ac37633a6b1}} 
+\index{main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}!add\+\_\+to\+\_\+misspelled@{add\+\_\+to\+\_\+misspelled}}
+\index{add\+\_\+to\+\_\+misspelled@{add\+\_\+to\+\_\+misspelled}!main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}}
+\subsubsection{\texorpdfstring{add\+\_\+to\+\_\+misspelled()}{add\_to\_misspelled()}}
+{\footnotesize\ttfamily int add\+\_\+to\+\_\+misspelled (\begin{DoxyParamCaption}\item[{char $\ast$}]{word,  }\item[{char $\ast$$\ast$}]{misspelled }\end{DoxyParamCaption})}
+
+
+
+Adds a misspelled word to a list of misspelled words. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em word} & A string (word). \\
+\hline
+{\em misspelled} & Array of strings (list of misspelled words).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int as pseudo-\/boolean (E\+X\+I\+T\+\_\+\+S\+U\+C\+C\+E\+SS ot E\+X\+I\+T\+\_\+\+F\+A\+I\+L\+U\+RE). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main__functions__edit_8h_ae9f446537b2f578ac35ea7866f305146}\label{main__functions__edit_8h_ae9f446537b2f578ac35ea7866f305146}} 
+\index{main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}!correct\+\_\+line@{correct\+\_\+line}}
+\index{correct\+\_\+line@{correct\+\_\+line}!main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}}
+\subsubsection{\texorpdfstring{correct\+\_\+line()}{correct\_line()}}
+{\footnotesize\ttfamily char$\ast$ correct\+\_\+line (\begin{DoxyParamCaption}\item[{char $\ast$}]{line,  }\item[{char $\ast$}]{old\+\_\+word,  }\item[{char $\ast$}]{new\+\_\+word }\end{DoxyParamCaption})}
+
+
+
+Replaces a word in a line with the word suggestion chosen by the user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & Line to be modified. \\
+\hline
+{\em old\+\_\+word} & String (Misspelled word). \\
+\hline
+{\em new\+\_\+word} & String (Corrected word). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Modified (Corrected) line. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main__functions__edit_8h_aa822af3786906dfae01ff09e7f1da0fe}\label{main__functions__edit_8h_aa822af3786906dfae01ff09e7f1da0fe}} 
+\index{main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}!is\+\_\+in\+\_\+punct\+\_\+array@{is\+\_\+in\+\_\+punct\+\_\+array}}
+\index{is\+\_\+in\+\_\+punct\+\_\+array@{is\+\_\+in\+\_\+punct\+\_\+array}!main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}}
+\subsubsection{\texorpdfstring{is\+\_\+in\+\_\+punct\+\_\+array()}{is\_in\_punct\_array()}}
+{\footnotesize\ttfamily bool is\+\_\+in\+\_\+punct\+\_\+array (\begin{DoxyParamCaption}\item[{char}]{letter }\end{DoxyParamCaption})}
+
+
+
+Determines whether a character is a punctuation character or not. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em letter} & A character. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the character is a punctuation character, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main__functions__edit_8h_a556d7f2b59db4e59a20dc5761f99726d}\label{main__functions__edit_8h_a556d7f2b59db4e59a20dc5761f99726d}} 
+\index{main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}!parse\+\_\+string@{parse\+\_\+string}}
+\index{parse\+\_\+string@{parse\+\_\+string}!main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}}
+\subsubsection{\texorpdfstring{parse\+\_\+string()}{parse\_string()}}
+{\footnotesize\ttfamily void parse\+\_\+string (\begin{DoxyParamCaption}\item[{char $\ast$}]{string,  }\item[{\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$}]{dict,  }\item[{char $\ast$}]{underline,  }\item[{char $\ast$$\ast$}]{misspelled }\end{DoxyParamCaption})}
+
+
+
+Given a line, generates a list of misspelled words and underlines them. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string} & Line to be parsed. \\
+\hline
+{\em dict} & Dictionary file being input. \\
+\hline
+{\em underline} & String of underline characters. \\
+\hline
+{\em misspelled} & Array of strings (list of misspelled words). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{main__functions__edit_8h_a2d17e60f8fdb56d8239558ff12fd8315}\label{main__functions__edit_8h_a2d17e60f8fdb56d8239558ff12fd8315}} 
+\index{main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}!remove\+\_\+prefix\+\_\+punctuation@{remove\+\_\+prefix\+\_\+punctuation}}
+\index{remove\+\_\+prefix\+\_\+punctuation@{remove\+\_\+prefix\+\_\+punctuation}!main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}}
+\subsubsection{\texorpdfstring{remove\+\_\+prefix\+\_\+punctuation()}{remove\_prefix\_punctuation()}}
+{\footnotesize\ttfamily void remove\+\_\+prefix\+\_\+punctuation (\begin{DoxyParamCaption}\item[{char $\ast$}]{word }\end{DoxyParamCaption})}
+
+
+
+Removes any punctuation characters at the beginning of a string (word). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em word} & A string (word). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{main__functions__edit_8h_a6d127f96df84f3c099b1a1f6b6348965}\label{main__functions__edit_8h_a6d127f96df84f3c099b1a1f6b6348965}} 
+\index{main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}!remove\+\_\+punctuation@{remove\+\_\+punctuation}}
+\index{remove\+\_\+punctuation@{remove\+\_\+punctuation}!main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}}
+\subsubsection{\texorpdfstring{remove\+\_\+punctuation()}{remove\_punctuation()}}
+{\footnotesize\ttfamily char$\ast$ remove\+\_\+punctuation (\begin{DoxyParamCaption}\item[{char $\ast$}]{word }\end{DoxyParamCaption})}
+
+
+
+Combines \mbox{\hyperlink{main__functions__edit_8h_a7b256b07c4d2ad5ed5af231dc69d4682}{remove\+\_\+trailing\+\_\+punctuation()}} and \mbox{\hyperlink{main__functions__edit_8h_a2d17e60f8fdb56d8239558ff12fd8315}{remove\+\_\+prefix\+\_\+punctuation()}} to remove trailing and prefix punctuation characters without modifying the original word. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em word} & A string (word). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Input string (word) with punctuation characters removed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main__functions__edit_8h_a7b256b07c4d2ad5ed5af231dc69d4682}\label{main__functions__edit_8h_a7b256b07c4d2ad5ed5af231dc69d4682}} 
+\index{main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}!remove\+\_\+trailing\+\_\+punctuation@{remove\+\_\+trailing\+\_\+punctuation}}
+\index{remove\+\_\+trailing\+\_\+punctuation@{remove\+\_\+trailing\+\_\+punctuation}!main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}}
+\subsubsection{\texorpdfstring{remove\+\_\+trailing\+\_\+punctuation()}{remove\_trailing\_punctuation()}}
+{\footnotesize\ttfamily void remove\+\_\+trailing\+\_\+punctuation (\begin{DoxyParamCaption}\item[{char $\ast$}]{word }\end{DoxyParamCaption})}
+
+
+
+Removes any punctuation characters at the end of a string (word). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em word} & A string (word). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{main__functions__edit_8h_a21a06bb106eda6d8b14dbf409122fa75}\label{main__functions__edit_8h_a21a06bb106eda6d8b14dbf409122fa75}} 
+\index{main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}!underline\+\_\+misspelled\+\_\+sentence@{underline\+\_\+misspelled\+\_\+sentence}}
+\index{underline\+\_\+misspelled\+\_\+sentence@{underline\+\_\+misspelled\+\_\+sentence}!main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}}
+\subsubsection{\texorpdfstring{underline\+\_\+misspelled\+\_\+sentence()}{underline\_misspelled\_sentence()}}
+{\footnotesize\ttfamily char$\ast$ underline\+\_\+misspelled\+\_\+sentence (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{misspelled,  }\item[{char $\ast$}]{sentence,  }\item[{char $\ast$}]{underline }\end{DoxyParamCaption})}
+
+
+
+Underlines a list misspelled words in a given sentence. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em misspelled} & Array of strings (list of misspelled words). \\
+\hline
+{\em sentence} & Dentence to be modified. \\
+\hline
+{\em underline} & String of underline characters.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Underline for the misspelled words in the input sentence. 
+\end{DoxyReturn}

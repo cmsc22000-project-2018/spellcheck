@@ -1,0 +1,65 @@
+\hypertarget{main__functions__batch_8h}{}\section{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+batch.h File Reference}
+\label{main__functions__batch_8h}\index{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+batch.\+h@{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+batch.\+h}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}dictionary.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \mbox{\hyperlink{main__functions__batch_8h_a688e58fa0a1912a0963c371088ed7a49}{edit\+\_\+batch}} (char $\ast$line, \mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$dict, int verbosity, int lnum)
+\begin{DoxyCompactList}\small\item\em Returns a line that has been corrected with automatic suggestions. \end{DoxyCompactList}\item 
+char $\ast$$\ast$ \mbox{\hyperlink{main__functions__batch_8h_aab81aadfd8cadafec13b339226833005}{batch\+\_\+mode}} (char $\ast$filename, \mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$dict, bool $\ast$quit, int verbosity)
+\begin{DoxyCompactList}\small\item\em Batch Mode function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Batch mode functions. In this mode, the program either generates a list of suggestions, printing out the list into the command line, or it generates a linked list of corrected lines, ready to be printed out to the command line or to be saved to a specific destination. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{main__functions__batch_8h_aab81aadfd8cadafec13b339226833005}\label{main__functions__batch_8h_aab81aadfd8cadafec13b339226833005}} 
+\index{main\+\_\+functions\+\_\+batch.\+h@{main\+\_\+functions\+\_\+batch.\+h}!batch\+\_\+mode@{batch\+\_\+mode}}
+\index{batch\+\_\+mode@{batch\+\_\+mode}!main\+\_\+functions\+\_\+batch.\+h@{main\+\_\+functions\+\_\+batch.\+h}}
+\subsubsection{\texorpdfstring{batch\+\_\+mode()}{batch\_mode()}}
+{\footnotesize\ttfamily char$\ast$$\ast$ batch\+\_\+mode (\begin{DoxyParamCaption}\item[{char $\ast$}]{filename,  }\item[{\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$}]{dict,  }\item[{bool $\ast$}]{quit,  }\item[{int}]{verbosity }\end{DoxyParamCaption})}
+
+
+
+Batch Mode function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & File being input. \\
+\hline
+{\em dict} & Dictionary file being input. \\
+\hline
+{\em quit} & Pointer to boolean determining if the function should quit or not (true\+: continue in main.\+c loop, false\+: exit program). \\
+\hline
+{\em verbosity} & Flag indicating whether to print output or not (1\+: Quiet Batch Mode, 2\+: Verbose Batch Mode). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Array of pointers to strings (lines to be printed if Verbose Batch Mode). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main__functions__batch_8h_a688e58fa0a1912a0963c371088ed7a49}\label{main__functions__batch_8h_a688e58fa0a1912a0963c371088ed7a49}} 
+\index{main\+\_\+functions\+\_\+batch.\+h@{main\+\_\+functions\+\_\+batch.\+h}!edit\+\_\+batch@{edit\+\_\+batch}}
+\index{edit\+\_\+batch@{edit\+\_\+batch}!main\+\_\+functions\+\_\+batch.\+h@{main\+\_\+functions\+\_\+batch.\+h}}
+\subsubsection{\texorpdfstring{edit\+\_\+batch()}{edit\_batch()}}
+{\footnotesize\ttfamily char$\ast$ edit\+\_\+batch (\begin{DoxyParamCaption}\item[{char $\ast$}]{line,  }\item[{\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$}]{dict,  }\item[{int}]{verbosity,  }\item[{int}]{lnum }\end{DoxyParamCaption})}
+
+
+
+Returns a line that has been corrected with automatic suggestions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & String of line to be modified. \\
+\hline
+{\em dict} & Dictionary file being input. \\
+\hline
+{\em verbosity} & Flag indicating whether to print output or not (1\+: Quiet Batch Mode, 2\+: Verbose Batch Mode). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Modified string of line. 
+\end{DoxyReturn}

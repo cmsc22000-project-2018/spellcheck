@@ -1,0 +1,68 @@
+\hypertarget{main__functions__interactive_8h}{}\section{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+interactive.h File Reference}
+\label{main__functions__interactive_8h}\index{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+interactive.\+h@{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+interactive.\+h}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}dictionary.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \mbox{\hyperlink{main__functions__interactive_8h_a1af38b34bab2f1ffcd52988af602819a}{edit\+\_\+interactive}} (char $\ast$line, \mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$dict, int linenumber, bool returnflag, bool $\ast$color)
+\begin{DoxyCompactList}\small\item\em Returns a line which has been corrected by generating a clist of misspelled words, asks for correction choices from user through the command line, and replaces misspelled word with the user choices. \end{DoxyCompactList}\item 
+char $\ast$$\ast$ \mbox{\hyperlink{main__functions__interactive_8h_a1b5f6c8da9f03f1ccb25294248839274}{interactive\+\_\+mode}} (char $\ast$filename, \mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$dict, bool $\ast$quit, bool $\ast$color)
+\begin{DoxyCompactList}\small\item\em Opens a file to parse and store it in a list, then edits each line, and returns the list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Interactive mode functions for the shell. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{main__functions__interactive_8h_a1af38b34bab2f1ffcd52988af602819a}\label{main__functions__interactive_8h_a1af38b34bab2f1ffcd52988af602819a}} 
+\index{main\+\_\+functions\+\_\+interactive.\+h@{main\+\_\+functions\+\_\+interactive.\+h}!edit\+\_\+interactive@{edit\+\_\+interactive}}
+\index{edit\+\_\+interactive@{edit\+\_\+interactive}!main\+\_\+functions\+\_\+interactive.\+h@{main\+\_\+functions\+\_\+interactive.\+h}}
+\subsubsection{\texorpdfstring{edit\+\_\+interactive()}{edit\_interactive()}}
+{\footnotesize\ttfamily char$\ast$ edit\+\_\+interactive (\begin{DoxyParamCaption}\item[{char $\ast$}]{line,  }\item[{\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$}]{dict,  }\item[{int}]{linenumber,  }\item[{bool}]{returnflag,  }\item[{bool $\ast$}]{color }\end{DoxyParamCaption})}
+
+
+
+Returns a line which has been corrected by generating a clist of misspelled words, asks for correction choices from user through the command line, and replaces misspelled word with the user choices. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & Line to be modified. \\
+\hline
+{\em dict} & Dictionary file being input. \\
+\hline
+{\em linenumber} & Number of lines. \\
+\hline
+{\em returnflag} & Flag to indicate if line being parsed is the last line. \\
+\hline
+{\em color} & Boolean to enable/disable the color functionality. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Modified line. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main__functions__interactive_8h_a1b5f6c8da9f03f1ccb25294248839274}\label{main__functions__interactive_8h_a1b5f6c8da9f03f1ccb25294248839274}} 
+\index{main\+\_\+functions\+\_\+interactive.\+h@{main\+\_\+functions\+\_\+interactive.\+h}!interactive\+\_\+mode@{interactive\+\_\+mode}}
+\index{interactive\+\_\+mode@{interactive\+\_\+mode}!main\+\_\+functions\+\_\+interactive.\+h@{main\+\_\+functions\+\_\+interactive.\+h}}
+\subsubsection{\texorpdfstring{interactive\+\_\+mode()}{interactive\_mode()}}
+{\footnotesize\ttfamily char$\ast$$\ast$ interactive\+\_\+mode (\begin{DoxyParamCaption}\item[{char $\ast$}]{filename,  }\item[{\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$}]{dict,  }\item[{bool $\ast$}]{quit,  }\item[{bool $\ast$}]{color }\end{DoxyParamCaption})}
+
+
+
+Opens a file to parse and store it in a list, then edits each line, and returns the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & File being input. \\
+\hline
+{\em dictionary} & Dictionary file being input. \\
+\hline
+{\em quit} & Pointer to boolean determining if the function should quit or not (true\+: continue in main.\+c loop, false\+: exit program). \\
+\hline
+{\em color} & Boolean to enable/disable the color functionality. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Array of strings (lines to be printed in the save page). 
+\end{DoxyReturn}
