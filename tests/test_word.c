@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "word.h"
 #include "dictionary.h"
+#include "log.c/src/log.h"
 
 /* testing word_valid */
 Test(word, word_valid)
@@ -17,8 +18,8 @@ Test(word, word_valid)
     cr_assert_eq(i, true, "testing for punctuation, failed");
 }
 
-/* testing word_valid */
-Test(word, word_valid0)
+/* testing valid_word */
+Test(word, valid_word0)
 {
     char* c = strdup(";checker");
     dict_t* dict = dict_new();
@@ -29,8 +30,8 @@ Test(word, word_valid0)
     cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
-/* testing word_valid */
-Test(word, word_valid1)
+/* testing valid_word */
+Test(word, valid_word1)
 {
     char* c = strdup("p'ac");
     dict_t* dict = dict_new();
@@ -41,8 +42,8 @@ Test(word, word_valid1)
     cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
-/* testing word_valid */
-Test(word, word_valid2)
+/* testing valid_word */
+Test(word, valid_word2)
 {
     char* c = strdup("ac");
     dict_t* dict = dict_new();

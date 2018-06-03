@@ -1,8 +1,9 @@
 #include <criterion/criterion.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "main_functions_edit.h"
 #include <string.h>
+#include "main_functions_edit.h"
+#include "log.c/src/log.h"
 
 /* Note on testing for main_functions_*.c files:
  * Note that there are five parts to main_functions.c: saving, editing, interactive, batch, main.
@@ -178,19 +179,19 @@ void check_remove_prefix_punctuation(char* word, char* expected) {
 }
 
 Test(main_functions_edit, remove_prefix_punctuation) {
-	char* buffer = strdup("...words");
+	char buffer[9] = "...words";
     char* expected = "words"; 
     check_remove_prefix_punctuation(buffer, expected);
 }
 
 Test(main_functions_edit, remove_prefix_punctuation2) {
-	char* buffer = strdup("..words");
+	char buffer[8] = "..words";
     char* expected = "words"; 
     check_remove_prefix_punctuation(buffer, expected);
 }
 
 Test(main_functions_edit, remove_prefix_punctuation3) {
-	char* buffer = strdup("??words?");
+	char buffer[10] = "??words?";
     char* expected = "words?"; 
     check_remove_prefix_punctuation(buffer, expected);
 }
@@ -215,11 +216,16 @@ Test(main_functions_edit, remove_trailing_punctuation1) {
 
 
 Test(main_functions_edit, remove_trailing_punctuation2) {
-	char buffer[6] = "words.";
+	char buffer[7] = "words.";
     char* expected = "words"; 
     check_remove_trailing_punctuation(buffer, expected);
 }
 
+Test(main_functions_edit, remove_trailing_punctuation3) {
+	char* buffer = strdup("??words?");
+    char* expected = "??words"; 
+    check_remove_trailing_punctuation(buffer, expected);
+}
 
 Test(main_functions_edit, remove_trailing_punctuation4) {
     char* sample = "words.!?!?!.";

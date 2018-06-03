@@ -89,5 +89,4 @@ void words_uppercase(char **words, int flag);
  */
 int generate_suggestions(dict_t *dict, char *word, char **suggestions, int max_edits, int amount);
 
-
 #endif

@@ -1,8 +1,8 @@
 #ifndef INCLUDE_MAIN_FUNCTIONS_BATCH_H_
 #define INCLUDE_MAIN_FUNCTIONS_BATCH_H_
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include "dictionary.h"
 
@@ -24,7 +24,7 @@
  *      verbosity determines whether or not shell output exists 
  * return: edited string of line
  */
-char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum);
+char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum);
 
 /* 
  * batch_mode: operates batch mode
@@ -38,6 +38,6 @@ char* edit_batch(char* line, dict_t* dict, int verbosity, int lnum);
  *
  * return: char** array of lines, to be printed if quiet mode
  */
-char** batch_mode(char* filename, dict_t* dict, bool* quit, int verbosity);
+char **batch_mode(char *filename, dict_t *dict, bool *quit, int verbosity);
 
 #endif

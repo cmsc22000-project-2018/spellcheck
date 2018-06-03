@@ -1,106 +1,147 @@
-#include <sys/stat.h>
+#include <stdlib.h>
 #include <stdio.h>
-#include <stdlib.h>	
-#include <sys/types.h>
-#include <string.h>
 #include <stdbool.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <string.h>
 #include <assert.h>
 #include "shellstrings.h"
 #include "parser.h"
 #include "main_functions_home.h"
+#include "log.c/src/log.h"
 
 /* See main_functions_home.h */
-void help_page()
-{
-    shell_help();
-	shell_prompt();
+void help_page(bool *color) {
+    shell_help(color);
+	shell_prompt(color);
 
-	parse_read_line();      // accept any input in the command line
+	// Accept any input in the command line
+	parse_read_line();
+	log_trace("exiting help_page");
 }
 
 /* See main_functions_home.h */
-bool fileexists(const char* filename)
-{
+bool fileexists(const char *filename) {
 	struct stat buffer;
-	return (bool)(stat(filename, &buffer) == 0);
+
+	log_trace("filename: %s", filename);
+
+	if (stat(filename, &buffer) == 0) {
+		return true;
+	}
+	return false;
 }
 
 /* See main_functions_home.h */
-int change_mode(char* arg)
-{
+int change_mode(char *arg, bool* color) {
+	log_trace("arg entered for mode: %s", arg);
 	int a = atoi(arg);
-    if ((a == 1) | (a == 2) | (a == 3)) {
+
+    if ((a == QUIET_MODE) || (a == VERBOSE_MODE) || (a == INTERACTIVE_MODE)) {
         return a;
-	} else {
-        shell_error("Input invalid: return to mode 3, interactive mode");		
-	    return 3; 		// default is 3, given this function is only called in main_page, at which point interactive is probably what user intended
-    }
-    return 3;
+	}
+
+    shell_error("Invalid mode; reverting to interactive.", color);
+    /*
+     * The default is 3, given this function is only called in main_page(),
+     * at which point interactive mode is what user probably intended
+     */
+	return INTERACTIVE_MODE;
 }
 
 /* See main_functions_home.h */
-void main_page(bool* quit, int *mode, char* file_name, char* dict_name)
-{
-	char* line;
-	char** args;
+void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
+	char *line;
+	char **args;
+	bool print = true;
 
 	while ((*quit) == true) {
-		shell_intro();
-		shell_prompt();
+		if (print == true) {
+			log_trace("printing main menu");
+			shell_main_menu(color);
+		}
+
+		shell_prompt(color);
 
 		line = parse_read_line();
 		args = parse_split_line(line);	// line is now split into tokens
 
-		if (args == NULL || args [2] != NULL) { // 3 inputs, or no input: error message
-			shell_error("Please type in one of the indicated commands!");
+		if ((args == NULL) || (args[2] != NULL)) { // 3 inputs, or no input: error message
+			log_warn("no arguments, or too many");
+			shell_error("Please type in one of the indicated commands.", color);
+			
+			print = false;
 			*quit = true;
+		}
 
-		} else if (!strcmp(args[0],"h")) { // Print help page, then wait for user input
-			help_page();
+		else if (!strcmp(args[0], "h")) { // Print help page, then wait for user input
+			help_page(color);
+			
+			print = true;
 			*quit = true;
+		}
 
-		} else if (!strcmp(args[0],"f")) { // Check valid file path, then exit. If not, redo loop
-
-			if(!fileexists(args[1])) {	//file path checking
-				shell_error("Please enter a valid file path for a new edit target!");
+		else if (!strcmp(args[0], "f")) { // Check valid file path, then exit. If not, redo loop
+			if (!fileexists(args[1])) {	//file path checking
+				log_warn("file does not exist");
+				shell_error("Please enter a valid file path for a new edit target.", color);
+				
+				print = false;
 				*quit = true;
-
-			} else {
-			strcpy(file_name,args[1]);
-			printf("\n\nInput file is now %s\n\n\n",file_name);
-			*quit = false;
 			}
 
-		} else if (!strcmp(args[0],"d")) {	// dictionary name change 
+			else {
+				log_debug("filename entered is %s", args[1]);
+				strcpy(filename,args[1]);
+				printf("\nInput file is now %s\n",filename);
 
-			if(!fileexists(args[1])) {	// Check file path validity for dicitonary
-				shell_error("Please enter a valid file path for a new dictionary!");
-				*quit = true;
-
-			} else {
-			dict_name=args[1];
-			printf("\n\nDictionary file is now %s\n\n\n",dict_name);
-			*quit = true;
-			}
-
-		} else if (!strcmp(args[0],"q")) { // quit
-			*quit = false;
-			*mode = QUIT;
-			return ;
-
-		} else if (!strcmp(args[0], "m")) { // change mode
-			printf("Mode number accepted: %d\n",atoi(args[1]));
-            *mode = change_mode(args[1]);
-
-			if(!fileexists(file_name)) {
-				*quit = true;
-
-			} else {
+				print = false;
 				*quit = false;
 			}
+		}
 
-		} else { // input bad
-			shell_error("Please type in one of the indicated commands!");
+		else if (!strcmp(args[0],"d")) {	// dictionary name change 
+			if (!fileexists(args[1])) {	// Check file path validity for dicitonary
+				log_warn("dictionary does not exist");
+				shell_error("Please enter a valid file path for a new dictionary.", color);
+				
+				print = false;
+				*quit = true;
+			}
+
+			else {
+				dict = args[1];
+				printf("\n\nDictionary file is now %s\n",dict);
+			
+				print = false;
+				*quit = true;
+			}
+		} 
+
+		else if (!strcmp(args[0], "m")) { // change mode
+			printf("Mode number accepted: %d\n", atoi(args[1]));
+            *mode = change_mode(args[1], color);
+
+            print = true;
+            *quit = true;
+		}
+
+		else if (!strcmp(args[0], "c")) { // color
+			log_trace("reversing mode colors");
+			*color = !(*color);
+		}
+
+		else if (!strcmp(args[0],"q")) { // quit
+			print = false;
+			*quit = false;
+			log_info("user chose to quit");
+			*mode = QUIT;
+			
+			return;
+		}
+
+		else { // input bad
+			shell_error("Invalid file input.", color);
 			*quit = true;
 		}
 

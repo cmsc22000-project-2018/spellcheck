@@ -1,8 +1,8 @@
 #ifndef INCLUDE_MAIN_FUNCTIONS_SAVE_H_
 #define INCLUDE_MAIN_FUNCTIONS_SAVE_H_
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 
 /*
@@ -19,7 +19,7 @@
  *
  * returns: void
  */
-void save_corrections(char* filename, char** lines);
+void save_corrections(char *filename, char **lines);
 
 /*
  * save_page: prints save_page, accepting command line inputs until user prints file, 
@@ -29,9 +29,10 @@ void save_corrections(char* filename, char** lines);
  *      - filename: string indicating name of file (saving destination)
  *      - lines: array of strings to be printed in file
  *      - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
+ *      - color: pointer to boolean (TRUE means print in colors, FALSE means print without colors)
  *
  * returns: void
  */
-void save_page(char* filename, char** lines, bool* quit);
+void save_page(char *filename, char **lines, bool *quit, bool* color);
 
 #endif

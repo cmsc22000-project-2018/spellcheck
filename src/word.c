@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include "word.h"
 #include "dictionary.h"
+#include "log.c/src/log.h"
 //#include "suggestion.h"
 
 /* See word.h */
@@ -19,10 +20,11 @@ bool word_valid(dict_t *dict, char *word) {
 
     if (dict_chars_exists(dict, *word) == 0 && *word != '\n') {
 	    if (!dict_exists(dict, word)) {
+            log_trace("returning true from valid_word");
             return true;
         }
     }
-
+    log_trace("returning false from valid_word");
     return false;
 }
 
@@ -179,5 +181,3 @@ int generate_suggestions(dict_t *dict, char *word, char **suggestions, int max_e
 
     return EXIT_SUCCESS;
 }
-
-
