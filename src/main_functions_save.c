@@ -30,7 +30,7 @@ void save_corrections(char *filename, char **lines) {
 /* See main_functions_save.h */
 void save_page(char *filename, char **lines, bool *quit, bool* color) {
 	int i = 1;
-    char line[50];
+    char line[10];
     char *args = NULL;
     char** inputs = NULL;
     char* savefilename = NULL;
@@ -49,8 +49,8 @@ void save_page(char *filename, char **lines, bool *quit, bool* color) {
             log_debug("parsing command input.");
 
             inputs = parse_split_line(line);
-            line = inputs[0];
-            args = inputs[1];
+            strcpy(line,inputs[0]);
+            args = strdup(inputs[1]);
         }
 
         if (!strcmp(line,"p")) {

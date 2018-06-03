@@ -32,7 +32,7 @@ char *underline_misspelled_sentence(char *misspelled, char *sentence, char *unde
 		strcat(underline, " ");
     }
 
-    size_t slen = strlen(misspelled);
+    int slen = strlen(misspelled);
 
 	for ( ; i < slen + pos; i++) {
 		strcat(underline, "^");
