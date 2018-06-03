@@ -289,7 +289,7 @@ void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggesti
     // Prints the location and character
     char* ptr = strstr(line, misspelled);
     int charpos = 0;
-    charpos = (int) ptr - (int) line;
+    charpos = ptr - line;
 
     log_trace("shell_verbose_chart character position in line is %d", charpos);
     

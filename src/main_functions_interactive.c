@@ -88,7 +88,9 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
                 printf("\n");
             }
 
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
+         	if (misspelled[i+1] != NULL)
+                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
+
         }
 
         else if (choice[0] == 's') { // skip
@@ -100,7 +102,8 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
                 printf("\n");
             }
 
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
+            if (misspelled[i+1] != NULL)
+                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
         }
 
         else if (choice[0] == 'i') { // insert
@@ -150,7 +153,8 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
                 printf("\n");
             }
 
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
+            if (misspelled[i+1] != NULL)
+                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
         } 
 
         else if (isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
@@ -166,7 +170,8 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
                 printf("\n");
             }
 
-         	printf("%s", underline_misspelled_sentence(misspelled, line_copy, underline));
+            if (misspelled[i+1] != NULL)
+                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
         }
 
         i++; // added loop changer

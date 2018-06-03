@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <shellstrings.h>
 #include <string.h>
+#include "parser.h"
 #include "main_functions_save.h"
 #include "log.c/src/log.h"
 

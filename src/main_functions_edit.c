@@ -25,26 +25,23 @@ char *underline_misspelled_sentence(char *misspelled, char *sentence, char *unde
 	assert(misspelled != NULL);
 	assert(ptr != NULL);
 
-
-
 	int pos = ptr - sentence;
 	int i;
-	size_t j;
 
 	for (i = 0; i < pos; i++) {
 		strcat(underline, " ");
     }
 
-    size_t slen = strlen(misspelled[element]);
+    size_t slen = strlen(misspelled);
 
 	for ( ; i < slen + pos; i++) {
 		strcat(underline, "^");
     }
 
-    underline[i] = '\0';.
+    underline[i] = '\0';
 
-	log_debug("underline is %s", n);
-	log_debug("returning from underline_misspelled_sentence", element);
+	log_debug("underline is %s", underline);
+	log_debug("returning from underline_misspelled_sentence");
 	return underline;
 }
 
