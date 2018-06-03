@@ -36,6 +36,6 @@ NOTE: you should not write \n while writing the expected outputs. The program au
 -a shows all output without shortening it.
 
 Recommended flags to run the test
-shelltest -p cli_batch.test
-shelltest -p -a cli_batch.test
+shelltest -p tests/cli_batch.test
+shelltest -p -a tests/cli_batch.test
 shelltest -a -p -d tests/cli_batch.test
