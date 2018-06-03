@@ -86,10 +86,10 @@ void change_log_level(int v) {
 }
 
 int main(int argc, char *argv[]) {
-    log_info("Program started successfully.");
+    log_trace("Program started successfully.");
 
     if (argc > 9) {
-        log_warn("Too many command line arguments was input.");
+        log_warn("Too many command line arguments were input.");
         shell_usage(false);
         log_info("Usage help page provided.");
         exit(1);
