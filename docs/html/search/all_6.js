@@ -1,5 +1,21 @@
 var searchData=
 [
-  ['trie',['trie',['../structtrie.html',1,'']]],
-  ['trie_5ft',['trie_t',['../structtrie__t.html',1,'']]]
+  ['red',['RED',['../shellstrings_8h.html#a8d23feea868a983c8c2b661e1e16972f',1,'shellstrings.h']]],
+  ['redisaeevents',['redisAeEvents',['../structredis_ae_events.html',1,'']]],
+  ['redisasynccontext',['redisAsyncContext',['../structredis_async_context.html',1,'']]],
+  ['rediscallback',['redisCallback',['../structredis_callback.html',1,'']]],
+  ['rediscallbacklist',['redisCallbackList',['../structredis_callback_list.html',1,'']]],
+  ['rediscontext',['redisContext',['../structredis_context.html',1,'']]],
+  ['redisivykisevents',['redisIvykisEvents',['../structredis_ivykis_events.html',1,'']]],
+  ['redislibeventevents',['redisLibeventEvents',['../structredis_libevent_events.html',1,'']]],
+  ['redislibevevents',['redisLibevEvents',['../structredis_libev_events.html',1,'']]],
+  ['redislibuvevents',['redisLibuvEvents',['../structredis_libuv_events.html',1,'']]],
+  ['redisqtadapter',['RedisQtAdapter',['../class_redis_qt_adapter.html',1,'']]],
+  ['redisreader',['redisReader',['../structredis_reader.html',1,'']]],
+  ['redisreadtask',['redisReadTask',['../structredis_read_task.html',1,'']]],
+  ['redisreply',['redisReply',['../structredis_reply.html',1,'']]],
+  ['redisreplyobjectfunctions',['redisReplyObjectFunctions',['../structredis_reply_object_functions.html',1,'']]],
+  ['redisrunloop',['RedisRunLoop',['../struct_redis_run_loop.html',1,'']]],
+  ['redissource',['RedisSource',['../struct_redis_source.html',1,'']]],
+  ['reset',['RESET',['../shellstrings_8h.html#ab702106cf3b3e96750b6845ded4e0299',1,'shellstrings.h']]]
 ];
