@@ -335,3 +335,41 @@ Test(dictionary, dict_exists_f1) {
     s = "notindictionarypleasedontpassifthispassesdictpersists";
     check_dict_exists("./tests/dict_test0.txt", s, EXIT_FAILURE);
 }
+
+/* Simple test for dict_suggestions */
+Test(suggestion, dict_suggestions0) {
+    dict_t *d = dict_new();
+
+    dict_add(d, "a");
+
+    // lol
+    char **result = dict_suggestions(d, "a", 0, 1);
+
+    cr_assert_eq(0, strcmp(result[0], "a"), 
+                "dict_suggestions() first result incorrect");
+}
+
+/* Complex test for dict_suggestions */
+Test(suggestion, dict_suggestions1) {
+    dict_t *d = dict_new();
+
+    dict_add(d, "afij4-8");
+    dict_add(d, "ayij48-");
+    dict_add(d, "flij4-8");
+    dict_add(d, "afij4*8");
+    dict_add(d, "antij4-8"); 
+    dict_add(d, "nkj345yf");
+    dict_add(d, "fdjsk43");
+    dict_add(d, "s");
+    dict_add(d, "jvu4893jfDJSkds8932ujfvn.`>IW");
+
+
+    char **result = dict_suggestions(d, "afij4-8", 3, 3);
+
+    cr_assert_eq(0, strcmp(result[0], "afij4-8"), 
+                "suggestion_list() first result incorrect");
+    cr_assert_eq(0, strcmp(result[1], "afij4*8"), 
+                "suggestion_list() second result incorrect");
+    cr_assert_eq(0, strcmp(result[2], "antij4-8"), 
+                "suggestion_list() third result incorrect");
+}
