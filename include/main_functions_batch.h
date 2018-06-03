@@ -18,6 +18,7 @@
  * \param line: String of line to be modified.
  * \param dict: Dictionary file being input.
  * \param verbosity: Flag indicating whether to print output or not (1: Quiet Batch Mode, 2: Verbose Batch Mode).
+ * \param lnum: Number of lines.
  * \return Modified string of line.
  */
 char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum);

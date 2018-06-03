@@ -24,6 +24,12 @@
  */
 
 /**
+ * \mainpage CMSC 22000 - Introduction to Software Development
+ *
+ * Spellcheck is a tool which, given a text, will search for misspelled words and will suggest alternative spellings.
+ */
+
+/**
  * \brief Default text input prompt string for the shell.
  *
  * \param color: Boolean to enable/disable the color functionality.

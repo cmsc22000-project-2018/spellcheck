@@ -46,6 +46,7 @@ int change_mode(char *arg, bool *color);
  * \param mode: Mode (Quiet Batch, Verbose Batch, or Interactive).
  * \param filename: File being input.
  * \param dict: Dictionary file being input.
+ * \param color: Boolean to enable/disable the color functionality.
  */
 void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color);
 

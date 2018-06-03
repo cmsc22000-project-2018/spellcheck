@@ -26,7 +26,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
  * \brief Opens a file to parse and store it in a list, then edits each line, and returns the list.
  *
  * \param filename: File being input.
- * \param dictionary: Dictionary file being input.
+ * \param dict: Dictionary file being input.
  * \param quit: Pointer to boolean determining if the function should quit or not (true: continue in main.c loop, false: exit program).
  * \param color: Boolean to enable/disable the color functionality.
  * \return Array of strings (lines to be printed in the save page).
