@@ -23,7 +23,7 @@ export PATH=$PATH:/Users/[your user name]/.local/bin
 ## Useful flags for debugging purposes
 Some flags that make it easier to spot the differences are as follows:
 
--diff only shows the differences between the expected and the actual, and ignores the parts that actually match.
+-d only shows the differences between the expected and the actual, and ignores the parts that actually match.
 
 -p shows all the expected and actual output including all the whitespaces, indicated with a "\n"
 NOTE: you should not write \n while writing the expected outputs. The program automatically translates whitespaces into \n. You should write the output as if you are writing it into the terminal.
@@ -32,5 +32,5 @@ NOTE: you should not write \n while writing the expected outputs. The program au
 
 Recommended flags to run the test
 shelltest -p cli_batch.test
-shelltest -p -diff cli_batch.test
 shelltest -p -a cli_batch.test
+shelltest -a -p -d tests/cli_batch.test
