@@ -9,8 +9,8 @@
 /* 
  * Batch Mode Functions
  * In this mode, the program either:
- *	- generates a list of suggestions, printing the list out into the command line or
- *	- generates a linked list of corrected lines of a file, ready to be printed to
+ *  - generates a list of suggestions, printing the list out into the command line or
+ *  - generates a linked list of corrected lines of a file, ready to be printed to
  *  the command line or saved to a specific destination.
  */
 
@@ -35,7 +35,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum);
  *  - dict: dictionary
  *  - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
  *  - verbosity: flag indicating whether or not to print output
- *	  Per definitions in main_functions_home.h, 1 = QUIET_MODE, 2 = VERBOSE_MODE
+ *    Per definitions in main_functions_home.h, 1 = QUIET_MODE, 2 = VERBOSE_MODE
  *
  * return: char** array of lines, to be printed if quiet mode
  */

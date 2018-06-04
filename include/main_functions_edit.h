@@ -82,7 +82,7 @@ int add_to_misspelled(char *word, char **misspelled);
  *  - string (line) to be parsed
  *  - dictionary
  *  - underline: string of ' ' and '^', highlighting misspelled words in sentence to be printed out in terminal
- *  this is initialized in edit_batch and edit_interactive as a malloc'd array with length of edit target string.
+ *    this is initialized in edit_batch and edit_interactive as a malloc'd array with length of edit target string.
  *  - misspelled: char** array of misspelled words in the line
  *
  * return: void
@@ -91,10 +91,12 @@ void parse_string(char *string, dict_t *dict, char *underline, char **misspelled
 
 /*
  * correct_line: replace word in array with word suggestion chosen by user
+ *
  * parameters:
  *  - line: line to be edited
  *  - old word: misspelled word
  *  - new word: correction
+ *
  * return: edited line 
  * //reference from https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
  */
