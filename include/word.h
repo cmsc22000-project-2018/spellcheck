@@ -67,13 +67,12 @@ void words_uppercase(char **words, int flag);
  * Parameters:
  *  - dict: A dictionary pointer. Must point to already allocated memory.
  *  - word: A string (word).
- *  - suggestions: An array of strings (words).
  *  - max_edits: Levenshtein distance of the string (word).
  *  - amount: Amount of suggestions.
  *
  * Returns:
  * returns string array representing suggestions. return NULL if not given.
  */
-char** generate_suggestions(dict_t *dict, char *word, char **suggestions, int max_edits, int amount);
+char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount);
 
 #endif

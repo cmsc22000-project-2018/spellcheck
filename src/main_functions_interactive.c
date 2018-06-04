@@ -160,23 +160,23 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
                 }
 
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
+            }
         }
         
-
         j = 0;
-        while (suggestions[j] != NULL) {
-            free(suggestions[j]);
-            j++;
+        if (suggestions != NULL) {
+            while (suggestions[j] != NULL) {
+                free(suggestions[j]);
+                j++;
+            }
+            free(suggestions);
         }
-        if (suggestions != NULL) free(suggestions);
-
-        i++; // added loop changer
     }
 
 	return line_copy;
 }
 
-int interactive_nsug_input(bool* color)
+int interactive_nsug_input(bool color)
 {
     char input[5];
     int check;

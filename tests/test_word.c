@@ -6,14 +6,14 @@
 #include "dictionary.h"
 #include "log.c/src/log.h"
 
-/* testing word_valid */
-Test(word, word_valid)
+/* testing valid_word */
+Test(word, valid_word)
 {
     char* c = strdup("have");
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = word_valid(dict, c);
+    int i = valid_word(dict, c);
 
     cr_assert_eq(i, true, "testing for punctuation, failed");
 }
@@ -25,7 +25,7 @@ Test(word, valid_word0)
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = word_valid(dict, c);
+    int i = valid_word(dict, c);
 
     cr_assert_eq(i, false, "testing for punctuation, failed");
 }
@@ -37,7 +37,7 @@ Test(word, valid_word1)
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = word_valid(dict, c);
+    int i = valid_word(dict, c);
 
     cr_assert_eq(i, false, "testing for punctuation, failed");
 }
@@ -49,7 +49,7 @@ Test(word, valid_word2)
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = word_valid(dict, c);
+    int i = valid_word(dict, c);
 
     cr_assert_eq(i, false, "testing for punctuation, failed");
 }
