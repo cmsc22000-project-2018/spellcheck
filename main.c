@@ -205,7 +205,7 @@ int main(int argc, char *argv[]) {
         }
 
 		// Starting to Parse file! Printing messages accordingly
-        char *md = shell_modename(&mode);
+        char *md = shell_modename(mode);
         log_trace("Mode set to: %s", md);
 
         if (mode == INTERACTIVE_MODE) {
@@ -226,7 +226,7 @@ int main(int argc, char *argv[]) {
                 break;
             case INTERACTIVE_MODE:
                 log_info("Entering interactive mode.");
-                result = interactive_mode(filename, new_dict, &quit, &color); // pass in dictionary
+                result = interactive_mode(filename, new_dict, &quit, color); // pass in dictionary
                 break;
             default:
                 break;
@@ -249,13 +249,13 @@ int main(int argc, char *argv[]) {
             if (md == NULL && (mode == QUIET_MODE)) {
                 log_trace("Printing result of the file edit.");
                 shell_print(result);
-                *quit = false;
+                quit = false;
             }
 
             else if (md != NULL) {
                 log_trace("Saving corrections to the designated file destination: %s", save_file);
                 save_corrections(save_file, result);
-                *quit = false;
+                quit = false;
             }
 
             else {

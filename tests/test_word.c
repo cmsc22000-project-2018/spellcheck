@@ -77,23 +77,6 @@ Test(word, generate_suggestions)
 }
 
 /* testing generate_suggestions */
-Test(word, generate_suggestions1)
-{
-    char* c = strdup("life");
-    char** suggestions = calloc(2, sizeof(char*));
-    if (suggestions == NULL) {
-        fprintf(stderr,"malloc failed, generate_suggestions1");
-        exit(0);
-    }
-    dict_t* dict = dict_new();
-    dict_read(dict, "tests/sample_dict.txt");
-
-    suggestions = generate_suggestions(dict, c);
-
-    cr_assert_null(suggestions, "return value incorrect");
-}
-
-/* testing generate_suggestions */
 Test(word, generate_suggestions2)
 {
     char* c = strdup("chequer");
@@ -106,8 +89,6 @@ Test(word, generate_suggestions2)
     dict_read(dict, "tests/sample_dict.txt");
 
     suggestions = generate_suggestions(dict, c);
-
-    cr_assert_not_null(suggestions, "sug return value incorrect");
 
     int i = strncmp("cheque", suggestions[1], 7);
     cr_assert_eq(i, 0, "suggestion output incorrect");
@@ -123,8 +104,6 @@ Test(word, generate_suggestions3)
 
     suggestions = generate_suggestions(dict, c);
 
-    cr_assert_not_null(suggestions, "int return value incorrect");
-
     int i = strncmp("come", suggestions[0], 5);
     cr_assert_eq(i, 0, "suggestion output incorrect");
 }
@@ -137,8 +116,6 @@ Test(word, generate_suggestions4)
     dict_t* dict = NULL;
 
     suggestions = generate_suggestions(dict, c);
-
-    cr_assert_not_null(suggestions, "int return value incorrect");
 
     int i = strncmp("no suggestions", suggestions[0], 14);
     cr_assert_eq(i, 0, "suggestion output incorrect");
