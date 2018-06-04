@@ -261,7 +261,7 @@ Test(word, generate_suggestions)
 {
     char* c = "splling";
     dict_t* dict = dict_new();
-    int i = dict_read(dict, "tests/test_short.txt");
+    int i = dict_read(dict, "tests/sample_dict.txt");
     cr_assert_eq(i, EXIT_SUCCESS, "dict_read failed");
 
     char** list = generate_suggestions(dict, c, 2, 2);
