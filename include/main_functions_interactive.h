@@ -34,7 +34,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
  * parameters: boolean (TRUE means print in colors, FALSE means print without colors)
  * return: char** array of lines, to be printed in save page
  */
-int interactive_nsug_input(bool color)
+int interactive_nsug_input(bool color);
 
 /*
  * interactive_mode: open file to parse and store in list, edit each line, then return list
