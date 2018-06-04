@@ -177,7 +177,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
 }
 
 int interactive_nsug_input(bool color) {
-    int *input;
+    int *input = NULL;
     int check;
 
     printf("Enter the maximum number of suggestions to generate: ");
