@@ -24,6 +24,7 @@
  *    in this case, there is a formatting issue in printing out the line that needs to be resolved,
  *    because the text file that was read does not have a newline character
  *    at the end of the line.
+ *  - color: if true, print colored string.
  *
  * return: edited line
  */

@@ -22,6 +22,7 @@
  *  - verbosity: flag indicating whether or not to print output
  *    Per definitions in main_functions_home.h, 1 = QUIET_MODE, 2 = VERBOSE_MODE
  *    verbosity determines whether or not shell output exists 
+ *  - lnum: line number
  * return: edited string of line
  */
 char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum);

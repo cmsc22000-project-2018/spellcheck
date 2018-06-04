@@ -55,9 +55,9 @@ char *remove_punctuation(char *word);
  * underline them in sentence (will underline in line once per occurence in array)
  *
  * paramters:
- *  - misspelled word
- *  - sentence to be edited
- *  - allocated string to populate with underline
+ *  - misspelled: misspelled word
+ *  - sentence: sentence to be edited
+ *  - underline: allocated string to populate with underline
  *
  * returns: underline for line
  */
@@ -67,8 +67,8 @@ char *underline_misspelled_sentence(char *misspelled, char *sentence, char *unde
  * add_to_misspelled: add an incorrect word to list of misspelled words
  *
  * parameters:
- *  - word
- *  - list of misspelled words
+ *  - word: word to add to list
+ *  - misspelled: list of misspelled words
  *
  * returns: int (EXIT_SUCCESS OR FAILURE)
  */
@@ -92,9 +92,9 @@ void parse_string(char *string, dict_t *dict, char *underline, char **misspelled
 /*
  * correct_line: replace word in array with word suggestion chosen by user
  * parameters:
- *  - line to be edited
- *  - old word (misspelled)
- *  - new word (correction)
+ *  - line: line to be edited
+ *  - old word: misspelled word
+ *  - new word: correction
  * return: edited line 
  * //reference from https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
  */
