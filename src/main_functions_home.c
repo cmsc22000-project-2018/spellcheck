@@ -65,6 +65,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		args = parse_split_line(line);	// line is now split into tokens
 
 		if ((args == NULL) || (args[2] != NULL)) { // 3 inputs, or no input: error message
+			
 			log_error("main_page rguments non-existent or too many argument input.");
 			shell_error("Please type in one of the indicated commands.", *color);
 			
@@ -78,12 +79,14 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 			*quit = true;
 
 		} else if (!strcmp(args[0], "f")) { // Check valid file path, then exit. If not, redo loop
+
 			if (!fileexists(args[1])) {	//file path checking
 				log_error("main_page invalid file input: file given does not exist.");
 				shell_error("Please enter a valid file path for a new edit target.", *color);
 				
 				print = false;
 				*quit = true;
+
 			} else {
 				log_debug("main_page file input: %s", args[1]);
 				strcpy(filename, args[1]);
@@ -94,15 +97,16 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 			}
 
 		} else if (!strcmp(args[0], "d")) {	// dictionary name change 
+
 			if (!fileexists(args[1])) {	// Check file path validity for dicitonary
 				log_error("main_page dictionary does not exist.");
 				shell_error("Please enter a valid file path for a new dictionary.", *color);
 				
 				print = false;
 				*quit = true;
-			}
 
-			else {
+			} else {
+
 				dict = args[1];
 				log_info("main_page dictionary file is now %s.",dict);
 			
@@ -111,6 +115,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 			}
 
 		} else if (!strcmp(args[0], "m")) { // change mode
+
 			log_info("main_page mode number accepted: %d.\n", atoi(args[1]));
             *mode = change_mode(args[1], color);
 
@@ -118,10 +123,12 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
             *quit = true;
 
 		} else if (!strcmp(args[0], "c")) { // color
+
 			log_trace("main_page reverting mode colors.");
 			*color = !(*color);
 
 		} else if (!strcmp(args[0], "q")) { // quit
+
 			print = false;
 			*quit = false;
 			log_info("main_page quitting program.");
@@ -130,6 +137,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 			return;
 
 		} else { // input bad
+
 			shell_error("Invalid file input.", *color);
 			log_error("main_page nvalid file input.");
 			*quit = true;

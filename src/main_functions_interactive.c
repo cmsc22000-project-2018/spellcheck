@@ -76,7 +76,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
             if (misspelled[i+1] != NULL) {
                 /* if the line is the last line being edited, the last character is
                  * EOF, not \n. */
-                printf("%s", line_copy);
+                printf("\n%s", line_copy);
                 if (returnflag) {
                     printf("\n");
                 }
@@ -89,7 +89,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
             if (misspelled[i+1] != NULL) {
                 /* if the line is the last line being edited, the last character is
                  * EOF, not \n. */
-                printf("%s", line_copy);
+                printf("\n%s", line_copy);
                 if (returnflag) {
                     printf("\n");
                 }
