@@ -43,76 +43,73 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
     log_info("edit_batch file parsing completed.");
 
     int i = 0;
-    int j;
     //Replacing words, printing if batch mode
     while (misspelled[i] != NULL) {
         // Generates suggestions
         char** suggestions = generate_suggestions(dict, misspelled[i], max_no_suggestions, max_edits);
 
-        /* 
+        /*
          * If no suggestions are generated:
          *  - In verbose mode, print "No suggestions".
          *  - In quiet mode, save the word as is (without corrections).
          */
-	    if (suggestions == NULL && verbosity == VERBOSE_MODE) {
-            suggestions = calloc(2, sizeof(char*));
-            suggestions[0] = strdup("No suggestions generated"); 
+        if (suggestions == NULL) {
+            suggestions = calloc(max_no_suggestions, sizeof(char*));
+            if (verbosity == VERBOSE_MODE) {
+                suggestions[0] = strdup("No suggestions generated");
+            } else {
+                suggestions[0] = strdup(misspelled[i]);
+            }
         }
 
-        if (verbosity == QUIET_MODE && suggestions != NULL) {
+        if (verbosity == QUIET_MODE) {
             log_trace("edit_batch correcting misspelled line.");
             correct_line(line_copy, misspelled[i], suggestions[0]);
         }
 
         // In verbose mode, edit the file and also print a replacement chart
-	    if (verbosity == VERBOSE_MODE) {
+        if (verbosity == VERBOSE_MODE) {
             log_trace("edit_batch printing batch mode correction chart.");
-	    	shell_verbose_chart(lnum, line_copy, misspelled[i], suggestions);
+            shell_verbose_chart(lnum, line_copy, misspelled[i], suggestions);
         }
 
-        j = 0;
-        while (suggestions[j] != NULL) {
-            free(suggestions[j]);
-            j++;
-        }
-        if (suggestions != NULL) free(suggestions);
+        i++;
+    }
 
-	    i++;
-	}
-
-	return line_copy;
+    return line_copy;
 }
 
 /* See main_functions_batch.h */
 char **batch_mode(char *filename, dict_t *dict, bool *quit, int verbosity) {
 
-	char **lines = parse_file(filename);
+    char **lines = parse_file(filename);
+
     log_debug("batch_mode file parsed into a char array.");
 
-	// If lineparse_file returns NULL
-	if (lines == NULL) {
-		shell_error("Failed to parse file.", false);
-		log_error("batch_mode file parse failed.");
+    // If lineparse_file returns NULL
+    if (lines == NULL) {
+        shell_error("Failed to parse file.", false);
+        log_error("batch_mode file parse failed.");
         *quit = true;
 
-		return NULL;
-	}
+        return NULL;
+    }
 
-	if (verbosity == VERBOSE_MODE) {
+    if (verbosity == VERBOSE_MODE) {
         printf("LINE:CHAR\t\tWORD\t\t\tSUGGESTIONS\n");
     }
 
-	int i = 0;
+    int i = 0;
 
-	while (lines[i] != NULL) {
+    while (lines[i] != NULL) {
         log_trace("Starting loop for line %s.", i + 1);
 
-		lines[i] = edit_batch(lines[i], dict, verbosity, i + 1);
-		
+        lines[i] = edit_batch(lines[i], dict, verbosity, i + 1);
+
         i++;
-	}
+    }
 
     *quit = false;
 
-	return lines;
+    return lines;
 }

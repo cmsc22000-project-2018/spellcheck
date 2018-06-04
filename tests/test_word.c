@@ -122,7 +122,6 @@ Test(word, word_check_cap6)
     int i = word_check_cap(c);
 
     cr_assert_eq(i, 2, "capitalization not properly identified; should return 2");
-
 }
 
 /* testing word_check_cap */

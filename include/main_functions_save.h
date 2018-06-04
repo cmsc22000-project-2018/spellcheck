@@ -14,8 +14,8 @@
  * save_corrections: writes lines (lines) to a file with name (filename)
  *
  * parameters:
- *	- filename: string indicating name of file (saving destination)
- *	- lines: array of strings to be printed in file
+ *  - filename: string indicating name of file (saving destination)
+ *  - lines: array of strings to be printed in file
  *
  * returns: void
  */

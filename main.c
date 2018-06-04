@@ -143,13 +143,7 @@ int main(int argc, char *argv[]) {
                 break;
 		
             case 's':
-                if (strstr(optarg, ".txt\0") == NULL) {    // does not save to a *.txt file
-                    shell_error("Invalid file path.", color);
-                    log_fatal("file path could not be found.");
-                    return EXIT_FAILURE;
-                }
-
-                strcpy(save_file,optarg);
+                strcpy(save_file, optarg);
             
                 if (mode == INTERACTIVE_MODE) {
                     shell_input(optarg, "file save destination", color);
@@ -211,7 +205,7 @@ int main(int argc, char *argv[]) {
         }
 
 		// Starting to Parse file! Printing messages accordingly
-        char *md = shell_modename(&mode);
+        char *md = shell_modename(mode);
         log_trace("Mode set to: %s", md);
 
         if (mode == INTERACTIVE_MODE) {
@@ -232,7 +226,7 @@ int main(int argc, char *argv[]) {
                 break;
             case INTERACTIVE_MODE:
                 log_info("Entering interactive mode.");
-                result = interactive_mode(filename, new_dict, &quit, &color); // pass in dictionary
+                result = interactive_mode(filename, new_dict, &quit, color); // pass in dictionary
                 break;
             default:
                 break;
@@ -255,13 +249,13 @@ int main(int argc, char *argv[]) {
             if (md == NULL && (mode == QUIET_MODE)) {
                 log_trace("Printing result of the file edit.");
                 shell_print(result);
-                *quit = false;
+                quit = false;
             }
 
             else if (md != NULL) {
                 log_trace("Saving corrections to the designated file destination: %s", save_file);
                 save_corrections(save_file, result);
-                *quit = false;
+                quit = false;
             }
 
             else {

@@ -38,7 +38,7 @@ char* parse_read_line();
  *
  * parameters: string from parse_read_line, which was command line input
  *
- * return: tokens (string), each representing a command separated by a whitespace
+ * return: array of tokens (strings), each representing a command separated by a whitespace
  * in the command
  */
 char **parse_split_line(char *line);

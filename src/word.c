@@ -143,7 +143,6 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
     /* Possibly, if dictionary is capitalized; run once with capitalizations (McDonals, for instance)
     if (sug_list == NULL) {
         sug_list = dict_suggestions(dict, word, max_edits, amount);
-    }
     */
 
     if (sug_list == NULL) return NULL;
