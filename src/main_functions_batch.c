@@ -46,7 +46,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
     //Replacing words, printing if batch mode
     while (misspelled[i] != NULL) {
         // Generates suggestions
-        char** suggestions = generate_suggestions(dict, misspelled[i], max_no_suggestions, max_edits);
+        char** suggestions = generate_suggestions(dict, misspelled[i], max_edits, max_no_suggestions);
 
         /*
          * If no suggestions are generated:

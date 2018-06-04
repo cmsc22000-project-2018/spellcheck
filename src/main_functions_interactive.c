@@ -44,7 +44,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
     int j;
     // Replaces words according to user suggestions
     while (misspelled[i] != NULL) {
-    	char** suggestions = generate_suggestions(dict, misspelled[i], max_no_suggestions, max_edits);
+    	char** suggestions = generate_suggestions(dict, misspelled[i], max_edits, max_no_suggestions);
         log_debug("edit_interactive suggestion generation returned.");
 
         shell_interactive_replacements(misspelled[i], suggestions, color);
@@ -190,6 +190,7 @@ int interactive_nsug_input(bool color) {
         shell_prompt(color);
 
         check = scanf("%d", &input);
+        log_trace("input is %d", input);
 
         if (check) {
             return input;
