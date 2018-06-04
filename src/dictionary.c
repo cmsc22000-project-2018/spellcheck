@@ -113,30 +113,31 @@ int dict_read(dict_t *d, char *file) {
     log_debug("opened file %s", file);
 
     if (f == NULL) {
-        log_trace("dict_exists returning EXIT_FAILURE");
+        log_trace("dict_read returning EXIT_FAILURE");
         return EXIT_FAILURE;
     }
 
     while (fscanf(f, "%100s", buffer) == 1) {
         if (dict_add(d, buffer) != EXIT_SUCCESS) {
-            log_trace("dict_exists returning EXIT_FAILURE");
+            log_trace("dict_read returning EXIT_FAILURE");
             return EXIT_FAILURE;
         }
     }
 
     fclose(f);
 
-    log_trace("dict_exists returning EXIT_SUCCESS");
+    log_trace("dict_read returning EXIT_SUCCESS");
     return EXIT_SUCCESS;
 }
 
 /* See dictionary.h */
 char **dict_suggestions(dict_t *d, char *str, int max_edits, int n) {
     if (d == NULL || d->dict == NULL || str == NULL) {
-        log_trace("returning EXIT_FAILURE");
+        log_trace("dict_suggestions returning EXIT_FAILURE");
         return NULL;
     }
 
+    log_trace("dict_suggestions")
     char **results = trie_approx(d->dict, str, max_edits, n);
 
     return results;
