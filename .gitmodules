@@ -1,3 +1,6 @@
 [submodule "lib/log.c"]
 	path = lib/log.c
 	url = https://github.com/rxi/log.c
+[submodule "api"]
+	path = api
+	url = https://github.com/cmsc22000-project-2018/api.git
