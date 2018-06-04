@@ -39,7 +39,6 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
     log_trace("edit_interactive line printed successfully.");
 
     int i = 0;
-    int j;
     // Replaces words according to user suggestions
     while (misspelled[i] != NULL) {
         char** suggestions = generate_suggestions(dict, misspelled[i]);
@@ -159,15 +158,6 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
 
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
             }
-        }
-
-        j = 0;
-        if (suggestions != NULL) { 
-            while (suggestions[j] != NULL) {
-                free(suggestions[j]);
-                j++;
-            }
-            free(suggestions);
         }
 
         i++; // added loop changer

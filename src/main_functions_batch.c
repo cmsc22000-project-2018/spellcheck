@@ -43,7 +43,6 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
     log_info("edit_batch file parsing completed.");
 
     int i = 0;
-    int j;
     //Replacing words, printing if batch mode
     while (misspelled[i] != NULL) {
         // Generates suggestions
@@ -72,15 +71,6 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
         if (verbosity == VERBOSE_MODE) {
             log_trace("edit_batch printing batch mode correction chart.");
             shell_verbose_chart(lnum, line_copy, misspelled[i], suggestions);
-        }
-
-        j = 0;
-        if (suggestions != NULL) {
-            while (suggestions[j] != NULL) {
-                free(suggestions[j]);
-                j++;
-            }
-            free(suggestions);
         }
 
         i++;
