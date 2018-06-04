@@ -117,6 +117,5 @@ Test(word, generate_suggestions4)
 
     suggestions = generate_suggestions(dict, c);
 
-    int i = strncmp("no suggestions", suggestions[0], 14);
-    cr_assert_eq(i, 0, "suggestion output incorrect");
+    cr_assert_null(suggestions, "suggestion output incorrect");
 }

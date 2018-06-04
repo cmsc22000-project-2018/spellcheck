@@ -35,11 +35,11 @@ int change_mode(char *arg, bool color) {
 	log_trace("change_mode mode type: %s", arg);
 	int a = atoi(arg);
 
-    if ((a == QUIET_MODE) || (a == VERBOSE_MODE) || (a == INTERACTIVE_MODE)) {
-        return a;
+	if ((a == QUIET_MODE) || (a == VERBOSE_MODE) || (a == INTERACTIVE_MODE)) {
+		return a;
 	}
 
-    shell_error("change_mode mode type invalid; reverting to interactive mode.", color);
+	shell_error("change_mode mode type invalid; reverting to interactive mode.", color);
     /*
      * The default is 3, given this function is only called in main_page(),
      * at which point interactive mode is what user probably intended
@@ -70,25 +70,21 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 			
 			print = false;
 			*quit = true;
-		}
 
-		else if (!strcmp(args[0], "h")) { // Print help page, then wait for user input
+		} else if (!strcmp(args[0], "h")) { // Print help page, then wait for user input
 			help_page(*color);
 			
 			print = true;
 			*quit = true;
-		}
 
-		else if (!strcmp(args[0], "f")) { // Check valid file path, then exit. If not, redo loop
+		} else if (!strcmp(args[0], "f")) { // Check valid file path, then exit. If not, redo loop
 			if (!fileexists(args[1])) {	//file path checking
 				log_error("main_page invalid file input: file given does not exist.");
 				shell_error("Please enter a valid file path for a new edit target.", *color);
 				
 				print = false;
 				*quit = true;
-			}
-
-			else {
+			} else {
 				log_debug("main_page file input: %s", args[1]);
 				strcpy(filename, args[1]);
 				printf("\nFile input is now %s\n", filename);
@@ -96,9 +92,8 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 				print = false;
 				*quit = false;
 			}
-		}
 
-		else if (!strcmp(args[0],"d")) {	// dictionary name change 
+		} else if (!strcmp(args[0],"d")) {	// dictionary name change 
 			if (!fileexists(args[1])) {	// Check file path validity for dicitonary
 				log_error("main_page dictionary does not exist.");
 				shell_error("Please enter a valid file path for a new dictionary.", *color);
@@ -114,31 +109,27 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 				print = false;
 				*quit = true;
 			}
-		} 
 
-		else if (!strcmp(args[0], "m")) { // change mode
+		} else if (!strcmp(args[0], "m")) { // change mode
 			log_info("main_page mode number accepted: %d.\n", atoi(args[1]));
             *mode = change_mode(args[1], color);
 
             print = true;
             *quit = true;
-		}
 
-		else if (!strcmp(args[0], "c")) { // color
+		} else if (!strcmp(args[0], "c")) { // color
 			log_trace("main_page reverting mode colors.");
 			*color = !(*color);
-		}
 
-		else if (!strcmp(args[0],"q")) { // quit
+		} else if (!strcmp(args[0],"q")) { // quit
 			print = false;
 			*quit = false;
 			log_info("main_page quitting program.");
 			*mode = QUIT;
 			
 			return;
-		}
-
-		else { // input bad
+			
+		} else { // input bad
 			shell_error("Invalid file input.", *color);
 			log_error("main_page nvalid file input.");
 			*quit = true;

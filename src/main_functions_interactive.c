@@ -162,11 +162,13 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
         }
 
         j = 0;
-        while (suggestions[j] != NULL) {
-            free(suggestions[j]);
-            j++;
+        if (suggestions != NULL) { 
+            while (suggestions[j] != NULL) {
+                free(suggestions[j]);
+                j++;
+            }
+            free(suggestions);
         }
-        if (suggestions != NULL) free(suggestions);
 
         i++; // added loop changer
     }

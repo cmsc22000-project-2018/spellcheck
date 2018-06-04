@@ -30,11 +30,11 @@ bool valid_word(dict_t* dict, char* shaved_word) {
 
 /* See word.h */
 char** generate_suggestions(dict_t* dict, char* word) {
-    char** suggestions = calloc(3, sizeof(char*));
-
 	if (dict == NULL) { // hard_coded; to change with suggestion.c
         return NULL;
     }
+
+    char** suggestions = calloc(3, sizeof(char*));
 
 	if (strcmp(word, "splling") == 0) {
 		suggestions[0] = strdup("spelling");

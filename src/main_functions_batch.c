@@ -54,7 +54,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
          *  - In verbose mode, print "No suggestions".
          *  - In quiet mode, save the word as is (without corrections).
          */
-	    if (suggestions == NULL && verbosity == VERBOSE_MODE) {
+	    if (suggestions[1] == NULL && verbosity == VERBOSE_MODE) {
             suggestions = calloc(max_no_suggestions, sizeof(char*));
             suggestions[0] = strdup("No suggestions generated"); 
         }
@@ -70,13 +70,13 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
 	    	shell_verbose_chart(lnum, line_copy, misspelled[i], suggestions);
         }
 
-        j = 0;
-        while (suggestions[j] != NULL) {
-            free(suggestions[j]);
-            j++;
+        if (suggestions != NULL) { 
+            while (suggestions[j] != NULL) {
+                free(suggestions[j]);
+                j++;
+            }
+            free(suggestions);
         }
-        if (suggestions != NULL) free(suggestions);
-
 	    i++;
 	}
 
