@@ -259,7 +259,7 @@ int main(int argc, char *argv[]) {
 
             md = strstr(save_file, ".txt\0");
 
-            if ((md == NULL && *mode) == (QUIET_MODE)) {
+            if (md == NULL && (*mode == QUIET_MODE)) {
                 log_trace("Printing result of the file edit.");
                 shell_print(result);
                 *quit = false;
