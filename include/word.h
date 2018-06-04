@@ -22,15 +22,12 @@ bool valid_word(dict_t *dict, char* word);
  * generate_suggestions - Returns a list of possible suggestions
  *
  * Parameters:
- *  - dict: A dictionary pointer. Must point to already allocated memory.
  *  - word: A string (word).
+ *  - dict: A dictionary pointer. Must point to already allocated memory.
  *  - suggestions: An array of strings (words).
- *  - max_edits: Number of maximum edits.
- *  - amount: Amount of suggestions.
  *
- * Returns:
- *  - int: EXIT_SUCCESS or EXIT_FAILURE (EXIT_FAILURE if no suggestions generated.)
+ * returns string array representing suggestions. return NULL if not given.
  */
-int generate_suggestions(char* word, dict_t* dict, char **suggestions);
+char** generate_suggestions(dict_t* dict, char* word);
 
 #endif

@@ -38,18 +38,14 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
     shell_interactive_line_print(linenumber, line_copy, underline, returnflag, color);
     log_trace("edit_interactive line printed successfully.");
 
-    // Generates an empty array where suggestions will be filled
-    char *suggestions[max_no_suggestions];
-    suggestions[max_no_suggestions] = NULL;
-
     int i = 0;
 
     // Replaces words according to user suggestions
     while (misspelled[i] != NULL) {
-    	int rc = generate_suggestions(misspelled[i], dict, suggestions);
-        log_debug("edit_interactive suggestion generation returned %d.", rc);
+    	char** suggestions = generate_suggestions(dict, misspelled[i]);
+        log_debug("edit_interactive suggestion generation returned.");
 
-        shell_interactive_replacements(misspelled[i], suggestions, rc, color);
+        shell_interactive_replacements(misspelled[i], suggestions, color);
 
         char choice[10];
         int check = 0;
@@ -173,6 +169,13 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
             if (misspelled[i+1] != NULL)
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
         }
+
+        j = 0;
+        while (suggestions[j] != NULL) {
+            free(suggestions[j]);
+            j++;
+        }
+        if (suggestions != NULL) free(suggestions);
 
         i++; // added loop changer
     }

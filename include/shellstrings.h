@@ -130,7 +130,10 @@ void shell_help(bool color);
  * shell_start_interactive - prints out interactive starting message
  *
  * Parameters:
- * - file, dictionary, mode names
+ * - file: name of file.
+ * - dict: name of dictionary file.
+ * - md: prints out name of mode, if the user chooses -v flag.
+ * - color: if true, print colored string.
  *
  * Returns:
  * - None.
@@ -141,8 +144,11 @@ void shell_start_interactive(char *filename, char *dict, char *md, bool color);
 /*
  * shell_modename - prints out mode name (verbose, quiet or interactive)
  * 
- * Parameters:
- * - note 1 is quiet, 2 is batch, 3 is interactive
+ * Parameters: 
+ * - mode: integer representing chosen mode. This can be QUIET_MODE, VERBOSE_MODE or INTERACTIVE_MODE
+ * 
+ * Returns:
+ * - string containing name of mode.
  */
 char *shell_modename(int mode);
 
@@ -151,7 +157,7 @@ char *shell_modename(int mode);
  *
  * Parameters:
  *  - lnum: line number
- *	- line: string of the line being edited
+ *  - line: string of the line being edited
  *  - underline: string of underlines, highlighting error words
  *  - returnflag: indicates if line being parsed is the last line (true if it is the last line)
  *	  in this case, there is a formatting issue in printing out the line that needs to be resolved,
@@ -167,24 +173,23 @@ void shell_interactive_line_print(int lnum, char *line, char *underline, bool re
  * shell_interactive_replacements
  *
  * Parameters:
- *  - word being replaced
- *  - list of suggestions
- *  - flag indicating whether suggestion generation succeeded or not
+ *  - word: word being replaced
+ *  - sug: list of suggestions
  *  - color: if true, print colored string.
  *
  * Returns:
  *  - None.
  */
-void shell_interactive_replacements(char *word, char **sug, int flag, bool color);
+void shell_interactive_replacements(char *word, char **sug, bool color);
 
 /*
  * shell_verbose_chart - verbose chart print 
  *
  * Parameters:
- *	- lnum: line number
- *	- line: line, to calculate character position of misspelled word
- *	- misspelled: misspelled word
- *	- suggestions: char** array of generated suggestions
+ *  - lnum: line number
+ *  - line: line, to calculate character position of misspelled word
+ *  - misspelled: misspelled word
+ *  - suggestions: char** array of generated suggestions
  *
  * Returns:
  *  - None.

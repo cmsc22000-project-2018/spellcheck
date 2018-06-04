@@ -233,11 +233,12 @@ void shell_interactive_line_print(int lnum, char *line, char *underline, bool re
 }
 
 
-void shell_interactive_replacements(char *word, char **sug, int flag, bool color) {
+void shell_interactive_replacements(char *word, char **sug, bool color) {
     int j = 0;
 
     if (color == true) {
-        if (flag == EXIT_FAILURE) {
+        if (sug == NULL) {
+            char** sug = calloc(2, sizeof(char*));
             sug[0] = word;
             printf("\nNo suggestions have been generated for " BOLDWHITE "%s" RESET ".\n\n", word);
             printf(BOLDWHITE "[d]" RESET " : Delete\n");
@@ -260,7 +261,8 @@ void shell_interactive_replacements(char *word, char **sug, int flag, bool color
     }
 
     else {
-        if (flag == EXIT_FAILURE) {
+        if (sug == NULL) {
+            char** sug = calloc(2, sizeof(char*));
             sug[0] = word;
             printf("\nNo suggestions have been generated for %s.\n\n", word);
             printf("[d] : Delete\n");

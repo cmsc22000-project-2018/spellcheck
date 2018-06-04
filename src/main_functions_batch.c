@@ -42,30 +42,27 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
     parse_string(line, dict, underline, misspelled);
     log_info("edit_batch file parsing completed.");
 
-
-    // Generates an empty array where suggestions will be filled
-    char *suggestions[max_no_suggestions];
-    suggestions[max_no_suggestions] = NULL;
-
     int i = 0;
+    int j;
     //Replacing words, printing if batch mode
     while (misspelled[i] != NULL) {
-        // Generates suggestions and fills the variable 'suggestions'
-        int rc = generate_suggestions(misspelled[i], dict, suggestions);
+        // Generates suggestions
+        char** suggestions = generate_suggestions(dict, misspelled[i]);
 
         /* 
          * If no suggestions are generated:
          *  - In verbose mode, print "No suggestions".
          *  - In quiet mode, save the word as is (without corrections).
          */
-	    if (rc == EXIT_FAILURE) {
+	    if (suggestions == NULL) {
+            suggestions = calloc(2, sizeof(char*));
             if (verbosity == VERBOSE_MODE) {
                 suggestions[0] = "No suggestions generated"; 
             }
             suggestions[1] = NULL;
         }
 
-        if (verbosity == QUIET_MODE && rc == EXIT_SUCCESS) {
+        if (verbosity == QUIET_MODE && suggestions != NULL) {
             log_trace("edit_batch correcting misspelled line.");
             correct_line(line_copy, misspelled[i], suggestions[0]);
         }
@@ -75,6 +72,13 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
             log_trace("edit_batch printing batch mode correction chart.");
 	    	shell_verbose_chart(lnum, line_copy, misspelled[i], suggestions);
         }
+
+        j = 0;
+        while (suggestions[j] != NULL) {
+            free(suggestions[j]);
+            j++;
+        }
+        if (suggestions != NULL) free(suggestions);
 
 	    i++;
 	}
