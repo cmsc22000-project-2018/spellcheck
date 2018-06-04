@@ -28,7 +28,7 @@ char *underline_misspelled_sentence(char *misspelled, char *sentence, char *unde
 	int pos = ptr - sentence;
 	int i;
 
-	for (i = 0; i < pos; i++) {
+    for (i = 0; i < pos; i++) {
 		strcat(underline, " ");
     }
 
@@ -40,9 +40,9 @@ char *underline_misspelled_sentence(char *misspelled, char *sentence, char *unde
 
     underline[i] = '\0';
 
-	log_debug("underline is %s", underline);
-	log_debug("returning from underline_misspelled_sentence");
-	return underline;
+    log_debug("underline is %s", underline);
+    log_debug("returning from underline_misspelled_sentence");
+    return underline;
 }
 
 /* See main_functions_edit.h */
@@ -72,8 +72,8 @@ bool is_in_punct_array(char letter) {
 	int i;
 
     for (i = 0; i < num_punctuation ; i++) {
-        if ((punctuation_array[i] - letter) == 0) { 
-        	log_trace("is_in_punct_array character is a punctuation."); 
+        if ((punctuation_array[i] - letter) == 0) {
+            log_trace("is_in_punct_array character is a punctuation.");
             return true;
         }
     }

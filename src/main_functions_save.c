@@ -11,35 +11,35 @@
 /* See main_functions_save.h */
 void save_corrections(char *filename, char **lines) {
     log_trace("save_corrections opening save file destination '%s'.", filename);
-	FILE *f = fopen(filename, "w");
+    FILE *f = fopen(filename, "w");
     assert(f != NULL);
 
-	int i = 0;
+    int i = 0;
 
-	while (lines[i] != NULL) {
+    while (lines[i] != NULL) {
         log_trace("Writing line into file '%s'.", lines[i]);
-		fprintf(f, "%s", lines[i]); // write lines into file
-		
+        fprintf(f, "%s", lines[i]); // write lines into file
+
         i++;
-	}
+    }
 
     log_trace("save_corrections closing save file destination '%s'.", filename);
-	fclose(f);
+    fclose(f);
 }
 
 /* See main_functions_save.h */
 void save_page(char *filename, char **lines, bool *quit, bool color) {
-	int i = 1;
+    int i = 1;
     char line[10];
     char *args = NULL;
     char** inputs = NULL;
     char* savefilename = NULL;
     int verify = 0;
 
-	while (i) {
+    while (i) {
         shell_save(color);
-		shell_prompt(color);
-		
+        shell_prompt(color);
+
         i = 0;
 
         verify = scanf("%s", line);
@@ -54,20 +54,20 @@ void save_page(char *filename, char **lines, bool *quit, bool color) {
         }
 
         if (!strcmp(line,"p")) {
-        	shell_print(lines);
+            shell_print(lines);
             log_info("Lines printed successfully.");
-        	i = 1;
+            i = 1;
         }
         else if (!strcmp(line, "r")) {
             log_info("Returning to previous page.");
-        	*quit = true;
+            *quit = true;
         }
 
         else if (!strcmp(line, "s")) {
-			log_info("Saving modifications to existing file.");
+            log_info("Saving modifications to existing file.");
             save_corrections(filename, lines);  // save to the same file destination, overwriting existing file
-			*quit = false;
-		}
+            *quit = false;
+        }
 
         else if (!strcmp(line, "c")) {
             log_info("Saving modifications to new file.");
@@ -83,18 +83,18 @@ void save_page(char *filename, char **lines, bool *quit, bool color) {
                     savefilename = strdup(args);
                 }
             }
-            
+
             while ((args == NULL) ^ i) {    // either user returns to main page, or inputs a vaid new destination
                 printf("\n\nEnter a viable file name (*.txt), or enter 'r' to return to the save page.\n\n");
 
                 shell_prompt(color);
-                
+
                 verify = scanf("%s", line);
                 assert (!(verify < 0));
 
                 log_debug("File entered is '%s'.", line);
                 args = strstr(line, ".txt\0");
-                
+
                 if (!strcmp(line, "r")) {
                     i = 1;
                 }
@@ -110,17 +110,17 @@ void save_page(char *filename, char **lines, bool *quit, bool color) {
                 log_trace("Entering save_corrections().");
                 save_corrections(savefilename, lines);  // save to different file destination
             }
-		}
+        }
 
         else if (!strcmp(line, "q")) {
             log_info("Quitting program and discarding any unsaved changes.");
-			*quit = false;
-		}
+            *quit = false;
+        }
 
         else {
-			shell_error("Please type in one of the indicated commands.", color);   // wrong input
+            shell_error("Please type in one of the indicated commands.", color);   // wrong input
             log_error("Invalid command input.");
-			i = 1;
-		}
-	}
+            i = 1;
+        }
+    }
 }

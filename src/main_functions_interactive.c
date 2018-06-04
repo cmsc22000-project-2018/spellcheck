@@ -1,214 +1,126 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <ctype.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <assert.h>
-#include "log.c/src/log.h"
-#include "shellstrings.h"
+#include <shellstrings.h>
+#include <string.h>
 #include "parser.h"
-#include "dictionary.h"
-#include "word.h"
-#include "main_functions_edit.h"
-#include "main_functions_interactive.h"
+#include "main_functions_save.h"
+#include "log.c/src/log.h"
 
-/* See main_functions_interactive.h */
-char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag, bool color) {
-    log_debug("edit_interactive 'returnflag' value set to %s.", returnflag);
-
-    char *line_copy = strdup(line);
-    int max_no_suggestions = 2; // Should the user decide this?
-    int length = strlen(line);
-
-    // Generates an empty array where the misspelled words in a line will be stored
-    char **misspelled = calloc(length, sizeof(char*));
-    assert(misspelled != NULL);
-
-    // Generates an empty array where the underline will go
-    char *underline = (char *)malloc(sizeof(char) * (strlen(line) + 1));
-    underline[0] = '\0';
-
-    // Identifides misspelled words and add to misspelled
-    parse_string(line, dict, underline, misspelled);
-    log_trace("edit_interactive line parsed successfully.");
-    // Add to underline function
-
-    shell_interactive_line_print(linenumber, line_copy, underline, returnflag, color);
-    log_trace("edit_interactive line printed successfully.");
+/* See main_functions_save.h */
+void save_corrections(char *filename, char **lines) {
+    log_trace("save_corrections opening save file destination '%s'.", filename);
+    FILE *f = fopen(filename, "w");
+    assert(f != NULL);
 
     int i = 0;
-    int j;
-    // Replaces words according to user suggestions
-    while (misspelled[i] != NULL) {
-    	char** suggestions = generate_suggestions(dict, misspelled[i]);
-        log_debug("edit_interactive suggestion generation returned.");
 
-        shell_interactive_replacements(misspelled[i], suggestions, color);
+    while (lines[i] != NULL) {
+        log_trace("Writing line into file '%s'.", lines[i]);
+        fprintf(f, "%s", lines[i]); // write lines into file
 
-        char choice[10];
-        int check = 0;
-
-        while (!check) {
-    		shell_prompt(color);
-        	check = scanf("%s", choice);
-
-            log_trace("edit_interactive scanned value is %s.", choice);
-
-        	if (!(choice[0] == 's') && !(choice[0] == 'd') && !(choice[0] == 'i')
-        		&& !(isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions))) {
-
-                shell_error("Please enter a valid input.", color);
-                log_error("edit_interactive nvalid input.");  
-
-                check = 0;
-        	}
-
-            else {
-        		check = 1;
-        	}
-        }
-
-        if (choice[0] == 'd') {	// delete
-        	correct_line(line_copy, misspelled[i], "");
-
-            if (misspelled[i+1] != NULL) {
-                /* if the line is the last line being edited, the last character is
-                 * EOF, not \n. */
-                printf("\n%s", line_copy);
-                if (returnflag) {
-                    printf("\n");
-                }
-
-                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
-            }
-
-        } else if (choice[0] == 's') { // skip
-        	// print the edited line
-            if (misspelled[i+1] != NULL) {
-                /* if the line is the last line being edited, the last character is
-                 * EOF, not \n. */
-                printf("\n%s", line_copy);
-                if (returnflag) {
-                    printf("\n");
-                }
-
-                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
-            }
-        } else if (choice[0] == 'i') { // insert
-			char c[50];
-			char sig[10];
-			int userconsent = 0;
-			int insertcheck = 0;
-
-			// Process of accepting replacment inputs
-			while (!userconsent) {
-				printf("\nEnter replacement: ");
-			    insertcheck = scanf("%s", c);
-
-				while (insertcheck < 0) {
-                    log_trace("edit_interactive userntered value: '%s'.", c);
-
-					shell_error("\n\nPlease enter a valid input.\n", color);
-                    log_error("Invalid input.");
-					shell_prompt(false);
-					insertcheck = scanf("%s\n", c);
-				}
-
-				printf("Are you sure you want to replace \"%s\" with \"%s\"? [y, n] : ", misspelled[i], c);
-				userconsent = scanf("%s", sig);
-                log_trace("edit_interactive user entered value: '%s'.", sig);
-
-				if (sig[0] == 'y') {
-					userconsent = 1;
-				}
-
-                else {
-					userconsent = 0;
-				}
-			}
-
-			char *newword = strdup(c);
-			printf("\nReplacing \"%s\" with \"%s\".\n", misspelled[i], newword);
-			correct_line(line_copy, misspelled[i], newword); //modifies line function
-
-            if (misspelled[i+1] != NULL) {
-                /* if the line is the last line being edited, the last character is
-                 * EOF, not \n. */
-                printf("%s", line_copy);
-                if (returnflag) {
-                    printf("\n");
-                }
-
-                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
-            }
-        } else if (isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
-        	// Replace misspelled word with chosen replacement
-        	int c = atoi(&choice[0]) - 1;
-        	printf("\nReplacing \"%s\" with \"%s\".\n", misspelled[i], suggestions[c]);
-        	correct_line(line_copy, misspelled[i], suggestions[c]); //modifies line function
-
-            if (misspelled[i+1] != NULL) {
-            	/* if the line is the last line being edited, the last character is
-            	 * EOF, not \n. */
-             	printf("%s", line_copy);
-             	if (returnflag) {
-                    printf("\n");
-                }
-
-                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
-            }
-        }
-
-        j = 0;
-        if (suggestions != NULL) { 
-            while (suggestions[j] != NULL) {
-                free(suggestions[j]);
-                j++;
-            }
-            free(suggestions);
-        }
-
-        i++; // added loop changer
+        i++;
     }
 
-	return line_copy;
+    log_trace("save_corrections closing save file destination '%s'.", filename);
+    fclose(f);
 }
 
-/* See main_functions_interactive.h */
-char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool color) {
-	char **lines;
-	lines = parse_file(filename);
+/* See main_functions_save.h */
+void save_page(char *filename, char **lines, bool *quit, bool color) {
+    int i = 1;
+    char line[10];
+    char *args = NULL;
+    char** inputs = NULL;
+    char* savefilename = NULL;
+    int verify = 0;
 
-    if (lines == NULL) {
-        shell_error("Failed to parse file.", false);
-        log_error("batch_mode file parse failed.");
-        *quit = true;
-        return NULL;
-    }
+    while (i) {
+        shell_save(color);
+        shell_prompt(color);
 
-    log_trace("edit_interactive file parsed successfully.");
+        i = 0;
 
-	// step through phases
-	int i = 0;
-	bool flag = false;
-	int linenumber;
+        verify = scanf("%s", line);
+        assert (!(verify < 0)); // ensure valid input
 
-	while (lines[i] != NULL) {
-        log_debug("edit_interactive starting to edit line %d", i + 1);
-		linenumber = i + 1;
-		
-        if (lines[i+1] == NULL) {
-            flag = true;	// last line
+        if (strlen(line) > 2) { // ensure that only one character is entered, otherwise cannot proceed
+            log_debug("parsing command input.");
+
+            inputs = parse_split_line(line);
+            strcpy(line,inputs[0]);
+            args = strdup(inputs[1]);
         }
 
-		lines[i] = edit_interactive(lines[i], dict, linenumber, flag, color);
-		
-        i++;
-	}
+        if (!strcmp(line,"p")) {
+            shell_print(lines);
+            log_info("Lines printed successfully.");
+            i = 1;
+        }
+        else if (!strcmp(line, "r")) {
+            log_info("Returning to previous page.");
+            *quit = true;
+        }
 
-    log_trace("edit_interactive editing finished successfully, exiting the interactive mode.");
-    *quit = false;
-	return lines;
+        else if (!strcmp(line, "s")) {
+            log_info("Saving modifications to existing file.");
+            save_corrections(filename, lines);  // save to the same file destination, overwriting existing file
+            *quit = false;
+        }
+
+        else if (!strcmp(line, "c")) {
+            log_info("Saving modifications to new file.");
+
+            // If a file was entered for saving, then store that file
+            if (args != NULL) {
+                char* testinput = NULL;
+                testinput = strdup(args);
+                testinput = strstr(testinput, ".txt\0");
+                if (testinput == NULL) {
+                    args = NULL;
+                } else {
+                    savefilename = strdup(args);
+                }
+            }
+
+            while ((args == NULL) ^ i) {    // either user returns to main page, or inputs a vaid new destination
+                printf("\n\nEnter a viable file name (*.txt), or enter 'r' to return to the save page.\n\n");
+
+                shell_prompt(color);
+
+                verify = scanf("%s", line);
+                assert (!(verify < 0));
+
+                log_debug("File entered is '%s'.", line);
+                args = strstr(line, ".txt\0");
+
+                if (!strcmp(line, "r")) {
+                    i = 1;
+                }
+
+                if (args != NULL) {
+                    savefilename = strdup(line);
+                }
+            }
+
+            *quit = false;
+
+            if (i == 0) {
+                log_trace("Entering save_corrections().");
+                save_corrections(savefilename, lines);  // save to different file destination
+            }
+        }
+
+        else if (!strcmp(line, "q")) {
+            log_info("Quitting program and discarding any unsaved changes.");
+            *quit = false;
+        }
+
+        else {
+            shell_error("Please type in one of the indicated commands.", color);   // wrong input
+            log_error("Invalid command input.");
+            i = 1;
+        }
+    }
 }
