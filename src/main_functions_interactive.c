@@ -95,6 +95,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
 
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
             }
+
         } else if (choice[0] == 'i') { // insert
             char c[50];
             char sig[10];
@@ -142,6 +143,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
 
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
             }
+            
         } else if (isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
             // Replace misspelled word with chosen replacement
             int c = atoi(&choice[0]) - 1;
