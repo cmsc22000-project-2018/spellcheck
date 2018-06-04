@@ -143,13 +143,7 @@ int main(int argc, char *argv[]) {
                 break;
 		
             case 's':
-                if (strstr(optarg, ".txt\0") == NULL) {    // does not save to a *.txt file
-                    shell_error("Invalid file path.", color);
-                    log_fatal("file path could not be found.");
-                    return EXIT_FAILURE;
-                }
-
-                strcpy(save_file,optarg);
+                strcpy(save_file, optarg);
             
                 if (mode == INTERACTIVE_MODE) {
                     shell_input(optarg, "file save destination", color);

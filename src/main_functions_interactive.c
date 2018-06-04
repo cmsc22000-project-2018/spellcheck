@@ -158,8 +158,8 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
                 }
 
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
+            }
         }
-        
 
         j = 0;
         while (suggestions[j] != NULL) {

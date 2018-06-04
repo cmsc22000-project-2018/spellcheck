@@ -70,7 +70,7 @@ Test(word, generate_suggestions)
 
     suggestions = generate_suggestions(dict, c);
 
-    cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");
+    cr_assert_not_null(suggestions, "int return value incorrect");
 
     int i = strncmp("spelling", suggestions[0], 8);
     cr_assert_eq(i, 0, "suggestion output incorrect");
@@ -107,7 +107,7 @@ Test(word, generate_suggestions2)
 
     suggestions = generate_suggestions(dict, c);
 
-    cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");
+    cr_assert_not_null(suggestions, "sug return value incorrect");
 
     int i = strncmp("cheque", suggestions[1], 7);
     cr_assert_eq(i, 0, "suggestion output incorrect");
@@ -123,7 +123,7 @@ Test(word, generate_suggestions3)
 
     suggestions = generate_suggestions(dict, c);
 
-    cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");
+    cr_assert_not_null(suggestions, "int return value incorrect");
 
     int i = strncmp("come", suggestions[0], 5);
     cr_assert_eq(i, 0, "suggestion output incorrect");
@@ -138,7 +138,7 @@ Test(word, generate_suggestions4)
 
     suggestions = generate_suggestions(dict, c);
 
-    cr_assert_eq(i, EXIT_FAILURE, "int return value incorrect");
+    cr_assert_not_null(suggestions, "int return value incorrect");
 
     int i = strncmp("no suggestions", suggestions[0], 14);
     cr_assert_eq(i, 0, "suggestion output incorrect");
