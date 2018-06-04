@@ -28,21 +28,21 @@ char *underline_misspelled_sentence(char *misspelled, char *sentence, char *unde
 	int pos = ptr - sentence;
 	int i;
 
-    for (i = 0; i < pos; i++) {
+	for (i = 0; i < pos; i++) {
 		strcat(underline, " ");
-    }
+	}
 
-    int slen = strlen(misspelled);
+	int slen = strlen(misspelled);
 
 	for ( ; i < slen + pos; i++) {
 		strcat(underline, "^");
-    }
+	}
 
-    underline[i] = '\0';
+	underline[i] = '\0';
 
-    log_debug("underline is %s", underline);
-    log_debug("returning from underline_misspelled_sentence");
-    return underline;
+	log_debug("underline is %s", underline);
+	log_debug("returning from underline_misspelled_sentence");
+	return underline;
 }
 
 /* See main_functions_edit.h */
@@ -71,12 +71,12 @@ bool is_in_punct_array(char letter) {
 	int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
 	int i;
 
-    for (i = 0; i < num_punctuation ; i++) {
-        if ((punctuation_array[i] - letter) == 0) {
-            log_trace("is_in_punct_array character is a punctuation.");
-            return true;
-        }
-    }
+	for (i = 0; i < num_punctuation ; i++) {
+		if ((punctuation_array[i] - letter) == 0) {
+			log_trace("is_in_punct_array character is a punctuation.");
+			return true;
+		}
+	}
 
     log_trace("is_in_punct_array character is not a punctuation."); 
     return false;
@@ -84,40 +84,40 @@ bool is_in_punct_array(char letter) {
 
 /* See main_functions_edit.h */
 void remove_prefix_punctuation(char *word) {
-    char prefix_char;
-    prefix_char = word[0];
-    log_trace("remove_prefix_punctuation before removing any prefixed punctuation, the word is '%s'.", word);
+	char prefix_char;
+	prefix_char = word[0];
+	log_trace("remove_prefix_punctuation before removing any prefixed punctuation, the word is '%s'.", word);
 
-    while (is_in_punct_array(prefix_char) == true) {
-        memmove(word, word + 1, strlen(word)); 
-        log_trace("remove_prefix_punctuation word is now %s", word);
-        prefix_char = word[0];
-    }
+	while (is_in_punct_array(prefix_char) == true) {
+		memmove(word, word + 1, strlen(word)); 
+		log_trace("remove_prefix_punctuation word is now %s", word);
+		prefix_char = word[0];
+	}
 }
 
 /* See main_functions_edit.h */
 void remove_trailing_punctuation(char *word) {
-    char trailing_char;
-    log_trace("remove_trailing_punctuation before removing trailing punctuation, the word is '%s'.", word);
-    trailing_char = word[(strlen(word) - 1)];
+	char trailing_char;
+	log_trace("remove_trailing_punctuation before removing trailing punctuation, the word is '%s'.", word);
+	trailing_char = word[(strlen(word) - 1)];
 
-    while (is_in_punct_array(trailing_char) == true) {
-        word[strlen(word) - 1] = '\0';
-        trailing_char = word[strlen(word) - 1]; //check next trailing character
-        log_trace("remove_trailing_punctuation word is now set to '%s'.", word);
-    }
+	while (is_in_punct_array(trailing_char) == true) {
+		word[strlen(word) - 1] = '\0';
+		trailing_char = word[strlen(word) - 1]; //check next trailing character
+		log_trace("remove_trailing_punctuation word is now set to '%s'.", word);
+	}
 }
 
 /* See main_functions_edit.h */
 char *remove_punctuation(char *word) { //removes trailing and prefix punctuation without modifying original word
-    char *shaved_word = (char *)malloc(strlen(word));
+	char *shaved_word = (char *)malloc(strlen(word));
     
-    strcpy(shaved_word, word);
-    remove_prefix_punctuation(shaved_word);
-    remove_trailing_punctuation(shaved_word);
+	strcpy(shaved_word, word);
+	remove_prefix_punctuation(shaved_word);
+	remove_trailing_punctuation(shaved_word);
 
-    log_debug("remove_punctuation word is now set to '%s'.", shaved_word);
-    return shaved_word;
+	log_debug("remove_punctuation word is now set to '%s'.", shaved_word);
+	return shaved_word;
 }
 
 /* See main_functions_edit.h */
@@ -125,7 +125,7 @@ void parse_string(char *string, dict_t *dict, char *underline, char **misspelled
 	char *string_copy = strdup(string);
 	char *tkn = strtok(string," \n"); //words only separated by spaces and newline
 	
-    while (tkn != NULL) {
+	while (tkn != NULL) {
 		log_trace("Token: %s", tkn);
 		char *shaved_word = remove_punctuation(tkn);
 
