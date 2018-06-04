@@ -76,13 +76,13 @@ int add_to_misspelled(char *word, char **misspelled);
 
 /*
  * parse_string: generate char** array of misspelled words from a line, as well as an underline
- *				 highlighting those misspelled words to be printed in the terminal
+ * highlighting those misspelled words to be printed in the terminal
  *
  * parameters:
  *  - string (line) to be parsed
  *  - dictionary
  *  - underline: string of ' ' and '^', highlighting misspelled words in sentence to be printed out in terminal
- *    this is initialized in edit_batch and edit_interactive as a malloc'd array with length of edit target string.
+ *  this is initialized in edit_batch and edit_interactive as a malloc'd array with length of edit target string.
  *  - misspelled: char** array of misspelled words in the line
  *
  * return: void

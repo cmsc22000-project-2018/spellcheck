@@ -38,18 +38,18 @@ bool fileexists(const char *filename);
  *  - color: bool for color of error message (false for no color, true for color)
  *
  * return: number indicating mode
- * 			1 means quiet, 2 verbose, 3 interactive
+ *  1 means quiet, 2 verbose, 3 interactive
  */
 int change_mode(char *arg, bool color);
 
 /*
  * main_page: prints out the shellstring main page and waits for user to respond with
- *			  commands to enter a file name, dictionary name, help page request, or quit.
- *			  Editing process begins when filename is entered.
+ *	commands to enter a file name, dictionary name, help page request, or quit.
+ *	Editing process begins when filename is entered.
  * parameters:
  *  - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
  *  - flag indicating mode
- *	  1 = QUIET_MODE, 2 = VERBOSE_MODE, 3 = INTERACTIVE_MODE
+ *	1 = QUIET_MODE, 2 = VERBOSE_MODE, 3 = INTERACTIVE_MODE
  *  - file_name: string indicating name of file to be parsed
  *  - dict_name: string indicating dictionary file name
  * return: void

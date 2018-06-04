@@ -16,25 +16,22 @@
 
 /* See word.h */
 bool valid_word(dict_t* dict, char* shaved_word) {
-    if (dict_chars_exists(dict, *shaved_word) == EXIT_SUCCESS && *shaved_word != '\n') {
-        if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
-            log_trace("valid_word returning true from valid_word");
-            return true;
-        } else {
-            log_trace("valid_word returning false from valid_word");
-            return false;
-        }
+    if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
+        log_trace("valid_word returning true from valid_word");
+        return true;
+    } else {
+        log_trace("valid_word returning false from valid_word");
+        return false;
     }
-    return false;
 }
 
 /* See word.h */
 char** generate_suggestions(dict_t* dict, char* word) {
-    char** suggestions = calloc(3, sizeof(char*));
-
 	if (dict == NULL) { // hard_coded; to change with suggestion.c
         return NULL;
     }
+
+    char** suggestions = calloc(3, sizeof(char*));
 
 	if (strcmp(word, "splling") == 0) {
 		suggestions[0] = strdup("spelling");
@@ -48,6 +45,9 @@ char** generate_suggestions(dict_t* dict, char* word) {
 	} else if((strcmp(word, "m'y") == 0)) {
         suggestions[0] = strdup("my");
         suggestions[1] = strdup("me");
+    } else {
+        free(suggestions);
+        return NULL;
     }
 
     log_trace("returning suggestions from generate_suggestions");
