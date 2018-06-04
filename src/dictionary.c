@@ -11,6 +11,7 @@
 #include <assert.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
 #include "dictionary.h"
 #include "log.c/src/log.h"
 
@@ -39,8 +40,13 @@ dict_t* dict_new() {
 /* See dictionary.h */
 int dict_init(dict_t *d) {
     assert(d != NULL);
+    time_t current_time;
+    char* c_time_string;
 
-    trie_t *t = trie_new("dict");
+    current_time = time(NULL);
+    c_time_string = ctime(&current_time);
+
+    trie_t* t = trie_new(c_time_string);
     if (t == NULL) {
         log_fatal("dict_init trie_new failed");
         return EXIT_FAILURE;
@@ -69,7 +75,7 @@ int dict_exists(dict_t *d, char *str) {
         return EXIT_FAILURE;
     }
 
-    log_debug("dict_exists entering trie_contains");
+    log_debug("dict_exists entering trie_contains, word is %s", str);
     int rc = trie_contains(d->dict, str);
 
     if (rc == 0) {
@@ -139,6 +145,14 @@ char **dict_suggestions(dict_t *d, char *str, int max_edits, int n) {
 
     log_trace("dict_suggestions");
     char **results = trie_approx(d->dict, str, max_edits, n);
+
+    if (results != NULL) {
+        log_debug("results is not null, sug[0] is \"%s\"", results[0]);
+        log_debug("results is not null, sug[1] is \"%s\"", results[1]);
+        log_debug("results is not null, sug[2] is \"%s\"", results[2]);
+        log_debug("results is not null, sug[3] is \"%s\"", results[3]);
+        log_debug("results is not null, sug[4] is \"%s\"", results[4]);
+    }
 
     return results;
 }

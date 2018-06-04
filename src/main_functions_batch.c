@@ -105,7 +105,7 @@ char **batch_mode(char *filename, dict_t *dict, bool *quit, int verbosity) {
     int i = 0;
 
     while (lines[i] != NULL) {
-        log_trace("Starting loop for line %s.", i + 1);
+        log_trace("Starting loop for line %d.", i + 1);
 
         lines[i] = edit_batch(lines[i], dict, verbosity, i + 1);
 
