@@ -19,6 +19,9 @@ script:
     - make
     - ./spellcheck tests/test_short.txt -l
     - ./spellcheck tests/test_short.txt -q -s test_save.txt -vv
+    - ./spellcheck tests/test_short.txt -q
+    - ./spellcheck tests/test_punct.txt -q -s test_save.txt -vv
+    - ./spellcheck tests/test_punct.txt -q
     - ./spellcheck < tests/test_main0.txt -c
     - ./spellcheck < tests/test_main1.txt
     - ./spellcheck < tests/test_main2.txt
