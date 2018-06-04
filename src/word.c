@@ -128,55 +128,45 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
     assert(max_edits > 0 && amount > 0);
 
 	if (dict == NULL) {
-        // No change if no dictionary
-        suggestions[0] = word;
-        
-        return EXIT_FAILURE;
+        return NULL;
     }
 
-    // Lowercase the inputted word
-    //char *lower_word = word_lowercase(word);
-
-    // Generate a suggestion list for the lowercased word
-    //char **sug_list = dict_suggestions(dict, lower_word, max_edits, amount);
-
-    char* sug_list[5] = {"a", "b", "c", "d", "e"};
-
-    // Capitalize suggestions if necessary
-    int flag = word_check_cap(word);
-
-    if (flag > 0) {
-        words_uppercase(sug_list, flag);
-    }
-
-    // Count number of suggestions returned
     int sug_num = 0;
     int i = 0;;
+
+    // Lowercase the inputted word
+    char *lower_word = word_lowercase(word);
+
+    // Generate a suggestion list for the lowercased word
+    char **sug_list = dict_suggestions(dict, lower_word, max_edits, amount);
+
+    /* Possibly, if dictionary is capitalized; run once with capitalizations (McDonals, for instance)
+    if (sug_list == NULL) {
+        sug_list = dict_suggestions(dict, word, max_edits, amount);
+    }
+    */
+
+    if (sug_list == NULL) return NULL;
+
+    // Capitalize suggestions if necessary. i here is flag.
+    i = word_check_cap(word);
+    if (i > 0) {
+        words_uppercase(sug_list, i);
+    }
+
+    // Count number of suggestions returned. i here is sug_list.
+    i = 0;
     while (sug_list[i] != NULL) {
         sug_num++;
     }
 
     // If no suggestions could be retrieved, return failure
 	if (sug_num == 0) {
-		return EXIT_FAILURE;
+		return NULL;
 	}
 
+    // is this necessary?
     sug_list[sug_num] = NULL;
-    // Copy the suggested words into the inputted suggestions array
-    i = 0;
-    while (sug_list[i] != NULL) {
-        suggestions[i] = strdup(sug_list[i]);
-        i++;
-    }
 
-    // Free each string
-    int j;
-    for (j = 0; j < sug_num; j++) {
-    	free(sug_list[j]);
-    }
-
-    // Free the string array
-    free(sug_list);
-
-    return EXIT_SUCCESS;
+    return sug_list;
 }
