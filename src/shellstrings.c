@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "shellstrings.h"
+#include "main_functions_home.h"
 #include "log.c/src/log.h"
 
 /* See shellstrings.h */
@@ -29,12 +30,12 @@ void shell_main_menu(bool color) {
                "Additionally, select an output mode and/or "
                "choose dictionary before running the program.\n\n" RESET);
 
-        printf(BOLDWHITE "f [/path/file.txt]" RESET "       : Input text file\n");
-        printf(BOLDWHITE "d [/path/dictionary.txt]" RESET " : Input custom dictionary file\n");
-        printf(BOLDWHITE "m [number]" RESET "               : Mode [1 - Quiet, 2 - Verbose, 3 - Interactive]\n");
-        printf(BOLDWHITE "c" RESET "                        : Enable/Disable color\n");
-        printf(BOLDWHITE "h" RESET "                        : Help\n");
-        printf(BOLDWHITE "q" RESET "                        : Quit program\n");
+        printf(BOLDWHITE "[f] [/path/file.txt]" RESET "       : Input text file\n");
+        printf(BOLDWHITE "[d] [/path/dictionary.txt]" RESET " : Input custom dictionary file\n");
+        printf(BOLDWHITE "[m] [number]" RESET "               : Mode [1 - Quiet, 2 - Verbose, 3 - Interactive]\n");
+        printf(BOLDWHITE "[c]" RESET "                        : Enable/Disable color\n");
+        printf(BOLDWHITE "[h]" RESET "                        : Help\n");
+        printf(BOLDWHITE "[q]" RESET "                        : Quit program\n");
     }
 
     else {
@@ -42,31 +43,31 @@ void shell_main_menu(bool color) {
                "Additionally, select an output mode and/or "
                "choose dictionary before running the program.\n\n");
 
-        printf("f [/path/file.txt]       : Input text file\n");
-        printf("d [/path/dictionary.txt] : Input custom dictionary file\n");
-        printf("m [number]               : Mode [1 - Quiet, 2 - Verbose, 3 - Interactive]\n");
-        printf("c                        : Enable/Disable color\n");
-        printf("h                        : Help\n");
-        printf("q                        : Quit program\n");
+        printf("[f] [/path/file.txt]       : Input text file\n");
+        printf("[d] [/path/dictionary.txt] : Input custom dictionary file\n");
+        printf("[m] [number]               : Mode [1 - Quiet, 2 - Verbose, 3 - Interactive]\n");
+        printf("[c]                        : Enable/Disable color\n");
+        printf("[h]                        : Help\n");
+        printf("[q]                        : Quit program\n");
     }
 }
 
 /* See shellstrings.h */
 void shell_save(bool color) {
     if (color == true) {
-        printf(BOLDWHITE "p" RESET " : Print all modifications\n");
-        printf(BOLDWHITE "s" RESET " : Save to existing file\n");
-        printf(BOLDWHITE "c" RESET " : Save to custom file\n");
-        printf(BOLDWHITE "r" RESET " : Re-edit file\n");
-        printf(BOLDWHITE "q" RESET " : Quit program\n");
+        printf(BOLDWHITE "[p]" RESET " : Print all modifications\n");
+        printf(BOLDWHITE "[s]" RESET " : Save to existing file\n");
+        printf(BOLDWHITE "[c]" RESET " : Save to custom file\n");
+        printf(BOLDWHITE "[r]" RESET " : Re-edit file\n");
+        printf(BOLDWHITE "[q]" RESET " : Quit program\n");
     }
 
     else {
-        printf("p : Print all modifications\n");
-        printf("s : Save to existing file\n");
-        printf("c : Save to custom file\n");
-        printf("r : Re-edit file\n");
-        printf("q : Quit program\n");
+        printf("[p] : Print all modifications\n");
+        printf("[s] : Save to existing file\n");
+        printf("[c] : Save to custom file\n");
+        printf("[r] : Re-edit file\n");
+        printf("[q] : Quit program\n");
     }
 }
 
@@ -197,11 +198,11 @@ void shell_start_interactive(char *filename, char *dict, char *md, bool color) {
 
 char *shell_modename(int mode) {
     switch (mode) {
-    case 1:
+    case QUIET_MODE:
         return "Quiet Batch Mode";
-    case 2:
+    case VERBOSE_MODE:
         return "Verbose Batch Mode";
-    case 3:
+    case INTERACTIVE_MODE:
         return "Interactive Mode";
     default:
         break;

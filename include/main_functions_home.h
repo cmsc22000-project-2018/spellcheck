@@ -6,10 +6,10 @@
 #include <stdbool.h>
 
 /*
- *	Main Page Functions:
- *		In the event that Spellcheck is not given a file to parse and edit, the main page will be printed out 
- *		such that the user can seek help, quit spellcheck, enter a filename, or enter a dictionary filename.
- *		These functions operate the main page.
+ * Main Page Functions:
+ * In the event that Spellcheck is not given a file to parse and edit, the main page will be printed out 
+ * such that the user can seek help, quit spellcheck, enter a filename, or enter a dictionary filename.
+ * These functions operate the main page.
  */
 
 #define INTERACTIVE_MODE 3
@@ -26,32 +26,38 @@ void help_page(bool color);
 
 /* 
  * fileexists: check if file with name, given by string, exists
+ *
  * parameter: string of file name, potential target for editing
+ *
  * return: bool, TRUE means exists, FALSE means not
  */
 bool fileexists(const char *filename);
 
 /*
  * change_mode: helper for main_page, determine input mode
+ *
  * parameter:
  *  - arg: command line input from main_page
  *  - color: bool for color of error message (false for no color, true for color)
  *
  * return: number indicating mode
- *  1 means quiet, 2 verbose, 3 interactive
+ * 1 means quiet, 2 verbose, 3 interactive
  */
 int change_mode(char *arg, bool color);
 
 /*
  * main_page: prints out the shellstring main page and waits for user to respond with
- *	commands to enter a file name, dictionary name, help page request, or quit.
- *	Editing process begins when filename is entered.
+ * commands to enter a file name, dictionary name, help page request, or quit.
+ * Editing process begins when filename is entered.
+ *
  * parameters:
  *  - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
  *  - flag indicating mode
- *	1 = QUIET_MODE, 2 = VERBOSE_MODE, 3 = INTERACTIVE_MODE
+ *    1 = QUIET_MODE, 2 = VERBOSE_MODE, 3 = INTERACTIVE_MODE
  *  - file_name: string indicating name of file to be parsed
  *  - dict_name: string indicating dictionary file name
+ *  - color: bool for color of error message (false for no color, true for color)
+ *
  * return: void
  */
 void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color);
