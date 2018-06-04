@@ -11,9 +11,10 @@
 
 /*
  * valid_word: checks that word is in dictionary
+ *
  * parameters: word, dictionary
+ *
  * returns: bool (true if in dictionary, false if not)
- * 
  */
 bool valid_word(dict_t *dict, char* word);
 

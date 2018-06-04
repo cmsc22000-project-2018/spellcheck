@@ -28,7 +28,7 @@ void save_corrections(char *filename, char **lines) {
 }
 
 /* See main_functions_save.h */
-void save_page(char *filename, char **lines, bool *quit, bool* color) {
+void save_page(char *filename, char **lines, bool *quit, bool color) {
 	int i = 1;
     char line[10];
     char *args = NULL;

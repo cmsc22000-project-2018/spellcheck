@@ -129,7 +129,7 @@ int main(int argc, char *argv[]) {
 		switch (c) {
             case 'd':
                 if (!fileexists(optarg)) {  // this checks if the file actually exists
-                    shell_error("Invalid dictionary file input.", color);
+                    shell_error("Invalid dictionary file input.", *color);
                     log_fatal("Dictionary file could not be found.");
                     return EXIT_FAILURE;
                 }
@@ -137,7 +137,7 @@ int main(int argc, char *argv[]) {
                 strcpy(dict, optarg);
 
                 if (*mode == INTERACTIVE_MODE) {
-                    shell_input(optarg, "dictionary", color);
+                    shell_input(optarg, "dictionary", *color);
                 }
 
                 break;
@@ -156,7 +156,7 @@ int main(int argc, char *argv[]) {
 		
             case 's':
                 if (strstr(optarg, ".txt\0") == NULL) {    // does not save to a *.txt file
-                    shell_error("Invalid file path.", color);
+                    shell_error("Invalid file path.", *color);
                     log_fatal("file path could not be found.");
                     return EXIT_FAILURE;
                 }
@@ -164,7 +164,7 @@ int main(int argc, char *argv[]) {
                 strcpy(save_file,optarg);
             
                 if (*mode == INTERACTIVE_MODE) {
-                    shell_input(optarg, "file save destination", color);
+                    shell_input(optarg, "file save destination", *color);
                 }
 
                 break;
@@ -178,12 +178,12 @@ int main(int argc, char *argv[]) {
                 break;
 
             case '?':
-                shell_usage(color);
+                shell_usage(*color);
                 exit(0);
                 break;
 
             default:
-                shell_error("Invalid format.", color);
+                shell_error("Invalid format.", *color);
                 log_fatal("Invalid shell line input.");
                 exit(0);
         }
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
         int msg = dict_read(new_dict, dict);
 
         if (msg == EXIT_FAILURE) {
-            shell_error("Invalid dictionary file input.", color);
+            shell_error("Invalid dictionary file input.", *color);
             log_fatal("Invalid dictionary file input.");
             exit(0);
         }
@@ -228,7 +228,7 @@ int main(int argc, char *argv[]) {
         log_trace("Mode set to: %s", md);
 
         if (*mode == INTERACTIVE_MODE) {
-            shell_start_interactive(filename, dict, md, color);
+            shell_start_interactive(filename, dict, md, *color);
         }
 
         char **result = NULL;
@@ -251,10 +251,16 @@ int main(int argc, char *argv[]) {
                 break;
         }
 
+        if (*quit == false) {
+            log_fatal("parsing failed");
+            return 1;
+        }
+
+
         if ((*mode != VERBOSE_MODE) && (result != NULL)) {	// Save file, a functionality unnecessary for verbose batch mode
             if (*mode == INTERACTIVE_MODE) {
                 log_trace("Printing success message.");
-                shell_edit_success(color);
+                shell_edit_success(*color);
             }
 
             md = strstr(save_file, ".txt\0");
@@ -273,7 +279,7 @@ int main(int argc, char *argv[]) {
 
             else {
                 log_trace("Printing the save page.");
-                save_page(filename, result, quit, color);
+                save_page(filename, result, quit, *color);
             }
         }
     }

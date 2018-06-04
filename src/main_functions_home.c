@@ -11,7 +11,7 @@
 #include "log.c/src/log.h"
 
 /* See main_functions_home.h */
-void help_page(bool *color) {
+void help_page(bool color) {
     shell_help(color);
 	shell_prompt(color);
 
@@ -31,7 +31,7 @@ bool fileexists(const char *filename) {
 }
 
 /* See main_functions_home.h */
-int change_mode(char *arg, bool* color) {
+int change_mode(char *arg, bool color) {
 	log_trace("change_mode mode type: %s", arg);
 	int a = atoi(arg);
 
@@ -56,24 +56,24 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 	while ((*quit) == true) {
 		if (print == true) {
 			log_trace("main_page printing main menu.");
-			shell_main_menu(color);
+			shell_main_menu(*color);
 		}
 
-		shell_prompt(color);
+		shell_prompt(*color);
 
 		line = parse_read_line();
 		args = parse_split_line(line);	// line is now split into tokens
 
 		if ((args == NULL) || (args[2] != NULL)) { // 3 inputs, or no input: error message
 			log_error("main_page rguments non-existent or too many argument input.");
-			shell_error("Please type in one of the indicated commands.", color);
+			shell_error("Please type in one of the indicated commands.", *color);
 			
 			print = false;
 			*quit = true;
 		}
 
 		else if (!strcmp(args[0], "h")) { // Print help page, then wait for user input
-			help_page(color);
+			help_page(*color);
 			
 			print = true;
 			*quit = true;
@@ -82,7 +82,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		else if (!strcmp(args[0], "f")) { // Check valid file path, then exit. If not, redo loop
 			if (!fileexists(args[1])) {	//file path checking
 				log_error("main_page invalid file input: file given does not exist.");
-				shell_error("Please enter a valid file path for a new edit target.", color);
+				shell_error("Please enter a valid file path for a new edit target.", *color);
 				
 				print = false;
 				*quit = true;
@@ -101,7 +101,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		else if (!strcmp(args[0],"d")) {	// dictionary name change 
 			if (!fileexists(args[1])) {	// Check file path validity for dicitonary
 				log_error("main_page dictionary does not exist.");
-				shell_error("Please enter a valid file path for a new dictionary.", color);
+				shell_error("Please enter a valid file path for a new dictionary.", *color);
 				
 				print = false;
 				*quit = true;
@@ -139,7 +139,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		}
 
 		else { // input bad
-			shell_error("Invalid file input.", color);
+			shell_error("Invalid file input.", *color);
 			log_error("main_page nvalid file input.");
 			*quit = true;
 		}

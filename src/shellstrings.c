@@ -1,4 +1,3 @@
-
 /* 
  * String output functions to be used in the shell
  *
@@ -13,8 +12,8 @@
 #include "log.c/src/log.h"
 
 /* See shellstrings.h */
-void shell_prompt(bool *color) {
-    if (*color == true) {
+void shell_prompt(bool color) {
+    if (color == true) {
         printf(BOLDWHITE "\nspellcheck >" RESET " ");
     }
 
@@ -24,8 +23,8 @@ void shell_prompt(bool *color) {
 }
 
 /* See shellstrings.h */
-void shell_main_menu(bool *color) {
-    if (*color == true) {
+void shell_main_menu(bool color) {
+    if (color == true) {
         printf(BOLDWHITE "\nPlease load a file to begin. "
                          "Additionally, select an output mode and/or "
                          "choose dictionary before running the program.\n\n" RESET);
@@ -53,8 +52,8 @@ void shell_main_menu(bool *color) {
 }
 
 /* See shellstrings.h */
-void shell_save(bool *color) {
-    if (*color == true) {
+void shell_save(bool color) {
+    if (color == true) {
         printf(BOLDWHITE "p" RESET " : Print all modifications\n");
         printf(BOLDWHITE "s" RESET " : Save to existing file\n");
         printf(BOLDWHITE "c" RESET " : Save to custom file\n");
@@ -72,8 +71,8 @@ void shell_save(bool *color) {
 }
 
 /* See shellstrings.h */
-void shell_edit_success(bool *color) {
-    if (*color == true) {
+void shell_edit_success(bool color) {
+    if (color == true) {
         printf(GREEN "\nSpellcheck complete.\n" RESET);
     }
 
@@ -94,8 +93,8 @@ void shell_print(char **lines) {
 }
 
 /* See shellstrings.h */
-void shell_input(char *filename, char *status, bool *color) {
-    if (*color == true) {
+void shell_input(char *filename, char *status, bool color) {
+    if (color == true) {
         printf(BOLDWHITE "%s" RESET " has been accepted as " BOLDWHITE "%s" RESET ".\n", filename, status);
     }
 
@@ -105,8 +104,8 @@ void shell_input(char *filename, char *status, bool *color) {
 }
 
 /* See shellstrings.h */
-void shell_error(char *error_text, bool *color) {
-    if (*color == true) {
+void shell_error(char *error_text, bool color) {
+    if (color == true) {
         printf(RED "ERROR:" RESET " %s", error_text);
     }
 
@@ -116,8 +115,8 @@ void shell_error(char *error_text, bool *color) {
 }
 
 /* See shellstrings.h */
-void shell_usage(bool *color) {
-    if (*color == true) {
+void shell_usage(bool color) {
+    if (color == true) {
         printf(RED "Usage:" RESET " ./spellcheck [filename.txt] [-mode] [-dictflag] [~/path/file.txt] [-saveflag] [~/path/destination.txt]\n");
     }
 
@@ -127,8 +126,8 @@ void shell_usage(bool *color) {
 }
 
 /* See shellstrings.h */
-void shell_help(bool *color) {
-    if (*color == true) {
+void shell_help(bool color) {
+    if (color == true) {
         printf(BOLDWHITE "------- Help Page ------\n" RESET
 
                "\nSpellcheck is a tool which searches for misspelled words "
@@ -174,8 +173,8 @@ void shell_help(bool *color) {
     }
 }
 
-void shell_start_interactive(char *filename, char *dict, char *md, bool *color) {
-    if (*color == true) {   // only printing this out in verbose
+void shell_start_interactive(char *filename, char *dict, char *md, bool color) {
+    if (color == true) {   // only printing this out in verbose
         log_info(BOLDWHITE "\n\n=============================================================\n"
                                "====================== Editing Started ======================\n"
                                "=============================================================\n\n" RESET);
@@ -211,8 +210,8 @@ char *shell_modename(int mode) {
     return "Interactive Mode";
 }
 
-void shell_interactive_line_print(int lnum, char *line, char *underline, bool returnflag, bool *color) {
-    if (*color == true) {
+void shell_interactive_line_print(int lnum, char *line, char *underline, bool returnflag, bool color) {
+    if (color == true) {
         printf(BOLDWHITE "\nLine:" RESET " %d:\n%s" , lnum, line);
 
         if (returnflag) {
@@ -234,10 +233,10 @@ void shell_interactive_line_print(int lnum, char *line, char *underline, bool re
 }
 
 
-void shell_interactive_replacements(char *word, char **sug, int flag, bool *color) {
+void shell_interactive_replacements(char *word, char **sug, int flag, bool color) {
     int j = 0;
 
-    if (*color == true) {
+    if (color == true) {
         if (flag == EXIT_FAILURE) {
             sug[0] = word;
             printf("\nNo suggestions have been generated for " BOLDWHITE "%s" RESET ".\n\n", word);
@@ -324,8 +323,8 @@ void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggesti
     printf("\n"); // print list of replacement
 }
 
-void shell_save_message(bool *color) {
-    if (*color == true) {
+void shell_save_message(bool color) {
+    if (color == true) {
         printf("\n" BOLDWHITE "Enter a file name [path/*.txt] or enter 'r' to return to previous page." RESET "\n");
     }
 

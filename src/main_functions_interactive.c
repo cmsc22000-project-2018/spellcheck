@@ -15,7 +15,7 @@
 #include "main_functions_interactive.h"
 
 /* See main_functions_interactive.h */
-char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag, bool* color) {
+char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag, bool color) {
     log_debug("edit_interactive 'returnflag' value set to %s.", returnflag);
 
     char *line_copy = strdup(line);
@@ -181,9 +181,17 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
 }
 
 /* See main_functions_interactive.h */
-char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool *color) {
+char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool color) {
 	char **lines;
 	lines = parse_file(filename);
+
+    if (lines == NULL) {
+        shell_error("Failed to parse file.", false);
+        log_error("batch_mode file parse failed.");
+        *quit = true;
+        return NULL;
+    }
+
     log_trace("edit_interactive file parsed successfully.");
 
 	// step through phases
@@ -205,6 +213,6 @@ char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool *color) {
 	}
 
     log_trace("edit_interactive editing finished successfully, exiting the interactive mode.");
-    *quit = true;
+    *quit = false;
 	return lines;
 }

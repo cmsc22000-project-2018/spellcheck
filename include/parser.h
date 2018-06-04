@@ -5,10 +5,10 @@
 #include <stdlib.h>
 
 /* Parsing Functions:
- * 		Parsing functions receive input from either the command line or a file. In the case of command line input,
- *		parse_read_line and parse_split_line accept the input from the user and split it into tokens.
- * 		In the case of file input, parse_file accepts a filename, opens the file associated with the name and
- *		generates a char** array of lines to correct.
+ * Parsing functions receive input from either the command line or a file. In the case of command line input,
+ * parse_read_line and parse_split_line accept the input from the user and split it into tokens.
+ * In the case of file input, parse_file accepts a filename, opens the file associated with the name and
+ * generates a char** array of lines to correct.
  */
 
 /*

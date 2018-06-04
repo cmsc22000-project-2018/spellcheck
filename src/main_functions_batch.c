@@ -92,7 +92,7 @@ char **batch_mode(char *filename, dict_t *dict, bool *quit, int verbosity) {
 	if (lines == NULL) {
 		shell_error("Failed to parse file.", false);
 		log_error("batch_mode file parse failed.");
-        *quit = false;
+        *quit = true;
 
 		return NULL;
 	}
