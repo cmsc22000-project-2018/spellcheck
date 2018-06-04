@@ -19,6 +19,7 @@
 char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
     log_info("edit_batch batch mode started successfully.");
 
+
 	char *line_copy = strdup(line);
     int max_no_suggestions = 2; //Should the user decide this?
 
@@ -41,6 +42,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
     parse_string(line, dict, underline, misspelled);
     log_info("edit_batch file parsing completed.");
 
+
     // Generates an empty array where suggestions will be filled
     char *suggestions[max_no_suggestions];
     suggestions[max_no_suggestions] = NULL;
@@ -60,15 +62,10 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
             if (verbosity == VERBOSE_MODE) {
                 suggestions[0] = "No suggestions generated"; 
             }
-
-            else {
-                suggestions[0] = misspelled[i];
-            }
-
             suggestions[1] = NULL;
         }
 
-        if (verbosity == QUIET_MODE) {
+        if (verbosity == QUIET_MODE && rc == EXIT_SUCCESS) {
             log_trace("edit_batch correcting misspelled line.");
             correct_line(line_copy, misspelled[i], suggestions[0]);
         }
@@ -87,6 +84,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
 
 /* See main_functions_batch.h */
 char **batch_mode(char *filename, dict_t *dict, bool *quit, int verbosity) {
+
 	char **lines = parse_file(filename);
     log_debug("batch_mode file parsed into a char array.");
 
@@ -107,6 +105,7 @@ char **batch_mode(char *filename, dict_t *dict, bool *quit, int verbosity) {
 
 	while (lines[i] != NULL) {
         log_trace("Starting loop for line %s.", i + 1);
+
 		lines[i] = edit_batch(lines[i], dict, verbosity, i + 1);
 		
         i++;
