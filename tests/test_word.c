@@ -253,4 +253,36 @@ Test(word, words_uppercase4)
     cr_assert_eq(i, 0, "recapitalization failed");
 }
 
+/*
+ * generate_suggestions testing
+ */
+
+Test(word, generate_suggestions)
+{
+    char* c = "splling";
+    dict_t dict = dict_new();
+    int i = dict_read(dict, "tests/test_short.txt");
+    cr_assert_eq(i, EXIT_SUCCESS, "dict_read failed");
+
+    char** list = generate_suggestions(dict, c, 2, 2);
+
+    cr_assert_not_null(list, "generate_suggestions returns null");
+
+    cr_assert_not_null(list[0], "generate_suggestions[0] is null");
+}
+
+Test(word, generate_suggestions)
+{
+    char* c = "splling";
+    dict_t dict = dict_new();
+    int i = dict_read(dict, "dictionary1.txt");
+    cr_assert_eq(i, EXIT_SUCCESS, "dict_read failed");
+
+    char** list = generate_suggestions(dict, c, 2, 2);
+
+    cr_assert_not_null(list, "generate_suggestions returns null");
+
+    cr_assert_not_null(list[0], "generate_suggestions[0] is null");
+}
+
 
