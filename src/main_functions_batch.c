@@ -55,7 +55,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
          *  - In quiet mode, save the word as is (without corrections).
          */
 	    if (suggestions == NULL) {
-            suggestions = calloc(2, sizeof(char*));
+            suggestions = calloc(max_no_suggestions, sizeof(char*));
             if (verbosity == VERBOSE_MODE) {
                 suggestions[0] = "No suggestions generated"; 
             }

@@ -37,13 +37,17 @@
  *
  *	> -i/-q : interactive, quiet mode
  *
- *  > --show-suggestions: verbose mode
+ *  > -l: verbose mode
  *
  *	> -s [filename.txt]: file saving destination 
  *
  *	> -c : colored strings
  *
- *  > -v : logging
+ *  > -v : logging at ERROR level
+ *
+ *  > -vv : loggig at INFO level
+ *
+ *  > -vvv : logging at TRACE level
  *
  *  ...
  *  and so on, with different combinations.
@@ -57,7 +61,7 @@ char *modename(int *mode) {
 		case QUIET_MODE:
             return "Quiet Batch Mode"; 
 		case VERBOSE_MODE:
-            return "List Batch Mode";
+            return "Verbose Batch Mode";
 		case INTERACTIVE_MODE:
             return "Interactive Mode";
 		default:
