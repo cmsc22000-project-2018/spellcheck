@@ -128,6 +128,7 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
     assert(max_edits > 0 && amount > 0);
 
 	if (dict == NULL) {
+        log_warn("returning NULL from generate_suggestions");
         return NULL;
     }
 
@@ -135,9 +136,12 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
     int i = 0;;
 
     // Lowercase the inputted word
+    log_debug("lowercase operation on %s", word);
     char *lower_word = word_lowercase(word);
+    log_debug("lower_word is %s", lower_word);
 
     // Generate a suggestion list for the lowercased word
+    log_info("entering dict_suggestions");
     char **sug_list = dict_suggestions(dict, lower_word, max_edits, amount);
 
     /* Possibly, if dictionary is capitalized; run once with capitalizations (McDonals, for instance)
@@ -145,9 +149,13 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
         sug_list = dict_suggestions(dict, word, max_edits, amount);
     */
 
-    if (sug_list == NULL) return NULL;
+    if (sug_list == NULL) {
+        log_info("sug_list returned null");
+        return NULL;
+    }
 
     // Capitalize suggestions if necessary. i here is flag.
+    log_debug("sug_list is not null, first category is %s", sug_list[0]);
     i = word_check_cap(word);
     if (i > 0) {
         words_uppercase(sug_list, i);
@@ -158,6 +166,7 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
     while (sug_list[i] != NULL) {
         sug_num++;
     }
+    log_debug("sug_num: %d", sug_num);
 
     // If no suggestions could be retrieved, return failure
 	if (sug_num == 0) {

@@ -20,7 +20,7 @@
  * printing in criterion testing was discouraged.
  */
 
-/* Test edit_batch */
+/* Test edit_batch 
 Test(main_functions_batch, edit_batch)
 {
 	char* line = strdup("Eye have, a splling chequer");
@@ -37,8 +37,8 @@ Test(main_functions_batch, edit_batch)
 
 	cr_assert_eq(i, 0, "edit_batch failed");
 }
-
-/* Test edit_batch */
+*/
+/* Test edit_batch 
 Test(main_functions_batch, edit_batch2)
 {
 	char* line = strdup("It cme with thy m'y PC.");
@@ -55,3 +55,4 @@ Test(main_functions_batch, edit_batch2)
 
 	cr_assert_eq(i, 0, "edit_batch failed");
 }
+*/

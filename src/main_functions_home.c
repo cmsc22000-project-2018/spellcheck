@@ -109,10 +109,12 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
             } else {
 
-                dict = args[1];
+                strcpy(dict, args[1]);
                 log_info("main_page dictionary file is now %s.",dict);
+                shell_input(args[1], "dictionary file", *color);
 
-                print = false;
+
+                print = true;
                 *quit = true;
             }
 
@@ -128,6 +130,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
             log_trace("main_page reverting mode colors.");
             *color = !(*color);
+            print = true;
 
         } else if (!strcmp(args[0], "q")) { // quit
 
@@ -140,8 +143,8 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 
         } else { // input bad
 
-            shell_error("Invalid file input.", *color);
-            log_error("main_page nvalid file input.");
+            shell_error("Invalid command line input.", *color);
+            log_error("main_page invalid command line input.");
             *quit = true;
         }
 
