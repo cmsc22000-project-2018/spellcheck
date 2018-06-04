@@ -40,10 +40,11 @@ int change_mode(char *arg, bool color) {
 	}
 
 	shell_error("change_mode mode type invalid; reverting to interactive mode.", color);
-    /*
-     * The default is 3, given this function is only called in main_page(),
-     * at which point interactive mode is what user probably intended
-     */
+	/*
+	 * The default is 3, given this function is only called in main_page(),
+	 * at which point interactive mode is what user probably intended
+	 */
+	
 	return INTERACTIVE_MODE;
 }
 
@@ -65,7 +66,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 		args = parse_split_line(line);	// line is now split into tokens
 
 		if ((args == NULL) || (args[2] != NULL)) { // 3 inputs, or no input: error message
-			
+
 			log_error("main_page rguments non-existent or too many argument input.");
 			shell_error("Please type in one of the indicated commands.", *color);
 			
