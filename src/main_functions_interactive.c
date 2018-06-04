@@ -73,36 +73,30 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
         if (choice[0] == 'd') {	// delete
         	correct_line(line_copy, misspelled[i], "");
 
-         	printf("\n%s", line_copy);
-        	
-            /* 
-             * If the line is the last line being edited,
-             * the last character is EOF, not \n.
-             */
+            if (misspelled[i+1] != NULL) {
+                /* if the line is the last line being edited, the last character is
+                 * EOF, not \n. */
+                printf("%s", line_copy);
+                if (returnflag) {
+                    printf("\n");
+                }
 
-        	if (returnflag) {
-                printf("\n");
+                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
             }
 
-         	if (misspelled[i+1] != NULL)
-                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
-
-        }
-
-        else if (choice[0] == 's') { // skip
+        } else if (choice[0] == 's') { // skip
         	// print the edited line
-        	printf("\n%s", line_copy);
-        	/* if the line is the last line being edited, the last character is
-        	 * EOF, not \n. */
-        	if (returnflag) {
-                printf("\n");
-            }
+            if (misspelled[i+1] != NULL) {
+                /* if the line is the last line being edited, the last character is
+                 * EOF, not \n. */
+                printf("%s", line_copy);
+                if (returnflag) {
+                    printf("\n");
+                }
 
-            if (misspelled[i+1] != NULL)
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
-        }
-
-        else if (choice[0] == 'i') { // insert
+            }
+        } else if (choice[0] == 'i') { // insert
 			char c[50];
 			char sig[10];
 			int userconsent = 0;
@@ -139,36 +133,33 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
 			printf("\nReplacing \"%s\" with \"%s\".\n", misspelled[i], newword);
 			correct_line(line_copy, misspelled[i], newword); //modifies line function
 
-         	printf("%s", line_copy);
+            if (misspelled[i+1] != NULL) {
+                /* if the line is the last line being edited, the last character is
+                 * EOF, not \n. */
+                printf("%s", line_copy);
+                if (returnflag) {
+                    printf("\n");
+                }
 
-        	/*
-             *if the line is the last line being edited,
-             * the last character is EOF, not \n.
-             */
-         	if (returnflag) {
-                printf("\n");
-            }
-
-            if (misspelled[i+1] != NULL)
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
-        } 
-
-        else if (isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
+            }
+        } else if (isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
         	// Replace misspelled word with chosen replacement
         	int c = atoi(&choice[0]) - 1;
         	printf("\nReplacing \"%s\" with \"%s\".\n", misspelled[i], suggestions[c]);
         	correct_line(line_copy, misspelled[i], suggestions[c]); //modifies line function
 
-        	/* if the line is the last line being edited, the last character is
-        	 * EOF, not \n. */
-         	printf("%s", line_copy);
-         	if (returnflag) {
-                printf("\n");
-            }
+            if (misspelled[i+1] != NULL) {
+            	/* if the line is the last line being edited, the last character is
+            	 * EOF, not \n. */
+             	printf("%s", line_copy);
+             	if (returnflag) {
+                    printf("\n");
+                }
 
-            if (misspelled[i+1] != NULL)
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
         }
+        
 
         j = 0;
         while (suggestions[j] != NULL) {

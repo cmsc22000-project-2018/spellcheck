@@ -33,13 +33,8 @@ char** generate_suggestions(dict_t* dict, char* word) {
     char** suggestions = calloc(3, sizeof(char*));
 
 	if (dict == NULL) { // hard_coded; to change with suggestion.c
-        log_warn("generate_suggestions no dictionary");
-        suggestions[0] = strdup("no suggestions");
-        suggestions[1] = NULL;
-        return suggestions;
+        return NULL;
     }
-
-    suggestions[2] = NULL;
 
 	if (strcmp(word, "splling") == 0) {
 		suggestions[0] = strdup("spelling");
