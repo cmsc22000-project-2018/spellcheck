@@ -260,7 +260,7 @@ Test(word, words_uppercase4)
 Test(word, generate_suggestions)
 {
     char* c = "splling";
-    dict_t dict = dict_new();
+    dict_t* dict = dict_new();
     int i = dict_read(dict, "tests/test_short.txt");
     cr_assert_eq(i, EXIT_SUCCESS, "dict_read failed");
 
@@ -274,7 +274,7 @@ Test(word, generate_suggestions)
 Test(word, generate_suggestions)
 {
     char* c = "splling";
-    dict_t dict = dict_new();
+    dict_t* dict = dict_new();
     int i = dict_read(dict, "dictionary1.txt");
     cr_assert_eq(i, EXIT_SUCCESS, "dict_read failed");
 
