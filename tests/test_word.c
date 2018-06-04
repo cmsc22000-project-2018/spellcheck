@@ -271,7 +271,7 @@ Test(word, generate_suggestions)
     cr_assert_not_null(list[0], "generate_suggestions[0] is null");
 }
 
-Test(word, generate_suggestions)
+Test(word, generate_suggestions1)
 {
     char* c = "splling";
     dict_t* dict = dict_new();

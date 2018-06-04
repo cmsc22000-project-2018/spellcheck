@@ -137,7 +137,7 @@ char **dict_suggestions(dict_t *d, char *str, int max_edits, int n) {
         return NULL;
     }
 
-    log_trace("dict_suggestions")
+    log_trace("dict_suggestions");
     char **results = trie_approx(d->dict, str, max_edits, n);
 
     return results;
