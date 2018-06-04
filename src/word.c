@@ -16,16 +16,13 @@
 
 /* See word.h */
 bool valid_word(dict_t* dict, char* shaved_word) {
-    if (dict_chars_exists(dict, *shaved_word) == EXIT_SUCCESS && *shaved_word != '\n') {
-        if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
-            log_trace("valid_word returning true from valid_word");
-            return true;
-        } else {
-            log_trace("valid_word returning false from valid_word");
-            return false;
-        }
+    if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
+        log_trace("valid_word returning true from valid_word");
+        return true;
+    } else {
+        log_trace("valid_word returning false from valid_word");
+        return false;
     }
-    return false;
 }
 
 /* See word.h */
