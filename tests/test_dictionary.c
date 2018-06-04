@@ -343,7 +343,9 @@ Test(suggestion, dict_suggestions0) {
     dict_add(d, "a");
 
     // lol
-    char **result = dict_suggestions(d, "a", 0, 1);
+    char **result = dict_suggestions(d, "a", 1, 1);
+
+    cr_assert_not_null(result, "dict_suggestions returned NULL when it shouldn't");
 
     cr_assert_eq(0, strcmp(result[0], "a"), 
                 "dict_suggestions() first result incorrect");
@@ -365,6 +367,8 @@ Test(suggestion, dict_suggestions1) {
 
 
     char **result = dict_suggestions(d, "afij4-8", 3, 3);
+
+    cr_assert_not_null(result, "dict_suggestions returned NULL when it shouldn't");
 
     cr_assert_eq(0, strcmp(result[0], "afij4-8"), 
                 "suggestion_list() first result incorrect");
