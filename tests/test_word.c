@@ -68,11 +68,11 @@ Test(word, generate_suggestions)
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = generate_suggestions(c, dict, suggestions);
+    suggestions = generate_suggestions(dict, c);
 
     cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");
 
-    i = strncmp("spelling", suggestions[0], 8);
+    int i = strncmp("spelling", suggestions[0], 8);
     cr_assert_eq(i, 0, "suggestion output incorrect");
 }
 
@@ -88,9 +88,9 @@ Test(word, generate_suggestions1)
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = generate_suggestions(c, dict, suggestions);
+    suggestions = generate_suggestions(dict, c);
 
-    cr_assert_eq(i, EXIT_FAILURE, "int return value incorrect");
+    cr_assert_null(suggestions, "return value incorrect");
 }
 
 /* testing generate_suggestions */
@@ -105,11 +105,11 @@ Test(word, generate_suggestions2)
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = generate_suggestions(c, dict, suggestions);
+    suggestions = generate_suggestions(dict, c);
 
     cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");
 
-    i = strncmp("cheque", suggestions[1], 7);
+    int i = strncmp("cheque", suggestions[1], 7);
     cr_assert_eq(i, 0, "suggestion output incorrect");
 }
 
@@ -117,19 +117,15 @@ Test(word, generate_suggestions2)
 Test(word, generate_suggestions3)
 {
     char* c = strdup("cme");
-    char** suggestions = calloc(2, sizeof(char*));
-    if (suggestions == NULL) {
-        fprintf(stderr,"malloc failed, generate_suggestions3");
-        exit(0);
-    }
+    char** suggestions = NULL;
     dict_t* dict = dict_new();
     dict_read(dict, "tests/sample_dict.txt");
 
-    int i = generate_suggestions(c, dict, suggestions);
+    suggestions = generate_suggestions(dict, c);
 
     cr_assert_eq(i, EXIT_SUCCESS, "int return value incorrect");
 
-    i = strncmp("come", suggestions[0], 5);
+    int i = strncmp("come", suggestions[0], 5);
     cr_assert_eq(i, 0, "suggestion output incorrect");
 }
 
@@ -137,17 +133,13 @@ Test(word, generate_suggestions3)
 Test(word, generate_suggestions4)
 {
     char* c = strdup("cme");
-    char** suggestions = calloc(2, sizeof(char*));
-    if (suggestions == NULL) {
-        fprintf(stderr,"malloc failed, generate_suggestions3");
-        exit(0);
-    }
+    char** suggestions = NULL;
     dict_t* dict = NULL;
 
-    int i = generate_suggestions(c, dict, suggestions);
+    suggestions = generate_suggestions(dict, c);
 
     cr_assert_eq(i, EXIT_FAILURE, "int return value incorrect");
 
-    i = strncmp("no suggestions", suggestions[0], 14);
+    int i = strncmp("no suggestions", suggestions[0], 14);
     cr_assert_eq(i, 0, "suggestion output incorrect");
 }

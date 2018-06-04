@@ -5,7 +5,7 @@
 #include "parser.h"
 #include "log.c/src/log.h"
 
-#define MAXCHAR 1025
+#define MAXCHAR 4096
 #define INITLINE 100
 #define READ_BUFFERSIZE 256
 #define LSH_TOK_BUFFERSIZE 64

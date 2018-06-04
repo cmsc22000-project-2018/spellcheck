@@ -18,10 +18,10 @@
 bool valid_word(dict_t* dict, char* shaved_word) {
     if (dict_chars_exists(dict, *shaved_word) == EXIT_SUCCESS && *shaved_word != '\n') {
         if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
-            log_trace("returning true from valid_word");
+            log_trace("valid_word returning true from valid_word");
             return true;
         } else {
-            log_trace("returning false from valid_word");
+            log_trace("valid_word returning false from valid_word");
             return false;
         }
     }
@@ -29,34 +29,27 @@ bool valid_word(dict_t* dict, char* shaved_word) {
 }
 
 /* See word.h */
-int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
-	if (dict == NULL) { // hard_coded; to change with suggestion.c
-        log_warn("no dictionary");
-        suggestions[0] = "no suggestions";
-        suggestions[1] = NULL;
-        return EXIT_FAILURE;
-    }
+char** generate_suggestions(dict_t* dict, char* word) {
+    char** suggestions = calloc(3, sizeof(char*));
 
-    suggestions[2] = NULL;
+	if (dict == NULL) { // hard_coded; to change with suggestion.c
+        return NULL;
+    }
 
 	if (strcmp(word, "splling") == 0) {
-		suggestions[0] = "spelling";
-		suggestions[1] = "spilling";
-		return EXIT_SUCCESS;
+		suggestions[0] = strdup("spelling");
+		suggestions[1] = strdup("spilling");
 	} else if (strcmp(word, "chequer") == 0) {
-    	suggestions[0] = "checker";
-    	suggestions[1] = "cheque";
-    	return EXIT_SUCCESS;;
+    	suggestions[0] = strdup("checker");
+    	suggestions[1] = strdup("cheque");
 	} else if((strcmp(word, "cme") == 0)) {
-    	suggestions[0] = "come";
-    	suggestions[1] = "came";
-    	return EXIT_SUCCESS;;
+    	suggestions[0] = strdup("come");
+    	suggestions[1] = strdup("came");
 	} else if((strcmp(word, "m'y") == 0)) {
-        suggestions[0] = "my";
-        suggestions[1] = "me";
-        return EXIT_SUCCESS;
+        suggestions[0] = strdup("my");
+        suggestions[1] = strdup("me");
     }
 
-    log_trace("returning EXIT_FAILURE from generate_suggestions");
-    return EXIT_FAILURE;
+    log_trace("returning suggestions from generate_suggestions");
+    return suggestions;
 }
