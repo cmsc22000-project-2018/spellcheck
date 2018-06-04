@@ -93,7 +93,7 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 				*quit = false;
 			}
 
-		} else if (!strcmp(args[0],"d")) {	// dictionary name change 
+		} else if (!strcmp(args[0], "d")) {	// dictionary name change 
 			if (!fileexists(args[1])) {	// Check file path validity for dicitonary
 				log_error("main_page dictionary does not exist.");
 				shell_error("Please enter a valid file path for a new dictionary.", *color);
@@ -121,14 +121,14 @@ void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color) {
 			log_trace("main_page reverting mode colors.");
 			*color = !(*color);
 
-		} else if (!strcmp(args[0],"q")) { // quit
+		} else if (!strcmp(args[0], "q")) { // quit
 			print = false;
 			*quit = false;
 			log_info("main_page quitting program.");
 			*mode = QUIT;
 			
 			return;
-			
+
 		} else { // input bad
 			shell_error("Invalid file input.", *color);
 			log_error("main_page nvalid file input.");

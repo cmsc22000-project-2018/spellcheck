@@ -48,6 +48,8 @@ char** generate_suggestions(dict_t* dict, char* word) {
 	} else if((strcmp(word, "m'y") == 0)) {
         suggestions[0] = strdup("my");
         suggestions[1] = strdup("me");
+    } else {
+        return NULL;
     }
 
     log_trace("returning suggestions from generate_suggestions");
