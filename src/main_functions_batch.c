@@ -43,6 +43,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
     log_info("edit_batch file parsing completed.");
 
     int i = 0;
+    int j;
     //Replacing words, printing if batch mode
     while (misspelled[i] != NULL) {
         // Generates suggestions

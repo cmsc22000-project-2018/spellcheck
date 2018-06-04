@@ -49,6 +49,7 @@ char** generate_suggestions(dict_t* dict, char* word) {
         suggestions[0] = strdup("my");
         suggestions[1] = strdup("me");
     } else {
+        free(suggestions);
         return NULL;
     }
 
