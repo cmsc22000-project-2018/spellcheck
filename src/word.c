@@ -16,14 +16,13 @@
 
 /* See word.h */
 bool valid_word(dict_t* dict, char* shaved_word) {
-    if (dict_chars_exists(dict, *shaved_word) == EXIT_SUCCESS && *shaved_word != '\n') {
-        if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
-            log_trace("valid_word returning true from valid_word");
-            return true;
-        }
+    if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
+        log_trace("valid_word returning true from valid_word");
+        return true;
+    } else {
+        log_trace("valid_word returning false from valid_word");
+        return false;
     }
-    log_trace("returning false from valid_word");
-    return false;
 }
 
 /* See word.h */
@@ -125,7 +124,7 @@ void words_uppercase(char **words, int flag) {
 
 
 /* See word.h */
-int generate_suggestions(dict_t *dict, char *word, char **suggestions, int max_edits, int amount) {
+char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount) {
     assert(max_edits > 0 && amount > 0);
 
 	if (dict == NULL) {

@@ -26,45 +26,45 @@
  * shell_prompt - Default text input prompt string for the shell.
  *
  * Parameters:
- *  - None.
+ *  - color: if true, print colored string.
  *
  * Returns:
  *  - None.
  */
-void shell_prompt(bool *color);
+void shell_prompt(bool color);
 
 /*
  * shell_intro - Introduction text for the shell.
  *
  * Parameters:
- *  - None.
+ *  - color: if true, print colored string.
  *
  * Returns:
  *  - None.
  */
-void shell_main_menu(bool *color);
+void shell_main_menu(bool color);
 
 /*
  * shell_save - Modification saving text for the shell.
  *
  * Parameters:
- *  - None.
+ *  - color: if true, print colored string.
  *
  * Returns:
  *  - None.
  */
-void shell_save(bool *color);
+void shell_save(bool color);
 
 /*
  * shell_edit_success - file editing success message
  *
  * Parameters:
- *  - None
+ *  - color: if true, print colored string.
  *
  * Returns:
  *  - None.
  */
-void shell_edit_success(bool *color);
+void shell_edit_success(bool color);
 
 /*
  * shell_print - Print edited text for viewing
@@ -83,64 +83,72 @@ void shell_edit_success(bool *color);
  * Parameters:
  *  - input_file: String of the file input by the user.
  *  - status: String for the file type - dictionary or 
- *              this is a string because shell_input is used
- *              to print a confirmation message on the screen
+ *    this is a string because shell_input is used
+ *    to print a confirmation message on the screen
+ *  - color: if true, print colored string.
  *
  * Returns:
  *  - None.
  */
-void shell_input(char *filename, char *status, bool *color);
+void shell_input(char *filename, char *status, bool color);
 
 /*
  * shell_error - Default error prompt string for the shell
  *
  * Parameters:
  *  - error_text: String for the specific error text.
+ *  - color: if true, print colored string.
  *
  * Returns:
  *  - None.
  */
-void shell_error(char *error_text, bool *color);
+void shell_error(char *error_text, bool color);
 
 /*
  * shell_usage - command line usage instructions
  *
  * Parameters:
- *  - None.
+ *  - color: if true, print colored string.
  *
  * Returns:
  *  - None.
  */
-void shell_usage(bool *color);
+void shell_usage(bool color);
 
 /*
  * shell_help - Default text input prompt string for the shell.
  *
  * Parameters:
- *  - None.
+ *  - color: if true, print colored string.
  *
  * Returns:
  *  - None.
  */
-void shell_help(bool *color);
+void shell_help(bool color);
 
 /*
  * shell_start_interactive - prints out interactive starting message
  *
  * Parameters:
- *  - file, dictionary, mode names
+ * - file: name of file.
+ * - dict: name of dictionary file.
+ * - md: prints out name of mode, if the user chooses -v flag.
+ * - color: if true, print colored string.
  *
  * Returns:
- *  - None.
+ * - None.
  */
-void shell_start_interactive(char *filename, char *dict, char *md, bool *color);
+void shell_start_interactive(char *filename, char *dict, char *md, bool color);
 
 
 /*
  * shell_modename - prints out mode name (verbose, quiet or interactive)
  * 
- * Accepts flag int
- *      note 1 is quiet, 2 is batch, 3 is interactive
+ * Parameters: 
+ * - mode: integer representing chosen mode. This can be QUIET_MODE, VERBOSE_MODE or INTERACTIVE_MODE
+ * 
+ * Returns:
+ * - string containing name of mode.
  */
 char *shell_modename(int mode);
 
@@ -149,38 +157,39 @@ char *shell_modename(int mode);
  *
  * Parameters:
  *  - lnum: line number
- *	- line: string of the line being edited
- *	- underline: string of underlines, highlighting error words
- *	- returnflag: indicates if line being parsed is the last line (true if it is the last line)
- *			in this case, there is a formatting issue in printing out the line that needs to be resolved,
- *			because the text file that was read does not have a newline character
- *			at the end of the file.
+ *  - line: string of the line being edited
+ *  - underline: string of underlines, highlighting error words
+ *  - returnflag: indicates if line being parsed is the last line (true if it is the last line)
+ *	  in this case, there is a formatting issue in printing out the line that needs to be resolved,
+ *	  because the text file that was read does not have a newline character
+ *	  at the end of the file.
+ *  - color: if true, print colored string.
  * Returns:
  *  - None.
  */
-void shell_interactive_line_print(int lnum, char *line, char *underline, bool returnflag, bool *color);
+void shell_interactive_line_print(int lnum, char *line, char *underline, bool returnflag, bool color);
 
 /*
  * shell_interactive_replacements
  *
  * Parameters:
- *  - word being replaced
- *  - list of suggestions
- *  - flag indicating whether suggestion generation succeeded or not
+ *  - word: word being replaced
+ *  - sug: list of suggestions
+ *  - color: if true, print colored string.
  *
  * Returns:
  *  - None.
  */
-void shell_interactive_replacements(char *word, char **sug, int flag, bool *color);
+void shell_interactive_replacements(char *word, char **sug, bool color);
 
 /*
  * shell_verbose_chart - verbose chart print 
  *
  * Parameters:
- *	- lnum: line number
- *	- line: line, to calculate character position of misspelled word
- *	- misspelled: misspelled word
- *	- suggestions: char** array of generated suggestions
+ *  - lnum: line number
+ *  - line: line, to calculate character position of misspelled word
+ *  - misspelled: misspelled word
+ *  - suggestions: char** array of generated suggestions
  *
  * Returns:
  *  - None.
@@ -191,11 +200,11 @@ void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggesti
  * shell_save_message - save message
  *
  * Parameters:
- *  - None
+ *  - color: if true, print colored string.
  *
  * Returns:
  *  - None.
  */
-void shell_save_message(bool *color);
+void shell_save_message(bool color);
 
 #endif

@@ -1,7 +1,9 @@
-# test for measuring the responsivity of interactive mode when given wrong input
+# test for measuring the responsivity of interactive mode when making changes to a file
 <
 f tests/test_short.txt
 a
+1
+1
 1
 1
 1
@@ -41,9 +43,9 @@ Enter any command to start interactive mode
 spellcheck > 
 
 Current line number is 1: 
-Eye have, a splling checker 
+Eye have, a splling chequer
 
-           ^^^^^^^           
+           ^^^^^^^ ^^^^^^^^ 
 
 Possible replacements for word splling are:
 
@@ -56,10 +58,22 @@ Possible replacements for word splling are:
 
 spellcheck > No changes made to "splling". 
 
-Current line number is 2: 
-It cme with m'y Pea Sea.
+Possible replacements for word chequer
+ are:
 
-   ^^^      ^^^           
+0 : Delete Word. 
+1 : No replacement. 
+2 : spelling 
+3 : spilling 
+
+
+
+spellcheck > No changes made to "chequer
+". 
+
+Current line number is 2: 
+It cme with thy m'y PC.
+   ^^^      ^^^ ^^^ ^^ 
 
 Possible replacements for word cme are:
 
@@ -72,6 +86,17 @@ Possible replacements for word cme are:
 
 spellcheck > No changes made to "cme". 
 
+Possible replacements for word thy are:
+
+0 : Delete Word. 
+1 : No replacement. 
+2 : come 
+3 : came 
+
+
+
+spellcheck > No changes made to "thy". 
+
 Possible replacements for word m'y are:
 
 0 : Delete Word. 
@@ -83,6 +108,17 @@ Possible replacements for word m'y are:
 
 spellcheck > No changes made to "m'y". 
 
+Possible replacements for word PC are:
+
+0 : Delete Word. 
+1 : No replacement. 
+2 : my 
+3 : me 
+
+
+
+spellcheck > No changes made to "PC". 
+
 File editing successful!
 
 s               : save to existing file
@@ -91,7 +127,147 @@ r               : return to home screen
 q               : quit program
 
 
-spellcheck > => ERROR: Please type in one of the indicated commands! <=
+spellcheck > Thank you for using Spellcheck. Bye!
+>= 0
+
+#test measuring all the change options of interactive mode
+<
+f tests/test_short.txt
+a
+2
+2
+3
+0
+3
+1
+q
+$ ./spellcheck
+>
+------- Welcome to Spellcheck! ------
+
+Please load a file to begin. Additionally, select an output mode and/or choose dictionary before running the program.
+
+f [/path/file.txt]           : open file
+d [/path/dictionary.txt]     : input custom dictionary file
+m [number]                   : switch output mode - quiet (1) verbose (2) or interactive (3) 
+h                            : help
+q                            : quit program
+
+spellcheck > 
+
+Input file is now tests/test_short.txt
+
+
+Dictionary Successfully Parsed!
+
+
+============================================================
+=================== Editing Started With ===================
+============================================================
+
+file: tests/test_short.txt
+dictionary: tests/sample_dict.txt
+mode: interactive mode
+
+Enter any command to start interactive mode
+
+
+spellcheck > 
+
+Current line number is 1: 
+Eye have, a splling chequer
+
+           ^^^^^^^ ^^^^^^^^ 
+
+Possible replacements for word splling are:
+
+0 : Delete Word. 
+1 : No replacement. 
+2 : spelling 
+3 : spilling 
+
+
+
+spellcheck > Replacing splling with spelling 
+New sentence is: 
+Eye have, a spelling chequer
+
+
+                     ^^^^^^^^
+Possible replacements for word chequer
+ are:
+
+0 : Delete Word. 
+1 : No replacement. 
+2 : spelling 
+3 : spilling 
+
+
+
+spellcheck > Replacing chequer
+ with spelling 
+New sentence is: 
+Eye have, a spelling spelling
+
+
+Current line number is 2: 
+It cme with thy m'y PC.
+   ^^^      ^^^ ^^^ ^^ 
+
+Possible replacements for word cme are:
+
+0 : Delete Word. 
+1 : No replacement. 
+2 : come 
+3 : came 
+
+
+
+spellcheck > Replacing cme with came 
+New sentence is: 
+It came with thy m'y PC.
+
+             ^^^ ^^^ ^^
+Possible replacements for word thy are:
+
+0 : Delete Word. 
+1 : No replacement. 
+2 : come 
+3 : came 
+
+
+
+spellcheck > Deleting thy.
+New sentence is: 
+
+It came with  m'y PC.
+
+              ^^^ ^^
+Possible replacements for word m'y are:
+
+0 : Delete Word. 
+1 : No replacement. 
+2 : my 
+3 : me 
+
+
+
+spellcheck > Replacing m'y with me 
+New sentence is: 
+It came with  me PC.
+
+                 ^^
+Possible replacements for word PC are:
+
+0 : Delete Word. 
+1 : No replacement. 
+2 : my 
+3 : me 
+
+
+
+spellcheck > No changes made to "PC". 
+
 File editing successful!
 
 s               : save to existing file

@@ -15,7 +15,7 @@
 #include "main_functions_interactive.h"
 
 /* See main_functions_interactive.h */
-char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool returnflag, bool* color)
+char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool returnflag, bool color)
 {
     log_debug("edit_interactive 'returnflag' value set to %s.", returnflag);
 
@@ -40,18 +40,14 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
     shell_interactive_line_print(linenumber, line_copy, underline, returnflag, color);
     log_trace("edit_interactive line printed successfully.");
 
-    // Generates an empty array where suggestions will be filled
-    char *suggestions[max_no_suggestions];
-    suggestions[max_no_suggestions] = NULL;
-
     int i = 0;
-
+    int j;
     // Replaces words according to user suggestions
     while (misspelled[i] != NULL) {
-    	int rc = generate_suggestions(dict, misspelled[i], suggestions, max_edits, max_no_suggestions);
-        log_debug("edit_interactive suggestion generation returned %d.", rc);
+    	char** suggestions = generate_suggestions(dict, misspelled[i], max_no_suggestions, max_edits);
+        log_debug("edit_interactive suggestion generation returned.");
 
-        shell_interactive_replacements(misspelled[i], suggestions, rc, color);
+        shell_interactive_replacements(misspelled[i], suggestions, color);
 
         char choice[10];
         int check = 0;
@@ -79,36 +75,30 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
         if (choice[0] == 'd') {	// delete
         	correct_line(line_copy, misspelled[i], "");
 
-         	printf("\n%s", line_copy);
-        	
-            /* 
-             * If the line is the last line being edited,
-             * the last character is EOF, not \n.
-             */
+            if (misspelled[i+1] != NULL) {
+                /* if the line is the last line being edited, the last character is
+                 * EOF, not \n. */
+                printf("%s", line_copy);
+                if (returnflag) {
+                    printf("\n");
+                }
 
-        	if (returnflag) {
-                printf("\n");
+                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
             }
 
-         	if (misspelled[i+1] != NULL)
-                printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
-
-        }
-
-        else if (choice[0] == 's') { // skip
+        } else if (choice[0] == 's') { // skip
         	// print the edited line
-        	printf("\n%s", line_copy);
-        	/* if the line is the last line being edited, the last character is
-        	 * EOF, not \n. */
-        	if (returnflag) {
-                printf("\n");
-            }
+            if (misspelled[i+1] != NULL) {
+                /* if the line is the last line being edited, the last character is
+                 * EOF, not \n. */
+                printf("%s", line_copy);
+                if (returnflag) {
+                    printf("\n");
+                }
 
-            if (misspelled[i+1] != NULL)
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
-        }
-
-        else if (choice[0] == 'i') { // insert
+            }
+        } else if (choice[0] == 'i') { // insert
 			char c[50];
 			char sig[10];
 			int userconsent = 0;
@@ -145,36 +135,40 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
 			printf("\nReplacing \"%s\" with \"%s\".\n", misspelled[i], newword);
 			correct_line(line_copy, misspelled[i], newword); //modifies line function
 
-         	printf("%s", line_copy);
+            if (misspelled[i+1] != NULL) {
+                /* if the line is the last line being edited, the last character is
+                 * EOF, not \n. */
+                printf("%s", line_copy);
+                if (returnflag) {
+                    printf("\n");
+                }
 
-        	/*
-             *if the line is the last line being edited,
-             * the last character is EOF, not \n.
-             */
-         	if (returnflag) {
-                printf("\n");
-            }
-
-            if (misspelled[i+1] != NULL)
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
-        } 
-
-        else if (isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
+            }
+        } else if (isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
         	// Replace misspelled word with chosen replacement
         	int c = atoi(&choice[0]) - 1;
         	printf("\nReplacing \"%s\" with \"%s\".\n", misspelled[i], suggestions[c]);
         	correct_line(line_copy, misspelled[i], suggestions[c]); //modifies line function
 
-        	/* if the line is the last line being edited, the last character is
-        	 * EOF, not \n. */
-         	printf("%s", line_copy);
-         	if (returnflag) {
-                printf("\n");
-            }
+            if (misspelled[i+1] != NULL) {
+            	/* if the line is the last line being edited, the last character is
+            	 * EOF, not \n. */
+             	printf("%s", line_copy);
+             	if (returnflag) {
+                    printf("\n");
+                }
 
-            if (misspelled[i+1] != NULL)
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
         }
+        
+
+        j = 0;
+        while (suggestions[j] != NULL) {
+            free(suggestions[j]);
+            j++;
+        }
+        if (suggestions != NULL) free(suggestions);
 
         i++; // added loop changer
     }
@@ -203,9 +197,17 @@ int interactive_nsug_input(bool* color)
 }
 
 /* See main_functions_interactive.h */
-char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool *color) {
+char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool color) {
 	char **lines;
 	lines = parse_file(filename);
+
+    if (lines == NULL) {
+        shell_error("Failed to parse file.", false);
+        log_error("batch_mode file parse failed.");
+        *quit = true;
+        return NULL;
+    }
+
     log_trace("edit_interactive file parsed successfully.");
 
     int nsug = interactive_nsug_input(color);
@@ -229,6 +231,6 @@ char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool *color) {
 	}
 
     log_trace("edit_interactive editing finished successfully, exiting the interactive mode.");
-    *quit = true;
+    *quit = false;
 	return lines;
 }

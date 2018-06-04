@@ -23,7 +23,7 @@ tests:
 	make -C ./tests
 
 clean:
-	-$(RM) $(OBJS) $(BIN) spellcheck.dSYM *.rdb
+	-$(RM) $(OBJS) $(BIN) *.rdb
 	make -C ./tests clean
 	make -C api clean
 	

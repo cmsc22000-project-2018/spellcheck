@@ -9,26 +9,13 @@
 #include <stdbool.h>
 
 /*
- * Helper function for word_valid()
+ * valid_word: checks that word is in dictionary
  *
- * is_in_array - Checks if a given punctuation is within a word
- * 
- * Parameters:
- *  - word: A string (word).
- *
- * Returns:
- *  - 0: Punctuation is not in the array.
- *  - 1: Punctuation is in the array.
- */
-int is_in_array(char *word);
-
-/*
- * word_valid: checks that word is in dictionary
  * parameters: word, dictionary
+ *
  * returns: bool (true if in dictionary, false if not)
- * 
  */
-bool word_valid(dict_t *dict, char* word);
+bool valid_word(dict_t *dict, char* word);
 
 /*
  * Helper function for generate_suggestions()
@@ -85,8 +72,8 @@ void words_uppercase(char **words, int flag);
  *  - amount: Amount of suggestions.
  *
  * Returns:
- *  - int: EXIT_SUCCESS or EXIT_FAILURE (EXIT_FAILURE if no suggestions generated).
+ * returns string array representing suggestions. return NULL if not given.
  */
-int generate_suggestions(dict_t *dict, char *word, char **suggestions, int max_edits, int amount);
+char** generate_suggestions(dict_t *dict, char *word, char **suggestions, int max_edits, int amount);
 
 #endif

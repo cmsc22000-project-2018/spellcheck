@@ -14,8 +14,8 @@
  * save_corrections: writes lines (lines) to a file with name (filename)
  *
  * parameters:
- *		- filename: string indicating name of file (saving destination)
- *		- lines: array of strings to be printed in file
+ *	- filename: string indicating name of file (saving destination)
+ *	- lines: array of strings to be printed in file
  *
  * returns: void
  */
@@ -26,13 +26,13 @@ void save_corrections(char *filename, char **lines);
  * user indicates file saving destination, user chooses to return to editing, or user decides to exit
  *
  * parameters:
- *      - filename: string indicating name of file (saving destination)
- *      - lines: array of strings to be printed in file
- *      - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
- *      - color: pointer to boolean (TRUE means print in colors, FALSE means print without colors)
+ *  - filename: string indicating name of file (saving destination)
+ *  - lines: array of strings to be printed in file
+ *  - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
+ *  - color: if true, print colored string.
  *
  * returns: void
  */
-void save_page(char *filename, char **lines, bool *quit, bool* color);
+void save_page(char *filename, char **lines, bool *quit, bool color);
 
 #endif
