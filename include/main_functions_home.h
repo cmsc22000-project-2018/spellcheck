@@ -6,10 +6,10 @@
 #include <stdbool.h>
 
 /*
- *	Main Page Functions:
- *		In the event that Spellcheck is not given a file to parse and edit, the main page will be printed out 
- *		such that the user can seek help, quit spellcheck, enter a filename, or enter a dictionary filename.
- *		These functions operate the main page.
+ *  Main Page Functions:
+ *  In the event that Spellcheck is not given a file to parse and edit, the main page will be printed out 
+ *  such that the user can seek help, quit spellcheck, enter a filename, or enter a dictionary filename.
+ *  These functions operate the main page.
  */
 
 #define INTERACTIVE_MODE 3
@@ -49,7 +49,7 @@ int change_mode(char *arg, bool color);
  * parameters:
  *  - quit: pointer to boolean (TRUE means continue in main.c loop, FALSE means exit program)
  *  - flag indicating mode
- *	1 = QUIET_MODE, 2 = VERBOSE_MODE, 3 = INTERACTIVE_MODE
+ *	  1 = QUIET_MODE, 2 = VERBOSE_MODE, 3 = INTERACTIVE_MODE
  *  - file_name: string indicating name of file to be parsed
  *  - dict_name: string indicating dictionary file name
  * return: void

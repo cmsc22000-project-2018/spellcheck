@@ -21,9 +21,9 @@
  *  - dict: dictionary
  *  - linenumber: number of line
  *  - returnflag: indicates if line being parsed is the last line (true if last line)
- *  in this case, there is a formatting issue in printing out the line that needs to be resolved,
- *  because the text file that was read does not have a newline character
- *  at the end of the line.
+ *    in this case, there is a formatting issue in printing out the line that needs to be resolved,
+ *    because the text file that was read does not have a newline character
+ *    at the end of the line.
  *
  * return: edited line
  */
