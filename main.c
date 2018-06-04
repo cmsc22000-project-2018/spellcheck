@@ -251,7 +251,7 @@ int main(int argc, char *argv[]) {
                 break;
         }
 
-        if (*quit == false) {
+        if (*quit == true) {
             log_fatal("parsing failed");
             return 1;
         }
