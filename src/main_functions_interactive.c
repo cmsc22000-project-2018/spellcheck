@@ -41,6 +41,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
     log_trace("edit_interactive line printed successfully.");
 
     int i = 0;
+    int j;
     // Replaces words according to user suggestions
     while (misspelled[i] != NULL) {
     	char** suggestions = generate_suggestions(dict, misspelled[i], max_no_suggestions, max_edits);
