@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
     char *save_file = malloc(UNIX_MAX_PATH * sizeof(char *));
 
 	// Default dict name
-    strcpy(dict, "tests/sample_dict.txt");
+    strcpy(dict, "dictionary0.txt");
 
 	/*
 	 * 1: Quiet Batch Mode
@@ -245,7 +245,6 @@ int main(int argc, char *argv[]) {
             }
 
             md = strstr(save_file, ".txt\0");
-
             if (md == NULL && (mode == QUIET_MODE)) {
                 log_trace("Printing result of the file edit.");
                 shell_print(result);

@@ -56,7 +56,7 @@ int change_mode(char *arg, bool color);
  *    1 = QUIET_MODE, 2 = VERBOSE_MODE, 3 = INTERACTIVE_MODE
  *  - file_name: string indicating name of file to be parsed
  *  - dict_name: string indicating dictionary file name
- *  - color: bool for color of error message (false for no color, true for color)
+ *  - color: pointer to bool for color of error message (false for no color, true for color)
  *
  * return: void
  */

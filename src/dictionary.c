@@ -11,6 +11,7 @@
 #include <assert.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
 #include "dictionary.h"
 #include "log.c/src/log.h"
 
@@ -39,8 +40,13 @@ dict_t* dict_new() {
 /* See dictionary.h */
 int dict_init(dict_t *d) {
     assert(d != NULL);
+    time_t current_time;
+    char* c_time_string;
 
-    trie_t *t = trie_new("dict");
+    current_time = time(NULL);
+    c_time_string = ctime(&current_time);
+
+    trie_t* t = trie_new(c_time_string);
     if (t == NULL) {
         log_fatal("dict_init trie_new failed");
         return EXIT_FAILURE;
@@ -58,7 +64,6 @@ int dict_free(dict_t *d) {
     trie_free(d->dict);
     free(d);
 
-    log_debug("dict_free success");
     return EXIT_SUCCESS;
 }
 
@@ -69,15 +74,13 @@ int dict_exists(dict_t *d, char *str) {
         return EXIT_FAILURE;
     }
 
-    log_debug("dict_exists entering trie_contains");
+    log_debug("dict_exists entering trie_contains, word is %s", str);
     int rc = trie_contains(d->dict, str);
 
     if (rc == 0) {
-        log_trace("dict_exists returning EXIT_SUCCESS");
         return EXIT_SUCCESS;
     }
 
-    log_trace("dict_exists returning EXIT_FAILURE");
     return EXIT_FAILURE;
 }
 
@@ -96,7 +99,6 @@ int dict_add(dict_t *d, char *str) {
     int rc = trie_insert(d->dict, str);
 
     if (rc == 0) {
-        log_trace("dict_exists returning EXIT_FAILURE");
         return EXIT_SUCCESS;
     }
 
@@ -113,27 +115,26 @@ int dict_read(dict_t *d, char *file) {
     log_debug("opened file %s", file);
 
     if (f == NULL) {
-        log_trace("dict_exists returning EXIT_FAILURE");
+        log_trace("dict_read returning EXIT_FAILURE");
         return EXIT_FAILURE;
     }
 
     while (fscanf(f, "%100s", buffer) == 1) {
         if (dict_add(d, buffer) != EXIT_SUCCESS) {
-            log_trace("dict_exists returning EXIT_FAILURE");
+            log_trace("dict_read returning EXIT_FAILURE");
             return EXIT_FAILURE;
         }
     }
 
     fclose(f);
 
-    log_trace("dict_exists returning EXIT_SUCCESS");
     return EXIT_SUCCESS;
 }
 
 /* See dictionary.h */
 char **dict_suggestions(dict_t *d, char *str, int max_edits, int n) {
     if (d == NULL || d->dict == NULL || str == NULL) {
-        log_trace("returning EXIT_FAILURE");
+        log_trace("dict_suggestions returning EXIT_FAILURE");
         return NULL;
     }
 

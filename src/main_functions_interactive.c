@@ -15,13 +15,14 @@
 #include "main_functions_interactive.h"
 
 /* See main_functions_interactive.h */
-char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag, bool color) {
+char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool returnflag, bool color) {
+
     log_debug("edit_interactive 'returnflag' value set to %s.", returnflag);
 
     char *line_copy = strdup(line);
-    int max_no_suggestions = 2; // Should the user decide this?
-    int length = strlen(line);
+    int max_edits = 2;
 
+    int length = strlen(line);
     // Generates an empty array where the misspelled words in a line will be stored
     char **misspelled = calloc(length, sizeof(char*));
     assert(misspelled != NULL);
@@ -39,9 +40,10 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
     log_trace("edit_interactive line printed successfully.");
 
     int i = 0;
+    int j;
     // Replaces words according to user suggestions
     while (misspelled[i] != NULL) {
-        char** suggestions = generate_suggestions(dict, misspelled[i]);
+    	char** suggestions = generate_suggestions(dict, misspelled[i], max_edits, nsug);
         log_debug("edit_interactive suggestion generation returned.");
 
         shell_interactive_replacements(misspelled[i], suggestions, color);
@@ -56,10 +58,9 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
             log_trace("edit_interactive scanned value is %s.", choice);
 
             if (!(choice[0] == 's') && !(choice[0] == 'd') && !(choice[0] == 'i')
-                && !(isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions))) {
+                && !(isdigit(choice[0]) && (atoi(&choice[0]) <= nsug))) {
 
                 shell_error("Please enter a valid input.", color);
-                log_error("edit_interactive nvalid input.");  
 
                 check = 0;
             }
@@ -144,7 +145,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
             }
             
-        } else if (isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
+        } else if (isdigit(choice[0]) && (atoi(&choice[0]) <= nsug)) { // choose suggestion
             // Replace misspelled word with chosen replacement
             int c = atoi(&choice[0]) - 1;
             printf("\nReplacing \"%s\" with \"%s\".\n", misspelled[i], suggestions[c]);
@@ -161,11 +162,40 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
             }
         }
+        
+        j = 0;
+        if (suggestions != NULL) {
+            while (suggestions[j] != NULL) {
+                free(suggestions[j]);
+                j++;
+            }
+            free(suggestions);
+        }
 
         i++; // added loop changer
     }
 
     return line_copy;
+}
+
+int interactive_nsug_input(bool color) {
+    int input;
+    int check;
+
+    printf("Enter the maximum number of suggestions to generate: ");
+
+    while (1) {
+        shell_prompt(color);
+
+        check = scanf("%d", &input);
+        log_trace("input is %d", input);
+
+        if (check) {
+            return input;
+        } else {
+            shell_error("Please enter a valid input.", color);
+        }
+    }
 }
 
 /* See main_functions_interactive.h */
@@ -182,10 +212,12 @@ char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool color) {
 
     log_trace("edit_interactive file parsed successfully.");
 
-    // step through phases
-    int i = 0;
-    bool flag = false;
-    int linenumber;
+    int nsug = interactive_nsug_input(color);
+
+	// step through phases
+	int i = 0;
+	bool flag = false;
+	int linenumber;
 
     while (lines[i] != NULL) {
         log_debug("edit_interactive starting to edit line %d", i + 1);
@@ -195,8 +227,8 @@ char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool color) {
             flag = true;    // last line
         }
 
-        lines[i] = edit_interactive(lines[i], dict, linenumber, flag, color);
-        
+		lines[i] = edit_interactive(lines[i], dict, linenumber, nsug, flag, color);
+		
         i++;
     }
 

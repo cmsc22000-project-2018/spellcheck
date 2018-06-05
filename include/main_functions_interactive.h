@@ -20,15 +20,22 @@
  *  - line: line to be edited
  *  - dict: dictionary
  *  - linenumber: number of line
- *  - returnflag: indicates if line being parsed is the last line (true if last line)
+ *  - nsug: int representing number of suggestions to print
+ *	- returnflag: indicates if line being parsed is the last line (true if last line)
  *    in this case, there is a formatting issue in printing out the line that needs to be resolved,
  *    because the text file that was read does not have a newline character
  *    at the end of the line.
- *  - color: if true, print colored string.
- *
+ *  - color: bool for color of error message (false for no color, true for color)
  * return: edited line
  */
-char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag, bool color);
+char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool returnflag, bool color);
+
+/*
+ * interactive_nsug_input: allows user to input maximum number of suggestions to print.
+ * parameters: boolean (TRUE means print in colors, FALSE means print without colors)
+ * return: int representing number of suggestions to print
+ */
+int interactive_nsug_input(bool color);
 
 /*
  * interactive_mode: open file to parse and store in list, edit each line, then return list

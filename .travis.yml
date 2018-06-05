@@ -13,16 +13,33 @@ before_install:
     - cd ..
     - sudo redis-server&
 
-script:
-    - make tests
-    - ./tests/test-spellcheck
-    - make
-    - ./spellcheck tests/test_short.txt -l
-    - ./spellcheck tests/test_short.txt -q -s test_save.txt -vv
-    - ./spellcheck tests/test_short.txt -q
-    - ./spellcheck tests/test_punct.txt -q -s test_save.txt -vv
-    - ./spellcheck tests/test_punct.txt -q
-    - ./spellcheck < tests/test_main0.txt
-    - ./spellcheck < tests/test_main1.txt
-    - ./spellcheck < tests/test_main2.txt
-    - make clean
+jobs:
+    include:
+        - stage: make
+          script: make
+          script: make tests
+
+        - stage: test
+          script: 
+            - make tests
+            - ./tests/test-spellcheck
+
+        - stage: quiet
+          script: 
+            - make 
+            - ./spellcheck 0.txt -q -s test_result.txt -vvv
+
+        - stage: interactive 1
+          script: 
+            - make 
+            - ./spellcheck < tests/test_main0.txt
+
+        - stage: verbose 1
+          script: 
+            - make 
+            - ./spellcheck < tests/test_main1.txt
+
+        - stage: verbose 2
+          script: 
+            - make 
+            - ./spellcheck 0.txt -l

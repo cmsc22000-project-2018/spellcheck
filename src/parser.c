@@ -39,7 +39,6 @@ char** parse_file(char* filename)
     }
 
     while(fgets(str, MAXCHAR, f) != 0) {
-
         if (n >= i) {
             log_info("reallocating line array, given lengthy file of more than %d lines", n);
             i += i;
@@ -55,9 +54,9 @@ char** parse_file(char* filename)
 
         lines[n] = strdup(str);
         n++;
+        log_trace("%d lines read", n);
     }
 
-    log_trace("%d lines read", n);
     lines[n] = NULL;
 
     fclose(f);

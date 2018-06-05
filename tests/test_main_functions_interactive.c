@@ -15,7 +15,6 @@
  * the wrapper interactive_mode function, cannot operate without command line inputs.
  */
 
-
 /*
  ***** add_to_misspelled tests *****
  */
@@ -210,12 +209,11 @@ void check_remove_trailing_punctuation(char* word, char* expected) {
 }
 
 Test(main_functions_edit, remove_trailing_punctuation1) {
-    char* sample = "...words...";
-    char *buffer = (char *) malloc(sizeof(char) * (strlen(sample) + 1));
-	strcpy(buffer, sample);
+    char* buffer = strdup("...words...");
     char* expected = "...words"; 
     check_remove_trailing_punctuation(buffer, expected);
 }
+
 
 Test(main_functions_edit, remove_trailing_punctuation2) {
 	char buffer[7] = "words.";
@@ -224,7 +222,7 @@ Test(main_functions_edit, remove_trailing_punctuation2) {
 }
 
 Test(main_functions_edit, remove_trailing_punctuation3) {
-	char buffer[9] = "??words?";
+	char* buffer = strdup("??words?");
     char* expected = "??words"; 
     check_remove_trailing_punctuation(buffer, expected);
 }
