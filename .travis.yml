@@ -17,9 +17,8 @@ script:
     - make tests
     - ./tests/test-spellcheck
     - make
-    - ./spellcheck 1.txt -l
-    - ./spellcheck 2.txt -l
-    - ./spellcheck 3.txt -l
+    - ./spellcheck 0.txt -l
+    - ./spellcheck 2.txt -q test_result.txt -vvv
     - ./spellcheck < tests/test_main0.txt
     - ./spellcheck < tests/test_main1.txt
     - ./spellcheck < tests/test_main2.txt

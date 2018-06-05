@@ -51,6 +51,7 @@ void save_page(char *filename, char **lines, bool *quit, bool color) {
             inputs = parse_split_line(line);
             strcpy(line,inputs[0]);
             args = strdup(inputs[1]);
+            printf("args: %s\n", args);
         }
 
         if (!strcmp(line,"p")) {
