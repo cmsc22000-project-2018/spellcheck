@@ -47,9 +47,9 @@ jobs:
         - stage: quiet 1
           script: 
             - make 
-            - ./spellcheck 1.txt -q -d dictionary1.txt
+            - ./spellcheck 1.txt -q -v-v-v
 
         - stage: quiet 2
           script: 
             - make 
-            - ./spellcheck 1.txt -q -s test_result.txt -vvv
+            - ./spellcheck 2.txt -q -s test_result.txt -vvv
