@@ -43,7 +43,7 @@ int word_check_cap(char *word) {
     if (isupper(word[i])) { // only first word, everything, or inconsistent
         num_cap++; // number of capitalizations
         
-        // start counting capitalization after the first one, which is already counted in the
+        // start counting capitalization after the first letter, which is already counted in the
         // if statement
         for (i++ ; i < word_length; i++) {
             if (isupper(word[i])) {
@@ -81,7 +81,6 @@ char *word_lowercase(char *word) {
 
     for (i = 0; i < len; i++) {
         lower_word[i] = tolower(lower_word[i]);
-
     }
 
     return lower_word;
