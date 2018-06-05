@@ -13,4 +13,5 @@ y
 s
 2
 p
-c test_result.txt
+c
+test_result.txt
