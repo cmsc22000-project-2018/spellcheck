@@ -26,6 +26,6 @@ void save_corrections(char *filename, char **lines);
  * \param quit: Pointer to boolean determining if the function should quit or not (true: continue in main.c loop, false: exit program).
  * \param color: Boolean to enable/disable the color functionality.
  */
-void save_page(char *filename, char **lines, bool *quit, bool* color);
+void save_page(char *filename, char **lines, bool *quit, bool color);
 
 #endif

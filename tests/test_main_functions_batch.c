@@ -51,7 +51,7 @@ Test(main_functions_batch, edit_batch2)
 
 	char* newline = edit_batch(line, dict, QUIET_MODE, 1);
 
-	i = strncmp("It come with thy my PC.", newline, 14);
+	i = strncmp("It came with they may PC.", newline, 25);
 
 	cr_assert_eq(i, 0, "edit_batch failed");
 }

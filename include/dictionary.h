@@ -18,10 +18,8 @@
  * \brief A dictionary and a instant lookup table of the characters contained in it.
  */
 typedef struct {
-    trie_t *dict; ///< A dictionary file.
-    char *char_list; ///< A list of characters.
+    trie_t *dict;
 } dict_t;
-
 
 /**
  * \memberof dict_t
@@ -101,4 +99,20 @@ int dict_add(dict_t *d, char *str);
  */
 int dict_read(dict_t *d, char *file);
 
-#endif /* INCLUDE_POINT_H_ */
+/**
+ * \memberof dict_t
+ * \brief Returns the n closest words to a given string in a dictionary.
+ * 
+ * \param d: A dictionary. Must point to a dictionary allocated with dict_new
+ * \param str: A string. This will be the (misspelled) word to match
+ * \param max_edits: the maximum levenshtein distance the words in the set can have
+ * \param n: the number of strings to return. 
+ * 
+ * \return The first n strings with the smallest distance, where ties are broken by alphabetical order.
+ * \return If there aren't enough matching strings, each remaining spot is set to NULL.
+ * \return NULL if there was an error
+ */
+char **dict_suggestions(dict_t *d, char *str, int max_edits, int n);
+
+
+#endif /* INCLUDE_DICTIONARY_H_ */

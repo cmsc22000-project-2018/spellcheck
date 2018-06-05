@@ -12,7 +12,7 @@
 
 /**
  * \file parser.h
- * File parsing functions for the program.
+ * File parsing functions receive input from either the command line or a file.
  */
 
 /**
@@ -35,7 +35,7 @@ char *parse_read_line();
  * \brief Reads the command line and return an array of strings.
  *
  * \param line: String from parse_read_line().
- * \return Tokens, each representing a command separated by whitespace.
+ * \return Array of tokens, each representing a command separated by whitespace.
  */
 char **parse_split_line(char *line);
 

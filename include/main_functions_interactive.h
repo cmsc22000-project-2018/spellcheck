@@ -16,11 +16,20 @@
  * \param line: Line to be modified.
  * \param dict: Dictionary file being input.
  * \param linenumber: Number of lines.
+ * \param nsug: int representing number of suggestions to print
  * \param returnflag: Flag to indicate if line being parsed is the last line.
  * \param color: Boolean to enable/disable the color functionality.
  * \return Modified line.
  */
-char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag, bool *color);
+char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool returnflag, bool color);
+
+/*
+ * \brief Allows user to input maximum number of suggestions to print.
+ *
+ * \param color: TRUE means print in colors, FALSE means print without colors
+ * \return int representing number of suggestions to print
+ */
+int interactive_nsug_input(bool color);
 
 /**
  * \brief Opens a file to parse and store it in a list, then edits each line, and returns the list.
@@ -31,6 +40,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, bool returnflag
  * \param color: Boolean to enable/disable the color functionality.
  * \return Array of strings (lines to be printed in the save page).
  */
-char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool *color);
+char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool color);
+
 
 #endif

@@ -20,7 +20,7 @@
  *
  * \param color: Boolean to enable/disable the color functionality.
  */
-void help_page(bool *color);
+void help_page(bool color);
 
 /**
  * \brief Checks whether the file input exists.
@@ -37,7 +37,7 @@ bool fileexists(const char *filename);
  * \param color: Boolean to enable/disable the color functionality.
  * \return Mode (1: Quiet Batch Mode, 2: Verbose Batch Mode, 3: Interactive Mode).
  */
-int change_mode(char *arg, bool *color);
+int change_mode(char *arg, bool color);
 
 /**
  * \brief Prints out the main page and waits for the user to input commands. Editing process begins after a file is input.

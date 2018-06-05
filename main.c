@@ -14,6 +14,8 @@
 #include "main_functions_edit.h"
 #include "main_functions_home.h"
 
+#define UNIX_MAX_PATH 4096
+
 /*
  *	Main function
  *
@@ -35,13 +37,19 @@
  *	Other flags:
  *	> -d [dictname.txt]: changes dictionary
  *
- *	> -i/-q/-v : interactive, quiet, verbose mode
+ *	> -i/-q : interactive, quiet mode
+ *
+ *  > -l: verbose mode
  *
  *	> -s [filename.txt]: file saving destination 
  *
  *	> -c : colored strings
  *
- *  > -l : logging
+ *  > -v : logging at ERROR level
+ *
+ *  > -vv : loggig at INFO level
+ *
+ *  > -vvv : logging at TRACE level
  *
  *  ...
  *  and so on, with different combinations.
@@ -50,21 +58,7 @@
  *	> ./spellcheck file.txt -d my_dict.txt -q misspelled.txt -s savefilename.txt -c
  */
 
-char *modename(int *mode) {
-	switch (*mode) {
-		case QUIET_MODE:
-            return "Quiet Batch Mode"; 
-		case VERBOSE_MODE:
-            return "Verbose Batch Mode";
-		case INTERACTIVE_MODE:
-            return "Interactive Mode";
-		default:
-            break;
-	}
-
-	return "Interactive Mode";
-}
-
+/* adjusts log level according to command line input */
 void change_log_level(int v) {
     // Set log level
     switch (v) {
@@ -86,35 +80,29 @@ void change_log_level(int v) {
 }
 
 int main(int argc, char *argv[]) {
-    log_info("Program started successfully.");
-
     if (argc > 9) {
-        log_warn("Too many command line arguments was input.");
+        log_error("Too many command line arguments was input.");
         shell_usage(false);
         log_info("Usage help page provided.");
         exit(1);
     }
 
 	// filenames up to 400 char
-    char *dict = malloc(401 * sizeof(char *));
-    char *filename = malloc(401 * sizeof(char *));
-    char *save_file = malloc(401 * sizeof(char *));
-    bool *color = malloc(sizeof(bool));
-    int logmode = 0;
+    char *dict = malloc(UNIX_MAX_PATH * sizeof(char *));
+    char *filename = malloc(UNIX_MAX_PATH * sizeof(char *));
+    char *save_file = malloc(UNIX_MAX_PATH * sizeof(char *));
 
 	// Default dict name
-    strcpy(dict, "tests/sample_dict.txt");
+    strcpy(dict, "dictionary0.txt");
 
 	/*
 	 * 1: Quiet Batch Mode
 	 * 2: Verbose Batch Mode
 	 * 3: Interactive Mode
 	 */
-    int *mode = malloc(sizeof(int));
-    *mode = INTERACTIVE_MODE;
-
-    // By default, the color functionality is off
-    *color = false;
+    int mode = INTERACTIVE_MODE;
+    bool color = false;
+    int logmode = 0;
 
 	// Parse Command Line Arguments
     char c;
@@ -136,54 +124,43 @@ int main(int argc, char *argv[]) {
 
                 strcpy(dict, optarg);
 
-                if (*mode == INTERACTIVE_MODE) {
+                if (mode == INTERACTIVE_MODE) {
                     shell_input(optarg, "dictionary", color);
                 }
 
                 break;
 
             case 'i':
-                *mode = INTERACTIVE_MODE;
-                log_info("Interactive mode selected.");
+                mode = INTERACTIVE_MODE;
                 break;
 
-            case 'v':
-                *mode = VERBOSE_MODE;
-                log_info("Verbose mode selected.");
+            case 'l':
+                mode = VERBOSE_MODE;
                 break;
 
             case 'q':
-                *mode = QUIET_MODE;
-                log_info("Quiet mode selected.");
+                mode = QUIET_MODE;
                 break;
 		
             case 's':
-                if (strstr(optarg, ".txt\0") == NULL) {    // does not save to a *.txt file
-                    shell_error("Invalid file path.", color);
-                    log_fatal("Text file could not be found.");
-                    return EXIT_FAILURE;
-                }
-
-                strcpy(save_file,optarg);
+                strcpy(save_file, optarg);
             
-                if (*mode == INTERACTIVE_MODE) {
+                if (mode == INTERACTIVE_MODE) {
                     shell_input(optarg, "file save destination", color);
                 }
 
                 break;
 
             case 'c':
-                *color = true;
-                log_info("Color mode enabled.");
+                color = true;
                 break;
 
-            case 'l':
+            case 'v':
                 logmode++;
                 break;
 
             case '?':
                 shell_usage(color);
-                log_info("Usage help page provided.");
                 exit(0);
                 break;
 
@@ -197,13 +174,11 @@ int main(int argc, char *argv[]) {
 
     change_log_level(logmode);
 
-	bool *quit = malloc(sizeof(bool));
-	*quit = true;
 
-    while ((*quit) == true) {
+	bool quit = true;
+    while (quit == true) {
         if (fileexists(filename)) {	// if file exists, then bypass main page
-            log_fatal("No filename specificed in the command line input.");
-            *quit = false;
+            quit = false;
         }
 
 	   /*
@@ -211,9 +186,9 @@ int main(int argc, char *argv[]) {
         * can open help page, quit, or load filename / dictname
         */
         log_trace("Printing the main page.");
-        main_page(quit, mode, filename, dict, color);
+        main_page(&quit, &mode, filename, dict, &color);
 
-        if (*mode == QUIT) { // user selected "quit" in main_page
+        if (mode == QUIT) { // user selected "quit" in main_page
             log_trace("Quitting the program.");
             return 0;
         }
@@ -230,56 +205,61 @@ int main(int argc, char *argv[]) {
         }
 
 		// Starting to Parse file! Printing messages accordingly
-        char *md = shell_modename(*mode);
+        char *md = shell_modename(mode);
         log_trace("Mode set to: %s", md);
 
-        if (*mode == INTERACTIVE_MODE) {
+        if (mode == INTERACTIVE_MODE) {
             shell_start_interactive(filename, dict, md, color);
         }
 
         char **result = NULL;
 
         // Execute either interactive or batch mode, and save file at end
-        switch (*mode) {
+        switch (mode) {
             case QUIET_MODE:
                 log_info("Entering quiet mode.");
-                result = batch_mode(filename, new_dict, quit, QUIET_MODE); // pass in dictionary
+                result = batch_mode(filename, new_dict, &quit, QUIET_MODE); // pass in dictionary
                 break;
             case VERBOSE_MODE:
                 log_info("Entering verbose mode.");
-                result = batch_mode(filename, new_dict, quit, VERBOSE_MODE); // pass in dictionary 
+                result = batch_mode(filename, new_dict, &quit, VERBOSE_MODE); // pass in dictionary 
                 break;
             case INTERACTIVE_MODE:
                 log_info("Entering interactive mode.");
-                result = interactive_mode(filename, new_dict, quit, color); // pass in dictionary
+                result = interactive_mode(filename, new_dict, &quit, color); // pass in dictionary
                 break;
             default:
                 break;
         }
 
-        if ((*mode != VERBOSE_MODE) && (result != NULL)) {	// Save file, a functionality unnecessary for verbose batch mode
-            if (*mode == INTERACTIVE_MODE) {
+        if (quit == true) {
+            log_fatal("parsing failed");
+            return 1;
+        }
+
+
+        if ((mode != VERBOSE_MODE) && (result != NULL)) {	// Save file, a functionality unnecessary for verbose batch mode
+            if (mode == INTERACTIVE_MODE) {
                 log_trace("Printing success message.");
                 shell_edit_success(color);
             }
 
             md = strstr(save_file, ".txt\0");
-
-            if ((md == NULL && *mode) == (QUIET_MODE)) {
+            if (md == NULL && (mode == QUIET_MODE)) {
                 log_trace("Printing result of the file edit.");
                 shell_print(result);
-                *quit = false;
+                quit = false;
             }
 
             else if (md != NULL) {
                 log_trace("Saving corrections to the designated file destination: %s", save_file);
                 save_corrections(save_file, result);
-                *quit = false;
+                quit = false;
             }
 
             else {
                 log_trace("Printing the save page.");
-                save_page(filename, result, quit, color);
+                save_page(filename, result, &quit, color);
             }
         }
     }

@@ -33,29 +33,33 @@
  * \brief Default text input prompt string for the shell.
  *
  * \param color: Boolean to enable/disable the color functionality.
+ *
  */
-void shell_prompt(bool *color);
+void shell_prompt(bool color);
 
 /**
  * \brief Main menu text for the shell.
  *
  * \param color: Boolean to enable/disable the color functionality.
+ *
  */
-void shell_main_menu(bool *color);
+void shell_main_menu(bool color);
 
+<<<<<<< HEAD
 /**
  * \brief Modification save text for the shell.
  *
  * \param color: Boolean to enable/disable the color functionality.
+ *
  */
-void shell_save(bool *color);
+void shell_save(bool color);
 
 /**
  * \brief File editing success message for the shell.
  *
  * \param color: Boolean to enable/disable the color functionality.
  */
-void shell_edit_success(bool *color);
+void shell_edit_success(bool color);
 
 /**
  * \brief Modified text priting for the shell.
@@ -71,7 +75,7 @@ void shell_edit_success(bool *color);
  * \param status: Type of file being input (text file, dictionary, etc).
  * \param color: Boolean to enable/disable the color functionality.
  */
-void shell_input(char *filename, char *status, bool *color);
+void shell_input(char *filename, char *status, bool color);
 
 /**
  * \brief Default error prompt for the shell.
@@ -79,21 +83,23 @@ void shell_input(char *filename, char *status, bool *color);
  * \param error_text: String for the specific error text.
  * \param color: Boolean to enable/disable the color functionality.
  */
-void shell_error(char *error_text, bool *color);
+void shell_error(char *error_text, bool color);
 
 /**
  * \brief Command line usage instructions screen for the shell.
  *
  * \param color: Boolean to enable/disable the color functionality.
  */
-void shell_usage(bool *color);
+void shell_usage(bool color);
 
 /**
  * \brief Help page screen for the shell.
+/*
+ * shell_help - Default text input prompt string for the shell.
  *
  * \param color: Boolean to enable/disable the color functionality.
  */
-void shell_help(bool *color);
+void shell_help(bool color);
 
 /**
  * \brief Interactive starting message for the shell.
@@ -102,8 +108,9 @@ void shell_help(bool *color);
  * \param dict: Dictionary file being input.
  * \param md: Mode (Quiet Batch, Verbose Batch, or Interactive).
  * \param color: Boolean to enable/disable the color functionality.
+ *
  */
-void shell_start_interactive(char *filename, char *dict, char *md, bool *color);
+void shell_start_interactive(char *filename, char *dict, char *md, bool color);
 
 
 /**
@@ -111,6 +118,7 @@ void shell_start_interactive(char *filename, char *dict, char *md, bool *color);
  * 
  * \param mode: Flag for mode (1: Quiet Batch, 2: Verbose Batch, 3: Interactive).
  * \return String of the mode name.
+ * 
  */
 char *shell_modename(int mode);
 
@@ -123,17 +131,15 @@ char *shell_modename(int mode);
  * \param returnflag: Flag to indicate if line being parsed is the last line.
  * \param color: Boolean to enable/disable the color functionality.
  */
-void shell_interactive_line_print(int lnum, char *line, char *underline, bool returnflag, bool *color);
+void shell_interactive_line_print(int lnum, char *line, char *underline, bool returnflag, bool color);
 
 /**
- * \brief Interactive word replacement for the shell/
- *
+ * \brief Interactive word replacement for the shell/ *
  * \param word: String (Word) being modified/replaced.
  * \param sug: Array of strings (list of suggestions).
- * \param flag: Flag indicating whether suggestion generation succeeded or not.
  * \param color: Boolean to enable/disable the color functionality.
  */
-void shell_interactive_replacements(char *word, char **sug, int flag, bool *color);
+void shell_interactive_replacements(char *word, char **sug, bool color);
 
 /**
  * \brief Modification chart printing for the Verbose Batch Mode.
@@ -150,6 +156,6 @@ void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggesti
  *
  * \param color: Boolean to enable/disable the color functionality.
  */
-void shell_save_message(bool *color);
+void shell_save_message(bool color);
 
 #endif

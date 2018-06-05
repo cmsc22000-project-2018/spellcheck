@@ -50,7 +50,7 @@ char *remove_punctuation(char *word);
  *
  * \return Underline for the misspelled words in the input sentence.
  */
-char *underline_misspelled_sentence(char **misspelled, char *sentence, char *underline);
+char *underline_misspelled_sentence(char *misspelled, char *sentence, char *underline);
 
 /**
  * \brief Adds a misspelled word to a list of misspelled words.
@@ -58,7 +58,7 @@ char *underline_misspelled_sentence(char **misspelled, char *sentence, char *und
  * \param word: A string (word).
  * \param misspelled: Array of strings (list of misspelled words).
  *
- * \returns int as pseudo-boolean (EXIT_SUCCESS ot EXIT_FAILURE).
+ * \returns Int as pseudo-boolean (EXIT_SUCCESS ot EXIT_FAILURE).
  */
 int add_to_misspelled(char *word, char **misspelled);
 

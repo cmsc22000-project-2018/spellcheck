@@ -6,57 +6,176 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include <stdbool.h>
 #include <stdlib.h>	
 #include <ctype.h>
-#include <stdbool.h>
 #include "word.h"
 #include "dictionary.h"
 #include "log.c/src/log.h"
+#include "dictionary.h"
+
+
+/* See word.h */
+int word_check_cap(char *word) {
+
+    int word_length = strlen(word);
+    int i = 0;
+    int num_punct = 0;
+    int num_cap = 0;
+
+    while (i < word_length) {
+        if (ispunct(word[i])) {
+            num_punct++; // number of punctuations in word
+        }
+        i++;
+    }
+
+    if (num_punct == word_length) {
+        return NOT_WORD; // no alphabet in word
+    }
+
+    // move to first letter, assuming punctuations like " and '
+    i = 0;
+    while (ispunct(word[i])) {
+        i++;
+    }
+
+    if (isupper(word[i])) { // only first word, everything, or inconsistent
+        num_cap++; // number of capitalizations
+        
+        // start counting capitalization after the first letter, which is already counted in the
+        // if statement
+        for (i++ ; i < word_length; i++) {
+            if (isupper(word[i])) {
+                num_cap++;
+            }
+        }
+
+        if (num_cap == 1) {
+            return ONE_CAP;
+        }
+
+        if (num_cap == word_length - num_punct) {
+            return ALL_CAPS;
+        }
+
+        return SOME_CAPS; // Inconsistent
+    }
+
+    // if control reaches here, then first letter of word is not capitalized
+    for (i = 0; i < word_length; i++) {
+        if (isupper(word[i])) {
+            return SOME_CAPS;
+        }
+    }
+
+    // if control reaches here, no letters are capitalized
+    return 0;
+}
+
+/* See word.h */
+char *word_lowercase(char *word) {
+    int i;
+    int len = strlen(word);
+    char *lower_word = strdup(word);
+
+    for (i = 0; i < len; i++) {
+        lower_word[i] = tolower(lower_word[i]);
+    }
+
+    return lower_word;
+}
+
+/* See word.h */
+void words_restore_cap(char **words, int flag) {
+    int i = 0;
+    int j = 0;
+
+    while (words[i] != NULL) {
+        // If only the first character of the word should be capitalized
+        if (flag == ONE_CAP) {
+            words[i][0] = toupper(words[i][0]);
+        }
+
+        // If the whole word should be capitalized
+        if (flag == ALL_CAPS) {
+            int len = strlen(words[i]);
+
+            j = 0;
+            while (j < len) {
+                    words[i][j] = toupper(words[i][j]);
+                j++;
+            }
+        }
+
+        i++;
+    }
+}
 
 
 /* See word.h */
 bool valid_word(dict_t* dict, char* shaved_word) {
-    if (dict_chars_exists(dict, *shaved_word) == EXIT_SUCCESS && *shaved_word != '\n') {
-        if(dict_exists(dict, shaved_word) == EXIT_SUCCESS) {
-            log_trace("returning true from valid_word");
-            return true;
-        } else {
-            log_trace("returning false from valid_word");
-            return false;
-        }
+    char* decap = word_lowercase(shaved_word);
+    log_trace("word is \"%s\", decap is \"%s\"", shaved_word, decap);
+
+    if((dict_exists(dict, shaved_word) == EXIT_SUCCESS) || dict_exists(dict, decap) == EXIT_SUCCESS) {
+        log_trace("valid_word returning true from valid_word");
+        return true;
+    } else {
+        log_trace("valid_word returning false from valid_word");
+        return false;
     }
-    return false;
 }
 
 /* See word.h */
-int generate_suggestions(char* word, dict_t* dict, char **suggestions) {
-	if (dict == NULL) { // hard_coded; to change with suggestion.c
-        log_warn("no dictionary");
-        suggestions[0] = "no suggestions";
-        suggestions[1] = NULL;
-        return EXIT_FAILURE;
+char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount) {
+    assert(max_edits > 0 && amount > 0);
+
+	if (dict == NULL) {
+        log_warn("returning NULL from generate_suggestions");
+        return NULL;
     }
 
-    suggestions[2] = NULL;
+    int sug_num = 0;
+    int i = 0;;
 
-	if (strcmp(word, "splling") == 0) {
-		suggestions[0] = "spelling";
-		suggestions[1] = "spilling";
-		return EXIT_SUCCESS;
-	} else if (strcmp(word, "chequer") == 0) {
-    	suggestions[0] = "checker";
-    	suggestions[1] = "cheque";
-    	return EXIT_SUCCESS;;
-	} else if((strcmp(word, "cme") == 0)) {
-    	suggestions[0] = "come";
-    	suggestions[1] = "came";
-    	return EXIT_SUCCESS;;
-	} else if((strcmp(word, "m'y") == 0)) {
-        suggestions[0] = "my";
-        suggestions[1] = "me";
-        return EXIT_SUCCESS;
+    // Lowercase the inputted word
+    log_debug("lowercase operation on %s", word);
+    char *lower_word = word_lowercase(word);
+    log_debug("lower_word is %s", lower_word);
+
+    // Generate a suggestion list for the lowercased word
+    log_info("entering dict_suggestions");
+    char **sug_list = dict_suggestions(dict, lower_word, max_edits, amount);
+    log_info("exiting dict_suggestions");
+
+    if (sug_list == NULL) {
+        log_info("sug_list returned null");
+        return NULL;
     }
 
-    log_trace("returning EXIT_FAILURE from generate_suggestions");
-    return EXIT_FAILURE;
+    // Capitalize suggestions if necessary. i here is flag.
+    i = word_check_cap(word);
+    log_info("checking capitalization, flag %d", i);
+    if (i > 0) {
+        words_restore_cap(sug_list, i);
+    }
+
+
+    // Count number of suggestions returned. i here is sug_list.
+    i = 0;
+    while (sug_list[i] != NULL) {
+        sug_num++;
+        i++;
+    }
+    log_debug("sug_num: %d", sug_num);
+
+    // If no suggestions could be retrieved, return failure
+	if (sug_num == 0) {
+		return NULL;
+	}
+
+    sug_list[amount] = NULL;
+
+    return sug_list;
 }
