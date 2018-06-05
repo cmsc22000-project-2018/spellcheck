@@ -27,7 +27,7 @@ jobs:
         - stage: quiet
           script: 
             - make 
-            - ./spellcheck 0.txt -q -s test_result.txt -vvv
+            - ./spellcheck tests/0.txt -q -s test_result.txt -vvv
 
         - stage: interactive 1
           script: 
@@ -42,4 +42,4 @@ jobs:
         - stage: verbose 2
           script: 
             - make 
-            - ./spellcheck 0.txt -l
+            - ./spellcheck tests/0.txt -l

@@ -8,77 +8,60 @@
 #include "dictionary.h"
 #include <stdbool.h>
 
-#define NOT_WORD -1
-#define NO_CAP 0
-#define ONE_CAP 1
-#define ALL_CAPS 2
-#define SOME_CAPS 3
+#define NOT_WORD -1 ///< String is not a word.
+#define NO_CAP 0 ///< String is not capitalized.
+#define ONE_CAP 1 ///< First letter of string is not capitalized
+#define ALL_CAPS 2 ///< All words are capitalized
+#define SOME_CAPS 3 ///< String capitalization is Inconsistent
 
-/*
- * valid_word: checks that word is in dictionary
- *
- * parameters: word, dictionary
- *
- * returns: bool (true if in dictionary, false if not)
+/**
+ * \file word.h
+ * A module to handle each word and provide suggestions.
  */
-bool valid_word(dict_t *dict, char* word);
 
-/*
- * Helper function for generate_suggestions()
+/**
+ * \brief Checks that a word is in a dictionary.
  *
- * word_check_cap - Checks if a word has a type of capitalization.
+ * \param dict: A dictionary pointer. Must point to already allocated memory with dict_new().
+ * \param word: A string (word).
+ * \return Boolean (true if in dictionary, false if not).
+ */
+bool valid_word(dict_t *dict, char *word);
+
+/**
+ * \brief Checks if a word has a type of capitalization.
  *
- * Parameters:
- *  - word: A string (word).
- *
- * Returns:
- *  - -1: Error - Not a word.
- *  - 0: Not capitalized.
- *  - 1: First letter is capitalized.
- *  - 2: Every letter is capitalized.
- *  - 3: Inconsistent capitalization.
+ * \param word: A string (word).
+ * \return NOT_WORD: Error - Not a word, NO_CAP: Not capitalized, ONE_CAP: First letter is capitalized, ALL_CAPS: Every letter is capitalized, SOME_CAPS: Inconsistent capitalization.
  */
 int word_check_cap(char *word);
 
-/*
- * Helper function for generate_suggestions()
+/**
+ * \brief Gets a string (word) and lowercases it.
  *
- * word_lowercase - Gets a string (word) and lowercases it.
- *
- * Parameters:
- *  - word: A string (word).
- *
- * Returns:
- *  - char *: Returns the lowercased version of the string (word).
+ * \param word: A string (word).
+ * \return Lowercased version of the string (word).
  */
 char *word_lowercase(char *word);
 
-/*
- * Helper function for generate_suggestions()
+/**
+ * \brief Gets a string (word) array and uppercases each string (word).
  *
- * words_restore_cap - Gets a string (word) array and uppercases each string (word).
- *
- * Parameters:
- *  - words: A string (word) array.
- *  - flag: Capitalization state from word_check_cap().
- *
- * Returns:
- *  - None (Modifies the given string (word) array).
+ * \param words: A string (word) array.
+ * \param flag: Capitalization state from word_check_cap().
+ * \return None (Modifies the given string (word) array).
  */
 void words_restore_cap(char **words, int flag);
 
-/*
- * generate_suggestions - Returns a list of possible suggestions.
+/**
+ * \brief Returns a list of possible suggestions.
  *
- * Parameters:
- *  - dict: A dictionary pointer. Must point to already allocated memory.
- *  - word: A string (word).
- *  - max_edits: Levenshtein distance of the string (word).
- *  - amount: Amount of suggestions.
- *
- * Returns:
- * returns string array representing suggestions. return NULL if not given.
+ * \param dict: A dictionary pointer. Must point to already allocated memory.
+ * \param word: A string (word).
+ * \param max_edits: Levenshtein distance of the string (word).
+ * \param amount: Amount of suggestions.
+ * \return String array representing suggestions. Return NULL if not given any.
  */
-char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount);
+char **generate_suggestions(dict_t *dict, char *word, int max_edits, int amount);
 
 #endif
