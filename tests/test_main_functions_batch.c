@@ -24,12 +24,10 @@
 Test(main_functions_batch, edit_batch)
 {
 	char* line = strdup("Eye have, a splling chequer");
-	dict_t* dict = dict_new();
-	int i = dict_read(dict, "tests/sample_dict.txt");
-	if (i == EXIT_FAILURE) {
-		fprintf(stderr, "dict_read failed\n");
-		exit(0);
-	}
+	dict_t* dict = dict_official();
+	int i;
+
+	cr_assert_not_null(dict, "dict_official() failed");
 
 	char* newline = edit_batch(line, dict, QUIET_MODE, 1);
 
@@ -42,12 +40,10 @@ Test(main_functions_batch, edit_batch)
 Test(main_functions_batch, edit_batch2)
 {
 	char* line = strdup("It cme with thy m'y PC.");
-	dict_t* dict = dict_new();
-	int i = dict_read(dict, "tests/sample_dict.txt");
-	if (i == EXIT_FAILURE) {
-		fprintf(stderr, "dict_read failed\n");
-		exit(0);
-	}
+	dict_t* dict = dict_official();
+	int i;
+
+	cr_assert_not_null(dict, "dict_official() failed");
 
 	char* newline = edit_batch(line, dict, QUIET_MODE, 1);
 

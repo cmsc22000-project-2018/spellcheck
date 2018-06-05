@@ -36,6 +36,12 @@ Test(dictionary, free) {
     cr_assert_eq(rc, EXIT_SUCCESS, "dict_free() failed");
 }
 
+Test(dictionary, official) {
+    dict_t *d = dict_official();
+
+    cr_assert_not_null(d, "dict_official() failed");
+}
+
 /*
 ************ dict_add tests ****************************
 */

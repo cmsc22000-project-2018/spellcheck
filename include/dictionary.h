@@ -19,7 +19,7 @@ typedef struct {
  * Allocates a new dictionary.
  *
  * Parameters:
- *  - dict: A filename of a dictionary file
+ *  - none
  *
  * Returns:
  *  - A pointer to the dictionary, or NULL if a dictionary
@@ -38,6 +38,19 @@ dict_t* dict_new();
  *  - EXIT_SUCCESS on success, EXIT_FAILURE if an error occurs
  */
 int dict_init(dict_t *d);
+
+
+/*
+ * Allocates a new dictionary. Uses the official dictionary from the redis server
+ *
+ * Parameters:
+ *  - none
+ *
+ * Returns:
+ *  - A pointer to the dictionary, or NULL if a dictionary
+ *    cannot be allocated
+ */
+dict_t* dict_official();
 
 
 /*

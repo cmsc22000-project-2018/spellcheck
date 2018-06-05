@@ -10,8 +10,9 @@
 Test(word, valid_word)
 {
     char* c = strdup("have");
-    dict_t* dict = dict_new();
-    dict_read(dict, "tests/sample_dict.txt");
+    dict_t* dict = dict_official();
+
+	cr_assert_not_null(dict, "dict_official() failed");
 
     int i = valid_word(dict, c);
 
@@ -22,8 +23,9 @@ Test(word, valid_word)
 Test(word, valid_word0)
 {
     char* c = strdup(";checker");
-    dict_t* dict = dict_new();
-    dict_read(dict, "tests/sample_dict.txt");
+    dict_t* dict = dict_official();
+
+	cr_assert_not_null(dict, "dict_official() failed");
 
     int i = valid_word(dict, c);
 
@@ -34,8 +36,9 @@ Test(word, valid_word0)
 Test(word, valid_word1)
 {
     char* c = strdup("p'ac");
-    dict_t* dict = dict_new();
-    dict_read(dict, "tests/sample_dict.txt");
+    dict_t* dict = dict_official();
+
+	cr_assert_not_null(dict, "dict_official() failed");
 
     int i = valid_word(dict, c);
 
@@ -46,8 +49,9 @@ Test(word, valid_word1)
 Test(word, valid_word2)
 {
     char* c = strdup("ac");
-    dict_t* dict = dict_new();
-    dict_read(dict, "tests/sample_dict.txt");
+    dict_t* dict = dict_official();
+
+	cr_assert_not_null(dict, "dict_official() failed");
 
     int i = valid_word(dict, c);
 
@@ -260,9 +264,9 @@ Test(word, words_restore_cap4)
 Test(word, generate_suggestions)
 {
     char* c = "splling";
-    dict_t* dict = dict_new();
-    int i = dict_read(dict, "tests/sample_dict.txt");
-    cr_assert_eq(i, EXIT_SUCCESS, "dict_read failed");
+    dict_t* dict = dict_official();
+
+	cr_assert_not_null(dict, "dict_official() failed");
 
     char** list = generate_suggestions(dict, c, 2, 2);
 
@@ -274,9 +278,9 @@ Test(word, generate_suggestions)
 Test(word, generate_suggestions1)
 {
     char* c = "splling";
-    dict_t* dict = dict_new();
-    int i = dict_read(dict, "tests/sample_dict.txt");
-    cr_assert_eq(i, EXIT_SUCCESS, "dict_read failed");
+    dict_t* dict = dict_official();
+
+	cr_assert_not_null(dict, "dict_official() failed");
 
     char** list = generate_suggestions(dict, c, 2, 2);
 
