@@ -27,7 +27,7 @@ Test(main_functions_batch, edit_batch)
 	dict_t* dict = dict_new();
 	int i = dict_read(dict, "tests/sample_dict.txt");
 
-	cr_assert_eq(is, EXIT_SUCCESS, "dict_read() failed");
+	cr_assert_eq(i, EXIT_SUCCESS, "dict_read() failed");
 
 	char* newline = edit_batch(line, dict, QUIET_MODE, 1);
 

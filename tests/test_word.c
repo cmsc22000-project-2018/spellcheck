@@ -10,13 +10,14 @@
 Test(word, valid_word)
 {
     char* c = strdup("have");
-    dict_t* dict = dict_official();
+    dict_t* dict = dict_new();
+    int i = dict_read(dict, "dictionary.txt");
 
-	cr_assert_not_null(dict, "dict_official() failed");
+    cr_assert_eq(i, EXIT_SUCCESS, "dict_read() failed");
 
-    int i = valid_word(dict, c);
+    i = valid_word(dict, c);
 
-    cr_assert_eq(i, true, "testing for punctuation, failed");
+    cr_assert_eq(i, false, "testing for punctuation, failed");
 }
 
 /* testing valid_word */
