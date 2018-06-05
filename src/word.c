@@ -146,7 +146,7 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
 
     // Generate a suggestion list for the lowercased word
     log_info("entering dict_suggestions");
-    char **sug_list = dict_suggestions(dict, lower_word, 1, 2);
+    char **sug_list = dict_suggestions(dict, lower_word, max_edits, amount + 1);
     log_info("exiting dict_suggestions");
 
     if (sug_list == NULL) {
@@ -175,8 +175,7 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
 		return NULL;
 	}
 
-    // is this necessary?
-    sug_list[sug_num] = NULL;
+    sug_list[amount] = NULL;
 
     return sug_list;
 }

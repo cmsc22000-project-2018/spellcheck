@@ -20,7 +20,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
     log_info("edit_batch batch mode started successfully.");
 
 	char *line_copy = strdup(line);
-    int max_no_suggestions = 2;
+    int max_no_suggestions = 4;
     int max_edits = 2;
 
     // Generates an empty array where the misspelled words in a line will be stored

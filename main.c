@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
     char *save_file = malloc(UNIX_MAX_PATH * sizeof(char *));
 
 	// Default dict name
-    strcpy(dict, "dictionary1.txt");
+    strcpy(dict, "dictionary0.txt");
 
 	/*
 	 * 1: Quiet Batch Mode

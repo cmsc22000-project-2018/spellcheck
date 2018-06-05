@@ -20,7 +20,6 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
     log_debug("edit_interactive 'returnflag' value set to %s.", returnflag);
 
     char *line_copy = strdup(line);
-    int max_no_suggestions = nsug; //should the user decide this?
     int max_edits = 2;
 
     int length = strlen(line);
@@ -44,7 +43,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
     int j;
     // Replaces words according to user suggestions
     while (misspelled[i] != NULL) {
-    	char** suggestions = generate_suggestions(dict, misspelled[i], max_edits, max_no_suggestions);
+    	char** suggestions = generate_suggestions(dict, misspelled[i], max_edits, nsug);
         log_debug("edit_interactive suggestion generation returned.");
 
         shell_interactive_replacements(misspelled[i], suggestions, color);
@@ -59,7 +58,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
             log_trace("edit_interactive scanned value is %s.", choice);
 
             if (!(choice[0] == 's') && !(choice[0] == 'd') && !(choice[0] == 'i')
-                && !(isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions))) {
+                && !(isdigit(choice[0]) && (atoi(&choice[0]) <= nsug))) {
 
                 shell_error("Please enter a valid input.", color);
 
