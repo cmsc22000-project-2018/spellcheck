@@ -1,16 +1,5 @@
 h
 return
-d
 f asdf
-f tests/test_short.txt
-3
-1
-i
-checkre
-n
-checker
-y
-1
-d
-p
-c test_result.txt
+m 2
+m 1 
