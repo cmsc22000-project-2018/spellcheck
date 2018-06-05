@@ -23,11 +23,11 @@
  */
 char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool returnflag, bool color);
 
-/*
- * \brief Allows user to input maximum number of suggestions to print.
+/**
+ * \brief Allows user to input the maximum number of suggestions to print.
  *
- * \param color: TRUE means print in colors, FALSE means print without colors
- * \return int representing number of suggestions to print
+ * \param color: Boolean to enable/disable the color functionality.
+ * \return int representing number of suggestions to print.
  */
 int interactive_nsug_input(bool color);
 
@@ -41,6 +41,5 @@ int interactive_nsug_input(bool color);
  * \return Array of strings (lines to be printed in the save page).
  */
 char **interactive_mode(char *filename, dict_t *dict, bool *quit, bool color);
-
 
 #endif
