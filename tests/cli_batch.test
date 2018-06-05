@@ -1,0 +1,59 @@
+# test for the batch mode with verbose flag
+<
+
+$ ./spellcheck -v tests/test_short.txt
+>
+
+LINE			WORD			SUGGESTIONS
+1			splling			spelling, spilling
+1			chequer			checker, cheque
+2			cme			come, came
+2			thy			No suggestions generated
+2			m'y			my, me
+2			PC			No suggestions generated
+>2
+>= 0
+
+# test for the batch mode with quiet flag
+<
+q
+$ ./spellcheck -q tests/test_short.txt
+>
+p : print all changes
+s : save to existing file
+c : save to custom file
+r : re-edit file
+q : quit program
+
+
+spellcheck > 
+>2
+>= 0
+
+# test for the batch mode with quiet flag
+<
+p
+q
+$ ./spellcheck -q tests/test_short.txt
+p : print all changes
+s : save to existing file
+c : save to custom file
+r : re-edit file
+q : quit program
+
+
+spellcheck > 
+
+Eye have, a spelling checker
+It come with thy my PC.
+
+p : print all changes
+s : save to existing file
+c : save to custom file
+r : re-edit file
+q : quit program
+
+
+spellcheck > 
+>2
+>= 0

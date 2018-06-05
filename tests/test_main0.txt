@@ -15,5 +15,4 @@ d
 1
 s
 p
-c
-test_result.txt
+c test_result.txt

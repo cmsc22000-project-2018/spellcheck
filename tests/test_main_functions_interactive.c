@@ -1,8 +1,9 @@
 #include <criterion/criterion.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "main_functions_edit.h"
 #include <string.h>
+#include "main_functions_edit.h"
+#include "log.c/src/log.h"
 
 /* Note on testing for main_functions_*.c files:
  * Note that there are five parts to main_functions.c: saving, editing, interactive, batch, main.
@@ -101,7 +102,7 @@ Test(main_functions_edit, correct_line3) {
 /*
  ***** underline_misspelled_sentence tests *****
  */
-void check_underline_misspelled_sentence(char** badwords, char* sentence, char* underline, char* expected) {
+void check_underline_misspelled_sentence(char* badwords, char* sentence, char* underline, char* expected) {
 	char *underlined = underline_misspelled_sentence(badwords, sentence, underline);
 
 	int result = strcmp(underlined, expected);
@@ -117,8 +118,8 @@ Test(main_functions_edit, underline_misspelled_sentence) {
 	badwords[1] = "splling";
 	badwords[2] = NULL;
 	
-	char *expected = "^^ ^^^^^^^";
-    check_underline_misspelled_sentence(badwords, line,underline, expected);
+	char *expected = "^^";
+    check_underline_misspelled_sentence(badwords[0], line,underline, expected);
 }
 
 
@@ -132,8 +133,8 @@ Test(main_functions_edit, underline_misspelled_sentence2) {
 	badwords[3] = NULL;
 	
 
-	char *expected = "^^ ^^^^^^^    ^^";
-    check_underline_misspelled_sentence(badwords, line, underline, expected);
+	char *expected = "   ^^^^^^^";
+    check_underline_misspelled_sentence(badwords[1], line, underline, expected);
 }
 
 
@@ -179,19 +180,19 @@ void check_remove_prefix_punctuation(char* word, char* expected) {
 }
 
 Test(main_functions_edit, remove_prefix_punctuation) {
-	char buffer[8] = "...words";
+	char buffer[9] = "...words";
     char* expected = "words"; 
     check_remove_prefix_punctuation(buffer, expected);
 }
 
 Test(main_functions_edit, remove_prefix_punctuation2) {
-	char buffer[7] = "..words";
+	char buffer[8] = "..words";
     char* expected = "words"; 
     check_remove_prefix_punctuation(buffer, expected);
 }
 
 Test(main_functions_edit, remove_prefix_punctuation3) {
-	char buffer[9] = "??words?";
+	char buffer[10] = "??words?";
     char* expected = "words?"; 
     check_remove_prefix_punctuation(buffer, expected);
 }
@@ -217,13 +218,13 @@ Test(main_functions_edit, remove_trailing_punctuation1) {
 }
 
 Test(main_functions_edit, remove_trailing_punctuation2) {
-	char buffer[6] = "words.";
+	char buffer[7] = "words.";
     char* expected = "words"; 
     check_remove_trailing_punctuation(buffer, expected);
 }
 
 Test(main_functions_edit, remove_trailing_punctuation3) {
-	char buffer[8] = "??words?";
+	char buffer[9] = "??words?";
     char* expected = "??words"; 
     check_remove_trailing_punctuation(buffer, expected);
 }

@@ -1,28 +1,33 @@
+/*
+ * A module to handle each word and provide suggestions
+ */
+
 #ifndef INCLUDE_WORD_H_
 #define INCLUDE_WORD_H_
-#include <stdio.h>
-#include <strings.h>
+
 #include "dictionary.h"
 #include <stdbool.h>
 
 
 /*
  * valid_word: checks that word is in dictionary
+ *
  * parameters: word, dictionary
+ *
  * returns: bool (true if in dictionary, false if not)
- * 
  */
 bool valid_word(dict_t *dict, char* word);
 
 /*
- * generate_suggestions: receives a dictionary, word, and an allocated array of suggestions
- * fills array of suggestions with words
- * note that this is currently hard-coded;
- * parameters: word, dictionary, array list to which suggestions are stored
- * returns: int (EXIT_SUCCESS OR FAILURE). FAILURE if no suggestions generated
+ * generate_suggestions - Returns a list of possible suggestions
+ *
+ * Parameters:
+ *  - word: A string (word).
+ *  - dict: A dictionary pointer. Must point to already allocated memory.
+ *  - suggestions: An array of strings (words).
+ *
+ * returns string array representing suggestions. return NULL if not given.
  */
-int generate_suggestions(char* word, dict_t* dict, char **suggestions);
-
+char** generate_suggestions(dict_t* dict, char* word);
 
 #endif
-

@@ -5,5 +5,6 @@ spellcheck
 .DS_Store
 settings.json
 parser_testing.txt
-test_save.txt 
 test_result.txt
+test_save.txt 
+*.rdb
