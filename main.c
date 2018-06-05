@@ -91,7 +91,6 @@ int main(int argc, char *argv[]) {
     char *dict = malloc(UNIX_MAX_PATH * sizeof(char *));
     char *filename = malloc(UNIX_MAX_PATH * sizeof(char *));
     char *save_file = malloc(UNIX_MAX_PATH * sizeof(char *));
-    save_file[0] = '\0'; // initialization
 
 	// Default dict name
     strcpy(dict, "dictionary0.txt");
@@ -245,15 +244,14 @@ int main(int argc, char *argv[]) {
                 shell_edit_success(color);
             }
 
-            int check = strcmp(save_file[0], '\0');
-
-            if (check == 0 && (mode == QUIET_MODE)) {
+            md = strstr(save_file, ".txt\0");
+            if (md == NULL && (mode == QUIET_MODE)) {
                 log_trace("Printing result of the file edit.");
                 shell_print(result);
                 quit = false;
             }
 
-            else if (check != 0) {
+            else if (md != NULL) {
                 log_trace("Saving corrections to the designated file destination: %s", save_file);
                 save_corrections(save_file, result);
                 quit = false;

@@ -28,7 +28,7 @@ bool valid_word(dict_t *dict, char* word);
  * Returns:
  *  - -1: Error - Not a word.
  *  - 0: Not capitalized.
- *  - 1: First letter is capitalized (Note: "I" is included here).
+ *  - 1: First letter is capitalized.
  *  - 2: Every letter is capitalized.
  *  - 3: Inconsistent capitalization.
  */
