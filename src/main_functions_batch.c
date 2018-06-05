@@ -67,7 +67,7 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
         if (verbosity == QUIET_MODE) {
             log_trace("edit_batch correcting misspelled line.");
             if (suggestions[0] != NULL)
-            correct_line(line_copy, misspelled[i], suggestions[0]);
+                correct_line(line_copy, misspelled[i], suggestions[0]);
         }
 
         // In verbose mode, edit the file and also print a replacement chart

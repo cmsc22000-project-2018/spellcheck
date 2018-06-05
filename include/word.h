@@ -8,6 +8,12 @@
 #include "dictionary.h"
 #include <stdbool.h>
 
+#define NOT_WORD -1
+#define NO_CAP 0
+#define ONE_CAP 1
+#define ALL_CAPS 2
+#define SOME_CAPS 3
+
 /*
  * valid_word: checks that word is in dictionary
  *
@@ -50,7 +56,7 @@ char *word_lowercase(char *word);
 /*
  * Helper function for generate_suggestions()
  *
- * words_uppercase - Gets a string (word) array and uppercases each string (word).
+ * words_restore_cap - Gets a string (word) array and uppercases each string (word).
  *
  * Parameters:
  *  - words: A string (word) array.
@@ -59,7 +65,7 @@ char *word_lowercase(char *word);
  * Returns:
  *  - None (Modifies the given string (word) array).
  */
-void words_uppercase(char **words, int flag);
+void words_restore_cap(char **words, int flag);
 
 /*
  * generate_suggestions - Returns a list of possible suggestions.

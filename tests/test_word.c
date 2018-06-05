@@ -61,7 +61,7 @@ Test(word, word_check_cap)
 
     int i = word_check_cap(c);
 
-    cr_assert_eq(i, 0, "no letter is capitalized, should return 0");
+    cr_assert_eq(i, NO_CAP, "no letter is capitalized, should return 0");
 }
 
 /* testing word_check_cap */
@@ -71,7 +71,7 @@ Test(word, word_check_cap1)
 
     int i = word_check_cap(c);
 
-    cr_assert_eq(i, 1, "First letter is capitalized, should return 1");
+    cr_assert_eq(i, ONE_CAP, "First letter is capitalized, should return 1");
 }
 
 /* testing word_check_cap */
@@ -81,7 +81,7 @@ Test(word, word_check_cap2)
 
     int i = word_check_cap(c);
 
-    cr_assert_eq(i, -1, "capitalization not properly identified; should return -1");
+    cr_assert_eq(i, NOT_WORD, "capitalization not properly identified; should return -1");
 }
 
 /* testing word_check_cap */
@@ -91,7 +91,7 @@ Test(word, word_check_cap3)
 
     int i = word_check_cap(c);
 
-    cr_assert_eq(i, 1, "First letter is capitalized, should return 1");
+    cr_assert_eq(i, ONE_CAP, "First letter is capitalized, should return 1");
 }
 
 /* testing word_check_cap */
@@ -101,7 +101,7 @@ Test(word, word_check_cap4)
 
     int i = word_check_cap(c);
 
-    cr_assert_eq(i, 0, "capitalization not properly identified; should return 0");
+    cr_assert_eq(i, NO_CAP, "capitalization not properly identified; should return 0");
 }
 
 /* testing word_check_cap */
@@ -111,7 +111,7 @@ Test(word, word_check_cap5)
 
     int i = word_check_cap(c);
 
-    cr_assert_eq(i, 2, "capitalization not properly identified; should return 2");
+    cr_assert_eq(i, ALL_CAPS, "capitalization not properly identified; should return 2");
 }
 
 /* testing word_check_cap */
@@ -121,7 +121,7 @@ Test(word, word_check_cap6)
 
     int i = word_check_cap(c);
 
-    cr_assert_eq(i, 2, "capitalization not properly identified; should return 2");
+    cr_assert_eq(i, ALL_CAPS, "capitalization not properly identified; should return 2");
 }
 
 /* testing word_check_cap */
@@ -131,7 +131,7 @@ Test(word, word_check_cap7)
 
     int i = word_check_cap(c);
 
-    cr_assert_eq(i, 2, "capitalization not properly identified; should return 2");
+    cr_assert_eq(i, ALL_CAPS, "capitalization not properly identified; should return 2");
 }
 
 /* testing word_check_cap */
@@ -141,7 +141,7 @@ Test(word, word_check_cap8)
 
     int i = word_check_cap(c);
 
-    cr_assert_eq(i, 3, "capitalization not properly identified; should return 3");
+    cr_assert_eq(i, SOME_CAPS, "capitalization not properly identified; should return 3");
 }
 
 /* testing word_check_cap */
@@ -151,7 +151,7 @@ Test(word, word_check_cap9)
 
     int i = word_check_cap(c);
 
-    cr_assert_eq(i, 3, "capitalization not properly identified; should return 3");
+    cr_assert_eq(i, SOME_CAPS, "capitalization not properly identified; should return 3");
 }
 
 /* testing word_lowercase */
@@ -184,69 +184,69 @@ Test(word, word_lowercase4)
     cr_assert_eq(i, 0, "decapitalization incorrect");
 }
 
-/* testing words_uppercase */
-Test(word, words_uppercase)
+/* testing words_restore_cap */
+Test(word, words_restore_cap)
 {
     char** c = calloc(3, sizeof(char*));
     c[0] = strdup("onepiece");
     c[1] = strdup("twopiece");
 
-    words_uppercase(c, 1);
+    words_restore_cap(c, 1);
 
     int i = strcmp(c[0], "Onepiece");
 
     cr_assert_eq(i, 0, "recapitalization failed");
 }
 
-/* testing words_uppercase */
-Test(word, words_uppercase1)
+/* testing words_restore_cap */
+Test(word, words_restore_cap1)
 {
     char** c = calloc(3, sizeof(char*));
     c[0] = strdup("onepiece");
     c[1] = strdup("twopiece");
 
-    words_uppercase(c, 2);
+    words_restore_cap(c, 2);
     int i = strcmp(c[1], "TWOPIECE");
 
     cr_assert_eq(i, 0, "recapitalization failed");
 }
 
-/* testing words_uppercase */
-Test(word, words_uppercase2)
+/* testing words_restore_cap */
+Test(word, words_restore_cap2)
 {
     char** c = calloc(3, sizeof(char*));
     c[0] = strdup("onepiece");
     c[1] = strdup("twopiece");
 
-    words_uppercase(c, 3);
+    words_restore_cap(c, 3);
 
     int i = strcmp(c[0], "onepiece");
 
     cr_assert_eq(i, 0, "recapitalization failed");
 }
 
-/* testing words_uppercase */
-Test(word, words_uppercase3)
+/* testing words_restore_cap */
+Test(word, words_restore_cap3)
 {
     char** c = calloc(3, sizeof(char*));
     c[0] = strdup("one'piece");
     c[1] = strdup("two'piece");
 
-    words_uppercase(c, 1);
+    words_restore_cap(c, 1);
 
     int i = strcmp(c[0], "One'piece");
 
     cr_assert_eq(i, 0, "recapitalization failed");
 }
 
-/* testing words_uppercase */
-Test(word, words_uppercase4)
+/* testing words_restore_cap */
+Test(word, words_restore_cap4)
 {
     char** c = calloc(3, sizeof(char*));
     c[0] = strdup("one''piece'");
     c[1] = strdup("two''piece'");
 
-    words_uppercase(c, 2);
+    words_restore_cap(c, 2);
 
     int i = strcmp(c[0], "ONE''PIECE'");
 

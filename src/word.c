@@ -31,7 +31,7 @@ int word_check_cap(char *word) {
     }
 
     if (num_punct == word_length) {
-        return -1; // no alphabet in word
+        return NOT_WORD; // no alphabet in word
     }
 
     // move to first letter, assuming punctuations like " and '
@@ -52,20 +52,20 @@ int word_check_cap(char *word) {
         }
 
         if (num_cap == 1) {
-            return 1;
+            return ONE_CAP;
         }
 
         if (num_cap == word_length - num_punct) {
-            return 2;
+            return ALL_CAPS;
         }
 
-        return 3; // Inconsistent
+        return SOME_CAPS; // Inconsistent
     }
 
     // if control reaches here, then first letter of word is not capitalized
     for (i = 0; i < word_length; i++) {
         if (isupper(word[i])) {
-            return 3;
+            return SOME_CAPS;
         }
     }
 
@@ -87,18 +87,18 @@ char *word_lowercase(char *word) {
 }
 
 /* See word.h */
-void words_uppercase(char **words, int flag) {
+void words_restore_cap(char **words, int flag) {
     int i = 0;
     int j = 0;
 
     while (words[i] != NULL) {
         // If only the first character of the word should be capitalized
-        if (flag == 1) {
+        if (flag == ONE_CAP) {
             words[i][0] = toupper(words[i][0]);
         }
 
         // If the whole word should be capitalized
-        if (flag == 2) {
+        if (flag == ALL_CAPS) {
             int len = strlen(words[i]);
 
             j = 0;
@@ -158,7 +158,7 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
     i = word_check_cap(word);
     log_info("checking capitalization, flag %d", i);
     if (i > 0) {
-        words_uppercase(sug_list, i);
+        words_restore_cap(sug_list, i);
     }
 
 
