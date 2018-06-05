@@ -8,7 +8,7 @@ Spellcheck is a tool which, given a text, will search for misspelled words and w
 For the API setup, please refer to [Redis and Hiredis installation](https://github.com/cmsc22000-project-2018/api). 
 
 ### Compilation
-To use spellcheck, run `make` in the root directory.
+To build spellcheck, run `make` in the root directory.
 
 ### Testing
 Testing has been conducted with the [Criterion](http://criterion.readthedocs.io/en/master/intro.html) testing framework and [ShellTestRunner](https://github.com/simonmichael/shelltestrunner).
@@ -35,7 +35,7 @@ For each detected error, the interactive mode produces:
 ```
 Line: 1:
 I have a splling checker
-            ^^^^^^^
+         ^^^^^^^
 ```
 (2) Generated suggestions, and options to delete the word, input an alternative word, or skip for users
 
