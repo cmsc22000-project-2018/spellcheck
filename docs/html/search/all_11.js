@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['white',['WHITE',['../shellstrings_8h.html#a87b537f5fa5c109d3c05c13d6b18f382',1,'shellstrings.h']]],
-  ['word_2eh',['word.h',['../word_8h.html',1,'']]]
+  ['underline_5fmisspelled_5fsentence',['underline_misspelled_sentence',['../main__functions__edit_8h.html#a6068c1c838c3a419e581512ff35e88d0',1,'main_functions_edit.h']]]
 ];

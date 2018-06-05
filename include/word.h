@@ -29,14 +29,6 @@
 bool valid_word(dict_t *dict, char* word);
 
 /**
- * \brief Returns a list of possible suggestions.
- *
- * \param word: A string (word).
- * \param dict: A dictionary pointer. Must point to already allocated memory with dict_new().
- * \param suggestions: Array of strings (list of suggestions).
- * \return EXIT_SUCCESS or EXIT_FAILURE (EXIT_FAILURE if no suggestions generated).
-
-/**
  * \brief Checks that word is in dictionary
  *
  * \param word: A string (word).

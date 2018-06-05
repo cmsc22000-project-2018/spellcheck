@@ -27,16 +27,15 @@ int \mbox{\hyperlink{structdict__t_ada2e9cd98e98ccefe871124833a4cd77}{dict\+\_\+
 int \mbox{\hyperlink{structdict__t_ab4825a90819a79433cd1f4f6034b4fc1}{dict\+\_\+add}} (\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$d, char $\ast$str)
 \begin{DoxyCompactList}\small\item\em Adds a word to a dictionary. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{structdict__t_a4a2d3fd1ef3eba7b6e70d87129ad347f}{dict\+\_\+read}} (\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$d, char $\ast$file)
-\begin{DoxyCompactList}\small\item\em Parses a file and adds all words to the dictionary. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Parses a file and adds all words to the dictionary. \end{DoxyCompactList}\item 
+char $\ast$$\ast$ \mbox{\hyperlink{structdict__t_af7a2a46644a6279d42ddda31bfde70e2}{dict\+\_\+suggestions}} (\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$d, char $\ast$str, int max\+\_\+edits, int n)
+\begin{DoxyCompactList}\small\item\em Returns the n closest words to a given string in a dictionary. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{structdict__t_a4743f4cde2360543d7976d68e0bfacee}\label{structdict__t_a4743f4cde2360543d7976d68e0bfacee}} 
-trie\+\_\+t $\ast$ \mbox{\hyperlink{structdict__t_a4743f4cde2360543d7976d68e0bfacee}{dict}}
-\begin{DoxyCompactList}\small\item\em A dictionary file. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{structdict__t_a7bceea2e14139c9899276927ea4736c6}\label{structdict__t_a7bceea2e14139c9899276927ea4736c6}} 
-char $\ast$ \mbox{\hyperlink{structdict__t_a7bceea2e14139c9899276927ea4736c6}{char\+\_\+list}}
-\begin{DoxyCompactList}\small\item\em A list of characters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+trie\+\_\+t $\ast$ {\bfseries dict}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -192,8 +191,36 @@ Parses a file and adds all words to the dictionary.
 \begin{DoxyReturn}{Returns}
 E\+X\+I\+T\+\_\+\+S\+U\+C\+C\+E\+SS on success, E\+X\+I\+T\+\_\+\+F\+A\+I\+L\+U\+RE if an error occurs. 
 \end{DoxyReturn}
+\mbox{\Hypertarget{structdict__t_af7a2a46644a6279d42ddda31bfde70e2}\label{structdict__t_af7a2a46644a6279d42ddda31bfde70e2}} 
+\index{dict\+\_\+t@{dict\+\_\+t}!dict\+\_\+suggestions@{dict\+\_\+suggestions}}
+\index{dict\+\_\+suggestions@{dict\+\_\+suggestions}!dict\+\_\+t@{dict\+\_\+t}}
+\subsubsection{\texorpdfstring{dict\+\_\+suggestions()}{dict\_suggestions()}}
+{\footnotesize\ttfamily char $\ast$$\ast$ dict\+\_\+suggestions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structdict__t}{dict\+\_\+t}} $\ast$}]{d,  }\item[{char $\ast$}]{str,  }\item[{int}]{max\+\_\+edits,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+
+
+Returns the n closest words to a given string in a dictionary. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em d} & A dictionary. Must point to a dictionary allocated with dict\+\_\+new \\
+\hline
+{\em str} & A string. This will be the (misspelled) word to match \\
+\hline
+{\em max\+\_\+edits} & the maximum levenshtein distance the words in the set can have \\
+\hline
+{\em n} & the number of strings to return.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The first n strings with the smallest distance, where ties are broken by alphabetical order. 
+
+If there aren\textquotesingle{}t enough matching strings, each remaining spot is set to N\+U\+LL. 
+
+N\+U\+LL if there was an error 
+\end{DoxyReturn}
 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-/\+Users/firatciftci/spellcheck/include/\mbox{\hyperlink{dictionary_8h}{dictionary.\+h}}\end{DoxyCompactItemize}
+/\+Users/jaewanpark/\+Desktop/\+V\+M\+\_\+\+R\+E\+P\+O\+\_\+\+R\+O\+O\+T/spellcheck/include/\mbox{\hyperlink{dictionary_8h}{dictionary.\+h}}\end{DoxyCompactItemize}

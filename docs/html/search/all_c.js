@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['quiet_5fmode',['QUIET_MODE',['../main__functions__home_8h.html#a04e7fb4fa6468ade8d218f3ddc3173ec',1,'main_functions_home.h']]],
-  ['quit',['QUIT',['../main__functions__home_8h.html#ad24e2b54375e12474e65ebf7175988fb',1,'main_functions_home.h']]]
+  ['one_5fcap',['ONE_CAP',['../word_8h.html#a480e66e55e40ffec180eb7f1068678aa',1,'word.h']]]
 ];

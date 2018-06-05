@@ -45,7 +45,6 @@ void shell_prompt(bool color);
  */
 void shell_main_menu(bool color);
 
-<<<<<<< HEAD
 /**
  * \brief Modification save text for the shell.
  *
@@ -94,7 +93,7 @@ void shell_usage(bool color);
 
 /**
  * \brief Help page screen for the shell.
-/*
+ *
  * shell_help - Default text input prompt string for the shell.
  *
  * \param color: Boolean to enable/disable the color functionality.

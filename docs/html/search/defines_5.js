@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['quiet_5fmode',['QUIET_MODE',['../main__functions__home_8h.html#a04e7fb4fa6468ade8d218f3ddc3173ec',1,'main_functions_home.h']]],
-  ['quit',['QUIT',['../main__functions__home_8h.html#ad24e2b54375e12474e65ebf7175988fb',1,'main_functions_home.h']]]
+  ['maxchar',['MAXCHAR',['../parser_8h.html#ac1535592e39e7edf0cafbd5e695ea622',1,'parser.h']]],
+  ['maxstrlen',['MAXSTRLEN',['../dictionary_8h.html#ab64c24e21a46ddfe0f4168c16b882846',1,'dictionary.h']]]
 ];

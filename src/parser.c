@@ -5,12 +5,6 @@
 #include "parser.h"
 #include "log.c/src/log.h"
 
-#define MAXCHAR 4096
-#define INITLINE 100
-#define READ_BUFFERSIZE 256
-#define LSH_TOK_BUFFERSIZE 64
-#define LSH_TOK_DELIM " \t\r\n\a"
-
 /* Parsing Functions for Parsing Input Files */
 
 /* returns with pointer to array of strings, each of which represent a line in a given file */

@@ -45,7 +45,7 @@ int change_mode(char *arg, bool color);
  * \param quit: Pointer to boolean determining if the function should quit or not (true: continue in main.c loop, false: exit program).
  * \param mode: Mode (Quiet Batch, Verbose Batch, or Interactive).
  * \param filename: File being input.
- * \param dict: Dictionary file being input.
+ * \pageram dict: Dictionary file being input.
  * \param color: Boolean to enable/disable the color functionality.
  */
 void main_page(bool *quit, int *mode, char *filename, char *dict, bool *color);

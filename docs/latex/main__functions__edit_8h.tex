@@ -1,5 +1,5 @@
-\hypertarget{main__functions__edit_8h}{}\section{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+edit.h File Reference}
-\label{main__functions__edit_8h}\index{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+edit.\+h@{/\+Users/firatciftci/spellcheck/include/main\+\_\+functions\+\_\+edit.\+h}}
+\hypertarget{main__functions__edit_8h}{}\section{/\+Users/jaewanpark/\+Desktop/\+V\+M\+\_\+\+R\+E\+P\+O\+\_\+\+R\+O\+O\+T/spellcheck/include/main\+\_\+functions\+\_\+edit.h File Reference}
+\label{main__functions__edit_8h}\index{/\+Users/jaewanpark/\+Desktop/\+V\+M\+\_\+\+R\+E\+P\+O\+\_\+\+R\+O\+O\+T/spellcheck/include/main\+\_\+functions\+\_\+edit.\+h@{/\+Users/jaewanpark/\+Desktop/\+V\+M\+\_\+\+R\+E\+P\+O\+\_\+\+R\+O\+O\+T/spellcheck/include/main\+\_\+functions\+\_\+edit.\+h}}
 {\ttfamily \#include $<$stdlib.\+h$>$}\newline
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
@@ -15,7 +15,7 @@ void \mbox{\hyperlink{main__functions__edit_8h_a7b256b07c4d2ad5ed5af231dc69d4682
 \begin{DoxyCompactList}\small\item\em Removes any punctuation characters at the end of a string (word). \end{DoxyCompactList}\item 
 char $\ast$ \mbox{\hyperlink{main__functions__edit_8h_a6d127f96df84f3c099b1a1f6b6348965}{remove\+\_\+punctuation}} (char $\ast$word)
 \begin{DoxyCompactList}\small\item\em Combines \mbox{\hyperlink{main__functions__edit_8h_a7b256b07c4d2ad5ed5af231dc69d4682}{remove\+\_\+trailing\+\_\+punctuation()}} and \mbox{\hyperlink{main__functions__edit_8h_a2d17e60f8fdb56d8239558ff12fd8315}{remove\+\_\+prefix\+\_\+punctuation()}} to remove trailing and prefix punctuation characters without modifying the original word. \end{DoxyCompactList}\item 
-char $\ast$ \mbox{\hyperlink{main__functions__edit_8h_a21a06bb106eda6d8b14dbf409122fa75}{underline\+\_\+misspelled\+\_\+sentence}} (char $\ast$$\ast$misspelled, char $\ast$sentence, char $\ast$underline)
+char $\ast$ \mbox{\hyperlink{main__functions__edit_8h_a6068c1c838c3a419e581512ff35e88d0}{underline\+\_\+misspelled\+\_\+sentence}} (char $\ast$misspelled, char $\ast$sentence, char $\ast$underline)
 \begin{DoxyCompactList}\small\item\em Underlines a list misspelled words in a given sentence. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{main__functions__edit_8h_aa393e6cc3a8b8027955d4ac37633a6b1}{add\+\_\+to\+\_\+misspelled}} (char $\ast$word, char $\ast$$\ast$misspelled)
 \begin{DoxyCompactList}\small\item\em Adds a misspelled word to a list of misspelled words. \end{DoxyCompactList}\item 
@@ -47,7 +47,7 @@ Adds a misspelled word to a list of misspelled words.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-int as pseudo-\/boolean (E\+X\+I\+T\+\_\+\+S\+U\+C\+C\+E\+SS ot E\+X\+I\+T\+\_\+\+F\+A\+I\+L\+U\+RE). 
+Int as pseudo-\/boolean (E\+X\+I\+T\+\_\+\+S\+U\+C\+C\+E\+SS ot E\+X\+I\+T\+\_\+\+F\+A\+I\+L\+U\+RE). 
 \end{DoxyReturn}
 \mbox{\Hypertarget{main__functions__edit_8h_ae9f446537b2f578ac35ea7866f305146}\label{main__functions__edit_8h_ae9f446537b2f578ac35ea7866f305146}} 
 \index{main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}!correct\+\_\+line@{correct\+\_\+line}}
@@ -158,11 +158,11 @@ Removes any punctuation characters at the end of a string (word).
 {\em word} & A string (word). \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{main__functions__edit_8h_a21a06bb106eda6d8b14dbf409122fa75}\label{main__functions__edit_8h_a21a06bb106eda6d8b14dbf409122fa75}} 
+\mbox{\Hypertarget{main__functions__edit_8h_a6068c1c838c3a419e581512ff35e88d0}\label{main__functions__edit_8h_a6068c1c838c3a419e581512ff35e88d0}} 
 \index{main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}!underline\+\_\+misspelled\+\_\+sentence@{underline\+\_\+misspelled\+\_\+sentence}}
 \index{underline\+\_\+misspelled\+\_\+sentence@{underline\+\_\+misspelled\+\_\+sentence}!main\+\_\+functions\+\_\+edit.\+h@{main\+\_\+functions\+\_\+edit.\+h}}
 \subsubsection{\texorpdfstring{underline\+\_\+misspelled\+\_\+sentence()}{underline\_misspelled\_sentence()}}
-{\footnotesize\ttfamily char$\ast$ underline\+\_\+misspelled\+\_\+sentence (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{misspelled,  }\item[{char $\ast$}]{sentence,  }\item[{char $\ast$}]{underline }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily char$\ast$ underline\+\_\+misspelled\+\_\+sentence (\begin{DoxyParamCaption}\item[{char $\ast$}]{misspelled,  }\item[{char $\ast$}]{sentence,  }\item[{char $\ast$}]{underline }\end{DoxyParamCaption})}
 
 
 
