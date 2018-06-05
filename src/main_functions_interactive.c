@@ -145,7 +145,7 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
                 printf("%s", underline_misspelled_sentence(misspelled[i+1], line_copy, underline));
             }
             
-        } else if (isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions)) { // choose suggestion
+        } else if (isdigit(choice[0]) && (atoi(&choice[0]) <= nsug)) { // choose suggestion
             // Replace misspelled word with chosen replacement
             int c = atoi(&choice[0]) - 1;
             printf("\nReplacing \"%s\" with \"%s\".\n", misspelled[i], suggestions[c]);
