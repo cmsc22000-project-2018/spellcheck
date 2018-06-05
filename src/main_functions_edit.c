@@ -14,6 +14,58 @@
 #include "main_functions_edit.h"
 #include "log.c/src/log.h"
 
+// Given an array of misspelled words, generates an underline
+// for an occurence in sentence
+
+/* See main_functions_edit.h */
+char *underline_misspelled_sentence(char *misspelled, char *sentence, char *underline) {
+	underline[0] = '\0';
+	char* ptr = strstr(sentence, misspelled);
+
+	assert(misspelled != NULL);
+	assert(ptr != NULL);
+
+	int pos = ptr - sentence;
+	int i;
+
+	for (i = 0; i < pos; i++) {
+		strcat(underline, " ");
+	}
+
+	int slen = strlen(misspelled);
+
+	for ( ; i < slen + pos; i++) {
+		strcat(underline, "^");
+	}
+
+	underline[i] = '\0';
+
+	log_debug("underline is %s", underline);
+	log_debug("returning from underline_misspelled_sentence");
+	return underline;
+}
+
+/* See main_functions_edit.h */
+int add_to_misspelled(char *word, char** misspelled) {
+	if (word == NULL || misspelled == NULL) {
+		log_error("add_to_misspelled misspelled word, or array, is NULL.");
+		return EXIT_FAILURE;
+	}
+
+	int i = 0;
+
+	while (misspelled[i] != NULL) {
+		i++;
+	}
+
+	log_info("add_to_misspelled word position is %d.", i);
+
+	misspelled[i] = word;
+
+	return EXIT_SUCCESS;
+}
+
+/* See main_functions_edit.h */
 bool is_in_punct_array(char letter) {
 	char punctuation_array[] = "+, .-\'&!?:;#~=/$^\n_<>\"";
 	int num_punctuation = sizeof(punctuation_array) / sizeof(punctuation_array[0]);
