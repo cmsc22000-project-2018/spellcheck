@@ -1,11 +1,11 @@
-/*
- * String output functions to be used in the shell
+/* 
+ * String printing library for the shell
  *
  * See shellstrings.h for function documentation.
  */
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include "shellstrings.h"
@@ -174,8 +174,9 @@ void shell_help(bool color) {
     }
 }
 
+/* See shellstrings.h */
 void shell_start_interactive(char *filename, char *dict, char *md, bool color) {
-    if (color == true) {   // only printing this out in verbose
+    if (color == true) {
         log_info(BOLDWHITE "\n\n=============================================================\n"
                  "====================== Editing Started ======================\n"
                  "=============================================================\n\n" RESET);
@@ -196,6 +197,7 @@ void shell_start_interactive(char *filename, char *dict, char *md, bool color) {
     }
 }
 
+/* See shellstrings.h */
 char *shell_modename(int mode) {
     switch (mode) {
     case QUIET_MODE:
@@ -211,6 +213,7 @@ char *shell_modename(int mode) {
     return "Interactive Mode";
 }
 
+/* See shellstrings.h */
 void shell_interactive_line_print(int lnum, char *line, char *underline, bool returnflag, bool color) {
     if (color == true) {
         printf(BOLDWHITE "\nLine:" RESET " %d:\n%s" , lnum, line);
@@ -233,7 +236,7 @@ void shell_interactive_line_print(int lnum, char *line, char *underline, bool re
     }
 }
 
-
+/* See shellstrings.h */
 void shell_interactive_replacements(char *word, char **sug, bool color) {
     int j = 0;
 
@@ -254,7 +257,7 @@ void shell_interactive_replacements(char *word, char **sug, bool color) {
                 j++;
             }
 
-            printf(BOLDWHITE "[d]" RESET " : Delete\n");
+            printf(BOLDWHITE "\n[d]" RESET " : Delete\n");
             printf(BOLDWHITE "[i]" RESET " : Input\n");
             printf(BOLDWHITE "[s]" RESET " : Skip\n\n");
         }
@@ -279,24 +282,26 @@ void shell_interactive_replacements(char *word, char **sug, bool color) {
                 j++;
             }
 
-            printf( "[d] : Delete\n");
+            printf( "\n[d] : Delete\n");
             printf( "[i] : Input\n");
             printf( "[s] : Skip\n\n");
         }
     }
 }
 
-void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggestions) {
+/* See shellstrings.h */
+void shell_verbose_chart(int lnum, char *line, char *misspelled, char **suggestions) {
     // Prints the location and character
     char* ptr = strstr(line, misspelled);
     int charpos = 0;
     charpos = ptr - line;
 
-    log_trace("shell_verbose_chart character position in line is %d", charpos);
+    log_trace("(shell_verbose_chart) Character position in line is %d.", charpos);
 
     printf("%d:%d\t\t\t", lnum, charpos);
 
-    int ntab = 3 - (strlen(misspelled) / 8); // number of tabs
+    // Number of tabs
+    int ntab = 3 - (strlen(misspelled) / 8);
 
     if (ntab < 0) {
         ntab = 1;
@@ -322,9 +327,11 @@ void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggesti
         j++;
     }
 
-    printf("\n"); // print list of replacement
+    // Prints list of replacement
+    printf("\n");
 }
 
+/* See shellstrings.h */
 void shell_save_message(bool color) {
     if (color == true) {
         printf("\n" BOLDWHITE "Enter a file name [path/*.txt] or enter 'r' to return to previous page." RESET "\n");

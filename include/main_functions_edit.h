@@ -6,99 +6,79 @@
 #include <stdbool.h>
 #include "dictionary.h"
 
-/*
- * Functions for Editing Strings
+/**
+ * \file main_functions_edit.h
+ * String editing functions for the shell.
  */
 
-/*
- * is_in_punct_array: determines if character is presented in hard coded punctuation array
+/**
+ * \brief Determines whether a character is a punctuation character or not.
  *
- * parameter: character
- *
- * return: returns true if a character is a punctuation char, false otherwise
+ * \param letter: A character.
+ * \return true if the character is a punctuation character, false otherwise.
  */
-
 bool is_in_punct_array(char letter);
 
-/* 
- * remove_prefix_punctuation: removes any punctuation characters
- * at the beginning of a string of alphabets
+/**
+ * \brief Removes any punctuation characters at the beginning of a string (word).
  *
- * parameter: word (string)
- *
- * return: void
+ * \param word: A string (word).
  */
 void remove_prefix_punctuation(char *word);
 
-/*
- * remove_trailing_punctuation: removes any punctuation characters
- * that trail a string of alphabets
+/**
+ * \brief Removes any punctuation characters at the end of a string (word).
  *
- * parameter: word (string)
- *
- * return: void
+ * \param word: A string (word).
  */
 void remove_trailing_punctuation(char *word); 
 
-/* 
- * remove_punctuation: combines remove_trailing_punctuation and remove_prefix_punctuation,
- * to remove trailing and prefix punctuation without modifying original word
+/**
+ * \brief Combines remove_trailing_punctuation() and remove_prefix_punctuation() to remove trailing and prefix punctuation characters without modifying the original word.
  *
- * parameter: word (string)
- *
- * return: word (string) with removed surrounding punctuations
+ * \param word: A string (word).
+ * \return Input string (word) with punctuation characters removed.
  */
 char *remove_punctuation(char *word);
 
-/*
- * underline_misspelled_sentence: given a list of misspelled words in order,
- * underline them in sentence (will underline in line once per occurence in array)
+/**
+ * \brief Underlines a list misspelled words in a given sentence.
  *
- * paramters:
- *  - misspelled: misspelled word
- *  - sentence: sentence to be edited
- *  - underline: allocated string to populate with underline
+ * \param misspelled: Array of strings (list of misspelled words).
+ * \param sentence: Dentence to be modified.
+ * \param underline: String of underline characters.
  *
- * returns: underline for line
+ * \return Underline for the misspelled words in the input sentence.
  */
 char *underline_misspelled_sentence(char *misspelled, char *sentence, char *underline);
 
-/*
- * add_to_misspelled: add an incorrect word to list of misspelled words
+/**
+ * \brief Adds a misspelled word to a list of misspelled words.
  *
- * parameters:
- *  - word: word to add to list
- *  - misspelled: list of misspelled words
+ * \param word: A string (word).
+ * \param misspelled: Array of strings (list of misspelled words).
  *
- * returns: int (EXIT_SUCCESS OR FAILURE)
+ * \returns Int as pseudo-boolean (EXIT_SUCCESS ot EXIT_FAILURE).
  */
 int add_to_misspelled(char *word, char **misspelled);
 
-/*
- * parse_string: generate char** array of misspelled words from a line, as well as an underline
- * highlighting those misspelled words to be printed in the terminal
+/**
+ * \brief Given a line, generates a list of misspelled words and underlines them.
  *
- * parameters:
- *  - string (line) to be parsed
- *  - dictionary
- *  - underline: string of ' ' and '^', highlighting misspelled words in sentence to be printed out in terminal
- *    this is initialized in edit_batch and edit_interactive as a malloc'd array with length of edit target string.
- *  - misspelled: char** array of misspelled words in the line
- *
- * return: void
+ * \param string: Line to be parsed.
+ * \param dict: Dictionary file being input.
+ * \param underline: String of underline characters.
+ * \param misspelled: Array of strings (list of misspelled words).
  */
 void parse_string(char *string, dict_t *dict, char *underline, char **misspelled);
 
-/*
- * correct_line: replace word in array with word suggestion chosen by user
+/**
+ * \brief Replaces a word in a line with the word suggestion chosen by the user.
  *
- * parameters:
- *  - line: line to be edited
- *  - old word: misspelled word
- *  - new word: correction
- *
- * return: edited line 
- * //reference from https://stackoverflow.com/questions/32413667/replace-all-occurrences-of-a-substring-in-a-string-in-c
+ * \param line: Line to be modified.
+ * \param old_word: String (Misspelled word).
+ * \param new_word: String (Corrected word).
+ * \return Modified (Corrected) line.
  */
 char *correct_line(char *line, char *old_word, char *new_word);
 
