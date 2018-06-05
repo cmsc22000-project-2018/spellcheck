@@ -11,6 +11,7 @@ before_install:
     - sudo make install
     - sudo ldconfig
     - cd ..
+    - host-manager -add redis.example.org 127.0.0.1
     - sudo redis-server&
 
 jobs:
