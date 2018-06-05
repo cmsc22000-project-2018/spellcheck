@@ -62,7 +62,6 @@ char *edit_interactive(char *line, dict_t *dict, int linenumber, int nsug, bool 
                 && !(isdigit(choice[0]) && (atoi(&choice[0]) <= max_no_suggestions))) {
 
                 shell_error("Please enter a valid input.", color);
-                log_error("edit_interactive nvalid input.");  
 
                 check = 0;
             }

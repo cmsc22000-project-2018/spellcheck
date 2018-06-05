@@ -102,7 +102,7 @@ int dict_add(dict_t *d, char *str) {
     int rc = trie_insert(d->dict, str);
 
     if (rc == 0) {
-        log_trace("dict_exists returning EXIT_FAILURE");
+        log_trace("dict_exists returning EXIT_SUCCESS");
         return EXIT_SUCCESS;
     }
 
@@ -143,16 +143,8 @@ char **dict_suggestions(dict_t *d, char *str, int max_edits, int n) {
         return NULL;
     }
 
-    log_trace("dict_suggestions");
+    log_trace("dict_suggestions generation with tries");
     char **results = trie_approx(d->dict, str, max_edits, n);
-
-    if (results != NULL) {
-        log_debug("results is not null, sug[0] is \"%s\"", results[0]);
-        log_debug("results is not null, sug[1] is \"%s\"", results[1]);
-        log_debug("results is not null, sug[2] is \"%s\"", results[2]);
-        log_debug("results is not null, sug[3] is \"%s\"", results[3]);
-        log_debug("results is not null, sug[4] is \"%s\"", results[4]);
-    }
 
     return results;
 }

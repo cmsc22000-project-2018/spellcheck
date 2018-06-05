@@ -275,7 +275,7 @@ Test(word, generate_suggestions1)
 {
     char* c = "splling";
     dict_t* dict = dict_new();
-    int i = dict_read(dict, "dictionary1.txt");
+    int i = dict_read(dict, "tests/sample_dict.txt");
     cr_assert_eq(i, EXIT_SUCCESS, "dict_read failed");
 
     char** list = generate_suggestions(dict, c, 2, 2);
@@ -284,5 +284,3 @@ Test(word, generate_suggestions1)
 
     cr_assert_not_null(list[0], "generate_suggestions[0] is null");
 }
-
-

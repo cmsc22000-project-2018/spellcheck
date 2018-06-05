@@ -118,7 +118,7 @@ bool valid_word(dict_t* dict, char* shaved_word) {
     char* decap = word_lowercase(shaved_word);
     log_trace("word is \"%s\", decap is \"%s\"", shaved_word, decap);
 
-    if((dict_exists(dict, shaved_word) == EXIT_SUCCESS) || dict_exists(dict, word_lowercase(shaved_word)) == EXIT_SUCCESS) {
+    if((dict_exists(dict, shaved_word) == EXIT_SUCCESS) || dict_exists(dict, decap) == EXIT_SUCCESS) {
         log_trace("valid_word returning true from valid_word");
         return true;
     } else {
@@ -146,12 +146,8 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
 
     // Generate a suggestion list for the lowercased word
     log_info("entering dict_suggestions");
-    char **sug_list = dict_suggestions(dict, lower_word, max_edits, 5);
-
-    /* Possibly, if dictionary is capitalized; run once with capitalizations (McDonals, for instance)
-    if (sug_list == NULL) {
-        sug_list = dict_suggestions(dict, word, max_edits, amount);
-    */
+    char **sug_list = dict_suggestions(dict, lower_word, 1, 2);
+    log_info("exiting dict_suggestions");
 
     if (sug_list == NULL) {
         log_info("sug_list returned null");
@@ -160,17 +156,17 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
 
     // Capitalize suggestions if necessary. i here is flag.
     i = word_check_cap(word);
+    log_info("checking capitalization, flag %d", i);
     if (i > 0) {
         words_uppercase(sug_list, i);
     }
 
-    // set upper limit for suggestions
-    sug_list[amount] = NULL;
 
     // Count number of suggestions returned. i here is sug_list.
     i = 0;
     while (sug_list[i] != NULL) {
         sug_num++;
+        i++;
     }
     log_debug("sug_num: %d", sug_num);
 
