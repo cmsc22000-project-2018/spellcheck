@@ -6,11 +6,11 @@
  */
 
 #include <stdlib.h>
-#include <stdbool.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
 #include <assert.h>
 #include <unistd.h>
-#include <string.h>
 #include <time.h>
 #include "dictionary.h"
 #include "log.c/src/log.h"
