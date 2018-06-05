@@ -107,7 +107,6 @@ void shell_help(bool color);
  * \param dict: Dictionary file being input.
  * \param md: Mode (Quiet Batch, Verbose Batch, or Interactive).
  * \param color: Boolean to enable/disable the color functionality.
- *
  */
 void shell_start_interactive(char *filename, char *dict, char *md, bool color);
 
@@ -117,7 +116,6 @@ void shell_start_interactive(char *filename, char *dict, char *md, bool color);
  * 
  * \param mode: Flag for mode (1: Quiet Batch, 2: Verbose Batch, 3: Interactive).
  * \return String of the mode name.
- * 
  */
 char *shell_modename(int mode);
 
@@ -133,7 +131,8 @@ char *shell_modename(int mode);
 void shell_interactive_line_print(int lnum, char *line, char *underline, bool returnflag, bool color);
 
 /**
- * \brief Interactive word replacement for the shell/ *
+ * \brief Interactive word replacement for the shell.
+ *
  * \param word: String (Word) being modified/replaced.
  * \param sug: Array of strings (list of suggestions).
  * \param color: Boolean to enable/disable the color functionality.
@@ -148,7 +147,7 @@ void shell_interactive_replacements(char *word, char **sug, bool color);
  * \param misspelled: A misspelled word.
  * \param suggestions: Array of strings (list of generated suggestions).
  */
-void shell_verbose_chart(int lnum, char* line, char *misspelled, char **suggestions);
+void shell_verbose_chart(int lnum, char *line, char *misspelled, char **suggestions);
 
 /**
  * \brief Save message screen for the shell.
