@@ -8,16 +8,16 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include <assert.h>
 #include <ctype.h>
+#include <assert.h>
 #include "word.h"
 #include "dictionary.h"
 #include "log.c/src/log.h"
 
 /* See word.h */
-bool valid_word(dict_t* dict, char* shaved_word) {
+bool valid_word(dict_t *dict, char *shaved_word) {
     char *decap = word_lowercase(shaved_word);
-    log_trace("word is \"%s\", decap is \"%s\"", shaved_word, decap);
+    log_trace("(valid_word) Word is \"%s\", lowercased version is \"%s\".", shaved_word, decap);
 
     if ((dict_exists(dict, shaved_word) == EXIT_SUCCESS) ||
         dict_exists(dict, decap) == EXIT_SUCCESS) {

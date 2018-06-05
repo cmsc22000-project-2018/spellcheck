@@ -1,12 +1,11 @@
-
 /* 
  * String printing library for the shell
  *
  * See shellstrings.h for function documentation.
  */
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include "shellstrings.h"

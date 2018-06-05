@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include <ctype.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <string.h>
+#include <ctype.h>
 #include <assert.h>
 #include "shellstrings.h"
 #include "parser.h"

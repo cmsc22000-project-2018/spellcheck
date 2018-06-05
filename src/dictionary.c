@@ -1,4 +1,3 @@
-
 /*
  * A dictionary data structure based on tries
  *
@@ -8,9 +7,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <unistd.h>
 #include <string.h>
 #include <assert.h>
-#include <unistd.h>
 #include <time.h>
 #include "dictionary.h"
 #include "log.c/src/log.h"
