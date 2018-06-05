@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
     char *save_file = malloc(UNIX_MAX_PATH * sizeof(char *));
 
 	// Default dict name
-    strcpy(dict, "dictionary0.txt");
+    strcpy(dict, "default");
 
 	/*
 	 * 1: Quiet Batch Mode
@@ -193,10 +193,25 @@ int main(int argc, char *argv[]) {
             return 0;
         }
 
-		 // Initialize dictionary, declare names of files to be used
-        dict_t *new_dict = dict_new();
+        int msg;
+        dict_t *new_dict;
 
-        int msg = dict_read(new_dict, dict);
+		 // Initialize dictionary, declare names of files to be used
+        if (strcmp(dict, "default") == 0) {
+            // use default dictionary
+            new_dict = dict_official();
+
+            if (d == NULL) {
+                msg = EXIT_FAILURE;
+            } else {
+                msg = EXIT_SUCCESS;
+            }
+
+        } else {
+            new_dict = dict_new();
+
+            msg = dict_read(new_dict, dict);
+        }
 
         if (msg == EXIT_FAILURE) {
             shell_error("Invalid dictionary file input.", color);
