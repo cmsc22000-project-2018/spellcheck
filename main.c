@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
                 strcpy(dict, optarg);
 
                 if (mode == INTERACTIVE_MODE) {
-                    shell_input(optarg, "dictionary", color);
+                    log_debug("dictionary accepted");
                 }
 
                 break;
