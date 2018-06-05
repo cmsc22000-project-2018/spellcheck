@@ -201,7 +201,7 @@ int main(int argc, char *argv[]) {
             // use default dictionary
             new_dict = dict_official();
 
-            if (d == NULL) {
+            if (new_dict == NULL) {
                 msg = EXIT_FAILURE;
             } else {
                 msg = EXIT_SUCCESS;

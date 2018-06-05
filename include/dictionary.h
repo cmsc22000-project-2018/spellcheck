@@ -50,7 +50,7 @@ int dict_init(dict_t *d);
  *  - A pointer to the dictionary, or NULL if a dictionary
  *    cannot be allocated
  */
-dict_t* dict_new();
+dict_t* dict_official();
 
 
 /*

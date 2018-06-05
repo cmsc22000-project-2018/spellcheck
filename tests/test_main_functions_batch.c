@@ -25,6 +25,7 @@ Test(main_functions_batch, edit_batch)
 {
 	char* line = strdup("Eye have, a splling chequer");
 	dict_t* dict = dict_official();
+	int i;
 
 	cr_assert_not_null(dict, "dict_official() failed");
 
@@ -40,6 +41,7 @@ Test(main_functions_batch, edit_batch2)
 {
 	char* line = strdup("It cme with thy m'y PC.");
 	dict_t* dict = dict_official();
+	int i;
 
 	cr_assert_not_null(dict, "dict_official() failed");
 

@@ -60,7 +60,6 @@ int dict_init(dict_t *d) {
 dict_t* dict_official() {
 
     dict_t *d;
-    int rc;
 
     d = malloc(sizeof(dict_t));
 
@@ -72,7 +71,7 @@ dict_t* dict_official() {
     trie_t* t = trie_new("dictionary");
     if (t == NULL) {
         log_fatal("dict_init trie_new failed");
-        return EXIT_FAILURE;
+        return NULL;
     }
     d->dict = t;
 
