@@ -21,5 +21,6 @@ script:
     - ./spellcheck < tests/test_main1.txt
     - ./spellcheck < tests/test_main2.txt
     - ./spellcheck 0.txt -l
-    - ./spellcheck 1.txt -q test_result.txt -vvv
+    - ./spellcheck 1.txt -q -d dictionary1.txt
+    - ./spellcheck 1.txt -q -s test_result.txt -vvv
     - make clean
