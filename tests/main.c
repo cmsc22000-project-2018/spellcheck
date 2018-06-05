@@ -3,6 +3,8 @@
 #include <criterion/criterion.h>
 #include <criterion/options.h>
 #include <criterion/output.h>
+#include <assert.h>
+#include "log.c/src/log.h"
 
 int main(int argc, char *argv[]) {
     struct criterion_test_set *tests = criterion_initialize();
