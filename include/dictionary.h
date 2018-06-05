@@ -18,7 +18,7 @@
  * \brief A dictionary and a instant lookup table of the characters contained in it.
  */
 typedef struct {
-    trie_t *dict;
+    trie_t *dict; ///< A dictionary file.
 } dict_t;
 
 /**
@@ -27,8 +27,7 @@ typedef struct {
  *
  * \return A pointer to the dictionary, or NULL if a dictionary cannot be allocated.
  */
-dict_t* dict_new();
-
+dict_t *dict_new();
 
 /**
  * \memberof dict_t
@@ -38,7 +37,6 @@ dict_t* dict_new();
  * \return EXIT_SUCCESS on success, EXIT_FAILURE if an error occurs.
  */
 int dict_init(dict_t *d);
-
 
 /**
  * \memberof dict_t
@@ -103,16 +101,12 @@ int dict_read(dict_t *d, char *file);
  * \memberof dict_t
  * \brief Returns the n closest words to a given string in a dictionary.
  * 
- * \param d: A dictionary. Must point to a dictionary allocated with dict_new
- * \param str: A string. This will be the (misspelled) word to match
- * \param max_edits: the maximum levenshtein distance the words in the set can have
- * \param n: the number of strings to return. 
- * 
- * \return The first n strings with the smallest distance, where ties are broken by alphabetical order.
- * \return If there aren't enough matching strings, each remaining spot is set to NULL.
- * \return NULL if there was an error
+ * \param d: A dictionary. Must point to a dictionary allocated with dict_new().
+ * \param str: A string. This will be the (misspelled) word to match.
+ * \param max_edits: The maximum levenshtein distance the words in the set can have.
+ * \param n: The number of strings to return.
+ * \return The first n strings with the smallest distance, where ties are broken by alphabetical order. If there aren't enough matching strings, each remaining spot is set to NULL (NULL if there was an error).
  */
 char **dict_suggestions(dict_t *d, char *str, int max_edits, int n);
-
 
 #endif /* INCLUDE_DICTIONARY_H_ */
