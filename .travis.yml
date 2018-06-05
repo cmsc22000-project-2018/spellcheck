@@ -11,16 +11,51 @@ before_install:
     - sudo make install
     - sudo ldconfig
     - cd ..
-    - sudo redis-server&
 
-script:
-    - make tests
-    - ./tests/test-spellcheck
-    - make
-    - ./spellcheck < tests/test_main0.txt
-    - ./spellcheck < tests/test_main1.txt
-    - ./spellcheck < tests/test_main2.txt
-    - ./spellcheck 0.txt -l
-    - ./spellcheck 1.txt -q -d dictionary1.txt
-    - ./spellcheck 1.txt -q -s test_result.txt -vvv
-    - make clean
+jobs:
+    include:
+        - stage: make
+          script: make
+          script: make tests
+
+        - stage: test
+          script: 
+            - make tests
+            - sudo redis-server&
+            - ./tests/test-spellcheck
+
+        - stage: interactive 1
+          script: 
+            - make 
+            - sudo redis-server&
+            - ./spellcheck < tests/test_main0.txt
+
+        - stage: verbose 1
+          script: 
+            - make 
+            - sudo redis-server&
+            - ./spellcheck < tests/test_main1.txt
+
+        - stage: verbose 2
+          script: 
+            - make 
+            - sudo redis-server&
+            - ./spellcheck < tests/test_main2.txt
+
+        - stage: verbose 3
+          script: 
+            - make 
+            - sudo redis-server&
+            - ./spellcheck 0.txt -l
+
+        - stage: quiet 1
+          script: 
+            - make 
+            - sudo redis-server&
+            - ./spellcheck 1.txt -q -d dictionary1.txt
+
+        - stage: quiet 2
+          script: 
+            - make 
+            - sudo redis-server&
+            - ./spellcheck 1.txt -q -s test_result.txt -vvv
