@@ -64,7 +64,6 @@ int dict_free(dict_t *d) {
     trie_free(d->dict);
     free(d);
 
-    log_debug("dict_free success");
     return EXIT_SUCCESS;
 }
 
@@ -79,11 +78,9 @@ int dict_exists(dict_t *d, char *str) {
     int rc = trie_contains(d->dict, str);
 
     if (rc == 0) {
-        log_trace("dict_exists returning EXIT_SUCCESS");
         return EXIT_SUCCESS;
     }
 
-    log_trace("dict_exists returning EXIT_FAILURE");
     return EXIT_FAILURE;
 }
 
@@ -102,7 +99,6 @@ int dict_add(dict_t *d, char *str) {
     int rc = trie_insert(d->dict, str);
 
     if (rc == 0) {
-        log_trace("dict_exists returning EXIT_SUCCESS");
         return EXIT_SUCCESS;
     }
 
@@ -132,7 +128,6 @@ int dict_read(dict_t *d, char *file) {
 
     fclose(f);
 
-    log_trace("dict_read returning EXIT_SUCCESS");
     return EXIT_SUCCESS;
 }
 
@@ -143,7 +138,6 @@ char **dict_suggestions(dict_t *d, char *str, int max_edits, int n) {
         return NULL;
     }
 
-    log_trace("dict_suggestions generation with tries");
     char **results = trie_approx(d->dict, str, max_edits, n);
 
     return results;

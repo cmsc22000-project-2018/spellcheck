@@ -3,6 +3,7 @@ return
 d
 f asdf
 f tests/test_short.txt
+2
 1
 i
 checkre
