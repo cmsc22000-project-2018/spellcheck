@@ -55,7 +55,7 @@ void shell_main_menu(bool color) {
 /* See shellstrings.h */
 void shell_save(bool color) {
     if (color == true) {
-        printf(BOLDWHITE "[p]" RESET " : Print all modifications\n");
+        printf(BOLDWHITE "\n[p]" RESET " : Print all modifications\n");
         printf(BOLDWHITE "[s]" RESET " : Save to existing file\n");
         printf(BOLDWHITE "[c]" RESET " : Save to custom file\n");
         printf(BOLDWHITE "[r]" RESET " : Re-edit file\n");
@@ -63,7 +63,7 @@ void shell_save(bool color) {
     }
 
     else {
-        printf("[p] : Print all modifications\n");
+        printf("\n[p] : Print all modifications\n");
         printf("[s] : Save to existing file\n");
         printf("[c] : Save to custom file\n");
         printf("[r] : Re-edit file\n");

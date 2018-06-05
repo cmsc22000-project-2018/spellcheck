@@ -3,17 +3,14 @@ return
 d
 f asdf
 f tests/test_short.txt
-2
+3
 1
 i
 checkre
 n
 checker
 y
-2
-a
-d
 1
-s
+d
 p
 c test_result.txt
