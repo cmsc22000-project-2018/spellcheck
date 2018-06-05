@@ -264,9 +264,10 @@ Test(word, words_restore_cap4)
 Test(word, generate_suggestions)
 {
     char* c = "splling";
-    dict_t* dict = dict_official();
+    dict_t* dict = dict_new();
+    int i = dict_read(dict, "tests/sample_dict.txt");
 
-	cr_assert_not_null(dict, "dict_official() failed");
+    cr_assert_eq(i, EXIT_SUCCESS, "dict_read() failed");
 
     char** list = generate_suggestions(dict, c, 2, 2);
 
@@ -278,9 +279,10 @@ Test(word, generate_suggestions)
 Test(word, generate_suggestions1)
 {
     char* c = "splling";
-    dict_t* dict = dict_official();
+    dict_t* dict = dict_new();
+    int i = dict_read(dict, "tests/sample_dict.txt");
 
-	cr_assert_not_null(dict, "dict_official() failed");
+    cr_assert_eq(i, EXIT_SUCCESS, "dict_read() failed");
 
     char** list = generate_suggestions(dict, c, 2, 2);
 
