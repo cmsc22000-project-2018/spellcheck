@@ -129,3 +129,15 @@ int dict_read(dict_t *d, char *file) {
     log_trace("dict_exists returning EXIT_SUCCESS");
     return EXIT_SUCCESS;
 }
+
+/* See dictionary.h */
+char **dict_suggestions(dict_t *d, char *str, int max_edits, int n) {
+    if (d == NULL || d->dict == NULL || str == NULL) {
+        log_trace("returning EXIT_FAILURE");
+        return NULL;
+    }
+
+    char **results = trie_approx(d->dict, str, max_edits, n);
+
+    return results;
+}
