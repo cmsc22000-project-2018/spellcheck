@@ -43,6 +43,8 @@ int word_check_cap(char *word) {
     if (isupper(word[i])) { // only first word, everything, or inconsistent
         num_cap++; // number of capitalizations
         
+        // start counting capitalization after the first one, which is already counted in the
+        // if statement
         for (i++ ; i < word_length; i++) {
             if (isupper(word[i])) {
                 num_cap++;
@@ -73,14 +75,13 @@ int word_check_cap(char *word) {
 
 /* See word.h */
 char *word_lowercase(char *word) {
-    int i = 0;
+    int i;
     int len = strlen(word);
     char *lower_word = strdup(word);
 
-    while (i < len) {
+    for (i = 0; i < len; i++) {
         lower_word[i] = tolower(lower_word[i]);
 
-        i++;
     }
 
     return lower_word;
@@ -146,7 +147,7 @@ char** generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
 
     // Generate a suggestion list for the lowercased word
     log_info("entering dict_suggestions");
-    char **sug_list = dict_suggestions(dict, lower_word, max_edits, amount + 1);
+    char **sug_list = dict_suggestions(dict, lower_word, max_edits, amount);
     log_info("exiting dict_suggestions");
 
     if (sug_list == NULL) {

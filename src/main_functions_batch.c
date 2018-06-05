@@ -61,13 +61,12 @@ char *edit_batch(char *line, dict_t *dict, int verbosity, int lnum) {
         if (suggestions[0] == NULL) {
             if (verbosity == VERBOSE_MODE) {
                 suggestions[0] = strdup("No suggestions generated");
-            } else {
-                suggestions[0] = strdup(misspelled[i]);
             }
         }
 
         if (verbosity == QUIET_MODE) {
             log_trace("edit_batch correcting misspelled line.");
+            if (suggestions[0] != NULL)
             correct_line(line_copy, misspelled[i], suggestions[0]);
         }
 
