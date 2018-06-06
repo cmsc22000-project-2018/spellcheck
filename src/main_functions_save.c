@@ -38,7 +38,7 @@ void save_page(char *filename, char **lines, bool *quit, bool color) {
     int verify = 0;
 
     while (i) {
-        shell_save_message(color);
+        shell_save(color);
         shell_prompt(color);
 
         i = 0;

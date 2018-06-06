@@ -165,6 +165,8 @@ char **generate_suggestions(dict_t *dict, char *word, int max_edits, int amount)
         return NULL;
     }
 
+    log_debug("first category is \"%s\"", sug_list[0]);
+
     // Capitalizes suggestions if necessary. i here is flag
     i = word_check_cap(word);
     log_debug("(generate_suggestions) Checking capitalization, flag %d.", i);

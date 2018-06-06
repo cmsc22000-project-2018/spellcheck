@@ -340,6 +340,4 @@ void shell_save_message(bool color) {
     else {
         printf("\nEnter a file name [path/*.txt] or enter 'r' to return to previous page.\n");
     }
-
-    shell_prompt(color);
 }

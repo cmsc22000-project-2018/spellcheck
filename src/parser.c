@@ -42,7 +42,6 @@ char **parse_file(char *filename) {
 
         lines[n] = strdup(str);
         n++;
-        log_trace("(parse_file) %d lines read.", n);
     }
 
     lines[n] = NULL;
